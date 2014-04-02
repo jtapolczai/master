@@ -1,0 +1,44 @@
+\begin{thebibliography}{1}
+
+\bibitem{8713551}
+Alain Berthoz.
+\newblock The role of inhibition in the hierarchical gating of executed and
+  imagined movements.
+\newblock {\em Cognitive Brain Reseach}, 3(2):101--13, 1996.
+
+\bibitem{DBLP:journals/adb/GadanhoH01}
+Sandra~Clara Gadanho and John Hallam.
+\newblock Robot learning driven by emotions.
+\newblock {\em Adaptive Behaviour}, 9(1):42--64, 2001.
+
+\bibitem{spikingNeural}
+Mihai Ionescu, Gheorghe P\u{a}un, and Takashi Yokomori.
+\newblock Spiking neural p systems.
+\newblock {\em Fundam. Inf.}, 71(2,3):279--308, February 2006.
+
+\bibitem{lotze1999}
+Martin Lotze, Perdo Montoya, Michael Erb, Ernst Hülsmann, Herta Flor, Uwe
+  Klose, Niels Birbaumer, and Wolfgang Grodd.
+\newblock {\em Journal of Cognitive Neuroscience}, 11(5):491--501, 1999.
+
+\bibitem{maclean1990}
+Paul MacLean.
+\newblock {\em The Triune Brain in Evolution: Role in Paleocerebral Functions}.
+\newblock Plenum Press, New York, 1990.
+
+\bibitem{emotionMachine}
+Marvin Minsky.
+\newblock {\em The Emotion Machine}.
+\newblock Simon \& Schuster, New York, 2006.
+
+\bibitem{membraneComputing}
+Gheorghe Paun, Grzegorz Rozenberg, and Arto Salomaa.
+\newblock {\em The Oxford Handbook of Membrane Computing}.
+\newblock Oxford University Press, Inc., New York, NY, USA, 2010.
+
+\bibitem{DBLP:journals/nn/SanderGS05}
+David Sander, Didier Grandjean, and Klaus~R. Scherer.
+\newblock A systems approach to appraisal mechanisms in emotion.
+\newblock {\em Neural Networks}, 18(4):317--352, 2005.
+
+\end{thebibliography}

@@ -1,0 +1,108 @@
+\documentclass[]{scrartcl}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{framed}
+
+\renewcommand{\tt}[1]{\texttt{#1}}
+\newcommand{\highlight}[1]{\colorbox{yellow!80}{#1}}
+\newcommand{\shade}[1]{\begin{shaded}#1\end{shaded}}
+
+\colorlet{shadecolor}{yellow!80}
+
+%opening
+\title{Report\\{\large on a}\\preliminary literature study\\{\large on the topic of}\\Affective AI}
+\author{Janos Tapolczai}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+%$$
+%\begin{array}{l}
+%	\tt{type Message} = (\Sigma^*, [0,1])\\
+%	\tt{type InterpretedMessage } T = (T, [0,1])\\
+%	\\
+%	\tt{filter} : \tt{Message} \rightarrow \mathbb{B}\\
+%	\tt{interpreter } T : \tt{Message} \rightarrow \tt{ Maybe (IntepretedMessage } T\tt{)}\\
+%	\tt{component } T_i\ T_o : \tt{InterpretedMessage } T_i \rightarrow [\tt{InterpretedMessage } T_o]
+%\end{array}
+%$$
+
+\section{Recent developments}
+
+A review of the literature shows that in recent years there has been, not so much the development of new theoretical models, but rather the application of tried and true technology like machine learning \cite{DBLP:conf/acii/AlZoubiHDC11} to novel problems. The foundational research that is being done tends --- one might suspect, due to the hardness of the general AI problem --- to be rather taxonomical, concerned with the mere description of emotions, not on the mechanism of their evocation and effect. Good examples of this are Celso M. de Melo et al. \cite{DBLP:conf/acii/MeloCAG11}, who presented simple emotional models used in the iterated prisoner's dilemma, Chen Yong et al. \cite{DBLP:conf/acii/YongT05} who dealt with the classifications of emotions, and Marc Schr{\"o}der et al. \cite{DBLP:conf/acii/SchroderBBPPZ11}, who described an {\em Emotion Markup Language}.
+
+Other popular topics in Affective AI are crowd sourcing (\cite{DBLP:conf/acii/KazemzadehLGN11} and \cite{DBLP:conf/acii/RiekOR11}) and emotion recognition in voice and video --- these, however, lie outside of the scope of this study and shall not be discussed here any further.
+
+\section{State of the art}
+
+In terms of theory, progress has been rather modest over last few years. When discussing the state of the art, we must distinguish between the prevailing views on what emotions {\em are} --- their nature and their taxonomy --- and the techniques used to model emotional {\em processes}.
+
+\subsection{Nature of emotions}
+
+ Even a cursory reading among published papers makes it clear that there is no consent on the exact nature and purpose of emotions. In discussions of these questions, the following positions emerge:
+\begin{enumerate}
+	\item Utility functions --- in the context of reinforcement learning, emotions are taken to mean {\em reward and punishment}, and are used to train neural networks \highlight{\cite{rolls2003,ahnpicard2006}}.
+	\item Somatic markers --- emotions are regarded as {\em shortcuts} in cognition: the activation of a marker in a situation leads to an immediate response; this mechanism is activated instead of logical reasoning, or after it has failed \highlight{\cite{damasio1994,bechara2005}}.
+	\item Evolutionary models --- Philippe Chassy and Fernand Gobet present a model in line with evolutionary biology, in which an older ``emotional CPU'' modulates a newer ``cognitive CPU'' \cite{chassy2005}. Minsky \cite{minsky} presents a similar view in {\em The Emotion Machine}, in which he equates consciousness simply to the ``noise'' made by various, vying mental components.
+\end{enumerate}
+
+\subsection{Taxonomy of emotions}
+
+
+\begin{shaded}
+
+When it comes to a taxonomy of emotion, we must distinguish between low- and high-fidelity models: low-fidelity models make no claim to faithfully capture the notion of affect; they use the term ``emotion'' almost metaphorically, as a synonym for ``reward function'', ``utility'', or ``achievement potential''. Examples of such models are found in machine learning and neural networks, and in Morgado \& Gaspar, who employed a two-axis model of {\em achievement potential} and {\em achievement flow} in the context of emotion-driven memory formation \cite{morgado2005}.
+
+High-fidelity models endeavour to give an experientally/neurologically faithful picture of emotions and are therefore much more profoundly informed by (a) empirical research and (b) the underlying cognitive model. From research, various authors (Ortony \& Turner, Matsumo \& Ekman) have derived the existence of six so-called {\em basic emotions}: happiness, surprise, sadness, fear, disgust, anger\footnote{} \cite[p. 24]{cambridgeAff}. These are said to be both qualitatively different from each other and prior to other, derivative emotions like contentment, shame, or aesthetic appreciation.\\
+
+\noindent
+When it comes to categorizing emotions, various vector-based solutions are popular:
+\begin{enumerate}
+	\item Tomkins partitions emotions into {\em positive} and {\em negative} affects \cite{tomkins1963}.
+	\item Davidson \& Irwin and Gable \& Harmon-Jones, starting from the idea that TODO, propose a different 2-axis model, with emotions being {\em approach-}/{\em avoidance}-related on one axis and positive/negative on the other \cite{davidson1999,gable2008}.
+	\item Breazeal creates a three-axis model with the axes {\em arousal}, {\em valence} and {\em stance} \cite{breazeal2003}. In this model, the experience of emotions is preceded by an affective appraisal stage, performed via somatic markers (see Damasio's {\em somatic marker hypothesis}).
+\end{enumerate}
+
+Other models build on nested categories instead of axes: Ortony et al. \cite{ortony1988} created the OCC model, which contains 22 emotions and categorizes them by valence, consequences for others and oneself, well-being, attribution, etc. This categorization is furthermore hierarchical: being {\em distressed} is a special case of being {\em displeased} where one's well-being is in danger; {\em remorse}, in turn, is a special case of distress, where the cause of displease is then attributed to oneself. Such an inheritance is stressed in \cite{steunebrink2009}.
+\end{shaded}
+
+\footnotetext{Matsumo \& Ekman additionally include contempt as a basic emotion.}
+
+\subsection{Models of emotional processes}
+
+Models of differing depth and grounded in various philosophies exist to model emotional processes. Most of these, as said, are at least a decade old, although people like Sabrina Campano et al. \cite{DBLP:conf/acii/CampanoSCS11} and Tibor Bosse et al. \cite{DBLP:conf/prima/BosseDMTW09} have recently produced interesting innovations.
+
+\begin{enumerate}
+	\item Neural networks --- neural networks can model emotions in two ways: first, they can simulate ordinary neural processes in the hope of producing something like affect as the end result or, second, emotion can be encoded into them as reward and punishment, as described by Rolls\cite{rolls2003} and Hyungil Ahn et al. \cite{ahnpicard2006}
+	%\item Bayesian networks --- a priori and a posteriori probabilities can be adjusted to reflect emotional states of an agent and thereby modulate the probabilities of outcomes. 
+	\item Layered architectures - Minksy \cite{minsky} describes a layered architecture with higher-lever mental components being stacked onto evolutionarily older, more primitive ones.
+	
+	\item Hormonal Emotion Architecture --- Sandra Clara Gadanho and John Hallam \cite{DBLP:journals/adb/GadanhoH01} model the mechanics of emotion using {\em hormones}, which are emitted whenever an agent experiences a certain emotion. In turn, they are fed back into the system and, combined with external stimuli, decide which emotions an agent feels.
+	
+	\item Chassy's and Gobet's model --- as discussed above, Chassy and Gobet view cognition as a rational, cognitive CPU influenced by an emotional component. Perhaps more of a meta-model, this idea could be used to integrate an emotion simulation program with a logical reasoner.
+	
+	\item COR --- Sabrina Campano et al. \cite{DBLP:conf/acii/CampanoSCS11} describe the {\em COR (Conservation of Resources)} model, based on the acquisition of desired and the protection of threatened resources.
+	
+	\item Emotion Contagion Spiral --- Tibor Bosse et al. \cite{DBLP:conf/prima/BosseDMTW09} and Gon\c{c}alo Pereira et al. \cite{DBLP:conf/acii/PereiraDPSP11} develop and build upon the {\em Emotion Contagion Spiral Model}, which aims to simulate the mechanism by which agents mimic and internalize the emotions of their peers. As Chassy's and Gobet's, this is somewhat of a meta-model, but can be useful in modelling multi-agent scenarios.
+	
+	\item OCC model --- The OCC model was invented by Ortony et al. \cite{ortony1988}. It introduced an extensive taxonomy, together for rules for when an agent would experience certain emotions. Dastani et al. \cite{dastani2011} extended it with a BDI (belief, desire, intention) model grounded in doxastic logic.
+\end{enumerate}
+
+\pagebreak
+
+\nocite{*}
+
+\bibliographystyle{unsrt}
+\bibliography{literaturrecherche}
+
+
+\end{document}

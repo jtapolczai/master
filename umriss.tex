@@ -1,0 +1,42 @@
+\documentclass[]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+
+%opening
+\title{Umriss: Masterarbeit zu Affective Computing im Kontext von \texttt{dlvhex}}
+\author{Janos Tapolczai}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section {Literaturrecherche}
+
+\begin{itemize}
+	\item Grundsätzlich 2 Ansätze: ingenieurmäßige Konstruktion (mit Hilfe von Fuzzy Logic, Bayesschen Netzwerken u.ä.) vs. Modellierung der physischen Vorgänge (neurale Netze).
+	\item Vielzahl von konkurrierenden Modellen: cell assemblies, neurale Netze, OCC model, Emotion Model von Gallanho \& Hallam.
+\end{itemize}
+
+\section{Stichworte: geplante Schwerpunkte}
+
+\begin{itemize}
+	\item Konstruktion/Implementierung eines parametrierbaren Modells von Emotionen \& Integration dieses Modells in dlv-basierte, rationale Agenten.\\
+	Vorzugsweise auf Basis der {\em somatic markers hypothesis} \& {\em cell assemblies}.
+	\item Durchführung eines genetischen Algorithmus: Agenten treten gegeneinander an, erfolgreiche Agenten werden miteinander kombiniert und bilden die Basis für die nächste Generation.
+	\item Szenarien: typische Situationen für soziale Wesen, aber abstrakt gehalten - Kampf um Ressourcen, Aufteilung von Beute, einfache Verhandlungen, etc.
+\end{itemize}
+
+\section{Unklarheiten}
+
+\begin{itemize}
+	\item Inwiefern soll das Modell parametrierbar sein? Sollen nur einige numerische Parameter angepasst werden können, oder soll auch der Programmablauf verändert werden können?
+	\item Wie soll die Effektivität der Agenten beurteilt werden? Anhand von festgelegten, händisch erstellten Szenarien, oder automatisch?
+	\item Wie wird die Welt simuliert? Ist der dlv-Solver Teil der Agenten, oder wird die Welt selbst mit dlv modelliert?
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,24 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: literaturrecherche.aux
+The style file: unsrt.bst
+Database file #1: literaturrecherche.bib
+Repeated entry---line 20 of file literaturrecherche.bib
+ : @conference{ahnpicard2006
+ :                          ,
+I'm skipping whatever remains of this entry
+Warning--string name "july" is undefined
+--line 299 of file literaturrecherche.bib
+Warning--string name "april" is undefined
+--line 307 of file literaturrecherche.bib
+A bad cross reference---entry "DBLP:conf/acii/SchroderBBPPZ11"
+refers to entry "DBLP:conf/acii/2011-1", which doesn't exist
+A bad cross reference---entry "DBLP:conf/acii/RiekOR11"
+refers to entry "DBLP:conf/acii/2011-1", which doesn't exist
+A bad cross reference---entry "DBLP:conf/acii/CampanoSCS11"
+refers to entry "DBLP:conf/acii/2011-1", which doesn't exist
+A bad cross reference---entry "DBLP:conf/acii/PereiraDPSP11"
+refers to entry "DBLP:conf/acii/2011-1", which doesn't exist
+Warning--I didn't find a database entry for "breazeal2003"
+Warning--empty booktitle in ahnpicard2006
+Warning--empty journal in davidson1999
+Warning--empty journal in gable2008
+(There were 5 error messages)

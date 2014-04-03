@@ -110,10 +110,16 @@ Gable P.~A. and Harmon-Jones E.
   attention}.
 \newblock 19:476--82, 2008.
 
+\bibitem{breazeal2003}
+Cynthia Breazeal.
+\newblock Emotion and sociable humanoid robots.
+\newblock {\em Internation Journal of Human-Computer Studies}, 59:119--155,
+  2003.
+
 \bibitem{ortony1988}
 Andrew Ortony, Gerald~L. Clore, and Allan Collins.
-\newblock {\em The cognitive structure of emotions}.
-\newblock Cambridge University Press, Cambridge, 1988.
+\newblock {\em The Cognitive Structure of Emotions}.
+\newblock Cambridge University Press, 1988.
 
 \bibitem{steunebrink2009}
 Steuenbrink B.~R., Dastani M.~M., and J.-J.~Ch. Meyer.
@@ -184,11 +190,5 @@ Alexander Feder.
 \newblock Methods of affective artificial intelligence and an application for
   traffic simulations with emotional drivers.
 \newblock Master's thesis, Vienna University of Technology, 2008.
-
-\bibitem{brazeal2003}
-Cynthia Breazeal.
-\newblock Emotion and sociable humanoid robots.
-\newblock {\em Internation Journal of Human-Computer Studies}, 59:119--155,
-  2003.
 
 \end{thebibliography}

@@ -31,6 +31,9 @@
 \newcommand{\ft}[1]{\tt{Ft}_{#1}}
 \renewcommand{\int}[1]{\tt{Int}_{#1}}
 \newcommand{\proc}[1]{\tt{Proc}_{#1}}
+\newcommand{\sends}[3]{#1 \rightarrow [#2] \rightarrow #3}
+\newcommand{\sendsm}[4]{#1 \rightarrow [#2 , #3] \rightarrow #4}
+\newcommand{\sendsf}[6]{#1\langle #2 \rangle \rightarrow [#3,#4] \rightarrow \langle#5\rangle#6}
 
 %opening
 \title{{\huge A Proposed Model of Cognition}}
@@ -51,23 +54,23 @@
 
 In this document, I will sketch a possible architecture of the human brain and a select few of its subsystems. The descriptions presented are supported by some empirical evidence, but I do not claim that they are straightforward transcriptions of neurological realities. The model is grounded substantially in evolutionary considerations, which provide the backdrop and the plausibility check for the claims presented herein.
 
-Section~\ref{sec:preliminaries} outlines the basic considerations that lead to the model. Section~\ref{sec:globalArchitecture} sketches the proposed model of the mind. Section~\ref{sec:affect} then sketches the affective subsystem and lastly, errors and falsifiability are discussed in Section~\ref{sec:errors}. 
+Section~\ref{sec:preliminaries} outlines the basic considerations that lead to the model. Section~\ref{sec:globalArchitecture} sketches the proposed model of the mind . Section~\ref{sec:mathematicalModel} presents the mathematical model. In section~\ref{sec:selectedSubsystems}, we look at three concrete subsystems: sensory perception, counterfactual perception (imagination) and affect.
 
 It should also be understood that everything in this document is, at best, a {\em rough} outline; it may be likened to a hexagon which approximates a circle: though (conjectured to be) basically correct, and useful, it is marred by significant incongruities with the object of its approximation.
 
 \section{Preliminary considerations \& justification}\label{sec:preliminaries}
 
 In order to understand how our brain works or could work, we must possess conceptual clarity --- we must conceive of it, not as a product of engineering, but as a historical artefact, and as one which was not produced ``in one step'', but gradually, where each stage of its evolution had to be viable on its own. What, one might ask, is the consequence of such a view?
-Most importantly, it allows the distinction between \caps{good} systems and \caps{clean} systems. Since, at each stage of its evolution, the organism that carried the brain had to be viable, the end product is by definition guaranteed to be ``good''. Because of that same fact, however, it is all but guaranteed not to be ``clean'': for one, it was not possible to snap whole new components into the system; it would have also been impossible to combine old components in the elaborate and precise ways in which a human engineer might use parts. Worse, old components were almost certainly not discarded when new and better components came into being. A good exposition of this process in humans can be found in Paul MacLean's seminal work {\em The Triune Brain in Evolution} \cite{maclean1990}
+Most importantly, it allows the distinction between \caps{good} systems and \caps{clean} systems. Since, at each stage of its evolution, the organism that carried the brain had to be viable, the end product is by definition guaranteed to be ``good''. Because of that same fact, however, it is all but guaranteed not to be ``clean'': for one, it was not possible to snap whole new components into the system; it would have also been impossible to combine old components in the elaborate and precise ways in which a human engineer might use parts. Worse, old components were almost certainly not discarded when new and better components came into being. A good exposition of this process in humans can be found in Paul MacLean's seminal work {\em The Triune Brain in Evolution} \cite{maclean1990}.
 
-\paragraph{Origin of nervous systems} Let us imagine a microscopic organism without any sort of nervous system: all of its behaviour is hard-coded and mechanical. It can take in nutrients through its cell walls or through an opening; parts of it can contract or expand in response to stimuli like light or pressure; homeostatic conditions can influence its chemistry. Figure~\ref{fig:noNervousSystem} shows this schema: if we enumerate the constituent parts or {\em components} of an organism is $\{C_1,\dots,C_n\}$, the organism's behavior is caused by signals being sent between $C_i$ and $C_j$ (the case $i=j$ is of course possible). Such an organism suffers from two disadvantages: (a) the behaviour is necessarily simple and (b) it is not very adaptable.
-
-\begin{figure}
+\begin{figure}[!h]
 	\centering
 	\includegraphics{figs/noNervousSystem.png}
 	\caption{Relationship between the components of an organism without a nervous system.}
 	\label{fig:noNervousSystem}
 \end{figure}
+\vspace{-0.18cm}
+\paragraph{Origin of nervous systems} Let us imagine a microscopic organism without any sort of nervous system: all of its behaviour is hard-coded and mechanical. It can take in nutrients through its cell walls or through an opening; parts of it can contract or expand in response to stimuli like light or pressure; homeostatic conditions can influence its chemistry. Figure~\ref{fig:noNervousSystem} shows this schema: if we enumerate the constituent parts or {\em components} of an organism is $\{C_1,\dots,C_n\}$, the organism's behavior is caused by signals being sent between $C_i$ and $C_j$ (the case $i=j$ is of course possible). Such an organism suffers from two disadvantages: (a) the behaviour is necessarily simple and (b) it is not very adaptable.
 
 Let us now imagine that such an organism develops a bundle of cells which transmit the signals from various parts of its body, modulate them in some way, and then send them to various parts, inducing changes. Schematically, this is shown in figure~\ref{fig:nervousSystem}, where a function $F$ is interposed between two components. The first such nervous systems were likely little more than signal transformers or magnifiers that expedited communication between parts: with a few neurons, an organism would have had the ability to coordinate movements or rely on sensing parts induce, say, movement.
 
@@ -112,21 +115,11 @@ To illustrate this, we can look at a simple neural network in figure~\ref{fig:ne
 
 \paragraph{The brain as a collection of functions}
 
-components don't just appear... is this in contradiction to the message space?
+The implication of such an evolutionary viewpoint is that brain functions don't ``just appear'', but are rather the result of small changes and the recombination of pre-existing parts. In particular, the idea of a rigidly ordered brain with central coordinators, universal message formats and large, highly complex, and atomic features like ``sight'' or ``reason'' become implausible. Instead of the brain as a collection of discrete, pluggable features, I propose a decentralized white-box architecture of simple parts: first, every component, while perhaps sophisticated, is conceptually simple. Second, communication between different components is not performed in the function-call pattern of computer programs, but rather by one component listening in on the activity of another. Since there is, inherently, no mechanism of function abstraction in neural systems, it stands to reason that the most likely way for new functions to develop is for additional neurons to modulate the activity of others. In such a scheme, a visual perception component doesn't have to know which other components will consume its output (or rather, listen on its activity); changes which affect agent activity in useful ways based on the visual data can occur gradually and, over time, become large enough to count as components in their own right.
 
-decentralized message space models the subsystems as white boxes, not as black-box functions (black-box functions emulate the white-box subsystems)
+\paragraph{Abstraction}
 
-\paragraph{Function abstraction}
-
-neural system encodes a function -> we look at the function, not at the underlying substrate computing it
-
-TODO
-
-%* rationality not "better", only a tiny part
-
-%* reason is social
-
-% decentralized
+While the model just described is conceptually useful, a mesh of gradually grown patterns does not lend itself to implementation in a program. Therefore, I will present a simplified model which, while attempting to remain true to the conceptual view, will have discrete functions and components in it. The white-box nature of brain activity will be emulated by a message-passing scheme in which messages model the internal activity of components. Instead of each component blindly acting in some fashion on the activity of another, components will have explicit parsers and interpreters and later, these will be further simplified into localized message formats and tagging, for the sake of easy implementation.
 
 \section{Diagram notation}
 
@@ -137,12 +130,12 @@ In the rest of this document, a number of diagrams appear. These will use the fo
 		\toprule
 		Symbol & Description\\
 		\midrule
-		\includegraphics[width=100pt]{figs/legend_proc.png} \dotfill & Processing component\\
-		\includegraphics[width=100pt]{figs/legend_choice.png} \dotfill & Choice\\
-		\includegraphics[width=75pt]{figs/legend_container.png} \dotfill & Data container (Queue, List, etc.)\\
-		\includegraphics[width=75pt]{figs/legend_data.png} \dotfill & Data\\
-		\includegraphics[width=50pt]{figs/legend_generator.png} \dotfill & Stream generator\\
-		\includegraphics[width=75pt]{figs/legend_imaginary.png} \dotfill & Counterfactual (imaginary) data\\
+		\includegraphics[width=80pt]{figs/legend_proc.png} \dotfill & Processing component\\
+		\includegraphics[width=80pt]{figs/legend_choice.png} \dotfill & Choice\\
+		\includegraphics[width=50pt]{figs/legend_container.png} \dotfill & Data container (Queue, List, etc.)\\
+		\includegraphics[width=50pt]{figs/legend_data.png} \dotfill & Data\\
+		\includegraphics[width=30pt]{figs/legend_generator.png} \dotfill & Stream generator\\
+		\includegraphics[width=50pt]{figs/legend_imaginary.png} \dotfill & Counterfactual (imaginary) data\\
 		\bottomrule
 	\end{tabular}
 \end{center}
@@ -151,21 +144,16 @@ In the rest of this document, a number of diagrams appear. These will use the fo
 
 We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
 
-\begin{figure}
+\begin{figure}[!h]
 	\centering
 	\includegraphics[width=400pt]{figs/global.png}
 	\caption{Global neural architecture.}
 	\label{fig:global}
 \end{figure}
 
-However, as we'll show in the next section, this model is generic enough to accommodate such special-purpose structures. Figure~\ref{fig:global} sketches a kind of graph in which the nodes are the components and the edges are accepted messages; the edges are the components and through their filters, they control the shape of the graph. By imposing invariants on these filters, we can have the graph take any shape we desire. In particular, we can model the kinds of structures that occur in other cognitive models and in empirical research: central organisers, sequences (``pipelines'') of components, localized messages affecting only a small part of the mind, et cetera.
+However, as I'll show in the next section, this model is generic enough to accommodate such special-purpose structures. Figure~\ref{fig:global} shows the message-passing scheme, but it also specifies a graph in which the nodes are the components and fixed, while the edges are the accepted messages and are determined by the nodes; through their filters, components control the shape of the graph. By imposing invariants on these filters, we can have the graph take any shape we desire. In particular, we can model the kinds of structures that occur in many other cognitive models and in empirical research: central organisers, sequences of components (``pipelines''), localized messages affecting only a small part of the mind, a component reading its own messages, loops and iterative messages between two or more components et cetera.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=150pt]{figs/message.png}
-	\caption{Structure of a neural message.}
-	\label{fig:message}
-\end{figure}
+\pagebreak
 
 \paragraph{Messages}
 
@@ -174,6 +162,13 @@ We may now ask how such messages between components are structured. Here, I make
 	\item messages have a priority and
 	\item they are effectively unstructured.
 \end{enumerate}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width=150pt]{figs/message.png}
+	\caption{Structure of a neural message.}
+	\label{fig:message}
+\end{figure}
 
 The my knowledge, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p. 222]{emotionMachine}:
 
@@ -192,28 +187,14 @@ The selection strategies Minsky lists imply that there is some mechanism in the 
 
 The second claim --- that messages are essentially unstructured --- means that there is no common, agreed-upon format in which they are stored. In addition to the evolutionary implausibility of such a format being created, an unstructured message format is in line with the white-box nature of components: since components merely ``listen in'' on others, and since each components will have its own pattern of activity, a listener would simply have to try and make sense of this activity as best it could. The proposed structure of messages is thus shown in figure~\ref{fig:message}: every message comprises a priority header, together with an unstructured body which, for our purposes, is simply a string of bits.
 
+\paragraph{Filters} Before a component can respond to a message by another, such a message must be assessed for the presence of relevant information. Conceptually, this happens via a \caps{filter} in each component, which pattern-matches incoming messages and, if a certain threshold is reached, signals relevance and hands the message over the \caps{interpreter} for parsing. Figure~\ref{fig:filter} shows such a filter: it is composed of a directed graph of nodes, and a node is activated if it detects some specific content in the message. Nodes, in turn, are connected via edges of strength $\in [0,1]$. When a node is activated, it sends a charge proportional to the strength of its link to its neighbours, contributing to their activation as well. Some nodes are marked as {\em output nodes}; if enough such output nodes become activated, the message is deemed to be sufficiently relevant. This model of filters is inspired by the {\em spiking neural P Systems} of Georghe Pa\u{u}n et al. (\cite[p. 337]{membraneComputing} and \cite{spikingNeural}), in which charges sent along directed graphs of neurons are used to compute functions.
+
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=215pt]{figs/filter.png}
 	\caption{A pattern-matching filter for a component $C_i$.}
 	\label{fig:filter}
 \end{figure}
-
-\paragraph{Filters} Before a component can respond to a message by another, such a message must be assessed for the presence of relevant information. Conceptually, this happens via a \caps{filter} in each component, which pattern-matches incoming messages and, if a certain threshold is reached, signals relevance and hands the message over the \caps{interpreter} for parsing. Figure~\ref{fig:filter} shows such a filter: it is composed of a directed graph of nodes, and a node is activated if it detects some specific content in the message. Nodes, in turn, are connected via edges of strength $\in [0,1]$. When a node is activated, it sends a charge proportional to the strength of its link to its neighbours, contributing to their activation as well. Some nodes are marked as {\em output nodes}; if enough such output nodes become activated, the message is deemed to be sufficiently relevant. This model of filters is inspired by the {\em spiking neural P Systems} of Georghe Pa\u{u}n et al. (\cite[p. 337]{membraneComputing} and \cite{spikingNeural}), in which charges sent along directed graphs of neurons are used to compute functions.
-
-%\begin{figure}
-%	\centering
-%	\begin{subfigure}[t]{0.3\textwidth}
-%		\includegraphics[width=\textwidth]{figs/message.png}
-%		\caption{Structure of a neural message.}
-%		\label{fig:message}
-%	\end{subfigure}
-%	\begin{subfigure}[t]{0.45\textwidth}
-%		\includegraphics[width=\textwidth]{figs/filter.png}
-%		\caption{A pattern-matching filter for a component $C_i$.}
-%		\label{fig:filter}
-%	\end{subfigure}
-%\end{figure}
 
 \section{Mathematical model}\label{sec:mathematicalModel}
 
@@ -240,7 +221,7 @@ $$
 
 \end{definition}
 
-\subsection{Messages}\label{sec:notation}
+\subsection{Sending \& receiving messages}\label{sec:notation}
 
 We now give a notation for the sending and receiving of messages in a system. Here, we distinguish two aspects: first, the structural, which describes how messages {\em can} travel in a system and the operational, which describes how the {\em do} travel in some given scenario.
 
@@ -307,7 +288,7 @@ When, for all messages $m_{out}, m_{in}$ and all components $C_i$ and $C_j$, the
 $$
 	C_i\langle\rangle \rightarrow [m_{out}, m_{in}] \rightarrow \langle\rangle C_j.
 $$
-we call the system {\em non-plastic}. Otherwise, the system is called {\em plastic}.
+we call the system {\em non-plastic}. Otherwise, we call the system {\em plastic}.
 \end{definition}
 
 \subsection{Invariants}
@@ -346,7 +327,7 @@ $$
 
 The global architecture now specified, we will introduce three related subsystems and fit them into this global framework: sensory perception --- the processing of raw sensory input into an format intelligible to other brain components ---, counterfactual perception --- the imagination, which mimics the output of the senses ---, and affect --- broadly speaking, the emotional component of cognition.
 
-\subsection{Sensory perception}
+\subsection{Sensory perception}\label{sec:sensoryPerception}
 
 The model presented herein is inspired by Marvin Minsky's ``The Emotion Machine''. Therein, Minsky proposes a layered mental structure where each successive layer operated on more and more abstract representations of the world, starting with primitive sensations and proceeding all the way to self-conscious reflection and rational planning. Figure~\ref{fig:brainLayers} shows such a layered structure.
 
@@ -357,7 +338,9 @@ The model presented herein is inspired by Marvin Minsky's ``The Emotion Machine'
  	\label{fig:brainLayers}
  \end{figure}
  
-The diagram is explained in this paragraph \cite[p. 100]{emotionMachine}:
+ \newpage
+ 
+The diagram is explained thus \cite[p. 100]{emotionMachine}:
 
 \begin{quote}
 	Now suppose that your A-Brain gets some signals from the external world (via such organs as eyes, ears, nose, and skin) --- and that it also can react to these by sending signals that make your muscles move. By itself, the A-Brain is a separate animal that only reacts to external events but has no sense of what they might mean. For example, when the fingertips of two lovers come into intimate physical contact, {\em the resulting sensations, by themselves, have no particular implications}. For there is no significance in those signals themselves: their meanings to those lovers {\em lie in how they prepresent and process them in the higher levels of their minds.}
@@ -369,17 +352,17 @@ If we apply this to the architecture of section~\ref{fig:global}, we can devise 
 	\item as a side a effect of this processing, cause  instinctive, low-level reactions in the body, such as pulling away from pain or jumping at a sudden fright.
 \end{enumerate}
 
-In figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown for visual, auditory, olfactory/gustatory and tactile sensation. The perceivable data is of two kinds: one is more abstract facilitates deliberative action, and the other contains instructions for instinctive behaviour for the body.
+In figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown for visual, auditory, olfactory/gustatory and tactile sensation. The produced data can be of two kinds: one is more abstract than the input and facilitates deliberative action, and the other contains instructions for instinctive behaviour for the body.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=\textwidth]{figs/sensoryPerception.png}
+	\includegraphics[width=325pt]{figs/sensoryPerception.png}
 	\caption{Partial structure of sensory perception - raw sensory data is processed and made available to higher functions such as the affective subsystem. The comment ``Possible side-effect: sensory experience'' signifies the fact that conscious and sub-conscious sensory experiences might occur as a side-effect of this processing. Whether this is indeed the case is unknown, however.}
 	\label{fig:sensoryPerception}
 \end{figure}
 
 
-\subsection{Counterfactual perception}
+\subsection{Counterfactual perception and planning}
 
 Broadly speaking, counterfactual perception can be described as ``imagination'', and is closely related to sensory perception and world simulation. In examining the system, we might broadly classify its processes into three categories:
 
@@ -406,7 +389,7 @@ Broadly speaking, counterfactual perception can be described as ``imagination'',
 	\item Executive planning --- humans can plan both both in immediate \& concrete terms (such as body movement) and in the abstract. It is likely that different circuitry is used for movement planning and for planning involving abstract reasoning, both in both cases, it is necessary that the brain simulate the world in some way. The simulation of the consequences of body movement is likely older than humanity and distinct from the kind of world simulation described above, but both share their function: the agent proposes as series of actions to take, inserts them into some mental world and judges the utility of those actions based on the predicted consequences.
 \end{enumerate}
 
-Needless to say, that this process in all its subtleties is immensely complex and thus, I simply endeavour to sketch its possible structure only in extremely rough outlines. This sketch is shown in figures~\ref{fig:imagination},  \ref{fig:planning}, and \ref{fig:worldSimulatorPlannerInteraction}: the world simulation is an ordinary component with a filter and interpreter which outputs, for simplicity's sake, messages marked as counterfactual. We can imagine such messages to be very much like ordinary sensory ones, with the exceptions that they have no accompanying sensation and, more importantly, that we are aware of their non-reality. The planning component receives instructions about desirable states and outputs hypothetical actions which the world simulator incorporates. The world simulator's output is in turn read by the planner, which their abandons the plan or decides to pursue it further.
+Needless to say, that this process in all its subtleties is immensely complex and thus, I simply endeavour to sketch its possible structure only in extremely rough outlines. This sketch is shown in figures~\ref{fig:imagination},  \ref{fig:planner}, and \ref{fig:worldSimulatorPlannerInteraction}: the world simulation is an ordinary component with a filter and interpreter which outputs, for simplicity's sake, messages marked as counterfactual. We can imagine such messages to be very much like ordinary sensory ones, with the exceptions that they have no accompanying sensation and, more importantly, that we are aware of their non-reality. The planning component receives instructions about desirable states and outputs hypothetical actions which the world simulator incorporates. The world simulator's output is in turn read by the planner, which then abandons the plan or decides to pursue it further.
 
 \begin{figure}
 	\centering
@@ -418,16 +401,53 @@ Needless to say, that this process in all its subtleties is immensely complex an
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/planner.png}
-	\caption{Planner with two kinds of inputs: (1) on the basis of real and counterfactual sensory data, possible steps are developed. (2) Projected consequences of actions lead to the readjustment of planned steps.}
+	\caption{Planner with two kinds of inputs: (1) real sensory data and (2) counterfactual data which comes from world simulation. On the basis of these inputs, possible steps are developed and sent out as commands.}
 	\label{fig:planner}
 \end{figure}
+
+The planner, minimally, has to perform two functions --- first, it has to judge the desirability of various world states and second, it has to be able to devise possible steps for the agent based on some strategy. If these two functions and some desired goal(s) are given, the planner can do its work by issuing the following commands, as shown in figure~\ref{fig:planner}:
+\begin{enumerate}
+	\item If some goals are not yet reached but appear possible, devise possible steps to take and have the world simulator predict their outcomes.
+	\item If the goals appear impossible the necessary steps prohibitively undesirable, command the world simulator to cease its activity.
+	\item If earlier proposed steps turn out to fulfil some goal, contact the agent's executive component.
+\end{enumerate}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/worldSimulatorPlannerInteraction.png}
-	\caption{Interaction between world simulator and planner: the planner devises possible steps and feeds them into the world simulator, which, in turn, tries to calculate their effects. The results are fed back to the planner, which uses them as a basis for other steps.}
+	\caption{Interaction between world simulator and planner: the planner devises possible steps and feeds them into the world simulator, which, in turn, tries to calculate their effects. The results are fed back to the planner.}
 	\label{fig:worldSimulatorPlannerInteraction}
 \end{figure}
+
+\subsubsection{World simulation as rationality}
+The way in which I just described the interaction between the world simulator and the planner suggests that they function as a pair of guesser and checker: the planner generates ideas on what to do and the world simulation tests their viability in some setting. Indeed, we can model rational thinking as embedded in the world simulator, especially if we make use of a plastic neural system. The proposed steps of the planner might be quite chaotic and irrational, but when given to the world simulator, it recognises them as such and returns a failure signal to the planner, causing it to abandon ``bad'' paths of cognition. A plastic planner can learn from the consistent failure of certain kinds of steps and, in time, propose them less and less often. Observed as a whole, this system of planner \& simulator appears to simply deliver good plans by intuition, even though, in isolation, neither part is very clever\footnote{I do not wish to idealize rationality too much; world simulation is only partly rational and, given faulty information about the world, will err considerably and in documented ways. Similarly, it is certainly possible for the planner to derange the world simulator by evaluating certain states as so desirable/undesirable that it will pursue even scenarios which the world simulator reports as highly unlikely.}.
+
+\paragraph{Model.} In a simplified way, we can model the process of logical deduction in a formal system $(A : \texttt{Set}[\texttt{String}], R : \texttt{Set}[\texttt{String} \times \texttt{String}])$ with axioms $A$ and deduction rules $R$ with a failure signal $\bot_i$, a success signal $\top_i,$ and a planner which modulates the probability of certain kinds of steps being proposed based on them. Let
+	\begin{enumerate}
+		\item $W$ be a world simulator for the world of propositions $\mathcal{P}$ in $(A,R)$,
+		\item $P$ a planner,
+		\item $\{s_i\ |\ i \in \mathbb{N}\}$ a set of messages about steps to take,
+		\item $\{K_i\ |\ i \in \mathbb{N}\}$ a list of message categories,
+		\item $\tt{cur}$ the current state of the world simulator,
+		\item $\tt{ins}\backslash 2$, $\tt{del}\backslash 1$ functions for inserting or deleting a state change into the world simulator or the planner,
+		\item $t(i)$ and $b(i)$ functions which increase or decrease the likelihood of sending a message belonging to category $K_i$ and 
+		\item $\bot_{i}, \top_{i}$ the failure and success signals of a message belonging to the category $K_i$.
+	\end{enumerate}
+	
+One step of the interaction between $W$ and $P$, in a scenario where $P$ proposes steps $s_{i_1},\dots,s_{i_n}$, is as follows:
+
+$$
+	\begin{array}{l}
+		\forall j \in \{i_1,\dots,i_n\}:\\
+		\quad \sendsf{P}{\tt{ins}(\tt{cur}, s_{i_j})}{s_{i_j}}{s_{i_j}}{\tt{ins}(\tt{cur}, s_{i_j})}{W}\\
+		\quad \forall l \in \mathbb{N}: K_l(s_j) \Rightarrow \mt{if } \exists (cur, s_j) \in R\ \mt{ then } \
+			\sendsf{W}{}{\top_i}{\top_i}{t(i)}{P}\\
+			\hspace{6.4cm} \ \mt{else }\ \sendsf{W}{\tt{del}(s_j)}{\bot_j}{\bot_j}{\tt{del}(s_j), b(j)}{P}\\
+	\end{array}
+$$
+
+If we repeat this interaction (with different proposed steps $s_{i_1},\dots,s_{i_n}$ in each iteration), we get an algorithm for logical deduction. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
+
 
 \subsection{Affect}\label{sec:affect}
 
@@ -439,7 +459,7 @@ The model presented herein is adapted from Gadanho and Hallam \cite{DBLP:journal
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width=300pt]{figs/gadanhoModel.png}
+	\includegraphics[width=200pt]{figs/gadanhoModel.png}
 	\caption{Emotional model of Gadanho and Hallam \cite[p. 46]{DBLP:journals/adb/GadanhoH01}.}
 	\label{fig:gadanhoModel}
 \end{figure}
@@ -455,8 +475,6 @@ $$
 	\end{array}
 $$
 
-The main advantage of Gadanho's and Hallam's model is that (a) it is sufficiently generic to accommodate various schemas and (b) posits an internal state (the hormone storage), giving agents a certain inertia. For example one can imagine integrating a many-dimensional model like Brazeal's [TODO: CITE BRAZEAL 2003] detailed taxonomy of emotion like Ortony's OCC model [TODO: CITE OCC (ortony 2003)]. The existence of an internal state is necessitated by the simply observation that our internal world is not solely dependent on momentary stimuli, but merely influenced by them. The idea of a hormone storage might be a simplistic approximation but it, too, can be refined as needed\footnote{It might be tempting to simply replace the hormone storage, but doing so would ignore the role that neurotransmitters like dopamine and serotonin play in cognition, irrespective of the purely computational activity of brain components.}. Figure~\ref{fig:sensoryPerception} shows the adapted model. The general structure was retained, but the set of sensations was replaced by the sensory processor described in section~\ref{fig:sensoryPerception} and, instead of a single dominant emotion, competing emotions simply emit messages for executive components. TODO: redo graph to account for this.
-
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=400pt]{figs/affectiveSubsystem.png}
@@ -464,10 +482,10 @@ The main advantage of Gadanho's and Hallam's model is that (a) it is sufficientl
 	\label{fig:affectiveSubsystem}
 \end{figure}
 
-\section{Errors in the model}\label{sec:errors}
+\pagebreak
+The main advantage of Gadanho's and Hallam's model is that (a) it is sufficiently generic to accommodate various schemas and (b) posits an internal state (the hormone storage), giving agents a certain inertia. For example, one can imagine integrating a many-dimensional model like Brazeal's \cite{breazeal2003} detailed taxonomy of emotion like Ortony's OCC model \cite{ortony1988}. The existence of an internal state is necessitated by the simply observation that our internal world is not solely dependent on momentary stimuli, but merely influenced by them. The idea of a hormone storage might be a simplistic approximation but it, too, can be refined as needed\footnote{It might be tempting to simply replace the hormone storage with the message space, but doing so would ignore the role that neurotransmitters like dopamine and serotonin play in cognition, irrespective of the purely computational activity of brain components.}. Figure~\ref{fig:sensoryPerception} shows the adapted model. The general structure was retained, but the set of sensations was replaced by the sensory processor described in section~\ref{sec:sensoryPerception} and, instead of a single dominant emotion, competing emotions simply emit messages which are used by execute components and the world simulation.
 
-
-
+\pagebreak
 
 \nocite{*}
 

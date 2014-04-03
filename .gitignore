@@ -215,3 +215,8 @@ pip-log.txt
 .mr.developer.cfg
 proposed_model.synctex.gz
 proposed_model.pdf
+*.aux
+*.bbl
+*.blg
+*.gz
+*.toc

@@ -3,19 +3,20 @@
 \contentsline {paragraph}{Origin of nervous systems}{2}
 \contentsline {paragraph}{Evolution of nervous systems}{3}
 \contentsline {paragraph}{The brain as a collection of functions}{4}
-\contentsline {paragraph}{Function abstraction}{4}
+\contentsline {paragraph}{Abstraction}{5}
 \contentsline {section}{\numberline {3}Diagram notation}{5}
-\contentsline {section}{\numberline {4}Global architecture}{5}
-\contentsline {paragraph}{Messages}{6}
-\contentsline {paragraph}{Filters}{7}
+\contentsline {section}{\numberline {4}Global architecture}{6}
+\contentsline {paragraph}{Messages}{7}
+\contentsline {paragraph}{Filters}{8}
 \contentsline {section}{\numberline {5}Mathematical model}{8}
-\contentsline {subsection}{\numberline {5.1}Messages}{8}
+\contentsline {subsection}{\numberline {5.1}Sending \& receiving messages}{9}
 \contentsline {subsubsection}{\numberline {5.1.1}Structural notation}{9}
 \contentsline {subsubsection}{\numberline {5.1.2}Operational notation}{9}
 \contentsline {subsubsection}{\numberline {5.1.3}Plastic and non-plastic neural systems}{10}
 \contentsline {subsection}{\numberline {5.2}Invariants}{10}
-\contentsline {section}{\numberline {6}Selected subsystems}{11}
+\contentsline {section}{\numberline {6}Selected subsystems}{10}
 \contentsline {subsection}{\numberline {6.1}Sensory perception}{11}
-\contentsline {subsection}{\numberline {6.2}Counterfactual perception}{12}
-\contentsline {subsection}{\numberline {6.3}Affect}{15}
-\contentsline {section}{\numberline {7}Errors in the model}{17}
+\contentsline {subsection}{\numberline {6.2}Counterfactual perception and planning}{13}
+\contentsline {subsubsection}{\numberline {6.2.1}World simulation as rationality}{16}
+\contentsline {paragraph}{Model.}{16}
+\contentsline {subsection}{\numberline {6.3}Affect}{17}

@@ -1,10 +1,16 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
 \bibitem{8713551}
 Alain Berthoz.
 \newblock The role of inhibition in the hierarchical gating of executed and
   imagined movements.
 \newblock {\em Cognitive Brain Reseach}, 3(2):101--13, 1996.
+
+\bibitem{breazeal2003}
+Cynthia Breazeal.
+\newblock Emotion and sociable humanoid robots.
+\newblock {\em Internation Journal of Human-Computer Studies}, 59:119--155,
+  2003.
 
 \bibitem{DBLP:journals/adb/GadanhoH01}
 Sandra~Clara Gadanho and John Hallam.
@@ -30,6 +36,11 @@ Paul MacLean.
 Marvin Minsky.
 \newblock {\em The Emotion Machine}.
 \newblock Simon \& Schuster, New York, 2006.
+
+\bibitem{ortony1988}
+Andrew Ortony, Gerald~L. Clore, and Allan Collins.
+\newblock {\em The cognitive structure of emotions}.
+\newblock Cambridge University Press, Cambridge, 1988.
 
 \bibitem{membraneComputing}
 Gheorghe Paun, Grzegorz Rozenberg, and Arto Salomaa.

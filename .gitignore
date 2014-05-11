@@ -220,3 +220,7 @@ proposed_model.pdf
 *.blg
 *.gz
 *.toc
+*.aux
+*.bbl
+*.blg
+*.toc

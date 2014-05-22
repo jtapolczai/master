@@ -67,14 +67,14 @@
 
 In this document, I will sketch a possible architecture of the human brain and a select few of its subsystems. The descriptions presented are supported by some empirical evidence, but I do not claim that they are straightforward transcriptions of neurological realities. The model is grounded substantially in evolutionary considerations, which provide the backdrop and the plausibility check for the claims presented herein.
 
-Section~\ref{sec:preliminaries} outlines the basic considerations that lead to the model. Section~\ref{sec:globalArchitecture} sketches the proposed model of the mind . Section~\ref{sec:mathematicalModel} presents the mathematical model. In section~\ref{sec:selectedSubsystems}, we look at three concrete subsystems: sensory perception, counterfactual perception (imagination) and affect.
+Section~\ref{sec:preliminaries} outlines the basic considerations that lead to the model. Section~\ref{sec:globalArchitecture} sketches the proposed model of the mind. Section~\ref{sec:mathematicalModel} presents the mathematical model. In Section~\ref{sec:selectedSubsystems}, we look at three concrete subsystems: sensory perception, counterfactual perception (imagination) and affect.
 
 It should also be understood that everything in this document is, at best, a {\em rough} outline; it may be likened to a hexagon which approximates a circle: though (conjectured to be) basically correct, and useful, it is marred by significant incongruities with the object of its approximation.
 
-\section{Preliminary considerations \hl{and} justification}\label{sec:preliminaries}
+\section{Preliminary considerations and justification}\label{sec:preliminaries}
 
 In order to understand how our brain works or could work, we must possess conceptual clarity --- we must conceive of it, not as a product of engineering, but as a historical artefact, and as one which was not produced ``in one step'', but gradually, where each stage of its evolution had to be viable on its own. What, one might ask, is the consequence of such a view?
-Most importantly, it allows the distinction between \hl{what I will herein call \textsc{efficient} systems and \textsc{clean} systems. Since, at each stage of its evolution, the organism that carried the brain had to be viable, the end product is by definition guaranteed to be ``efficient''}. Because of that same fact, however, it is all but guaranteed not to be ``clean'': for one, it was not possible to snap whole new components into the system; it would have also been impossible to combine old components in the elaborate and precise ways in which a human engineer might use parts. Worse, old components were almost certainly not discarded when new and better components came into being. A good exposition of this process in humans can be found in Paul MacLean's seminal work {\em The Triune Brain in Evolution} \cite{maclean1990}.
+Most importantly, it allows the distinction between what I will herein call \textsc{efficient} systems and \textsc{clean} systems. Since, at each stage of its evolution, the organism that carried the brain had to be viable, the end product is by definition guaranteed to be ``efficient''. Because of that same fact, however, it is all but guaranteed not to be ``clean'': for one, it was not possible to snap whole new components into the system; it would have also been impossible to combine old components in the elaborate and precise ways in which a human engineer might use parts. Worse, old components were almost certainly not discarded when new and better components came into being. A good exposition of this process in humans can be found in Paul MacLean's seminal work {\em The Triune Brain in Evolution} \cite{maclean1990}.
 
 \begin{figure}[!h]
 	\centering
@@ -83,9 +83,9 @@ Most importantly, it allows the distinction between \hl{what I will herein call 
 	\label{fig:noNervousSystem}
 \end{figure}
 \vspace{-0.18cm}
-\paragraph{Origin of nervous systems} \hl{The evolution of nervous systems in organisms dates back to the development of primitive electrical signalling in eukaryotes, using calcium action potentials.\footnote{See any textbook on evolutionary biology.} The benefits of such mechanisms were obvious: let us imagine a microscopic organism without any sort of nervous system --- all of its behaviour is hard-coded and mechanical.} It can take in nutrients through its cell walls or through an opening; parts of it can contract or expand in response to stimuli like light or pressure; homeostatic conditions can influence its chemistry. Figure~\ref{fig:noNervousSystem} shows this schema: if we enumerate the constituent parts or {\em components} of an organism as $\{C_1,\dots,C_n\}$, the organism's behavior is caused by signals being sent between $C_i$ and $C_j$ (the case $i=j$ is of course possible). Such an organism suffers from two disadvantages: (a) the behaviour is necessarily simple and (b) it is not very adaptable.
+\paragraph{Origin of nervous systems} The evolution of nervous systems in organisms dates back to the development of primitive electrical signalling in eukaryotes, using calcium action potentials.\footnote{See any textbook on evolutionary biology.} The benefits of such mechanisms were obvious: let us imagine a microscopic organism without any sort of nervous system --- all of its behaviour is hard-coded and mechanical. It can take in nutrients through its cell walls or through an opening; parts of it can contract or expand in response to stimuli like light or pressure; homeostatic conditions can influence its chemistry. Figure~\ref{fig:noNervousSystem} shows this schema: if we enumerate the constituent parts or {\em components} of an organism as $\{C_1,\dots,C_n\}$, the organism's behavior is caused by signals being sent between $C_i$ and $C_j$ (the case $i=j$ is of course possible). Such an organism suffers from two disadvantages: (a) the behaviour is necessarily simple and (b) it is not very adaptable.
 
-Let us now imagine that such an organism develops a bundle of cells which transmit the signals from various parts of its body, modulate them in some way, and then send them to various parts, inducing changes. Schematically, this is shown in \hl{Figure}~\ref{fig:nervousSystem}, where a function $F$ is interposed between two components. The first such nervous systems were likely little more than signal transformers or magnifiers that expedited communication between parts: with a few neurons, an organism would have had the ability to coordinate movements or rely on sensing parts induce, say, movement.
+Let us now imagine that such an organism develops a bundle of cells which transmit the signals from various parts of its body, modulate them in some way, and then send them to various parts, inducing changes. Schematically, this is shown in Figure~\ref{fig:nervousSystem}, where a function $F$ is interposed between two components. The first such nervous systems were likely little more than signal transformers or magnifiers that expedited communication between parts: with a few neurons, an organism would have had the ability to coordinate movements or rely on sensing parts induce, say, movement.
 
 \begin{figure}
 	\centering
@@ -103,9 +103,9 @@ The neuron bundles would have been quite malleable in the face of selection pres
 
 Of course, other changes would have also been possible, such as the metabolization of different food sources,\footnote{A current-day example is given by nylon-eating bacteria, which have developed in the last century and which now have an abundant food source and no competition.} but we can see how the aforementioned three could have been effected through changes in a simple nervous system alone. Let us recall the beginning of this section and contrast such a malleable computational mesh with most products of human engineering: one cannot simply take out a piston in a car or replace a cogwheel in a mechanical clock with a differently sized one. Machines are designed to fit together perfectly and their complexity tends to be irreducible. Even programs, which are more open to mutation and which are often evolved in evolutionary algorithms, are easily broken by small changes.
 
-\paragraph{Adaptation of nervous systems}  When discussing how an organism's nervous system can evolve and, in particular, {\em evolve to perform new tasks} and not just variations on old ones, explanations are again constrained by two criteria: (a) the change has to be small, or at least have a small cause\footnote{The effect does not have to be small --- \hl{changes in single genes can switch entire components on or off. The MYH16 gene, which is present in non-human primates but has been switched off in humans, is an example. In us, its disabling lead to a drastic reduction in the size of jaw muscles and a corresponding increase in brain size}~\cite{carroll2005}.} and (b) each change must be beneficial in the short term.\footnote{Caveats apply: if the selection pressure on a group of organisms isn't too strong, changes which may be sub-optimal but perhaps beneficial at some later point may spread, and non-selective processes like genetic drift can also play a role.}
+\paragraph{Adaptation of nervous systems}  When discussing how an organism's nervous system can evolve and, in particular, {\em evolve to perform new tasks} and not just variations on old ones, explanations are again constrained by two criteria: (a) the change has to be small, or at least have a small cause\footnote{The effect does not have to be small --- changes in single genes can switch entire components on or off. The MYH16 gene, which is present in non-human primates but has been switched off in humans, is an example. In us, its disabling lead to a drastic reduction in the size of jaw muscles and a corresponding increase in brain size~\cite{carroll2005}.} and (b) each change must be beneficial in the short term.\footnote{Caveats apply: if the selection pressure on a group of organisms isn't too strong, changes which may be sub-optimal but perhaps beneficial at some later point may spread, and non-selective processes like genetic drift can also play a role.}
 
-To illustrate this, we can look at a simple neural network in \hl{Figure}~\ref{fig:neuralNetwork}, with a marked node $N_x$. Figure~\ref{fig:unlikelyEvolution} shows an unlikely change scenario in which some new component/function is cleanly grafted onto the system. Figure~\ref{fig:likelyEvolution} then shows a much more likely scenario: a mutation causes $N_x$ to be split and the new nodes take over some of its connections. In time, new functions can thus grow into the system, but never in the manner in which, say, an engineer would implement a new feature.
+To illustrate this, we can look at a simple neural network in Figure~\ref{fig:neuralNetwork}, with a marked node $N_x$. Figure~\ref{fig:unlikelyEvolution} shows an unlikely change scenario in which some new component/function is cleanly grafted onto the system. Figure~\ref{fig:likelyEvolution} then shows a much more likely scenario: a mutation causes $N_x$ to be split and the new nodes take over some of its connections. In time, new functions can thus grow into the system, but never in the manner in which, say, an engineer would implement a new feature.
 
 \begin{figure}
 	\centering
@@ -128,11 +128,11 @@ To illustrate this, we can look at a simple neural network in \hl{Figure}~\ref{f
 
 \paragraph{The brain as a collection of functions}
 
-\hl{The processes hitherto described are quite uncontroversial and can be found reiterated in any textbook on the evolution of nervous systems. The functional structure and the model of computation used in the brain, however, are not well understood. fMRI and similar brain imagining techniques, while invaluable, give only rough impressions about the neural correlates of certain forms of cognition and do not give fine-grained insight into its structure. As such, the model I shall describe in the following paragraphs is conjecture.} The implication of such an evolutionary viewpoint, \hl{I conjecture in this document,} is that brain functions don't ``just appear'', but are rather the result of small changes and the recombination of pre-existing parts. \hl{This, in turn, informs the plausibility of various possible brain architectures. In becomes unlikely that the brain should be a collection of neatly delineated functions, or that it should have certain coordinating units or universal message formats for communication between components. The reason for this is that administrative mechanism confer little evolutionary benefit on their owen, and do not confer it gradually: the imposition of a central coordinating mechanism on a pre-existing mesh of neurons would necessitate the complete reorganisation of such, and the abandonment of the previous communication channels on favor centralized coordination. The same objections can be raised against a universal or even a local message format. Moreover, such mechanisms require substantial changes in the organism with no obvious or immediate advantage.
+The processes hitherto described are quite uncontroversial and can be found reiterated in any textbook on the evolution of nervous systems. The functional structure and the model of computation used in the brain, however, are not well understood. FMRI and similar brain imagining techniques, while invaluable, give only rough impressions about the neural correlates of certain forms of cognition and do not give fine-grained insight into its structure. As such, the model I shall describe in the following paragraphs is a conjecture. The implication of such an evolutionary viewpoint, I conjecture in this document, is that brain functions don't ``just appear'', but are rather the result of small changes and the recombination of pre-existing parts. This, in turn, informs the plausibility of various possible brain architectures. In becomes unlikely that the brain should be a collection of neatly delineated functions, or that it should have certain coordinating units or universal message formats for communication between components. The reason for this is that administrative mechanism confer little evolutionary benefit on their owen, and do not confer it gradually: the imposition of a central coordinating mechanism on a pre-existing mesh of neurons would necessitate the complete reorganisation of such, and the abandonment of the previous communication channels on favor centralized coordination. The same objections can be raised against a universal or even a local message format. Moreover, such mechanisms require substantial changes in the organism with no obvious or immediate advantage.
 
 Such objections do not contradict the existence of macroscopic structures in the brain, dedicated to certain tasks. The development and adaptation of such remains entirely plausible. They do, however, give insight into the pattern of processing inside such structures, which is often simply regarded as atomic or replicated in computers as if it were a conventional engineering product.
 
-Instead of a rigidly ordered brain with central organisation and large, discrete, and highly complex features like ``sight'' or ``reason'' which function like pluggable black boxes, I propose a decentralized white-box architecture composed of simple parts:} first, every component, while perhaps sophisticated, is conceptually simple. Second, communication between different components is not performed in the function-call pattern of computer programs, but rather by one component listening in on the activity of another. Since there is, inherently, no mechanism of function abstraction in neural systems, it stands to reason that the most likely way for new functions to develop is for additional neurons to modulate the activity of others. In such a scheme, a visual perception component doesn't have to know which other components will consume its output (or rather, listen on its activity); changes which affect agent activity in useful ways based on the visual data can occur gradually and, over time, become large enough to count as components in their own right.
+Instead of a rigidly ordered brain with central organisation and large, discrete, and highly complex features like ``sight'' or ``reason'' which function like pluggable black boxes, I propose a decentralized white-box architecture composed of simple parts: first, every component, while perhaps sophisticated, is conceptually simple. Second, communication between different components is not performed in the function-call pattern of computer programs, but rather by one component listening in on the activity of another. Since there is, inherently, no mechanism of function abstraction in neural systems, it stands to reason that the most likely way for new functions to develop is for additional neurons to modulate the activity of others. In such a scheme, a visual perception component doesn't have to know which other components will consume its output (or rather, listen on its activity); changes which affect agent activity in useful ways based on the visual data can occur gradually and, over time, become large enough to count as components in their own right.
 
 \paragraph{Practical abstraction}
 
@@ -159,7 +159,7 @@ In the rest of this document, a number of diagrams appear. These will use the fo
 
 \section{Global architecture}\label{sec:globalArchitecture}
 
-\hl{} We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
+\hl{} We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
 
 \begin{figure}[!h]
 	\centering
@@ -187,7 +187,7 @@ We may now ask how such messages between components are structured. Here, I make
 	\label{fig:message}
 \end{figure}
 
-\hl{To} my knowledge, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p. 222]{emotionMachine}:
+\hl{To the best of my knowledge}, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p. 222]{emotionMachine}:
 
 \begin{quote}
 	Of course, when one activates two or more Critics or Selectors, this is likely to cause some conflicts, because two different resources might try to turn on a third resource both {\em on} and {\em off}. To deal with this, we could design the system to use various policies like these:
@@ -202,7 +202,7 @@ We may now ask how such messages between components are structured. Here, I make
 
 The selection strategies Minsky lists imply that there is some mechanism in the brain to determine the urgency of a signal. While it is possible that higher brain functions like reasoning or affect make an additional, rational evaluation, sensations like intense pain, bright lights, or great sadness can likely be communicated most easily by the appropriate components causing a flood of activity which, by its very intensity, informs other components of the urgency of their messages.
 
-The second claim --- that messages are essentially unstructured --- means that there is no common, agreed-upon format in which they are stored. In addition to the evolutionary implausibility of such a format being created, an unstructured message format is in line with the white-box nature of components: since components merely ``listen in'' on others, and since each components will have its own pattern of activity, a listener would simply have to try and make sense of this activity as best it could. The proposed structure of messages is thus shown in \hl{Figure}~\ref{fig:message}: every message comprises a priority header, together with an unstructured body which, for our purposes, is simply a string of bits.
+The second claim --- that messages are essentially unstructured --- means that there is no common, agreed-upon format in which they are stored. In addition to the evolutionary implausibility of such a format being created, an unstructured message format is in line with the white-box nature of components: since components merely ``listen in'' on others, and since each components will have its own pattern of activity, a listener would simply have to try and make sense of this activity as best it could. The proposed structure of messages is thus shown in Figure~\ref{fig:message}: every message comprises a priority header, together with an unstructured body which, for our purposes, is simply a string of bits.
 
 \paragraph{Filters} Before a component can respond to a message by another, such a message must be assessed for the presence of relevant information. Conceptually, this happens via a \caps{filter} in each component, which pattern-matches incoming messages and, if a certain threshold is reached, signals relevance and hands the message over the \caps{interpreter} for parsing. Figure~\ref{fig:filter} shows such a filter: it is composed of a directed graph of nodes, and a node is activated if it detects some specific content in the message. Nodes, in turn, are connected via edges of strength $\in [0,1]$. When a node is activated, it sends a charge proportional to the strength of its link to its neighbours, contributing to their activation as well. Some nodes are marked as {\em output nodes}; if enough such output nodes become activated, the message is deemed to be sufficiently relevant. This model of filters is inspired by the {\em spiking neural P Systems} of Georghe Pa\u{u}n et al. (\cite[p. 337]{membraneComputing} and \cite{spikingNeural}), in which charges sent along directed graphs of neurons are used to compute functions.
 
@@ -215,9 +215,8 @@ The second claim --- that messages are essentially unstructured --- means that t
 
 \section{Mathematical model}\label{sec:mathematicalModel}
 
-We now create a mathematical model for the description of the architecture of section~\ref{sec:globalArchitecture}. This model will be split into two parts: the structural and the operational semantics. The structural semantics encode the static properties of neural systems, whereas the operational semantics describe the behaviour of such a system at runtime.
+We now create a mathematical model for the description of the architecture of Section~\ref{sec:globalArchitecture}. This model will be split into two parts: the structural and the operational semantics. The structural semantics encode the static properties of neural systems, whereas the operational semantics describe the behaviour of such a system at runtime.
 
-\begin{shaded}
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
 \begin{definition}[Maybe]
@@ -246,32 +245,30 @@ We now create a mathematical model for the description of the architecture of se
 \noindent
 A set of neural components, together with a set of messages, induces a {\em neural system}:
 
+\begin{shaded}
 \begin{definition}[Neural system]
-	Let $T$ be any type and let $I$ be an index set. Then, a neural system is a three-tuple
+	Let $T$ be any type and let $I$ be an index set. Then, a neural system with message type $T$ and component names from $I$ is a tuple
 	$$
-		\langle \textbf{Co}, \textbf{Me}, I \rangle
+		\langle \textbf{Co}, \textbf{Me} \rangle
 	$$
 	where
 	\begin{itemize}
 		\item $\textbf{Co}$ is a set of neural components (with message type $T$ and names from $I$) and
-		\item $\textbf{Me}$ is a set of $T$, called the {\em set of messages}.
+		\item $\textbf{Me}$ is a set of elements of type $T$, called the {\em set of messages}.
 	\end{itemize}
 \end{definition}
-
 \end{shaded}
 
-\subsection{Sending \hl{and} receiving messages}\label{sec:notation}
+\subsection{Sending and receiving messages}\label{sec:notation}
 
-We now give a notation for the sending and receiving of messages in a system. Here, we distinguish two aspects: first, the structural, which describes how messages {\em can} travel in a system and the operational, which describes how \hl{they} {\em do} travel in some given scenario.
+We now give a notation for the sending and receiving of messages in a system. Here, we distinguish two aspects: first, the structural, which describes how messages {\em can} travel in a system and the operational, which describes how they {\em do} travel in some given scenario.
 
 \subsubsection{Structural notation}
 
 The elements of a component statically determine which messages it can receive and send. Based on the behaviour of the filter, interpreter and processor of a component, we can express a number of properties.
 
-\begin{shaded}
-
 \begin{definition}[Message reception]
-	Let $C$ be a component and $m$ be a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \tt{true}$ and $\int{arg1} = \tt{Just } m'$.
+	\hl{Let $C$ be a component and $m$ be a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \tt{true}$ and $\int{C} = \tt{Just } m'$ for some $m'$.}
 	When $C$ can receive all messages in $\{m_1,\dots,m_n\}$, we write:
 	$$
 		\canrec{m_1,\dots,m_n}{C}.
@@ -372,25 +369,25 @@ Whereas the structural notation pertained to the static properties of a neural s
 	The semantics are as follows: after by sending or receiving a message, $\co$ is replaced by $(\co - \{C\}) \cup \{f_n \circ \dots \circ f_1 (C) \}$.
 \end{definition}
 
+\begin{shaded}
 \begin{definition}[Plastic and non-plastic neural systems]
-	If, for all messages $m$ and components $C$ in a neural system, the following holds:
+	If, for all messages $m$ and components $C, C'$ in a neural system, the following holds:
 	$$
-		C\langle\rangle \rightarrow [m] \rightarrow \langle\rangle C
+		C\langle\rangle \rightarrow [m] \rightarrow \langle\rangle C'
 	$$
 	
+	\noindent
 	we call the system non-plastic. Otherwise, we call it plastic.
 \end{definition}
+\end{shaded}
 
 
 This definition intends to roughly convey the notion of neuroplasticity, as used in neuroscience: areas in the brain are changed over time through specific patterns of activity. Here, such change is modelled by the execution of functions and the replacement of $C$ in the system by $f_n \circ \dots \circ f_1 (C)$.
-
-\end{shaded}
 
 \subsection{Invariants}
 
 Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.}, but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
 
-\begin{shaded}
 \begin{invariant}[Central organiser]
 $$
 	\begin{array}{l}
@@ -399,7 +396,6 @@ $$
 	\end{array}
 $$
 \end{invariant}
-\end{shaded}
 
 Figure~\ref{fig:centralOrganizer} depicts such an organizer. Similarly, sequences can be created by components $C_{1},\dots,C_{n}$, where each components reads the message of the last one.
 
@@ -446,7 +442,7 @@ The diagram is explained thus \cite[p. 100]{emotionMachine}:
 	Now suppose that your A-Brain gets some signals from the external world (via such organs as eyes, ears, nose, and skin) --- and that it also can react to these by sending signals that make your muscles move. By itself, the A-Brain is a separate animal that only reacts to external events but has no sense of what they might mean. For example, when the fingertips of two lovers come into intimate physical contact, {\em the resulting sensations, by themselves, have no particular implications}. For there is no significance in those signals themselves: their meanings to those lovers {\em lie in how they prepresent and process them in the higher levels of their minds.}
 \end{quote}
 
-If we apply this to the architecture of section~\ref{fig:global}, we can devise a system in which each sense $S$ has an associated component $C_S$ which does two things:
+If we apply this to the architecture of Section~\ref{fig:global}, we can devise a system in which each sense $S$ has an associated component $C_S$ which does two things:
 \begin{enumerate}
 	\item Consume the raw sensory information delivered by various organs and output processed input for higher brain functions;
 	\item as a side a effect of this processing, cause  instinctive, low-level reactions in the body, such as pulling away from pain or jumping at a sudden fright.
@@ -457,7 +453,7 @@ In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown fo
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=325pt]{figs/sensoryPerception.png}
-	\caption{Partial structure of sensory perception - raw sensory data is processed and made available to higher functions such as the affective subsystem. The comment ``Possible side-effect: sensory experience'' signifies the fact that conscious and sub-conscious sensory experiences might occur as a side-effect of this processing. \hl{However, it is currently unknown to neuroscience whether this is indeed the case.}}
+	\caption{Partial structure of sensory perception - raw sensory data is processed and made available to higher functions such as the affective subsystem. The comment ``Possible side-effect: sensory experience'' signifies the fact that conscious and sub-conscious sensory experiences might occur as a side-effect of this processing. However, it is currently unknown to neuroscience whether this is indeed the case.}
 	\label{fig:sensoryPerception}
 \end{figure}
 
@@ -522,7 +518,6 @@ The planner, minimally, has to perform two functions --- first, it has to judge 
 \subsubsection{World simulation as rationality}
 The way in which I just described the interaction between the world simulator and the planner suggests that they function as a pair of guesser and checker: the planner generates ideas on what to do and the world simulation tests their viability in some setting. Indeed, we can model rational thinking as embedded in the world simulator, especially if we make use of a plastic neural system. The proposed steps of the planner might be quite chaotic and irrational, but when given to the world simulator, it recognises them as such and returns a failure signal to the planner, causing it to abandon ``bad'' paths of cognition. A plastic planner can learn from the consistent failure of certain kinds of steps and, in time, propose them less and less often. Observed as a whole, this system of planner and simulator appears to simply deliver good plans by intuition, even though, in isolation, neither part is very clever.\footnote{I do not wish to idealize rationality too much; world simulation is only partly rational and, given faulty information about the world, will err considerably and in documented ways. Similarly, it is certainly possible for the planner to derange the world simulator by evaluating certain states as so desirable/undesirable that it will pursue even scenarios which the world simulator reports as highly unlikely.}
 
-\begin{shaded}
 \paragraph{Model.} In a simplified way, we can model the process of logical deduction in a formal system $F = (A, R)$, where $A$ is a recursive set of axioms and $R$ is a recursive set of production rules of the form $(r_{\mt{from}}, r_{\mt{to}})$ s.t. $r_{\mt{from}} \rightarrow r_{\mt{to}}$ is a valid production in the system. Let
 	\begin{enumerate}
 		\item $W$ be a world simulator for the world of propositions $\mathcal{P}$ in $(A,R)$,
@@ -557,7 +552,6 @@ Axioms can be selected by executing $T_{\mt{guess}}(\tt{ax})$ for all $\tt{ax} \
 Intuitively, $T_{\mt{guess}}$ guesses a step to take. It does so but inserting it into the planner's world-state via $\tt{ins}$ and then sending a message to the world simulator, which also inserts it into its world state. $T_{\mt{check}}$ then checks whether the change from $\tt{cur}$ to $\tt{step}$ was legitimate. If so, it determines to which category $\tt{step}$ belongs and sends the $\top$-signal for that category back to the planner. Otherwise, it sends the corresponding $\bot$-signal. The purpose of this is to make it more or less likely, respectively, that the planner should choose the same category of step in the future. The categories, we can imagine, could be things like ``modus ponens'', ``associative reasoning'', ``appeal to consequences'' and so forth.
 
 If we repeat this interaction (with different proposed steps $s_1,\dots,s_p$ in each iteration), we get an algorithm for logical deduction  --- that is, since $A$ and $R$ are recursive, the system will recursively enumerate all valid logical formulas, provided that the probability of selecting any valid step is $> 0$. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
-\end{shaded}
 
 
 \subsection{Affect}\label{sec:affect}
@@ -598,9 +592,7 @@ The main advantage of Gadanho's and Hallam's model is that (a) it is sufficientl
 
 \subsubsection{Affective subsystems}
 
-\begin{shaded}
-
-In this section, I will develop the concept of ``emotion'' in greater detail. The process shown in \hl{Figure}~\ref{fig:affectiveSubsystem} might suggest we simply have a collection of emotions and that all emotions are essentially equal, but I submit that this is not so. Instead, I propose the existence of various subsystems, each responsible for a group of emotions, and each with its own history and distinctive tasks. In the rest of this work, the following two assumptions will be made:
+In this section, I will develop the concept of ``emotion'' in greater detail. The process shown in Figure~\ref{fig:affectiveSubsystem} might suggest we simply have a collection of emotions and that all emotions are essentially equal, but I submit that this is not so. Instead, I propose the existence of various subsystems, each responsible for a group of emotions, and each with its own history and distinctive tasks. In the rest of this work, the following two assumptions will be made:
 
 \begin{enumerate}
 	\item {\em ``Emotion'' is not a singular phenomenon.} Specifically, this is contradicts many-dimensional models of emotions which propose one, two, three or four axes and a corresponding vector space in which every emotion is a point. Such a view implies that all emotions share a neurological template which is parametrized with coordinates to result in different experiences.
@@ -621,8 +613,6 @@ Further, much research has been done in the area of so-called {\em basic emotion
 
 Damasio \cite{damasio1998}, drawing upon neuroscientific findings, sketches a model of affect mainly involving the prefrontal cortex, but alos the amygdala, the hypothalamus, and the anterior cingulate cortex, as seen in Figure~\ref{fig:damasioSystem}.
 
-\end{shaded}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=250pt]{figs/damasioSystem.png}
@@ -630,7 +620,6 @@ Damasio \cite{damasio1998}, drawing upon neuroscientific findings, sketches a mo
 	\label{fig:damasioSystem}
 \end{figure}
 
-\begin{shaded}
 In the same article, he describes how different brain regions are responsible for different kinds of emotion:
 
 \begin{quotation}
@@ -643,16 +632,12 @@ These facts make it quite clear that emotions are not simply homogeneous phenome
 
 \paragraph{Structure of affect} The system depicted in Figure~\ref{fig:affectiveSubsystem} left several parts unspecified: the sensory processor $\Pr$, the emotion selectors $S_1,\dots,S_n$ and the messages sent by the chosen emotions into the message space. In the following paragraphs, I will flesh out that model in greater detail, building principally on the work of Sander, Grandjean and Scherer \cite{DBLP:journals/nn/SanderGS05}. Sander and colleagues partitioned the emotion process into four stages, as shown in Figure~\ref{fig:sanderSystem}. The first is {\em relevance}, which functions as a filter and detects the intrinsic pleasantness and the level of (emotional) attention that a stimulus demands. The processes of this stage, roughly speaking, correspond to the work of the sensory processor $\Pr$. The second stage is {\em implication}, where reasoning becomes engaged in order to determine the cause, likely outcome, and urgency of the perceived facts. At this stage, emotions like joy, anger, contentment, disgust, etc. are evoked, together with approach- and avoidance-related behaviours --- this corresponds to the emotion selectors $S_1,\dots,S_n$. Deliberate strategies come only in the next stage: {\em coping}. In it, reasoning and planning become fully engaged. The fourth stage is {\em normative significance} and deals, in essence, with moral concerns, both internal and those of other agents.
 
-\end{shaded}
-
 \begin{figure}
 	\centering
 	\includegraphics[width=440pt]{figs/sanderSystem.png}
 	\caption{The four-stage emotion process according to Sander et al, consisting of relevance, implication, coping and normative significance.}
 	\label{fig:sanderSystem}
 \end{figure}
-
-\begin{shaded}
 
 The system of Sander et al. presents the {\em vertical view} (the pipeline) of emotion; based on the evidence discussed above, I shall now present the {\em horizontal view} and construct a model of the hypothesized subsystems within the emotional system. Since no established vocabulary seems to exist in this specific are I shall first introduce a number of terms.
 
@@ -688,15 +673,13 @@ Up to this point, the executive functions have not been discussed in detail, as 
 	\item \textbf{conscious mental control}: deliberate mental changes of an agent. This includes the making of decisions, the deliberate focusing of attention, deliberate planning, deliberate strategy selection, and so forth.
 \end{enumerate}
 
-%\paragraph{Pre-social behavior control}
+\paragraph{Pre-social behavior control}
 
-%\paragraph{Social judgement system}
+\paragraph{Social judgement system}
 
-%\paragraph{Social reflective system}
+\paragraph{Social reflective system}
 
-%\paragraph{Aesthetic judgement system}
-
-\end{shaded}
+\paragraph{Aesthetic judgement system}
 
 \pagebreak
 

@@ -264,10 +264,10 @@ By convention, we denote type variables by lower-case and concrete types by uppe
 We can combine type constructors, sum types, and product types into {\em algebraic data types} (ADTs).
 
 \begin{definition}[Algebraic data type (ADT)]\label{def:ADT}
-Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type ($1 \leq i \leq n$). Then $s\ x_1,\dots,x_n = T_i + \dots + T_n$ is an algebraic data type with type variables $x_1,\dots,x_n$.
+Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type with type variables ($1 \leq i \leq n$). Then $\allQ{x_1,\dots,x_n} (T_i + \dots + T_n)$. If we want to give a name to an ADT, we write it as $s\ x_1,\dots,x_n = T_i + \dots + T_n$ (for some string $s$).
 \end{definition}
 
-Since an ADT is merely the named sum of product types, it is itself a type constructor. If it has no type variables, it is also a type.
+Since an ADT is merely the sum of product types, it is itself a type constructor. If it has no type variables, it is also a type.
 
 Next, we define two ADTs which we will use in the next section: \tt{Maybe} and \tt{Either}.
 
@@ -286,7 +286,7 @@ Definitions~\ref{def:type}-\ref{def:ADT} specify a fragment of System F,\footnot
 
 \end{shaded}
 
-\footnotetext{Note: $T'$ does not need to occur in $T$.}
+\footnotetext[5]{Note: $T'$ does not need to occur in $T$.}
 \footnotetext{Specifically, the decidable fragment of System F with only prenex-polymorphism, where all type constructors are of the form $\allQ{x_1,\dots,x_n} T$ for quantifier-free $T$. This is also called the Hindley-Milner type system.}
 
 \subsection{Neural systems}\label{sec:mathematicalNeuralSystem}

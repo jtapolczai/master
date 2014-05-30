@@ -26,12 +26,19 @@
 
 \newtheorem{definition}{Definition}
 \newtheorem{invariant}{Invariant}
+\newtheorem{example}{Example}
 
 \newcommand{\mt}[1]{\textnormal{#1}}
 \renewcommand{\tt}[1]{\texttt{#1}}
 \colorlet{shadecolor}{yellow!60}
 \newcommand{\highlight}[1]{\colorbox{yellow!70}{#1}}
 \newcommand{\shade}[1]{\begin{shaded}#1\end{shaded}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\allQ}[1]{\left[\forall #1 \right]}
 
 \newcommand{\co}{\mathbf{Co}}
 \newcommand{\cansend}[2]{#1 \rightarrowtail \{#2\}}
@@ -219,12 +226,70 @@ We now create a mathematical model for the description of the architecture of Se
 
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
-\begin{definition}[Maybe]
-	Let $T$ be any type. Then, $\tt{Maybe } T$ is the sum type consisting of the $\tt{Just } T$, indicating a value of type $T$, and $\tt{Nothing}$, indicating that no such value is present. Formally:
-	$$
-		\tt{Maybe T} = \tt{Nothing} + \tt{Just T}
-	$$ 
+\begin{shaded}
+
+Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections, without assuming the reader's familiarity with it. This section introduces the relevant notions and gives their formal definitions.
+
+\begin{definition}[Type]\label{def:type}
+For our purposes, types are defined inductively thus:
+	\begin{enumerate}
+		\item[Base case] The sets ($\N$, $\Q$, $\R$, $\B = \{\tt{false}, \tt{true} \}$) are types.
+		\item[Sum types] If $t_1,t_2$ are types, the sum type $T_1 \cup T_2$, written as $T_1 + T_n$, is a type. 
+		\item[Product types] If $s$ is a string and $T_1,\dots,T_n$ are types, the product type $\{s\} \times T_1 \times \dots \times T_n$, written as $s\ T_1 \dots T_n$, is a type. A special case is is the {\em anonymous product type} (tuple), where $s=``\langle\rangle"$. There, we just write $\langle T_1,\dots,T_n \rangle$.
+		\item[Full application] If $T_1,\dots,T_n$ are types and $\allQ{x_1,\dots,x_n} C$ is a type constructor (see next definition), then $C[x_1\backslash T_1,\dots, x_n\backslash T_n]$, written as $C\ T_1 \dots T_n$, is a type.
+	\end{enumerate}
 \end{definition}
+
+\begin{definition}[Type constructor]\label{def:typeCon}
+Next, we inductively define type constructors which quantify over types:
+	\begin{enumerate}
+		\item[Base case] Every type $T$ is a type constructor.
+		\item[Abstraction] If $C$ is a type constructor and $T$ is a type, $\allQ{x} C[T\backslash x]$ is a type constructor.\footnotemark
+		\item[Sum types] If $C_1\dots,C_n$ are type constructors with $C_i = \allQ{x^i_1\dots,x^i_n} T_i$ ($1 \leq i \leq n$), then\\ $\allQ{x_1,\dots,x_n} (C_1 + \dots + C_n)$ is a type constructor.
+		\item[Partial application] If $T_1,\dots,T_i$ ($i < n$) are types and $\allQ{x_1,\dots,x_n} T$ is a type constructor,\\ then $\allQ{x_{i+1},\dots,x_n} T[x_1\backslash T_1,\dots,x_i\backslash T_i]$ is a type constructor.
+	\end{enumerate}
+\end{definition}
+
+By convention, we denote type variables by lower-case and concrete types by upper-case letters, omitting the explicit $\forall$-blocks. A special kind of type constructor is the function arrow ($\rightarrow$) which induces the function type:
+
+\begin{example}[Function arrow]
+	$\allQ{s,t} \rightarrow s\ t$ is the type constructor for unary functions from $s$ to $t$. We also write this infix as $s \rightarrow t$. Functions with multiple arguments, mapping $t_1,\dots,t_{n-1}$ to $t_n$, are modelled via nested function arrows:
+	
+	$$
+		t_1 \rightarrow (t_2 \rightarrow \dots \rightarrow (t_{n-1} \rightarrow t_n)\cdots)
+	$$
+\end{example}
+
+\noindent
+We can combine type constructors, sum types, and product types into {\em algebraic data types} (ADTs).
+
+\begin{definition}[Algebraic data type (ADT)]\label{def:ADT}
+Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type ($1 \leq i \leq n$). Then $s\ x_1,\dots,x_n = T_i + \dots + T_n$ is an algebraic data type with type variables $x_1,\dots,x_n$.
+\end{definition}
+
+Since an ADT is merely the named sum of product types, it is itself a type constructor. If it has no type variables, it is also a type.
+
+Next, we define two ADTs which we will use in the next section: \tt{Maybe} and \tt{Either}.
+
+\begin{example}[Maybe, Either]
+	$$
+		\begin{array}{l}
+			\tt{Maybe t} = \tt{Nothing} + \tt{Just t}\\
+			\tt{Either l r} = \tt{Left l} + \tt{Right r}\\
+		\end{array}
+	$$ 
+	
+	\tt{Maybe} represents an optional value, which may or may not be present. \tt{Either} represents a choice between two values, of which either the left or the right one is present, but not both.
+\end{example}
+
+Definitions~\ref{def:type}-\ref{def:ADT} specify a fragment of System F,\footnotemark\ which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
+
+\end{shaded}
+
+\footnotetext{Note: $T'$ does not need to occur in $T$.}
+\footnotetext{Specifically, the decidable fragment of System F with only prenex-polymorphism, where all type constructors are of the form $\allQ{x_1,\dots,x_n} T$ for quantifier-free $T$. This is also called the Hindley-Milner type system.}
+
+\subsection{Neural systems}\label{sec:mathematicalNeuralSystem}
 
 \begin{definition}[Neural component]
 	Let $I$ be an index set and let $T$ be any type. Then, a neural component $C$ with a name from $I$ and message type $T$ is a four-tuple
@@ -386,7 +451,7 @@ This definition intends to roughly convey the notion of neuroplasticity, as used
 
 \subsection{Invariants}
 
-Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.}, but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
+Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
 
 \begin{invariant}[Central organiser]
 $$

@@ -234,9 +234,9 @@ Since the mathematical model is built with implementation in mind, I will use so
 For our purposes, types are defined inductively thus:
 	\begin{enumerate}
 		\item[Base case] The sets ($\N$, $\Q$, $\R$, $\B = \{\tt{false}, \tt{true} \}$) are types.
-		\item[Sum types] If $t_1,t_2$ are types, the sum type $T_1 \cup T_2$, written as $T_1 + T_n$, is a type. 
-		\item[Product types] If $s$ is a string and $T_1,\dots,T_n$ are types, the product type $\{s\} \times T_1 \times \dots \times T_n$, written as $s\ T_1 \dots T_n$, is a type. A special case is is the {\em anonymous product type} (tuple), where $s=``\langle\rangle"$. There, we just write $\langle T_1,\dots,T_n \rangle$.
-		\item[Full application] If $T_1,\dots,T_n$ are types and $\allQ{x_1,\dots,x_n} C$ is a type constructor (see next definition), then $C[x_1\backslash T_1,\dots, x_n\backslash T_n]$, written as $C\ T_1 \dots T_n$, is a type.
+		\item[Sum types] If $t_1,t_2$ are types, the sum type $T_1 \cup T_2$, written as $\mathtt{T_1 + T_2}$, is a type. 
+		\item[Product types] If $s$ is a string and $T_1,\dots,T_n$ are types, the product type $\{s\} \times T_1 \times \dots \times T_n$, written as $\mathtt{s\ T_1 \dots T_n}$, is a type. A special case is the {\em anonymous product type} (tuple), where $s=``\langle\rangle"$. There, we just write $\langle T_1,\dots,T_n \rangle$.
+		\item[Full application] If $T_1,\dots,T_n$ are types and $\allQ{x_1,\dots,x_n} C$ is a type constructor (see next definition), then $C[x_1\backslash T_1,\dots, x_n\backslash T_n]$, written as $\mathtt{C\ T_1 \dots T_n}$, is a type.
 	\end{enumerate}
 \end{definition}
 
@@ -264,7 +264,7 @@ By convention, we denote type variables by lower-case and concrete types by uppe
 We can combine type constructors, sum types, and product types into {\em algebraic data types} (ADTs).
 
 \begin{definition}[Algebraic data type (ADT)]\label{def:ADT}
-Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type with type variables ($1 \leq i \leq n$). Then $\allQ{x_1,\dots,x_n} (T_i + \dots + T_n)$. If we want to give a name to an ADT, we write it as $s\ x_1,\dots,x_n = T_i + \dots + T_n$ (for some string $s$).
+Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type with type variables ($1 \leq i \leq n$). Then $\allQ{x_1,\dots,x_n} (T_i + \dots + T_n)$ is an ADT. If we want to give a name to an ADT, we write it as $\mathtt{s\ x_1 \dots x_n = T_i + \dots + T_n}$ (for some string $s$).
 \end{definition}
 
 Since an ADT is merely the sum of product types, it is itself a type constructor. If it has no type variables, it is also a type.
@@ -274,20 +274,20 @@ Next, we define two ADTs which we will use in the next section: \tt{Maybe} and \
 \begin{example}[Maybe, Either]
 	$$
 		\begin{array}{l}
-			\tt{Maybe t} = \tt{Nothing} + \tt{Just t}\\
-			\tt{Either l r} = \tt{Left l} + \tt{Right r}\\
+			\mathtt{Maybe\ t = Nothing + Just\ t}\\
+			\mathtt{Either\ l\ r = Left\ l + Right\ r}\\
 		\end{array}
 	$$ 
 	
-	\tt{Maybe} represents an optional value, which may or may not be present. \tt{Either} represents a choice between two values, of which either the left or the right one is present, but not both.
+	$\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both.
 \end{example}
 
-Definitions~\ref{def:type}-\ref{def:ADT} specify a fragment of System F,\footnotemark\ which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
+Definitions~\ref{def:type}-\ref{def:ADT} specify a fragment of System F$_\omega$,\footnotemark\ which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
 
 \end{shaded}
 
 \footnotetext[5]{Note: $T'$ does not need to occur in $T$.}
-\footnotetext{Specifically, the decidable fragment of System F with only prenex-polymorphism, where all type constructors are of the form $\allQ{x_1,\dots,x_n} T$ for quantifier-free $T$. This is also called the Hindley-Milner type system.}
+\footnotetext{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} T$ for quantifier-free $T$. This is also called the Hindley-Milner type system.}
 
 \subsection{Neural systems}\label{sec:mathematicalNeuralSystem}
 
@@ -523,7 +523,7 @@ In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown fo
 \end{figure}
 
 
-\subsection{Counterfactual perception and planning}
+\subsection{Counterfactual perception and planning}\label{sec:worldSimulation}
 
 Broadly speaking, counterfactual perception can be described as ``imagination'', and is closely related to sensory perception and world simulation. In examining the system, we might broadly classify its processes into three categories:
 
@@ -616,7 +616,7 @@ Axioms can be selected by executing $T_{\mt{guess}}(\tt{ax})$ for all $\tt{ax} \
 
 Intuitively, $T_{\mt{guess}}$ guesses a step to take. It does so but inserting it into the planner's world-state via $\tt{ins}$ and then sending a message to the world simulator, which also inserts it into its world state. $T_{\mt{check}}$ then checks whether the change from $\tt{cur}$ to $\tt{step}$ was legitimate. If so, it determines to which category $\tt{step}$ belongs and sends the $\top$-signal for that category back to the planner. Otherwise, it sends the corresponding $\bot$-signal. The purpose of this is to make it more or less likely, respectively, that the planner should choose the same category of step in the future. The categories, we can imagine, could be things like ``modus ponens'', ``associative reasoning'', ``appeal to consequences'' and so forth.
 
-If we repeat this interaction (with different proposed steps $s_1,\dots,s_p$ in each iteration), we get an algorithm for logical deduction  --- that is, since $A$ and $R$ are recursive, the system will recursively enumerate all valid logical formulas, provided that the probability of selecting any valid step is $> 0$. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
+If we repeat this interaction (with different proposed steps $s_1,\dots,s_p$ in each iteration), we get an algorithm for logical deduction  --- that is, since $A$ and $R$ are recursive, the system will recursively enumerate all valid logical formulas, \hl{provided that we also employ backtracking and} the probability of selecting any valid step is $> 0$. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
 
 
 \subsection{Affect}\label{sec:affect}
@@ -738,13 +738,55 @@ Up to this point, the executive functions have not been discussed in detail, as 
 	\item \textbf{conscious mental control}: deliberate mental changes of an agent. This includes the making of decisions, the deliberate focusing of attention, deliberate planning, deliberate strategy selection, and so forth.
 \end{enumerate}
 
-\paragraph{Pre-social behavior control}
+\paragraph{Pre-social behavior control} 
 
 \paragraph{Social judgement system}
 
 \paragraph{Social reflective system}
 
 \paragraph{Aesthetic judgement system}
+
+\begin{shaded}
+
+\section{Interaction between affect and world simulation}
+
+Section~\ref{sec:worldSimulation} outlined what could be called {\em deliberate action} in the from of a planner-world-simulator loop. Section~\ref{sec:affect} described the structure and components of affect. These systems are of course not isolated from each other; emotional states influence both the planner's chosen heuristics and the world simulator's creation of worlds. In addition, attention, also influenced by affect, controls the allocation of cognitive resources. We now explore these relationships in further detail.
+
+\paragraph{Planning as search} In the AI literature, search algorithms are of great importance. In this context, we can view the loop between planner and world simulator as a greedy search: the planner chooses the nodes which are to be expanded and sends them to the world simulator. It, in turn, performs the expansion by simulating the appropriate worlds. These simulated worlds are sent back to the planner for evaluation regarding desirability (i.e. cost). This presents an obvious problem: since greedy search is not complete, our planner-world-simulator loop can't be complete either. In fact, the situation is worse --- greedy search computes the cost of all candidates for expansion and chooses the cheapest, whereas our planner, being heuristic, might not consider certain nodes at all.
+
+This might seem damning, but we must also consider the interaction with attention and memory. First, planned steps are committed to memory and thus, we gain access to past costs. An agent doesn't plan blindly, but can recall how long its plans are and what costs past planned steps entail. Given this information, we can turn the greedy algorithm into an A$^*$ search, with the qualification that the planner might not consider certain nodes. The mechanism of attention can further be used to enhance the search: if planning along a certain path takes too long, the agent might decide to abandon it altogether and start afresh with a different strategy. This failure too is stored in memory and can influence the planner in the new planning process by making the proposing of steps of the previously pursued path  unlikely.
+
+\section{Implementation}
+
+In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
+
+\noindent
+Note: instead of detailed partial descriptions, I, for now, sketch the rough outline of the proposed implementation to give a complete picture.
+
+Outline of algorithm (provisional):
+
+\begin{enumerate}
+	\item One agent is composed of the following components:
+		\begin{enumerate}
+			\item Sensory perception
+			\item Affect
+			\item Planner and world simulator
+			\item Memory
+			\item Attention
+		\end{enumerate}
+	\item Sensory perception will be highly domain-dependent and, by necessity, simplified. Domains might be flatland or some custom-made game scenarios. In essence, it will deliver facts about objects and events in the world, bypassing the problem of faithfully implementing sight, hearing, smell, balance, pain, etc.
+	\item At each step, sensory facts are put into the neural system's message space and are consumed by the evocative systems (PSBC, attention-refocusing, SJS, AS).
+	\item The primitive parts of the PSBC can affect the executive system directly. Its higher-level parts, as well as the other three systems, work in the following way:
+		\begin{enumerate}
+			\item Attention-refocusing directs cognitive resources to stimuli it deems important. As a result, the priority of (certain) sensory messages is increased, increasing their influence on PSBC and the SJS.
+			\item PSBC and the SJS evoke certain emotions. Thereby, they might set goals for the agent. This setting of goals engages the planner and world simulator, which try to devise a plan to meet said goal --- this is implemented via DLV-hex programs. These DLV-hex program, in turn, call the emotional systems in order to modulate both the planner and the world simulator according to the emotional state of the agent.
+			\item Planned steps are committed to (short-term) memory.
+		\end{enumerate}
+	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
+	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
+\end{enumerate}
+
+\end{shaded}
 
 \pagebreak
 

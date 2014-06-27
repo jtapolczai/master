@@ -60,7 +60,7 @@
 \DeclareMathOperator{\cint}{cint}
 
 %opening
-\title{{\huge A Proposed Model of Cognition}}
+\title{{\huge A Proposed Evolutionary Model of Cognition}}
 \author{Janos Tapolczai}
 
 \begin{document}
@@ -766,6 +766,18 @@ Section~\ref{sec:worldSimulation} outlined what could be called {\em deliberate 
 This might seem damning, but we must also consider the interaction with attention and memory. First, planned steps are committed to memory and thus, we gain access to past costs. An agent doesn't plan blindly, but can recall how long its plans are and what costs past planned steps entail. Given this information, we can turn the greedy algorithm into an A$^*$ search, with the qualification that the planner might not consider certain nodes. The mechanism of attention can further be used to enhance the search: if planning along a certain path takes too long, the agent might decide to abandon it altogether and start afresh with a different strategy. This failure too is stored in memory and can influence the planner in the new planning process by making the proposing of steps of the previously pursued path  unlikely.
 
 \section{Implementation}
+
+\subsection{World}
+
+The choice of world profoundly affects the implementation of the agent --- its perception, knowledge base, and the range of performed actions. On one hand, it should be simple enough to permit a reasonably small and effective agent which does not get bogged down with irrelevant details; on the other, the world should be sufficiently complex to allow the agent to shine. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. For this evaluation, we choose a version of the Wumpus world --- a standard in AI, described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite{norvig}
+
+\subsubsection{Wumpus world}
+
+
+
+
+
+
 
 In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
 

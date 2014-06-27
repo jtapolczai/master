@@ -55,6 +55,10 @@
 
 \newcommand{\compT}[2]{\tt{Comp}_{#1,#2}}
 
+\DeclareMathOperator{\tint}{int}
+\newcommand{\type}[1]{\mathtt{#1}}
+\DeclareMathOperator{\cint}{cint}
+
 %opening
 \title{{\huge A Proposed Model of Cognition}}
 \author{Janos Tapolczai}
@@ -166,7 +170,7 @@ In the rest of this document, a number of diagrams appear. These will use the fo
 
 \section{Global architecture}\label{sec:globalArchitecture}
 
-\hl{} We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
+We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
 
 \begin{figure}[!h]
 	\centering
@@ -194,7 +198,7 @@ We may now ask how such messages between components are structured. Here, I make
 	\label{fig:message}
 \end{figure}
 
-\hl{To the best of my knowledge}, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p. 222]{emotionMachine}:
+To the best of my knowledge, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p. 222]{emotionMachine}:
 
 \begin{quote}
 	Of course, when one activates two or more Critics or Selectors, this is likely to cause some conflicts, because two different resources might try to turn on a third resource both {\em on} and {\em off}. To deal with this, we could design the system to use various policies like these:
@@ -226,37 +230,54 @@ We now create a mathematical model for the description of the architecture of Se
 
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
-\begin{shaded}
+Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. In this section the relevant notions will be introduced, without assuming any prior knowledge. 
 
-Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections, without assuming the reader's familiarity with it. This section introduces the relevant notions and gives their formal definitions.
-
-\begin{definition}[Type]\label{def:type}
+\begin{definition}[Syntax: Type]\label{def:type}
 For our purposes, types are defined inductively thus:
 	\begin{enumerate}
-		\item[Base case] The sets ($\N$, $\Q$, $\R$, $\B = \{\tt{false}, \tt{true} \}$) are types.
-		\item[Sum types] If $t_1,t_2$ are types, the sum type $T_1 \cup T_2$, written as $\mathtt{T_1 + T_2}$, is a type. 
-		\item[Product types] If $s$ is a string and $T_1,\dots,T_n$ are types, the product type $\{s\} \times T_1 \times \dots \times T_n$, written as $\mathtt{s\ T_1 \dots T_n}$, is a type. A special case is the {\em anonymous product type} (tuple), where $s=``\langle\rangle"$. There, we just write $\langle T_1,\dots,T_n \rangle$.
-		\item[Full application] If $T_1,\dots,T_n$ are types and $\allQ{x_1,\dots,x_n} C$ is a type constructor (see next definition), then $C[x_1\backslash T_1,\dots, x_n\backslash T_n]$, written as $\mathtt{C\ T_1 \dots T_n}$, is a type.
+		\item[Basic type.] The sets $\N$, $\Q$, $\R$, $\B$ are types.
+		\item[Sum type.] If $\type{T_1},\type{T_2}$ are types, the sum type $\type{T_1 + T_2}$, is a type. 
+		\item[Product type.] If $\type{s}$ is a string and $\type{T_1},\dots,\type{T_n}$ are types, the product type $\type{s}\ \type{T_1} \dots \type{T_n}$, is a type. A special case is the {\em anonymous product type} (tuple), where $s=``\langle\rangle"$. There, we just write $\langle\type{T_1},\dots,T_n \rangle$.
+		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor (see next definition), then $\mathtt{C\\type{T_1} \dots \type{T_n}}$, is a type.
 	\end{enumerate}
 \end{definition}
 
-\begin{definition}[Type constructor]\label{def:typeCon}
-Next, we inductively define type constructors which quantify over types:
+\begin{definition}[Semantics: Type]\label{def:typeSem}
+Semantically, every type $T$ is simply a set of values. We denote this set with the interpretation function $\tint(T)$.
 	\begin{enumerate}
-		\item[Base case] Every type $T$ is a type constructor.
-		\item[Abstraction] If $C$ is a type constructor and $T$ is a type, $\allQ{x} C[T\backslash x]$ is a type constructor.\footnotemark
-		\item[Sum types] If $C_1\dots,C_n$ are type constructors with $C_i = \allQ{x^i_1\dots,x^i_n} T_i$ ($1 \leq i \leq n$), then\\ $\allQ{x_1,\dots,x_n} (C_1 + \dots + C_n)$ is a type constructor.
-		\item[Partial application] If $T_1,\dots,T_i$ ($i < n$) are types and $\allQ{x_1,\dots,x_n} T$ is a type constructor,\\ then $\allQ{x_{i+1},\dots,x_n} T[x_1\backslash T_1,\dots,x_i\backslash T_i]$ is a type constructor.
+		\item[Basic type.] $\tint(\B) = \{ \tt{false}, \tt{true} \}$. $\N, \Q, \R$ are interpreted as the natural, rational, and real numbers, respectively.
+		\item[Sum type.] If $\type{T_1}, \type{T_2}$ are types, then $\tint(\type{T_1 + T_2}) = \tint(\type{T_1}) \cup \tint(\type{T_2})$.
+		\item[Product type.] If $\type{T_1},\dots,\type{T_n}$ are types, then $\tint(\type{s}\ \type{T_1} \dots \type{T_n}) = \{s\} \times \tint(\type{T_1}) \times \dots \times \tint(\type{T_n})$.
+		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor, then $\tint(\type{C}\ \type{T_1} \dots \type{T_n}) = \bigcup\limits_{v_1 \in\ \tint(T_1)} \cdots \bigcup\limits_{v_n \in\ \tint(T_n)} \bigcup\limits_{C' \in\ \cint(C)} C'[x_1\backslash v_1,\dots, x_n\backslash v_n]$.
 	\end{enumerate}
 \end{definition}
 
-By convention, we denote type variables by lower-case and concrete types by upper-case letters, omitting the explicit $\forall$-blocks. A special kind of type constructor is the function arrow ($\rightarrow$) which induces the function type:
+We now define type constructors which quantify over types:
+
+\begin{definition}[Syntax: Type constructor]\label{def:typeCon}\
+	\begin{enumerate}
+		\item[Base case.] Every type $\type{T}$ is a type constructor.
+		\item[Abstraction.] If $\type{C}$ is a type constructor and $\type{T}$ is a type, $\allQ{x} \type{C}[\type{T}\backslash x]$ is a type constructor.
+		\item[Sum types.] If $\type{C_1}\dots,\type{C_n}$ are type constructors with $\type{C_i} = \allQ{x^i_1\dots,x^i_n} \type{T_i}$ ($1 \leq i \leq n$), then\\ $\allQ{x_1,\dots,x_n} (\type{C_1} + \dots + \type{C_n})$ is a type constructor.
+		\item[Partial application.] If $\type{T_1},\dots,\type{T_i}$ ($i < n$) are types and $\allQ{x_1,\dots,x_n} \type{T}$ is a type constructor,\\ then $\allQ{x_{i+1},\dots,x_n} \type{T}[x_1\backslash \type{T_1},\dots,x_i\backslash \type{T_i}]$ is a type constructor.
+	\end{enumerate}
+\end{definition}
+
+\begin{definition}[Semantics: Type constructor]\label{def:typeConSem}
+Type constructors have a partial interpretation function $\cint$, defined thus: if $\type{C}$ is a type constructor containing exactly the types $\type{T_1},\dots,\type{T_n}$, then $\cint(\type{C}) = \bigcup\limits_{v_1 \in\ \tint(T_1)} \cdots \bigcup\limits_{v_n \in\ \tint(T_n)} \type{C}[T_1\backslash v_1,\dots,T_n\backslash v_n]$.
+\end{definition}
+
+Intuitively, sum types are simply unions, product types are named cartesian products, and full applications are instantiations of type constructors with all possible values. Type constructors themselves are just generic types.
+
+Henceforth, by convention, we will write type variables in lower-case and concrete types in upper-case, omitting the explicit $\forall$-blocks. That is, a type like $\allQ{x,y,z} \type{C\ x\ (\N + T_1)\ y\ z}$ will simply be written as $\type{C\ x\ (\N + T_1)\ y\ z}$ and it will be clear that $\type{x}, \type{y}, \type{z}$ are type variables, while $\N, \type{T_1}$ are concrete types.\\
+
+A special kind of type constructor is the function arrow ($\rightarrow$) which induces the function type:
 
 \begin{example}[Function arrow]
-	$\allQ{s,t} \rightarrow s\ t$ is the type constructor for unary functions from $s$ to $t$. We also write this infix as $s \rightarrow t$. Functions with multiple arguments, mapping $t_1,\dots,t_{n-1}$ to $t_n$, are modelled via nested function arrows:
+	$\rightarrow \type{s}\ \type{t}$ is the type constructor for unary functions from $\type{s}$ to $\type{t}$. We also write this infix as $\type{s} \rightarrow \type{t}$. Functions with multiple arguments, mapping $\type{t_1},\dots,\type{t_{n-1}}$ to $\type{t_n}$, are modelled via nested function arrows:
 	
 	$$
-		t_1 \rightarrow (t_2 \rightarrow \dots \rightarrow (t_{n-1} \rightarrow t_n)\cdots)
+		\type{t_1} \rightarrow (\type{t_2} \rightarrow \dots \rightarrow (\type{t_{n-1}} \rightarrow \type{t_n})\cdots)
 	$$
 \end{example}
 
@@ -264,53 +285,47 @@ By convention, we denote type variables by lower-case and concrete types by uppe
 We can combine type constructors, sum types, and product types into {\em algebraic data types} (ADTs).
 
 \begin{definition}[Algebraic data type (ADT)]\label{def:ADT}
-Let $s$ be a string and $C_1,\dots,C_n$ be type constructors s.t. $C_i = \allQ{x_1,\dots,x_n} T_i$ and $T_i$ is a named product type with type variables ($1 \leq i \leq n$). Then $\allQ{x_1,\dots,x_n} (T_i + \dots + T_n)$ is an ADT. If we want to give a name to an ADT, we write it as $\mathtt{s\ x_1 \dots x_n = T_i + \dots + T_n}$ (for some string $s$).
+Let $\type{s}$ be a string and $\type{C_1},\dots,\type{C_n}$ be type constructors s.t. $\type{C_i} = \allQ{x_1,\dots,x_n} \type{T_i}$ and $\type{T_i}$ is a named product type with type variables ($1 \leq i \leq n$). Then $\allQ{x_1,\dots,x_n} (\type{T_i} + \dots + \type{T_n})$ is an ADT. If we want to give a name to an ADT, we write it as $\type{s\ x_1 \dots x_n = T_i + \dots + T_n}$.
 \end{definition}
 
-Since an ADT is merely the sum of product types, it is itself a type constructor. If it has no type variables, it is also a type.
+Since an ADT is merely the sum of product types, it is itself a type constructor. If it has no type variables, it is also a type. Next, we define three ADTs which we will use in the next section: \tt{Maybe}, \tt{Either}, and \tt{List}.
 
-Next, we define two ADTs which we will use in the next section: \tt{Maybe} and \tt{Either}.
-
-\begin{example}[Maybe, Either]
+\begin{example}[Maybe, Either, List]
 	$$
-		\begin{array}{l}
-			\mathtt{Maybe\ t = Nothing + Just\ t}\\
-			\mathtt{Either\ l\ r = Left\ l + Right\ r}\\
+		\begin{array}{l l}
+			\type{Maybe\ t} & = \type{Nothing + Just\ t}\\
+			\type{Either\ l\ r} & = \type{Left\ l + Right\ r}\\
+			\type{[]\ a} & = \type{[] + (a : [a])}\\
 		\end{array}
 	$$ 
 	
-	$\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both.
+	$\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both. $\type{[a]}$ denotes a list of values of type $\type{a}$.
 \end{example}
 
-Definitions~\ref{def:type}-\ref{def:ADT} specify a fragment of System F$_\omega$,\footnotemark\ which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
+Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see Barendregt's paper \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
 
-\end{shaded}
-
-\footnotetext[5]{Note: $T'$ does not need to occur in $T$.}
-\footnotetext{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} T$ for quantifier-free $T$. This is also called the Hindley-Milner type system.}
 
 \subsection{Neural systems}\label{sec:mathematicalNeuralSystem}
 
 \begin{definition}[Neural component]
-	Let $I$ be an index set and let $T$ be any type. Then, a neural component $C$ with a name from $I$ and message type $T$ is a four-tuple
+	Let $I$ be an index set and let $\type{T}$ be any type. Then, a neural component $C$ with a name from $I$ and message type $\type{T}$ is a four-tuple
 	$$
 		\langle i, \tt{ft}, \tt{int}, \tt{proc} \rangle
 	$$
 	where
 	\begin{enumerate}
 		\item $i$ is an element of $I$ and is called the {\em name} of $C$,
-		\item $\tt{ft}$ is a function $T \rightarrow \{\tt{false}, \tt{true}\}$, called the {\em filter} of $C$,
-		\item $\tt{int}$ is a function $T \rightarrow \tt{Maybe } T$, called the {\em interpreter} of $C$, and
-		\item $\tt{proc}$ is function $T \rightarrow T$, called the {\em processor} of $C$.
+		\item $\tt{ft}$ is a function $\type{T \rightarrow \B}$, called the {\em filter} of $C$,
+		\item $\tt{int}$ is a function $\type{T} \rightarrow \type{Maybe\ T}$, called the {\em interpreter} of $C$, and
+		\item $\tt{proc}$ is function $\type{T} \rightarrow \type{T}$, called the {\em processor} of $C$.
 	\end{enumerate}
 	
-	Formally, the type of $C$ is $\tt{Comp}_{T,I}$. As a shorthand, we denote the name, filter, interpreter and processor of a given component $C$ as $\tt{name}_C$, $\tt{ft}_C$, $\tt{int}_C$, $\tt{proc}_C$, respectively.
+	Formally, the type of $C$ is $\tt{Comp}_{\type{T},I}$. As a shorthand, we denote the name, filter, interpreter and processor of a given component $C$ as $\tt{name}_C$, $\tt{ft}_C$, $\tt{int}_C$, $\tt{proc}_C$, respectively.
 \end{definition}
 
 \noindent
 A set of neural components, together with a set of messages, induces a {\em neural system}:
 
-\begin{shaded}
 \begin{definition}[Neural system]
 	Let $T$ be any type and let $I$ be an index set. Then, a neural system with message type $T$ and component names from $I$ is a tuple
 	$$
@@ -322,7 +337,6 @@ A set of neural components, together with a set of messages, induces a {\em neur
 		\item $\textbf{Me}$ is a set of elements of type $T$, called the {\em set of messages}.
 	\end{itemize}
 \end{definition}
-\end{shaded}
 
 \subsection{Sending and receiving messages}\label{sec:notation}
 
@@ -333,7 +347,7 @@ We now give a notation for the sending and receiving of messages in a system. He
 The elements of a component statically determine which messages it can receive and send. Based on the behaviour of the filter, interpreter and processor of a component, we can express a number of properties.
 
 \begin{definition}[Message reception]
-	\hl{Let $C$ be a component and $m$ be a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \tt{true}$ and $\int{C} = \tt{Just } m'$ for some $m'$.}
+	Let $C$ be a component and $m$ be a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \tt{true}$ and $\int{C} = \tt{Just } m'$ for some $m'$.
 	When $C$ can receive all messages in $\{m_1,\dots,m_n\}$, we write:
 	$$
 		\canrec{m_1,\dots,m_n}{C}.
@@ -434,7 +448,6 @@ Whereas the structural notation pertained to the static properties of a neural s
 	The semantics are as follows: after by sending or receiving a message, $\co$ is replaced by $(\co - \{C\}) \cup \{f_n \circ \dots \circ f_1 (C) \}$.
 \end{definition}
 
-\begin{shaded}
 \begin{definition}[Plastic and non-plastic neural systems]
 	If, for all messages $m$ and components $C, C'$ in a neural system, the following holds:
 	$$
@@ -444,14 +457,13 @@ Whereas the structural notation pertained to the static properties of a neural s
 	\noindent
 	we call the system non-plastic. Otherwise, we call it plastic.
 \end{definition}
-\end{shaded}
 
 
 This definition intends to roughly convey the notion of neuroplasticity, as used in neuroscience: areas in the brain are changed over time through specific patterns of activity. Here, such change is modelled by the execution of functions and the replacement of $C$ in the system by $f_n \circ \dots \circ f_1 (C)$.
 
 \subsection{Invariants}
 
-Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
+Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{DBLP:journals/nn/SanderGS05} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
 
 \begin{invariant}[Central organiser]
 $$
@@ -616,8 +628,7 @@ Axioms can be selected by executing $T_{\mt{guess}}(\tt{ax})$ for all $\tt{ax} \
 
 Intuitively, $T_{\mt{guess}}$ guesses a step to take. It does so but inserting it into the planner's world-state via $\tt{ins}$ and then sending a message to the world simulator, which also inserts it into its world state. $T_{\mt{check}}$ then checks whether the change from $\tt{cur}$ to $\tt{step}$ was legitimate. If so, it determines to which category $\tt{step}$ belongs and sends the $\top$-signal for that category back to the planner. Otherwise, it sends the corresponding $\bot$-signal. The purpose of this is to make it more or less likely, respectively, that the planner should choose the same category of step in the future. The categories, we can imagine, could be things like ``modus ponens'', ``associative reasoning'', ``appeal to consequences'' and so forth.
 
-If we repeat this interaction (with different proposed steps $s_1,\dots,s_p$ in each iteration), we get an algorithm for logical deduction  --- that is, since $A$ and $R$ are recursive, the system will recursively enumerate all valid logical formulas, \hl{provided that we also employ backtracking and} the probability of selecting any valid step is $> 0$. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
-
+If we repeat this interaction (with different proposed steps $s_1,\dots,s_p$ in each iteration), we get an algorithm for logical deduction  --- that is, since $A$ and $R$ are recursive, the system will recursively enumerate all valid logical formulas, provided that we pursue each path and that the probability of selecting any valid step is $> 0$. In addition, we could add a goal function $g$ to $P$ s.t. it would accept certain states and stop. Thereby, $P$ and $W$ could be used to prove logical propositions.
 
 \subsection{Affect}\label{sec:affect}
 
@@ -704,7 +715,7 @@ These facts make it quite clear that emotions are not simply homogeneous phenome
 	\label{fig:sanderSystem}
 \end{figure}
 
-The system of Sander et al. presents the {\em vertical view} (the pipeline) of emotion; based on the evidence discussed above, I shall now present the {\em horizontal view} and construct a model of the hypothesized subsystems within the emotional system. Since no established vocabulary seems to exist in this specific are I shall first introduce a number of terms.
+The system of Sander et al. presents the {\em vertical view} (the pipeline) of emotion; however, it does not describe the broader context into which this system is embedded. In particular, it does not address the interactions with perception, memory, and reasoning. Based on the evidence discussed above, I shall now present a {\em horizontal view} and construct a model of the hypothesized emotional subsystems and their interactions with other parts of the brain. Since no established vocabulary seems to exist in this specific are I shall first introduce a number of terms.
 
 \begin{definition}[Evocative system]
 An evocative system is a subsystem in the brain responsible for evoking consciously experienced affect within an agent based on internal or external stimuli.
@@ -746,8 +757,6 @@ Up to this point, the executive functions have not been discussed in detail, as 
 
 \paragraph{Aesthetic judgement system}
 
-\begin{shaded}
-
 \section{Interaction between affect and world simulation}
 
 Section~\ref{sec:worldSimulation} outlined what could be called {\em deliberate action} in the from of a planner-world-simulator loop. Section~\ref{sec:affect} described the structure and components of affect. These systems are of course not isolated from each other; emotional states influence both the planner's chosen heuristics and the world simulator's creation of worlds. In addition, attention, also influenced by affect, controls the allocation of cognitive resources. We now explore these relationships in further detail.
@@ -785,8 +794,6 @@ Outline of algorithm (provisional):
 	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
 	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
 \end{enumerate}
-
-\end{shaded}
 
 \pagebreak
 

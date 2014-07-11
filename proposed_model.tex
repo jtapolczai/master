@@ -1,74 +1,6 @@
 \documentclass[]{scrartcl}
 
-\usepackage{graphicx}
-\usepackage{soul}
-\usepackage{caption}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{subcaption}
-\usepackage[utf8]{inputenc}
-\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
-\usepackage{xcolor}
-\usepackage{framed}
-\usepackage{booktabs}
-
-\makeatletter
-\newtheoremstyle{break}
-   {\topsep}{\topsep}%
-   {\itshape}{}%
-   {\bfseries}{}%
-   { }
-   {\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
-    \thmnote{ {\bfseries(#3)}}.}% 
-\makeatother
-\theoremstyle{break}
-
-\newtheorem{definition}{Definition}
-\newtheorem{invariant}{Invariant}
-\newtheorem{example}{Example}
-
-\newcommand{\mt}[1]{\textnormal{#1}}
-\renewcommand{\tt}[1]{\texttt{#1}}
-\colorlet{shadecolor}{yellow!60}
-\newcommand{\highlight}[1]{\colorbox{yellow!70}{#1}}
-\newcommand{\shade}[1]{\begin{shaded}#1\end{shaded}}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\B}{\mathbb{B}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\allQ}[1]{\left[\forall #1 \right]}
-
-\newcommand{\co}{\mathbf{Co}}
-\newcommand{\cansend}[2]{#1 \rightarrowtail \{#2\}}
-\newcommand{\cantsend}[2]{#1 \stackrel{\times}{\rightarrowtail} \{#2\}}
-\newcommand{\canrec}[2]{\{#1\} \rightarrowtail #2}
-\newcommand{\cantrec}[2]{\{#1\} \stackrel{\times}{\rightarrowtail} #2}
-\newcommand{\rec}[1]{\tt{rec}(#1)}
-\newcommand{\ft}[1]{\tt{ft}_{#1}}
-\renewcommand{\int}[1]{\tt{int}_{#1}}
-\newcommand{\proc}[1]{\tt{proc}_{#1}}
-\newcommand{\sends}[3]{#1 \rightarrow [#2] \rightarrow #3}
-\newcommand{\sendsm}[4]{#1 \rightarrow [#2 , #3] \rightarrow #4}
-\newcommand{\sendsf}[6]{#1\langle #2 \rangle \rightarrow [#3,#4] \rightarrow \langle#5\rangle#6}
-
-\newcommand{\compT}[2]{\tt{Comp}_{#1,#2}}
-
-\DeclareMathOperator{\tint}{int}
-\newcommand{\type}[1]{\mathtt{#1}}
-\DeclareMathOperator{\cint}{cint}
-
-% Symbol for the extended Wumpus world.
-\newcommand{\wext}{\ensuremath{\mathcal{W}_{\mathrm{ext}}}}
-\newcommand{\wjun}{\ensuremath{W_{\mathrm{jun}}}}
-
-\newcommand{\tuple}[1]{\ensuremath{\langle #1 \rangle}}
-
-\newcommand{\lp}{{\rm (}}
-\newcommand{\rp}{{\rm )}}
-\newcommand{\paren}[1]{\lp{#1}\rp}
+\include{commands}
 
 \title{{\huge A Proposed Evolutionary Model of Cognition}}
 \author{Janos Tapolczai}
@@ -246,7 +178,7 @@ Since the mathematical model is built with implementation in mind, I will use so
 \begin{definition}[Syntax: Type]\label{def:type}
 For our purposes, types are defined inductively thus:
 	\begin{description}
-		\item[Basic type.] The sets $\N$ and $\R$ are types.
+		\item[Basic type.] $\N$, $\R$, and $\emptyset$ are types.
 		\item[Sum type.] If $\type{T_1},\type{T_2}$ are types, the sum type $\type{T_1 + T_2}$, is a type. 
 		\item[Product type.] If $\type{s}$ is a string and $\type{T_1},\dots,\type{T_n}$ are types, the product type $\type{s}\ \type{T_1} \dots \type{T_n}$, is a type. A special case is the {\em anonymous product type} \paren{tuple}, where $s=``\langle\rangle"$. There, we just write $\langle\type{T_1},\dots,T_n \rangle$.
 		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor \paren{see next definition}, then $\type{C\ T_1} \dots \type{T_n}$, is a type.
@@ -268,28 +200,61 @@ Every type is simply interpreted as a set of values which are of that type; type
 \begin{definition}[Semantics: Type]\label{def:typeSem}
 Let $\type{T}$ be a type. Its interpretation function $\tint(\type{T})$ is defined thus:.
 	\begin{description}
-		\item[Basic type.] $\N$ and $\R$ are interpreted as the natural and real numbers, respectively.
+		\item[Basic type.] $\N$ and $\R$ are interpreted as the natural and real numbers, respectively. $\tint(\emptyset) = \{\}$.
 		\item[Sum type.] If $\type{T_1}, \type{T_2}$ are types, then $\tint(\type{T_1 + T_2}) = \tint(\type{T_1}) \cup \tint(\type{T_2})$.
-		\item[Product type.] If $\type{T_1},\dots,\type{T_n}$ are types, then $\tint(\type{s}\ \type{T_1} \dots \type{T_n}) = \{s\} \times \tint(\type{T_1}) \times \dots \times \tint(\type{T_n})$.
-		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor, then\\$\tint(\type{C}\ \type{T_1} \dots \type{T_n}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \left( \bigcup\limits_{C' \in\ \cint(C)} C'[x_1\backslash v_1,\dots, x_n\backslash v_n] \right)$.
+		\item[Product type.] If $\type{T_1},\dots,\type{T_n}$ are types and $\type{s}$ is a string, then
+		$$
+			\tint(\type{s}\ \type{T_1} \dots \type{T_n}) = \left\{
+				\begin{array}{l l}
+					\{\type{s}\} & \mt{if } n = 0\\
+					\{\type{s}\} \times \tint(\type{T_1}) \times \dots \times \tint(\type{T_n}) & \mt{if } n \geq 1.
+				\end{array}
+			\right.
+		$$
+		
+		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor, then
+		$$
+			\tint(\type{C}\ \type{T_1} \dots \type{T_n}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \left( \bigcup\limits_{C' \in\ \cint(C)} C'[x_1\backslash v_1,\dots, x_n\backslash v_n] \right).
+		$$
 	\end{description}
 \end{definition}
 
 \begin{definition}[Semantics: Type constructor]\label{def:typeConSem}
-The partial interpretation function $\cint$ for type constructors is defined as follows: if $\type{C}$ is a type constructor containing exactly the types $\type{T_1},\dots,\type{T_n}$, then $\cint(\type{C}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \type{C}[\type{T_1}\backslash v_1,\dots,\type{T_n}\backslash v_n]$.
+The partial interpretation function $\cint$ for type constructors is defined as follows: if $\type{C}$ is a type constructor containing exactly the types $\type{T_1},\dots,\type{T_n}$, then
+	$$
+		\cint(\type{C}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \type{C}[\type{T_1}\backslash v_1,\dots,\type{T_n}\backslash v_n].
+	$$
 \end{definition}
 
 Intuitively, sum types are simply unions, product types are named cartesian products, and full applications are instantiations of type constructors with all possible values. Type constructors themselves are just generic types.
 
+Whenever we want to assert that an expression has a specific type, we write:
+
+\begin{notation}[Typed expressions]
+	Let $x$ be an expression and $\type{T}$ a type. $x :: \type{T}$ asserts that $x$ has type $\type{T}$.
+\end{notation}
+
 Henceforth, by convention, we will write type variables in lower-case and concrete types in upper-case, omitting the explicit $\forall$-blocks. That is, a type like $\allQ{x,y,z} \type{C\ x\ (\N + T_1)\ y\ z}$ will simply be written as $\type{C\ x\ (\N + T_1)\ y\ z}$ and it will be clear that $\type{x}, \type{y}, \type{z}$ are type variables, while $\N, \type{T_1}$ are concrete types. A special kind of type constructor is the function arrow ($\rightarrow$) which induces the function type:
 
 \begin{example}[Function arrow]
-	$\rightarrow \type{s}\ \type{t}$ is the type constructor for unary functions from $\type{s}$ to $\type{t}$. We also write this infix as $\type{s} \rightarrow \type{t}$. Functions with multiple arguments, mapping $\type{t_1},\dots,\type{t_{n-1}}$ to $\type{t_n}$, are modelled via nested function arrows:
+	If we take, say, the type $\rightarrow \type{S1}\ \type{S2}$ (a product type with the product types $\type{S1}$ and $\type{S2}$ as arguments) and abstract twice, we get $\allQ{s,t} \rightarrow \type{s}\ \type{t}$. $\rightarrow \type{s}\ \type{t}$ is the type constructor for unary functions from $\type{s}$ to $\type{t}$, also written infix as $\type{s} \rightarrow \type{t}$. Functions with multiple arguments, mapping $\type{t_1},\dots,\type{t_{n-1}}$ to $\type{t_n}$, can be modelled in two ways: either through n-tuples, or through nested function arrows:
 	
 	$$
-		\type{t_1} \rightarrow (\type{t_2} \rightarrow \dots \rightarrow (\type{t_{n-1}} \rightarrow \type{t_n})\cdots)
+		\begin{array}{l}
+			\tuple{\type{t_1}, \type{t_2}, \dots \type{t_{n-1}}} \rightarrow \type{t_n}\\
+			\type{t_1} \rightarrow (\type{t_2} \rightarrow \dots \rightarrow (\type{t_{n-1}} \rightarrow \type{t_n})\cdots)
+		\end{array}
 	$$
+	
+	The first method necessitates that we supply all arguments at once, whereas the second allows them to be given one after another.
 \end{example}
+
+\noindent
+Function arrows allow the execution of functions in the obvious way:
+
+\begin{definition}[Function application]
+	Let $f :: \type{S} \rightarrow \type{T}$ and $x :: \type{T}$ Then $f(x) :: \type{T}$.
+\end{definition}
 
 \noindent
 We can combine type constructors, sum types, and product types into {\em algebraic data types} (ADTs).
@@ -317,7 +282,8 @@ Since an ADT is merely the sum of product types, it is itself a type constructor
 	$\B$, $\Q$, $\C$ are the sets of Boolean number and rational/complex numbers, respectively. $\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both. $\type{[a]}$ denotes a list of values of type $\type{a}$.
 \end{example}
 
-Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see Barendregt \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
+
+Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see Barendregt \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F$_\omega$ is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
 
 
 \subsection{Neural systems}\label{sec:mathematicalNeuralSystem}
@@ -325,17 +291,17 @@ Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega
 \begin{definition}[Neural component]
 	Let $I$ be an index set and let $\type{T}$ be any type. Then, a neural component $C$ with a name from $I$ and message type $\type{T}$ is a four-tuple
 	$$
-		\langle i, \tt{ft}, \tt{int}, \tt{proc} \rangle
+		\tuple{\field{name}, \field{ft}, \field{int}, \field{proc}}
 	$$
 	where
 	\begin{enumerate}
-		\item $i$ is an element of $I$ and is called the {\em name} of $C$,
-		\item $\tt{ft}$ is a function $\type{T \rightarrow \B}$, called the {\em filter} of $C$,
-		\item $\tt{int}$ is a function $\type{T} \rightarrow \type{Maybe\ T}$, called the {\em interpreter} of $C$, and
-		\item $\tt{proc}$ is function $\type{T} \rightarrow \type{T}$, called the {\em processor} of $C$.
+		\item $\field{name} :: I$ is the {\em name} of $C$,
+		\item $\field{ft} :: \type{T \rightarrow \B}$ is  called the {\em filter} of $C$,
+		\item $\field{int} :: \type{T} \rightarrow \type{Maybe\ T}$ is called the {\em interpreter} of $C$, and
+		\item $\field{proc} :: \type{T} \rightarrow \type{T}$ is called the {\em processor} of $C$.
 	\end{enumerate}
 	
-	Formally, the type of $C$ is $\tt{Comp}_{\type{T},I}$. As a shorthand, we denote the name, filter, interpreter and processor of a given component $C$ as $\tt{name}_C$, $\tt{ft}_C$, $\tt{int}_C$, $\tt{proc}_C$, respectively.
+	Formally, the type of $C$ is $\field{Comp}_{\type{T},I}$. As a shorthand, we denote the name, filter, interpreter and processor of a given component $C$ as $\field{name}_C$, $\field{ft}_C$, $\field{int}_C$, $\field{proc}_C$, respectively.
 \end{definition}
 
 \noindent
@@ -362,7 +328,7 @@ We now give a notation for the sending and receiving of messages in a system. He
 The elements of a component statically determine which messages it can receive and send. Based on the behaviour of the filter, interpreter and processor of a component, we can express a number of properties.
 
 \begin{definition}[Message reception]
-	Let $C$ be a component and $m$ a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \tt{true}$ and $\int{C} = \tt{Just } m'$ for some $m'$.
+	Let $C$ be a component and $m$ a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \field{True}$ and $\int{C} = \field{Just } m'$ for some $m'$.
 	When $C$ can receive all messages in $\{m_1,\dots,m_n\}$, we write:
 	$$
 		\canrec{m_1,\dots,m_n}{C}.
@@ -396,7 +362,7 @@ The elements of a component statically determine which messages it can receive a
 		\rec{m} \equiv \{C \in \co\ |\ \canrec{m}{C} \}.
 	$$
 	
-	\tt{rec} can also be overloaded to refer to the set of components which can receive and interpret at least some message of a component $C$:
+	$\field{rec}$ can also be overloaded to refer to the set of components which can receive and interpret at least some message of a component $C$:
 	
 $$
 	\rec{C} \equiv \{C_i \in \co\ |\ \exists m:\ \cansend{C}{m} \wedge \canrec{m}{C_i} \}.
@@ -865,58 +831,255 @@ We can interpret each vertex $v$ in the graph as a room with attached data $l(v)
 \begin{definition}[World properties]
 	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-world. We say that $W$ has property $X$ iff it fulfils the first-order sentence corresponding to $X$. The following properties are of importance:
 	
+	
+
 	\begin{center}
-		\begin{tabular}{l l}
+		\begin{tabular}[b]{l l}
 		\toprule
 		\textbf{Property name} & \textbf{FO sentence}\\
 		\midrule\addlinespace[0.7em]
 		Reflexive & $\allQ{v \in V(G)} (v,v) \in E(G)$\\ \addlinespace[0.7em]
-		Non-Euclidean & $\allQ{v_1,v_2,v_3 \in V(G)} \{(v_1,v_2),(v_1,v_3)\} \subseteq E(G) \Rightarrow (v_2,v_3) \notin E(G)$\\ \addlinespace[0.7em]
+		Non-Euclidean &
+		\begin{minipage}[t]{0.65\textwidth}
+			$\allQ{\textit{ pairwise distinct } v_1,v_2,v_3 \in V(G)}$\\$\{(v_1,v_2),(v_1,v_3)\} \subseteq E(G) \Rightarrow (v_2,v_3) \notin E(G)$
+		\end{minipage}\\ \addlinespace[0.7em]
 		Symmetrical & $\allQ{v_1,v_2 \in V(G)} (v_1,v_2) \in E(G) \Rightarrow (v_2,v_1) \in E(G)$\\ \addlinespace[0.7em]
-		Connected & $\allQ{v_1,v_2 \in V(G)} \mt{there exists a path from } v_1 \mt{ to } v_2 \mt{ in } G$\\ \addlinespace[0.7em]
-		Minimally $n$-dimensional & $\allQ{v \in V(G)} \mathrm{deg}^+(v) \leq 2n \wedge \mathrm{deg}^-(v) \leq 2n$\\ \addlinespace[0.5em]
+		Connected & $\allQ{v_1,v_2 \in V(G)}$ there exists a path from $v_1$ to $v_2$ in $G$\\ \addlinespace[0.7em]
+		
+		$n$-dimensionally embeddable
+		 &
+		\begin{minipage}[t]{0.65\textwidth}
+		there exists an infinite graph $S$ such that
+		\begin{enumerate}
+			\item $V(G) \subseteq V(S)$,
+			\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
+			\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
+			\item $(v_1,v_2) \in E(S)$ iff the distance between $v_1$ and $v_2$ in $\R^n$ is 1.
+		\end{enumerate}
+		\end{minipage}
+		
+		\\ \addlinespace[0.5em]
 		\bottomrule
+		
 		\end{tabular}
 	\end{center}
 \end{definition}
 
-where $\mathrm{deg}^+$ and $\mathrm{deg}^-$ are the out- and in-degree of a node, respectively.
-A special form of \wext-type world is a grid world, whose rooms are arranged in a regular pattern.
+The first four properties speak for themselves. As for the fifth --- Figure~\ref{fig:2dgrid} shows an example of a 2-dimensionally embeddable frame. A frame $G$ is $n$-dimensionally embeddable if it is a fragment of an infinite, $n$-dimensional, square grid of nodes $S$, plus any loops $G$ might have. When we embed this infinite grid $S$ into $\R^n$ through an embedding, every edge corresponds to a vector of length 1 along exactly one dimension. If we additionally take $G$'s loops to correspond to null-vectors, this induces an {\em edge direction function} and a {\em position function}:
 
-\begin{definition}[Grid world]
-	Let $n \in \N$ and let $W$ be a \wext-type world \paren{with type variables $\type{T_v}, \type{T_e}, \type{T_g}$}. If $W$ is reflexive, non-Euclidean, symmetrical, and connected, $W$ is a {\em minimally $n$-dimensional grid world}.
+\begin{definition}[Edge direction and position]
+Let $W = \tuple{G, \mathrm{gl}}$ be an $n$-dimensionally embeddable world (for some $n$) and $\epsilon$ an embedding of $W$ into $\R^n$. Then we have an {\em edge direction function} 
+
+$$\Delta_n^\epsilon : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^-,\dots,x_n^+,x_n^-\}$$
+
+with $0$ corresponding to a loop and $x_i^+$/$x_i^-$ corresponding to forward/backward movement in the $i$th dimension. We also have a {\em position function}
+
+$$\pi^\epsilon : V(G) \rightarrow \R^n.$$
+
+When the number of dimensions and the embedding are obvious, we omit $n$ and $\epsilon$.
+Since $\pi^\epsilon$ is injective, an inverse $(\pi^\epsilon)^{-1}$ also exists. Through it, we define the {\em indexing function} of $W$:
+
+$$
+	\begin{array}{l}
+		[] : n\textit{-dimensionally embeddable world} \rightarrow \R^n \rightarrow \type{Maybe}\ V(G)\\
+		W[p] \equiv \left\{
+			\begin{array}{l l}
+				\type{Just } (\pi^\epsilon)^{-1}(p) & \textit{if } (\pi^\epsilon)^{-1}(p) \textit{ is defined}\\
+				\type{Nothing} & \textit{otherwise}
+			\end{array}
+			\right.
+	\end{array}
+$$
 \end{definition}
 
-Grid worlds are potentially infinite, n-dimensional grids, although their cells need not form a square or cube. Their shape can be irregular in that some rooms may be missing, although the shape as a whole must stay connected.
+We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply $\Delta$ and $\pi$) to allow them to determine their position and direction in the world. Providing such information might seem problematic, but we thereby free ourselves from having to insert things like landmarks, wind currents, stars, and other navigational aids into the world. Given that navigation is not the focus of this thesis, this seems an appropriate simplification. Using the above properties, we can specify a subtype of \wext-type worlds:
 
-Next we will specify a concrete \wext-type world which will serve as the environment for our agents. We will call this world the ``jungle world'' \wjun. As we saw in Definition~\ref{def:wext}, we can parametrize \wext-type worlds through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$. 
+\begin{figure}
+	\centering
+	\includegraphics{figs/2dgrid.png}
+	\caption{An example of a 2-dimensionally embeddable world.}
+	\label{fig:2dgrid}
+\end{figure}
+
+\begin{definition}[2D grid world]
+	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-type world \paren{with type variables $\type{T_v}, \type{T_e}, \type{T_g}$}. If $W$ is reflexive, connected, and 2-dimensionally embeddable $W$ is a {\em 2D grid world}.
+	Every 2D grid world has an associated function $\Delta_2 : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^- \}$.\\
+	Note: every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.
+\end{definition}
+
+Grid worlds, as we have seen, are potentially infinite, n-dimensional grids, although their cells need not form a square or cube. Their shape can be irregular in that some rooms and connections may be missing, as long as the shape as a whole stays connected.
+
+2D grid worlds are representationally the same as \wext-type worlds; they just have some structural invariants on their frames. If we additionally specialize the representation through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$, we arrive at the type of world which will serve as the environment for our agents: the ``jungle world'' \wjun.
 
 \begin{definition}[\wjun] Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be the the following tuples:
 
 $$
 	\begin{array}{r c l}
-		\type{TV_{\mathrm{jun}}} & = & \langle \tt{agents} :: [\type{Agent}],\\
-		           &   &       \ \tt{wumpus} :: [\type{Wumpus}],\\
-		           &   & 	   \ \tt{plants} :: \type{Maybe\ Plant},\\
-		           &   &       \ \tt{stench} :: \R,\\
-		           &   &       \ \tt{breeze} :: \R,\\
-		           &   &	   \ \tt{pit}    :: \B,\\
-		           &   &	   \ \tt{gold}   :: \N \rangle 
+		\type{TV_{\mathrm{jun}}} & = & \langle \field{agents} :: [\type{Agent}],\\
+		           &   &       \ \field{wumpus} :: [\type{Wumpus}],\\
+		           &   & 	   \ \field{plants} :: \type{Maybe\ Plant},\\
+		           &   &       \ \field{stench} :: \R,\\
+		           &   &       \ \field{breeze} :: \R,\\
+		           &   &	   \ \field{pit}    :: \B,\\
+		           &   &	   \ \field{gold}   :: \N \rangle 
 		\\
 		\\
-		\type{TE_{\mathrm{jun}}} & = & \langle \tt{danger} :: \R,\\
-				   &   &       \ \tt{fatigue} :: \R \rangle
+		\type{TE_{\mathrm{jun}}} & = & \langle \field{danger} :: \R,\\
+				   &   &       \ \field{fatigue} :: \R \rangle
 		\\
 		\\
 		\type{Temp} & = & \type{Freezing} + \type{Cold} + \type{Temperate} + \type{Warm} + \type{Hot}\\
 		\\
-		\type{TG_{\mathrm{jun}}} & = & \langle \tt{time} :: \N,\\
-				   &   &       \ \tt{temperature} :: \type{Temp} \rangle
+		\type{TG_{\mathrm{jun}}} & = & \langle \field{time} :: \N,\\
+				   &   &       \ \field{temperature} :: \type{Temp} \rangle
 	\end{array}
 $$
 
-Further, let $\mathrm{gl}$ be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2-dimensional grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
+Further, let $\mathrm{gl}$ be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
 \end{definition}
+
+Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, defined below.
+
+\begin{definition}[Semantics and runs of \wjun-type worlds]
+Let $\varphi$ be a function of type $\wjun \rightarrow \wjun$. $\varphi$ is called {\em semantics of \wjun-type worlds}.
+Let $W$ be a \wjun-type world. The iterated application of $\varphi$ to $W$, given by the list ${[W, \varphi(W), \varphi^2(W), \varphi^3(W), \dots]}$, is called a {\em run of $W$ \paren{with semantics $\varphi$}}. $\varphi^n(W)$ is referred to as the {\em state of $W$'s simulation at time $n$ \paren{with semantics $\varphi$}}.
+\end{definition}
+
+\begin{definition}[Standards semantics of \wjun-type worlds]
+The standard semantics for \wjun-type worlds are given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$ is defined as 
+$$\ssem(W = \tuple{G, \mathrm{gl}}) = \tuple{G', \mathrm{gl}'}, $$
+where $W'$ is identical to $W$, except for the following changes.\\
+
+\begin{description}
+	\item[Environment] For all $v \in V(G)$, perform the following:
+	
+	\begin{description}
+		\item[Wumpus.] If there is a Wumpus in a cell $w$ at $\leq 3$ distance from $v$, increase $v$'s stench by $(1 - \log_{10}||v,w||) - \field{stench}(l(v))$.
+		If there is no Wumpus within distance $\leq 3$, decrease $v$'s stench by $\frac{1}{3}$, to a minimum of 0.\\
+		
+		\item[Plant.] If there is a plant on $v$ and it has no fruit, increase its growth by $\frac{1}{10}$. If its growth thereby reaches $1$, add a fruit to the plant and reset the growth to 0.
+		
+		\item[Agent]
+		* make decision => record
+			* fight wumpus
+			* pick up gold
+			* pick up fruit
+			* put down item
+			* travel
+	  * fall into pit
+	  * danger, fatigue
+			* interact with other agent
+	  * world offers: send gesture
+	  				  attack
+	  				  give item
+	  				  NOP
+		
+		\item[Pit] If there is a pit in a cell $w$ at a distance $3$ from $v$, set the breeze to 
+	\end{description}
+	
+	\item[Global data] The new global data $\mathrm{gl}'$ is given by
+	
+	$$
+		\begin{array}{r c l}
+			\mathrm{gl}' & = & \langle \field{time}(\mathrm{gl}) + 1\ \mathrm{mod}\ 50,\\
+					   &   &       \ \field{cycle} \circ \field{temperature}(\mathrm{gl}') \rangle\\
+			\\
+			\field{cycle}(t) & = &
+			\left\{
+				\begin{array}{l l l l}
+					\type{Freezing} & \mt{if } & 20 & \leq |n - 25|\\
+					\type{Cold} & \mt{if } & 15 & \leq |n - 25| < 20\\
+					\type{Temperate} & \mt{if } & 10 & \leq |n - 25| < 15\\
+					\type{Warm} & \mt{if } & 5 & \leq |n - 25| < 10\\
+					\type{Hot} & \mt{if } & & \ \ \ |n - 25| < 5
+				\end{array}
+			\right.\\
+		\end{array}
+	$$
+	
+	\item[Wumpus behavior]
+	
+	* wumpus: if line of sight, approaches agent depending on temperature and distance
+	
+	  -> colder => agent can get closer without being attacked
+	  
+	  -> colder => wumpus is weaker (but agent fatigues more)
+	
+	\item[Agent behavior]
+	
+	* agent travel -> take into account fatigue and danger
+	
+	* agent engages with other agents
+	
+	* agent sees environment
+	
+	* agent drops/picks up items
+	
+	* agents stays in place -> traverses loop -> fatigue restore (per edge direction function)
+	
+	* fights wumpus, outcome depends on wumpus/agent strength and health
+	  (fatigue: attack power, health: defense)
+	
+\end{description}
+
+*agents and wumpuses make choices each turn
+ ** agents/wumpus traverses danger-edge : damage with probability
+ ** fatigue: always applied to agent/wumpus
+ 
+ * fatigue: can't move
+ * fatigue regen each turn
+ * best regen in temperate temp, slower in freezing/hot
+ 
+ * agent: health regen each turn
+ * agent: health regen with eating plants
+ 
+ * plants regen after N turns
+ 
+ * agents can attack/be friendly with each other
+ * attack effectiveness depends on fatigue
+ * agents can give gold gifts to each other => increase friendliness
+ * small gold gifts => spite?
+   ** large gold gifts => impressed?
+   ** not handcrafted; depends on agent's affective state
+ 
+ * fixed set of actions: smile, flee, growl,...
+   * agent A sends signals; agent B interprets them - but possible incorrectly
+  
+ * temperature changes periodically
+ 
+ * pits cause death
+ 
+ * line of sight exists: ~5 squares
+ 
+ * agents can turn left/right
+ 
+ * killed wumpus drops meat => health regen
+ * meat and fruits can be gathered into inventories and gifted to other
+   agents, like gold
+   
+ * gold => one-time gathering
+ * plants => repeated gathering
+ * meat => hunting
+ 
+ *agents can attack/defend together against wumpuses
+ 
+ *wumpuses are territorial herbivores; move on their own. defend plants and kill agents.
+\end{definition}
+
+It should now be clear why \wjun\ is called a jungle world: it is a social hunter-gatherer scenario in which uncoordinated agents act and interact without any explicit performance measure. They can gather food or gold, rest, hunt wumpuses, and even be friendly with each other, but fundamentally, everyone is out for himself. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
+
+\subsection{Agents}
+
+The agents of our simulation are composed of two parts: their minds and their bodies. Their minds constitute their sensors and agents functions; their bodies make up their actuators, although they are more than that. An agent's body can be damaged and healed, perceived by others, and it can hold items. As such, the bodies are intimately part of the world. From the point of view of the agent's mind, they are external objects they happen to control.
+
+\subsubsection{Body}
+
+An agent's body is comprised of 
+
+* inventory (finite) - wumpus meat, fruits, gold
+* health (visible to other agents)
+
+\subsubsection{Cognition}
 
 \pagebreak
 

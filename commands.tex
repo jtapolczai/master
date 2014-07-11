@@ -1,0 +1,79 @@
+\usepackage{graphicx}
+\usepackage{soul}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{booktabs}
+
+\makeatletter
+\newtheoremstyle{break}
+   {\topsep}{\topsep}%
+   {\itshape}{}%
+   {\bfseries}{}%
+   { }
+   {\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
+    \thmnote{ {\bfseries(#3)}}.}% 
+\makeatother
+\theoremstyle{break}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{invariant}[thm]{Invariant}
+\newtheorem{example}[thm]{Example}
+\newtheorem{notation}[thm]{Notation}
+
+\newcommand{\mt}[1]{\textnormal{#1}}
+\renewcommand{\tt}[1]{\texttt{#1}}
+\colorlet{shadecolor}{yellow!60}
+\newcommand{\highlight}[1]{\colorbox{yellow!70}{#1}}
+\newcommand{\shade}[1]{\begin{shaded}#1\end{shaded}}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\allQ}[1]{\left[\forall #1 \right]}
+\newcommand{\exQ}[1]{\left[\exists #1 \right]}
+
+\newcommand{\co}{\mathbf{Co}}
+\newcommand{\cansend}[2]{#1 \rightarrowtail \{#2\}}
+\newcommand{\cantsend}[2]{#1 \stackrel{\times}{\rightarrowtail} \{#2\}}
+\newcommand{\canrec}[2]{\{#1\} \rightarrowtail #2}
+\newcommand{\cantrec}[2]{\{#1\} \stackrel{\times}{\rightarrowtail} #2}
+\newcommand{\rec}[1]{\field{rec}(#1)}
+\newcommand{\ft}[1]{\tt{ft}_{#1}}
+\renewcommand{\int}[1]{\tt{int}_{#1}}
+\newcommand{\proc}[1]{\tt{proc}_{#1}}
+\newcommand{\sends}[3]{#1 \rightarrow [#2] \rightarrow #3}
+\newcommand{\sendsm}[4]{#1 \rightarrow [#2 , #3] \rightarrow #4}
+\newcommand{\sendsf}[6]{#1\langle #2 \rangle \rightarrow [#3,#4] \rightarrow \langle#5\rangle#6}
+
+\newcommand{\compT}[2]{\tt{Comp}_{#1,#2}}
+
+\DeclareMathOperator{\tint}{int}
+\newcommand{\type}[1]{\mathtt{#1}}
+\DeclareMathOperator{\cint}{cint}
+
+% Symbol for the extended Wumpus world.
+\newcommand{\wext}{\ensuremath{\mathcal{W}_{\mathrm{ext}}}}
+\newcommand{\wjun}{\ensuremath{\mathcal{W}_{\mathrm{jun}}}}
+\newcommand{\ssem}{\ensuremath{\mathrm{sem}}}
+
+\newcommand{\dist}[2]{||{#1},{#2}||}
+
+\newcommand{\tuple}[1]{\ensuremath{\langle #1 \rangle}}
+
+\newcommand{\lp}{{\rm (}}
+\newcommand{\rp}{{\rm )}}
+\newcommand{\paren}[1]{\lp{#1}\rp}
+% Graph Cartesian product
+\newcommand{\gcp}{\Box}
+% A field in a record (ADT)
+\newcommand{\field}[1]{\mathtt{#1}}

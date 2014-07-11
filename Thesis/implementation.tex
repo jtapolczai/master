@@ -1,0 +1,332 @@
+Having laid the theoretical framework, we come to the practical part of this thesis --- a proof-of-concept implementation of multiple affective agents interacting with each other. This section contains the following parts: (1) the structure of each agent, (2) the world into which the agents are embedded, and (3) the evolutionary changes in the agent pool from generation to generation.
+
+\subsection{Agent structure}
+
+In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
+
+\noindent
+Note: instead of detailed partial descriptions, I, for now, sketch the rough outline of the proposed implementation to give a complete picture.
+
+Outline of algorithm (provisional):
+
+\begin{enumerate}
+	\item One agent is composed of the following components:
+		\begin{enumerate}
+			\item Sensory perception
+			\item Affect
+			\item Planner and world simulator
+			\item Memory
+			\item Attention
+		\end{enumerate}
+	\item Sensory perception will be highly domain-dependent and, by necessity, simplified. Domains might be Blocks world or some custom-made game scenarios. In essence, it will deliver facts about objects and events in the world, bypassing the problem of faithfully implementing sight, hearing, smell, balance, pain, etc.
+	\item At each step, sensory facts are put into the neural system's message space and are consumed by the evocative systems (PSBC, attention-refocusing, SJS, AS).
+	\item The primitive parts of the PSBC can affect the executive system directly. Its higher-level parts, as well as the other three systems, work in the following way:
+		\begin{enumerate}
+			\item Attention-refocusing directs cognitive resources to stimuli it deems important. As a result, the priority of (certain) sensory messages is increased, increasing their influence on PSBC and the SJS.
+			\item PSBC and the SJS evoke certain emotions. Thereby, they might set goals for the agent. This setting of goals engages the planner and world simulator, which try to devise a plan to meet said goal --- this is implemented via DLV-hex programs. These DLV-hex program, in turn, call the emotional systems in order to modulate both the planner and the world simulator according to the emotional state of the agent.
+			\item Planned steps are committed to (short-term) memory.
+		\end{enumerate}
+	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
+	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
+\end{enumerate}
+
+\subsection{World}
+
+The choice of world profoundly affects the implementation of the agent: its knowledge base, mechanism of perception and interaction, the required complexity of the implementation, etc. On one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other, the world should be sufficiently complex to allow the agent to shine. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. I shall first lay out the design goals and then evaluate three possible worlds for agents.
+
+\paragraph{Design goals} The two most important criteria for prospective worlds are richness of interaction and world complexity, in that order. As said, an evaluation of affective agents is only possible if they can interact with their environment and other entities in a sufficiently complex way to allow agents with different emotional profiles to be distinguished from each other. Mechanisms of problem-solving like STRIPS \cite{fikesNilsson}, A* \cite{nilssonAStar}, ASP \cite{lifschitz}, forward-/backward-planning, etc. have been explored in the context of structurally simple worlds, generally those representable through propositional logic, cost-functions, decision tress, and the like. While these are useful, they are less appropriate in an affective scenario for the following two reasons:
+
+\begin{enumerate}
+	\item they are geared towards finding provably optimal solutions to computationally expensive but conceptually simple problems like planning or game-playing and
+	\item they rely heavily on hand-crafted ontologies and domain knowledge on the part of the human programmer.
+\end{enumerate}
+
+For a world to be useful to us and to avoid these pitfalls, it should be in some sense realistic: it should permit a large number of different kinds of interactions, and it should not provide agents in it with perfect knowledge about its rules. 
+
+I admit that I here stand in opposition with Marvin Minsky, who famously recommended the use of idealized micro-worlds to study artificial intelligence, in that same vein in which physics makes use of ideal, frictionless planes and perfect spheres. His argument certainly has merit, but I believe that emotion is too complex a phenomenon for such abstract scenarios. In too simple a setting, pure reasoning not only easily outperforms emotional behaviour, but avenues for exhibiting emotional behaviour are scarce to begin with. For this reason, I propose that, in this context, rich interactions should take precedence over idealization and simplicity.
+
+It is of course still desirable to minimize complexity as far as possible. An overwhelmingly complex world has two obvious drawbacks: first, the required complexity of an agent scales with the complexity of the world; second, the more complex the world, the harder it is to reason about it. If there are a hundred ways to succeed, for instance, agent performance becomes quite difficult to measure.
+
+\subsubsection{Blocks world}
+
+Blocks worlds are the simplest type of abstract world, and many variations exist. They all have in common a number of shapes placed on top of each other in a 2-dimensional world. An agent can pick up and move a shape if and only if there are no other shapes on top of it (and if it is not already holding one). The goal generally consists of achieving some desired configuration of shapes, such as building or piecewise transporting a tower, or collecting all red triangles. 
+
+Micro-worlds like blocks worlds have extensively studied. In this, their simplicity has been their great advantage --- That very simplicity is serious problem for us, however. Affect is inherently a subtle and social phenomenon; it is not clear how it could be believably exhibited in such an abstract and simple world. The very same properties which expedite their theoretical study make them useless for our evaluation.
+
+%\subsubsection{Real world}
+
+\subsubsection{Wumpus world}
+
+The traditional Wumpus world, as described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite[p. 236]{norvig}, is a grid-based, 4x4 cave world with one agent, one monster --- the Wumpus --- and gold placed in random rooms. The agent starts at position $\langle 1,1\rangle$ and can move forward or turn 90$^\circ$ to the left or right. If it enters a room with a pit or a live Wumpus, it dies; its goal is to find and collect the gold and then move back to position $\langle 1,1\rangle$ to climb out of the cave. In addition, it has one arrow which he can fire straight ahead to defend against the Wumpus. The agent has only the following local information \cite[p. 237]{norvig}:
+\begin{itemize}
+	\item In the square containing the Wumpus and in the directly (not diagonally) adjacent squares, the agent will perceive a {\em Stench}.
+	\item In the squares directly adjacent to a pit, the agent will perceive a {\em Breeze}.
+	\item In the square where the gold is, the agent will perceive a {\em Glitter}.
+	\item When an agent walks into a wall, it will perceive a {\em Bump}.
+	\item When the Wumpus is killed, it emits a woeful {\em Scream} that can be perceived anywhere in the cave.
+\end{itemize}
+
+This type of world is simple enough to be amenable to rule-based reasoning, although it can contain ambiguous situations where the agent does not have enough information to make the best choice. For example, if an agent moves to position $\langle p_x,p_y \rangle$ and experiences a breeze, 1, 2, or 3 adjacent rooms may contain pits, but it cannot be safely determined which ones these are. Thus,  occasionally, the agent must choose between climbing out without the gold and risking death by pit or Wumpus.
+
+For our purposes, this is a bit too simple, however. Caution/bravery is the only axis along which agents can be differentiated and although various complex behaviours --- such as trying one dangerous cell, then going back and trying another one to explore the world --- are possible, these do not have a clear relation to emotional states.
+
+Let us, while staying true to the spirit of the original, now define a type of extended Wumpus world \wext\ that allows more varied interaction between agent an environment.
+
+\begin{definition}[\wext-type world]\label{def:wext}
+	Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be arbitrary types. Further, let $G$ be a directed graph with vertex labels of type $\type{T_v}$ and edge labels of type $\type{T_e}$, and let $\mathrm{gl}$ be an object of type $\type{T_g}$. Then the tuple \tuple{G, \mathrm{gl}} is a \wext-type world \paren{with type parameters $\type{T_v}$, $\type{T_e}$, $\type{T_g}$}. We call $G$ the {\em world frame} and $\mathrm{gl}$ the {\em world data}.
+\end{definition}
+
+We can interpret each vertex $v$ in the graph as a room with attached data $l(v)$ of type $\type{T_v}$, and each edge $e$ as an unidirectional connection between rooms with attached data (such as path costs) $l(e)$ of type $\type{T_e}$. $\mathrm{gl}$ is the global world data. Next, we specify some properties of the world frame:
+
+\begin{definition}[World properties]
+	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-world. We say that $W$ has property $X$ iff it fulfils the first-order sentence corresponding to $X$. The following properties are of importance:
+	
+	
+
+	\begin{center}
+		\begin{tabular}[b]{l l}
+		\toprule
+		\textbf{Property name} & \textbf{FO sentence}\\
+		\midrule\addlinespace[0.7em]
+		Reflexive & $\allQ{v \in V(G)} (v,v) \in E(G)$\\ \addlinespace[0.7em]
+		Non-Euclidean &
+		\begin{minipage}[t]{0.65\textwidth}
+			$\allQ{\textit{ pairwise distinct } v_1,v_2,v_3 \in V(G)}$\\$\{(v_1,v_2),(v_1,v_3)\} \subseteq E(G) \Rightarrow (v_2,v_3) \notin E(G)$
+		\end{minipage}\\ \addlinespace[0.7em]
+		Symmetrical & $\allQ{v_1,v_2 \in V(G)} (v_1,v_2) \in E(G) \Rightarrow (v_2,v_1) \in E(G)$\\ \addlinespace[0.7em]
+		Connected & $\allQ{v_1,v_2 \in V(G)}$ there exists a path from $v_1$ to $v_2$ in $G$\\ \addlinespace[0.7em]
+		
+		$n$-dimensionally embeddable
+		 &
+		\begin{minipage}[t]{0.65\textwidth}
+		there exists an infinite graph $S$ such that
+		\begin{enumerate}
+			\item $V(G) \subseteq V(S)$,
+			\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
+			\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
+			\item $(v_1,v_2) \in E(S)$ iff the distance between $v_1$ and $v_2$ in $\R^n$ is 1.
+		\end{enumerate}
+		\end{minipage}
+		
+		\\ \addlinespace[0.5em]
+		\bottomrule
+		
+		\end{tabular}
+	\end{center}
+\end{definition}
+
+The first four properties speak for themselves. As for the fifth --- Figure~\ref{fig:2dgrid} shows an example of a 2-dimensionally embeddable frame. A frame $G$ is $n$-dimensionally embeddable if it is a fragment of an infinite, $n$-dimensional, square grid of nodes $S$, plus any loops $G$ might have. When we embed this infinite grid $S$ into $\R^n$ through an embedding, every edge corresponds to a vector of length 1 along exactly one dimension. If we additionally take $G$'s loops to correspond to null-vectors, this induces an {\em edge direction function} and a {\em position function}:
+
+\begin{definition}[Edge direction and position]
+Let $W = \tuple{G, \mathrm{gl}}$ be an $n$-dimensionally embeddable world (for some $n$) and $\epsilon$ an embedding of $W$ into $\R^n$. Then we have an {\em edge direction function} 
+
+$$\Delta_n^\epsilon : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^-,\dots,x_n^+,x_n^-\}$$
+
+with $0$ corresponding to a loop and $x_i^+$/$x_i^-$ corresponding to forward/backward movement in the $i$th dimension. We also have a {\em position function}
+
+$$\pi^\epsilon : V(G) \rightarrow \R^n.$$
+
+When the number of dimensions and the embedding are obvious, we omit $n$ and $\epsilon$.
+Since $\pi^\epsilon$ is injective, an inverse $(\pi^\epsilon)^{-1}$ also exists. Through it, we define the {\em indexing function} of $W$:
+
+$$
+	\begin{array}{l}
+		[] : n\textit{-dimensionally embeddable world} \rightarrow \R^n \rightarrow \type{Maybe}\ V(G)\\
+		W[p] \equiv \left\{
+			\begin{array}{l l}
+				\type{Just } (\pi^\epsilon)^{-1}(p) & \textit{if } (\pi^\epsilon)^{-1}(p) \textit{ is defined}\\
+				\type{Nothing} & \textit{otherwise}
+			\end{array}
+			\right.
+	\end{array}
+$$
+\end{definition}
+
+We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply $\Delta$ and $\pi$) to allow them to determine their position and direction in the world. Providing such information might seem problematic, but we thereby free ourselves from having to insert things like landmarks, wind currents, stars, and other navigational aids into the world. Given that navigation is not the focus of this thesis, this seems an appropriate simplification. Using the above properties, we can specify a subtype of \wext-type worlds:
+
+\begin{figure}
+	\centering
+	\includegraphics{figs/2dgrid.png}
+	\caption{An example of a 2-dimensionally embeddable world.}
+	\label{fig:2dgrid}
+\end{figure}
+
+\begin{definition}[2D grid world]
+	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-type world \paren{with type variables $\type{T_v}, \type{T_e}, \type{T_g}$}. If $W$ is reflexive, connected, and 2-dimensionally embeddable $W$ is a {\em 2D grid world}.
+	Every 2D grid world has an associated function $\Delta_2 : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^- \}$.\\
+	Note: every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.
+\end{definition}
+
+Grid worlds, as we have seen, are potentially infinite, n-dimensional grids, although their cells need not form a square or cube. Their shape can be irregular in that some rooms and connections may be missing, as long as the shape as a whole stays connected.
+
+2D grid worlds are representationally the same as \wext-type worlds; they just have some structural invariants on their frames. If we additionally specialize the representation through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$, we arrive at the type of world which will serve as the environment for our agents: the ``jungle world'' \wjun.
+
+\begin{definition}[\wjun] Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be the the following tuples:
+
+$$
+	\begin{array}{r c l}
+		\type{TV_{\mathrm{jun}}} & = & \langle \field{agents} :: [\type{Agent}],\\
+		           &   &       \ \field{wumpus} :: [\type{Wumpus}],\\
+		           &   & 	   \ \field{plants} :: \type{Maybe\ Plant},\\
+		           &   &       \ \field{stench} :: \R,\\
+		           &   &       \ \field{breeze} :: \R,\\
+		           &   &	   \ \field{pit}    :: \B,\\
+		           &   &	   \ \field{gold}   :: \N \rangle 
+		\\
+		\\
+		\type{TE_{\mathrm{jun}}} & = & \langle \field{danger} :: \R,\\
+				   &   &       \ \field{fatigue} :: \R \rangle
+		\\
+		\\
+		\type{Temp} & = & \type{Freezing} + \type{Cold} + \type{Temperate} + \type{Warm} + \type{Hot}\\
+		\\
+		\type{TG_{\mathrm{jun}}} & = & \langle \field{time} :: \N,\\
+				   &   &       \ \field{temperature} :: \type{Temp} \rangle
+	\end{array}
+$$
+
+Further, let $\mathrm{gl}$ be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
+\end{definition}
+
+Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, defined below.
+
+\begin{definition}[Semantics and runs of \wjun-type worlds]
+Let $\varphi$ be a function of type $\wjun \rightarrow \wjun$. $\varphi$ is called {\em semantics of \wjun-type worlds}.
+Let $W$ be a \wjun-type world. The iterated application of $\varphi$ to $W$, given by the list ${[W, \varphi(W), \varphi^2(W), \varphi^3(W), \dots]}$, is called a {\em run of $W$ \paren{with semantics $\varphi$}}. $\varphi^n(W)$ is referred to as the {\em state of $W$'s simulation at time $n$ \paren{with semantics $\varphi$}}.
+\end{definition}
+
+\begin{definition}[Standards semantics of \wjun-type worlds]
+The standard semantics for \wjun-type worlds are given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$ is defined as 
+$$\ssem(W = \tuple{G, \mathrm{gl}}) = \tuple{G', \mathrm{gl}'}, $$
+where $W'$ is identical to $W$, except for the following changes.\\
+
+\begin{description}
+	\item[Environment] For all $v \in V(G)$, perform the following:
+	
+	\begin{description}
+		\item[Wumpus.] If there is a Wumpus in a cell $w$ at $\leq 3$ distance from $v$, increase $v$'s stench by $(1 - \log_{10}||v,w||) - \field{stench}(l(v))$.
+		If there is no Wumpus within distance $\leq 3$, decrease $v$'s stench by $\frac{1}{3}$, to a minimum of 0.\\
+		
+		\item[Plant.] If there is a plant on $v$ and it has no fruit, increase its growth by $\frac{1}{10}$. If its growth thereby reaches $1$, add a fruit to the plant and reset the growth to 0.
+		
+		\item[Agent]
+		* make decision => record
+			* fight wumpus
+			* pick up gold
+			* pick up fruit
+			* put down item
+			* travel
+	  * fall into pit
+	  * danger, fatigue
+			* interact with other agent
+	  * world offers: send gesture
+	  				  attack
+	  				  give item
+	  				  NOP
+		
+		\item[Pit] If there is a pit in a cell $w$ at a distance $3$ from $v$, set the breeze to 
+	\end{description}
+	
+	\item[Global data] The new global data $\mathrm{gl}'$ is given by
+	
+	$$
+		\begin{array}{r c l}
+			\mathrm{gl}' & = & \langle \field{time}(\mathrm{gl}) + 1\ \mathrm{mod}\ 50,\\
+					   &   &       \ \field{cycle} \circ \field{temperature}(\mathrm{gl}') \rangle\\
+			\\
+			\field{cycle}(t) & = &
+			\left\{
+				\begin{array}{l l l l}
+					\type{Freezing} & \mt{if } & 20 & \leq |n - 25|\\
+					\type{Cold} & \mt{if } & 15 & \leq |n - 25| < 20\\
+					\type{Temperate} & \mt{if } & 10 & \leq |n - 25| < 15\\
+					\type{Warm} & \mt{if } & 5 & \leq |n - 25| < 10\\
+					\type{Hot} & \mt{if } & & \ \ \ |n - 25| < 5
+				\end{array}
+			\right.\\
+		\end{array}
+	$$
+	
+	\item[Wumpus behavior]
+	
+	* wumpus: if line of sight, approaches agent depending on temperature and distance
+	
+	  -> colder => agent can get closer without being attacked
+	  
+	  -> colder => wumpus is weaker (but agent fatigues more)
+	
+	\item[Agent behavior]
+	
+	* agent travel -> take into account fatigue and danger
+	
+	* agent engages with other agents
+	
+	* agent sees environment
+	
+	* agent drops/picks up items
+	
+	* agents stays in place -> traverses loop -> fatigue restore (per edge direction function)
+	
+	* fights wumpus, outcome depends on wumpus/agent strength and health
+	  (fatigue: attack power, health: defense)
+	
+\end{description}
+
+*agents and wumpuses make choices each turn
+ ** agents/wumpus traverses danger-edge : damage with probability
+ ** fatigue: always applied to agent/wumpus
+ 
+ * fatigue: can't move
+ * fatigue regen each turn
+ * best regen in temperate temp, slower in freezing/hot
+ 
+ * agent: health regen each turn
+ * agent: health regen with eating plants
+ 
+ * plants regen after N turns
+ 
+ * agents can attack/be friendly with each other
+ * attack effectiveness depends on fatigue
+ * agents can give gold gifts to each other => increase friendliness
+ * small gold gifts => spite?
+   ** large gold gifts => impressed?
+   ** not handcrafted; depends on agent's affective state
+ 
+ * fixed set of actions: smile, flee, growl,...
+   * agent A sends signals; agent B interprets them - but possible incorrectly
+  
+ * temperature changes periodically
+ 
+ * pits cause death
+ 
+ * line of sight exists: ~5 squares
+ 
+ * agents can turn left/right
+ 
+ * killed wumpus drops meat => health regen
+ * meat and fruits can be gathered into inventories and gifted to other
+   agents, like gold
+   
+ * gold => one-time gathering
+ * plants => repeated gathering
+ * meat => hunting
+ 
+ *agents can attack/defend together against wumpuses
+ 
+ *wumpuses are territorial herbivores; move on their own. defend plants and kill agents.
+\end{definition}
+
+It should now be clear why \wjun\ is called a jungle world: it is a social hunter-gatherer scenario in which uncoordinated agents act and interact without any explicit performance measure. They can gather food or gold, rest, hunt wumpuses, and even be friendly with each other, but fundamentally, everyone is out for himself. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
+
+\subsection{Agents}
+
+The agents of our simulation are composed of two parts: their minds and their bodies. Their minds constitute their sensors and agents functions; their bodies make up their actuators, although they are more than that. An agent's body can be damaged and healed, perceived by others, and it can hold items. As such, the bodies are intimately part of the world. From the point of view of the agent's mind, they are external objects they happen to control.
+
+\subsubsection{Body}
+
+An agent's body is comprised of 
+
+* inventory (finite) - wumpus meat, fruits, gold
+* health (visible to other agents)
+
+\subsubsection{Cognition}

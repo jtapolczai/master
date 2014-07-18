@@ -164,6 +164,7 @@ $$
 		\type{Item} & = & \type{Gold + Fruit + Meat}\\
 		\\
 		\type{Agent} & = & \langle \field{name} :: \type{String},\\ 
+					 & = & \ \field{direction} :: \type{X_1^+ + X_1^- + X_2^+ + X_2^-},\\
 					 &   & \ \field{health} :: \R,\\
 					 &   & \ \field{fatigue} :: \R,\\
 					 &   & \ \field{inventory} :: [\type{\langle Item, \N \rangle}] \rangle
@@ -266,7 +267,9 @@ where $W'$ is identical to $W$, except for the following changes.\\
 	\begin{enumerate}
 		\item[\action{move}] --- move along an edge $e$. If $\Delta(e) = 0$, restore $0.1$ of the agent's fatigue, otherwise reduce it by $0.05 \times \field{fatigue}(e)$. Additionally (if $\Delta(e) \neq 0$), apply $0.1$ damage with probability $\field{danger}(e)$.
 		
-		If an agent's fatigue is below $0.2$, it can't choose this action.
+		If an agent's fatigue is below $0.2$, it cannot choose this action.
+		
+		\item[\action{rotate}] --- the agent changes the direction into which it is facing to a value in ${x_1^+,x_1^-,x_2^+,x_2^-}$.
 		
 		\item[\action{attack}] --- move along an edge $e$ to attack an agent or wumpus.
 		
@@ -324,7 +327,7 @@ Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two
 \begin{figure}
 	\centering
 	\includegraphics{figs/los.png}
-	\caption{Sight cone of an agent at $\field{light}(t) = 2$. The agent has a $\frac{\pi}{4}$ field of vision, but cannot see through gaps and around corners.}
+	\caption{Sight cone of an agent at $\field{light}(t) = 2$. The cone with width $\frac{\pi}{4}$ signifies that agent's range of vision. Red vertices are perceived, black ones are not because they are blocked by holes in the world. The upper right vertex is not visible because the distance $\Delta$ between the direct line to it and the shortest edge path is too great.}
 	\label{fig:los}
 \end{figure}
 
@@ -339,8 +342,6 @@ If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the fo
 \end{enumerate}
 
 The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.
-
-TODO: INCLUDE ROTATION INTO AGENT/WORLD/ACTIONS (ssem)
 
 \subsubsection{Cognition}
 

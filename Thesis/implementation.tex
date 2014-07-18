@@ -312,6 +312,7 @@ What we are missing is the description of the agent's percepts in the world. As 
 In addition to this local information, the agent also has a sense of sight, modelled via an approximately $\frac{\pi}{2}$ radians cone, the length of which depends on daylight. Formally:
 
 \begin{definition}[Sight cone]
+	\label{def:los}
 	Let $W = \tuple{G, \mathrm{gl}}$ be a 2D grid world. Let an agent be on vertex $v \in V(G)$, facing into direction $d$. Let further $l_d$ be the line starting at $v$ and extending infinitely into direction $d$, and $l_{v,w}$ be the line from $v$ to $w$. Then, any other vertex $w \in V(G)$ falls into the agent's sight cone exactly if:
 	
 	\begin{enumerate}
@@ -344,6 +345,18 @@ If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the fo
 The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.
 
 \subsubsection{Cognition}
+
+Our goal is the design of a reasonably effective type of agent which will be able to navigate $\wjun$-type worlds. \textsc{Effectiveness}, in this context, simply means \textsc{survival}. There is no explicit performance measure; certain agents will survive, while others will not.
+
+\paragraph{Relevant aspects.} We have already seen what sort of data an agent must process if it is to perform well. It must first know or learn the geography of the world, of which it is a priori unaware. It must also be able to seek out resources in the form of plant and gold; it must be able to deal with the threat posed by Wumpuses, either by avoiding or defeating them. Most importantly, it must be able to interact with other agents in ways which avoid adverse behaviour towards the agent itself, and it must find ways to solicit beneficial behaviour from them.
+
+In order to achieve this, three things are indispensable: (1) memory, (2) utility maximisation. If we don't impose a memory limit, it is quite easy to store everything that happens to an agent. In essence, such memories will be fragments of past states of the external which can be used to make decisions. Utility maximisation is the far more complex task: the agent must either perform individual fact synthesis or inherit certain predilections from its parents and must therewith exhibit useful behaviour. The fact synthesis can be done in a number of ways --- machine learning, reasoning, heuristic ---, but we must remember that knowledge, by itself, does not determine behaviour. In addition, the agent must possess a decision-making component which uses gained knowledge in whatever way it sees fit. Knowledge thus  {\em allows} efficient decisions to be made, but fundamentally, an agent is free to disregard any fact it wants.
+
+\paragraph{Social and non-social behaviour.} (PSBC), (SJS)
+
+\newpage
+
+
 
 In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
 

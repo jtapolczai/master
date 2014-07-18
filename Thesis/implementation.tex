@@ -1,34 +1,4 @@
-Having laid the theoretical framework, we come to the practical part of this thesis --- a proof-of-concept implementation of multiple affective agents interacting with each other. This section contains the following parts: (1) the structure of each agent, (2) the world into which the agents are embedded, and (3) the evolutionary changes in the agent pool from generation to generation.
-
-\subsection{Agent structure}
-
-In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
-
-\noindent
-Note: instead of detailed partial descriptions, I, for now, sketch the rough outline of the proposed implementation to give a complete picture.
-
-Outline of algorithm (provisional):
-
-\begin{enumerate}
-	\item One agent is composed of the following components:
-		\begin{enumerate}
-			\item Sensory perception
-			\item Affect
-			\item Planner and world simulator
-			\item Memory
-			\item Attention
-		\end{enumerate}
-	\item Sensory perception will be highly domain-dependent and, by necessity, simplified. Domains might be Blocks world or some custom-made game scenarios. In essence, it will deliver facts about objects and events in the world, bypassing the problem of faithfully implementing sight, hearing, smell, balance, pain, etc.
-	\item At each step, sensory facts are put into the neural system's message space and are consumed by the evocative systems (PSBC, attention-refocusing, SJS, AS).
-	\item The primitive parts of the PSBC can affect the executive system directly. Its higher-level parts, as well as the other three systems, work in the following way:
-		\begin{enumerate}
-			\item Attention-refocusing directs cognitive resources to stimuli it deems important. As a result, the priority of (certain) sensory messages is increased, increasing their influence on PSBC and the SJS.
-			\item PSBC and the SJS evoke certain emotions. Thereby, they might set goals for the agent. This setting of goals engages the planner and world simulator, which try to devise a plan to meet said goal --- this is implemented via DLV-hex programs. These DLV-hex program, in turn, call the emotional systems in order to modulate both the planner and the world simulator according to the emotional state of the agent.
-			\item Planned steps are committed to (short-term) memory.
-		\end{enumerate}
-	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
-	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
-\end{enumerate}
+Having laid the theoretical framework, we come to the practical part of this thesis --- a proof-of-concept implementation of multiple affective agents interacting with each other. This section contains the following parts: (1) the world in which act, (2) the architecture of these agents, and (3) the evolutionary changes in the agent pool from generation to generation.
 
 \subsection{World}
 
@@ -161,7 +131,9 @@ Grid worlds, as we have seen, are potentially infinite, n-dimensional grids, alt
 
 2D grid worlds are representationally the same as \wext-type worlds; they just have some structural invariants on their frames. If we additionally specialize the representation through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$, we arrive at the type of world which will serve as the environment for our agents: the ``jungle world'' \wjun.
 
-\begin{definition}[\wjun] Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be the the following tuples:
+\begin{definition}[\wjun]
+\label{def:wjun}
+Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be the following tuples:
 
 $$
 	\begin{array}{r c l}
@@ -213,6 +185,7 @@ Let $W$ be a \wjun-type world. The iterated application of $\varphi$ to $W$, giv
 \end{definition}
 
 \begin{definition}[Standards semantics of \wjun-type worlds]
+\label{def:ssem}
 The standard semantics for \wjun-type worlds are given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$ is defined as 
 $$\ssem(W = \tuple{G, \mathrm{gl}}) = \tuple{G', \mathrm{gl}'}, $$
 where $W'$ is identical to $W$, except for the following changes.\\
@@ -317,10 +290,84 @@ It should now be clear why \wjun\ is called a jungle world: it is a social hunte
 
 \subsection{Agents}
 
-The agents of our simulation are composed of two parts: their minds and their bodies. Their minds constitute their sensors and agents functions; their bodies make up their actuators, although they are more than that. An agent's body can be damaged and healed, perceived by others, and it can hold items. As such, the bodies are actually part of the world. From the point of view of the agent's mind, they are external objects they happen to control.
+The agents of our simulation are composed of two parts: their minds and their bodies. Their minds constitute their sensors and agents functions; their bodies, make up their actuators, although they are more than that. An agent's body can be damaged and healed, perceived by others, and it can hold items. As such, the bodies are actually part of the world. From the point of view of the agent's mind, they are external objects they happen to control.
 
-\subsubsection{Body}
+\subsubsection{Body and percepts}
 
-As we saw in Definition~
+As we saw in Definitions~\ref{def:wjun} and \ref{def:ssem}, agents (1) have a body composed of a name, health, fatigue, and an inventory of items they carry, and (2) can execute one of a fixed set of actions at each step. These data function in the obvious way: the name is publicly available information other agents can use for identification, the agent is killed when its health drops to zero, fatigue determines the effectiveness when attacking and prevents movement when low, and the inventory is used to store items which the agent can use for itself or give away to others.
+
+What we are missing is the description of the agent's percepts in the world. As in the original Wumpus world, an agent can perceive everything on its cell:
+	\begin{enumerate}
+		\item the list other agents,
+		\item the list of (dead) Wumpuses,
+		\item the plant, if present,
+		\item the breeze,
+		\item the stench, and
+		\item the amount of gold.
+	\end{enumerate}
+	
+In addition to this local information, the agent also has a sense of sight, modelled via an approximately $\frac{\pi}{2}$ radians cone, the length of which depends on daylight. Formally:
+
+\begin{definition}[Sight cone]
+	Let $W = \tuple{G, \mathrm{gl}}$ be a 2D grid world. Let an agent be on vertex $v \in V(G)$, facing into direction $d$. Let further $l_d$ be the line starting at $v$ and extending infinitely into direction $d$, and $l_{v,w}$ be the line from $v$ to $w$. Then, any other vertex $w \in V(G)$ falls into the agent's sight cone exactly if:
+	
+	\begin{enumerate}
+		\item the angle between $l_{v,w}$ and $l_d$ is $\leq \frac{\pi}{4}$,
+		\item $\dist{v}{w} \leq 1.5 \times (\field{light} \circ \field{time} (\mathrm{gl}) + 1)$, and
+		\item there is a path $v_1, v_2, \dots, v_n$ from $v$ to $w$ in $G$ such that
+		the distance between $v_i$ and the closest point along $l_{v,w}$ is $\leq \frac{\sqrt{2}}{2}$ ($1 \leq i \leq n$).
+	\end{enumerate}
+\end{definition}
+
+Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two limits its length based on light conditions; criterion three demands rough line-of-sight, saying that the path in $G$ may never deviate more than one cell from the line in $\R^2$. Figure~\ref{fig:los} illustrates the working of this mechanism.
+
+\begin{figure}
+	\centering
+	\includegraphics{figs/los.png}
+	\caption{Sight cone of an agent at $\field{light}(t) = 2$. The agent has a $\frac{\pi}{4}$ field of vision, but cannot see through gaps and around corners.}
+	\label{fig:los}
+\end{figure}
+
+If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the following cell data:
+
+\begin{enumerate}
+	\item the list of agents on $w$,
+	\item the list of Wumpuses,
+	\item the plant, it present,
+	\item the pit, if present, and
+	\item the amount of gold.
+\end{enumerate}
+
+The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.
+
+TODO: INCLUDE ROTATION INTO AGENT/WORLD/ACTIONS (ssem)
 
 \subsubsection{Cognition}
+
+In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
+
+\noindent
+Note: instead of detailed partial descriptions, I, for now, sketch the rough outline of the proposed implementation to give a complete picture.
+
+Outline of algorithm (provisional):
+
+\begin{enumerate}
+	\item One agent is composed of the following components:
+		\begin{enumerate}
+			\item Sensory perception
+			\item Affect
+			\item Planner and world simulator
+			\item Memory
+			\item Attention
+		\end{enumerate}
+	\item Sensory perception will be highly domain-dependent and, by necessity, simplified. Domains might be Blocks world or some custom-made game scenarios. In essence, it will deliver facts about objects and events in the world, bypassing the problem of faithfully implementing sight, hearing, smell, balance, pain, etc.
+	\item At each step, sensory facts are put into the neural system's message space and are consumed by the evocative systems (PSBC, attention-refocusing, SJS, AS).
+	\item The primitive parts of the PSBC can affect the executive system directly. Its higher-level parts, as well as the other three systems, work in the following way:
+		\begin{enumerate}
+			\item Attention-refocusing directs cognitive resources to stimuli it deems important. As a result, the priority of (certain) sensory messages is increased, increasing their influence on PSBC and the SJS.
+			\item PSBC and the SJS evoke certain emotions. Thereby, they might set goals for the agent. This setting of goals engages the planner and world simulator, which try to devise a plan to meet said goal --- this is implemented via DLV-hex programs. These DLV-hex program, in turn, call the emotional systems in order to modulate both the planner and the world simulator according to the emotional state of the agent.
+			\item Planned steps are committed to (short-term) memory.
+		\end{enumerate}
+	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
+	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
+\end{enumerate}

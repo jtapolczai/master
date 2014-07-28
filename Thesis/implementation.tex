@@ -352,9 +352,83 @@ Our goal is the design of a reasonably effective type of agent which will be abl
 
 In order to achieve this, three things are indispensable: (1) memory, (2) utility maximisation. If we don't impose a memory limit, it is quite easy to store everything that happens to an agent. In essence, such memories will be fragments of past states of the external which can be used to make decisions. Utility maximisation is the far more complex task: the agent must either perform individual fact synthesis or inherit certain predilections from its parents and must therewith exhibit useful behaviour. The fact synthesis can be done in a number of ways --- machine learning, reasoning, heuristic ---, but we must remember that knowledge, by itself, does not determine behaviour. In addition, the agent must possess a decision-making component which uses gained knowledge in whatever way it sees fit. Knowledge thus  {\em allows} efficient decisions to be made, but fundamentally, an agent is free to disregard any fact it wants.
 
-\paragraph{Design goals and cognitive Components.}
+\paragraph{Design goals and dynamism.} As with the world, the cognitive structure of agents is a compromise between intricacy and simplicity. Ideally, we would make every aspect of an agent's thinking dynamic and malleable under evolution, but this would necessitate a prohibitively high implementation effort. Instead, based on the description of \textsc{filters} in Section~\ref{sec:schemaOfCognition}, I make the following compromise: the {\em evocation} of an emotion will be dynamic and different from agent to agent; the effects of emotions, however, will always be the same. As an example, different agents might become angry in different situations and to different degrees, but the behavioural consequences that follow from the emotion of anger will always be the same.
 
-\paragraph{Pre-social behaviour.} Certain  (PSBC), (SJS)
+\paragraph{Cognitive components.} Based on the considerations outlines in earlier sections, I propose that an agent be made out of the following six components:
+
+\begin{description}
+	\item[Pre-social behaviour control (PSBC).] This controls aspects of an agents which, in principle, can work without other agents: fear, happiness, anger.  These emotions are evoked in social situations, but in principle, they would be useful in a world without any other agents present.
+	\item[Social judgement system (SJS).] Analogous to the \textsc{PSBC}, the \textsc{SJS} controls an agent's appraisal of other agents and thereby influences its decision-making.
+	\item[Counterfactual perception (CFP).] In essence, the imagination of an agent. Counterfactual perception allows reasoning and the internal simulation of parts of the world.
+	\item[Attention-control (AC).] Attention-control is the recognition of certain real or counterfactual percepts as {\em important}, leading to the allocation of cognitive resources to them.
+	\item[Decision-making (DM)]. The executive component of an agent which includes both internal decision-making (IDM) --- {\em what to think} --- and external decision-making (EDM) --- {\em what to do}.
+	\item[Memory.] Memory is a log of counterfactual and real events that happened to an agent. This log is utilized chiefly by the \textsc{CFP} with the goal of providing world data.
+\end{description}
+
+As a side remark: these components make no claim to encompass the kind of intelligence humans have. In particular, there are no aesthetics, pure abstract reasoning,  purely self-centered emotions like grief or remorse, etc. Providing such mechanisms is, however, not the goal; we merely wish to make the agents complex enough to successfully navigate the world. For this purpose, a simple, social, and animalistic sort of intelligence suffices, one that, in complexity, is actually below even that of wolves an dogs.
+
+\paragraph{Pre-social behaviour control.} The \textsc{PSBC} is responsible for evoking the kinds of emotions that non-social animals have, in some form. Here ``pre-social'' does not refer to the current use of this system, but to its evolutionary history: past animals were able to experience anger and fear, or something analogous to anger and fear, before they developed social lives. The fight-or-flight instinct, and deciding when to engage in activity and when to abstain from it are necessary for survival even in solitary animals. A social system, of course, does impact these emotions, but a social system is not necessary for them to be there.
+We categorize the experienced emotions according to approach/avoidance and positivity/negativity, based on the work of Davidson and Irwin \cite{davidson1999}. The four combinations are:
+
+\begin{enumerate}
+	\item Anger, which is approach-related and negative. Anger causes \action{attack}-actions against Wumpuses and other agents, and \action{gesture}-actions with parameters the agent deems to be aggressive.
+	\item Fear, which is avoidance-related and negative. Fear, causes flight and \action{gesture}-actions which the agent deems submissive.
+	\item Enthusiasm, which is approach-related and positive. Enthusiasm has a wide range of effects: \action{gesture}-actions with positive contents, fatigue-inducing activity, and the gathering and sharing of resources with other agents.
+	\item Contentment, which is avoidance-related and positive. Contentment is concerned primarily with the conservation of resources. Its chief effect is thus the is the cessation of action.
+\end{enumerate}
+
+Figure~\ref{fig:PSBC} illustrates these four emotions. Each of them can be evoked with an {\em intensity} $\in [0,1]$. Higher-intensity emotions exert a greater pressure on decision-making and attention control. The figure, with its two axes, should not mislead us into thinking that emotions are just vectors in $\R^2$. There is, for example, weak/intense enthusiasm and there is weak/intense contentment, but there is no emotion halfway between contentment and enthusiasm. It {\em is} possible that a stimulus should activate two emotions at once, but those will actually be two emotions, not one ``hybrid'' emotion.
+
+\begin{figure}
+	\centering
+	\include{Figs/PSBC}
+	\caption{Emotions evoked by the \textsc{PSBC}.The left half contains the positive emotions of enthusiasm and contentment, whereas the right contains the negative emotions of anger and fear. Enthusiasm and anger are both approach-related, causing action, whereas contentment and fear are approach-related, causing flight or abstinence from action.}
+	\label{fig:PSBC}
+\end{figure}
+
+In terms of implementation, this is realized via the system we saw in Figure~\ref{fig:affectiveSubsystem}, Section~\ref{sec:selectedSubsystems}: each of the four emotions has a \textsc{selector} reads percepts and the \textsc{hormone storage}, using them to decide whether and how intensely to activate and emotion. Emotions, once active, flow into the \textsc{hormone storage} and send messages into the global message space. The scheme is illustrated in Figure~\ref{fig:PSBC_system}.
+
+\begin{figure}
+	\centering
+	%\include{Figs/PSBC_system}
+	
+	\begin{tikzpicture}
+		\figDataContainer{(0,0)}{Percepts}
+		
+		\draw [->] (2,0.3) -- (2,2)
+		                   -- (-0.25,2)
+		                   -- (-0.25,3);
+		                   
+		\draw [->] (2,0.3) -- (2,2)
+		                   -- (1.25,2)
+		                   -- (1.25,3);
+		                   
+		\draw [->] (2,0.3) -- (2,2)
+		                   -- (2.75,2)
+		                   -- (2.75,3);
+		                   
+		\draw [->] (2,0.3) -- (2,2)
+		                   -- (4.25,2)
+		                   -- (4.25,3);
+		                   
+		\figFilter{(-0.75,4)}{$\field{ft}_{\mathsf{A}}$}
+		\figFilter{(0.75,4)}{$\field{ft}_{\mathsf{F}}$}
+		\figFilter{(2.25,4)}{$\field{ft}_{\mathsf{C}}$}
+		\figFilter{(3.75,4)}{$\field{ft}_{\mathsf{E}}$}
+		
+		TODO: make interpreter command
+		TODO: put interpreter & processor next
+		TODO: make hormone storage
+		TODO: pipe them into hormone storage
+		TODO: pipe HS into filters
+		TODO: pipe processors into message space
+		
+	\end{tikzpicture}
+	\caption{The PSBC as a collection of a hormone storage and four emotion selectors.}
+	\label{fig:PSBC_system}
+\end{figure}
+
+\paragraph{Social judgement system.}
 
 \newpage
 

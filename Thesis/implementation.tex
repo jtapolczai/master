@@ -377,56 +377,43 @@ We categorize the experienced emotions according to approach/avoidance and posit
 	\item Contentment, which is avoidance-related and positive. Contentment is concerned primarily with the conservation of resources. Its chief effect is thus the is the cessation of action.
 \end{enumerate}
 
-Figure~\ref{fig:PSBC} illustrates these four emotions. Each of them can be evoked with an {\em intensity} $\in [0,1]$. Higher-intensity emotions exert a greater pressure on decision-making and attention control. The figure, with its two axes, should not mislead us into thinking that emotions are just vectors in $\R^2$. There is, for example, weak/intense enthusiasm and there is weak/intense contentment, but there is no emotion halfway between contentment and enthusiasm. It {\em is} possible that a stimulus should activate two emotions at once, but those will actually be two emotions, not one ``hybrid'' emotion.
+Figure~\ref{fig:PSBC} illustrates these four emotions. Each of them can be evoked with a {\em valence} $\in [-1,1]$. Higher-valence emotions exert a greater pressure on decision-making and attention control. The figure, with its two axes, should not mislead us into thinking that emotions are just vectors in $\R^2$. There is, for example, weak/intense enthusiasm and there is weak/intense contentment, but there is no emotion halfway between contentment and enthusiasm. It {\em is} possible that a stimulus should activate two emotions at once, but those will actually be two emotions, not one ``hybrid'' emotion.
 
 \begin{figure}
 	\centering
-	\include{Figs/PSBC}
+	\input{Figs/Tikz/PSBC}
 	\caption{Emotions evoked by the \textsc{PSBC}.The left half contains the positive emotions of enthusiasm and contentment, whereas the right contains the negative emotions of anger and fear. Enthusiasm and anger are both approach-related, causing action, whereas contentment and fear are approach-related, causing flight or abstinence from action.}
 	\label{fig:PSBC}
 \end{figure}
 
-In terms of implementation, this is realized via the system we saw in Figure~\ref{fig:affectiveSubsystem}, Section~\ref{sec:selectedSubsystems}: each of the four emotions has a \textsc{selector} reads percepts and the \textsc{hormone storage}, using them to decide whether and how intensely to activate and emotion. Emotions, once active, flow into the \textsc{hormone storage} and send messages into the global message space. The scheme is illustrated in Figure~\ref{fig:PSBC_system}.
+In terms of implementation, this is realized via the system we saw in Figure~\ref{fig:affectiveSubsystem}, Section~\ref{sec:selectedSubsystems}: each of the four emotions has a \textsc{selector} reads percepts and the \textsc{hormone storage}, using them to decide whether and how intensely to activate and emotion. Emotions, once active, flow into the \textsc{hormone storage} and send messages into the global message space. The scheme is illustrated in Figure~\ref{fig:PSBC_system}: the filters of each emotions continually check the agent's percepts for relevant data. If a filter is activated, the message is passed the component's interpreter (to determine its urgency), which hands it to the processor. It then puts the message ``I feel emotion $E$ with intensity $\pi_E$'' into the message space. In this, it takes the \textsc{hormone storage} into account: experiencing an emotion increases the corresponding hormone level, and, conversely, a high hormone level intensifies the emotion. Formally, the hormone storage is defined thus:
+
+\begin{definition}[Hormone storage]
+	Let $E_1,\dots,E_n$ be the names of emotions. A hormone storage for the emotions $E_1,\dots,E_n$ is the ADT $\type{H}_n = \tuple{h_1 :: \R, \dots, h_n :: \R}$, together with the functions $\field{receive} :: \type{H}_n \rightarrow \N \rightarrow \R \rightarrow \type{H}_n$ and $\field{tick} :: \type{H}_n \rightarrow \type{H}_n$, given by
+	
+	$$
+		\begin{array}{r c l}
+			\field{receive}(h,e,\pi) & = & 2\pi * \log_2(1-\field{get}(h,e))\\
+			\\
+			\field{tick}(h) & = & \langle \field{get}_1(h) - 2\log(\field{get}_1(h)),\\
+							 &   & \ \ \dots\\
+							 &   & \ \field{get}_n(h) - 2\log(\field{get}_n(h)) \rangle.
+		\end{array}
+	$$
+\end{definition}
+
+The idea is that hormone level increases and decreases logarithmically: whenever an agent receives a message about an experienced emotion $e$ with intensity $\pi$, the corresponding level $h_e$ is increased proportionally to $\pi$ and the logarithm of the current level. The levels also decay at each time step, returning the agent to a neutral state over time if no stimuli are experienced.
+
+One objection might be that, while an agent can experience conflicting emotions if multiple components are activated, different emotions cannot directly interact with each other. This is true; however, they can interact indirectly, through the message space: if a component $C_X$ reads the message of component $C_Y$ as a percept and, because of that, begins sending negatively-valenced messages, the emotion $X$ is effectively shutting down the emotion $Y$ --- even though the process is controlled by $C_Y$. I of course do not claim that this mechanism accurately reflects nature, that being an empirical question, but at the very least, it gives us a way to implement both ambivalence and quick mood changes.
 
 \begin{figure}
 	\centering
-	%\include{Figs/PSBC_system}
-	
-	\begin{tikzpicture}
-		\figDataContainer{(0,0)}{Percepts}
-		
-		\draw [->] (2,0.3) -- (2,2)
-		                   -- (-0.25,2)
-		                   -- (-0.25,3);
-		                   
-		\draw [->] (2,0.3) -- (2,2)
-		                   -- (1.25,2)
-		                   -- (1.25,3);
-		                   
-		\draw [->] (2,0.3) -- (2,2)
-		                   -- (2.75,2)
-		                   -- (2.75,3);
-		                   
-		\draw [->] (2,0.3) -- (2,2)
-		                   -- (4.25,2)
-		                   -- (4.25,3);
-		                   
-		\figFilter{(-0.75,4)}{$\field{ft}_{\mathsf{A}}$}
-		\figFilter{(0.75,4)}{$\field{ft}_{\mathsf{F}}$}
-		\figFilter{(2.25,4)}{$\field{ft}_{\mathsf{C}}$}
-		\figFilter{(3.75,4)}{$\field{ft}_{\mathsf{E}}$}
-		
-		TODO: make interpreter command
-		TODO: put interpreter & processor next
-		TODO: make hormone storage
-		TODO: pipe them into hormone storage
-		TODO: pipe HS into filters
-		TODO: pipe processors into message space
-		
-	\end{tikzpicture}
-	\caption{The PSBC as a collection of a hormone storage and four emotion selectors.}
+	\input{Figs/Tikz/PSBC_system}
+	\caption{The PSBC as a collection of a hormone storage and four emotion selectors. The neural components shown are {\em anger} ($\mathsf{A}$), {\em contentment} ($\mathsf{C}$), {\em enthusiasm} ($\mathsf{E}$), and {\em fear} ($\mathsf{F}$).}
 	\label{fig:PSBC_system}
 \end{figure}
+
+TODO: do the scrubber, which deletes anger-messages if "i am no longer angry"-messages get in.
 
 \paragraph{Social judgement system.}
 

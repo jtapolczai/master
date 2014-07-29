@@ -1,0 +1,68 @@
+\usepackage{graphicx}
+% Packages
+\usepackage{soul}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in]{geometry}
+\usepackage[usenames, dvipsnames]{xcolor}
+\usepackage{framed}
+\usepackage{booktabs}
+
+% Tikz
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
+
+% Theorems
+\makeatletter
+\newtheoremstyle{break}
+   {\topsep}{\topsep}%
+   {\itshape}{}%
+   {\bfseries}{}%
+   { }
+   {\thmname{#1}\thmnumber{\@ifnotempty{#1}{ }\@upn{#2}}%
+    \thmnote{ {\bfseries(#3)}}.}% 
+\makeatother
+\theoremstyle{break}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{definition}[thm]{Definition}
+\newtheorem{invariant}[thm]{Invariant}
+\newtheorem{example}[thm]{Example}
+\newtheorem{notation}[thm]{Notation}
+
+% Basic fluff
+\newcommand{\mt}[1]{\textnormal{#1}}
+\renewcommand{\tt}[1]{\texttt{#1}}
+\colorlet{shadecolor}{yellow!60}
+\newcommand{\highlight}[1]{\colorbox{yellow!70}{#1}}
+\newcommand{\shade}[1]{\begin{shaded}#1\end{shaded}}
+\newcommand{\tuple}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\lp}{{\rm (}}
+\newcommand{\rp}{{\rm )}}
+\newcommand{\paren}[1]{\lp{#1}\rp}
+% Graph Cartesian product
+\newcommand{\gcp}{\Box}
+\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
+\newcommand{\degs}{{^\circ}}
+
+% Blackboard bold letters, quantors
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\B}{\mathbb{B}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\allQ}[1]{\left[\forall #1 \right]}
+\newcommand{\exQ}[1]{\left[\exists #1 \right]}
+
+% Symbol for the extended Wumpus world.
+\newcommand{\wext}{\ensuremath{\mathcal{W}_{\mathrm{ext}}}}
+\newcommand{\wjun}{\ensuremath{\mathcal{W}_{\mathrm{jun}}}}
+\newcommand{\ssem}{\ensuremath{\mathrm{sem}}}
+
+\newcommand{\dist}[2]{||{#1},{#2}||}

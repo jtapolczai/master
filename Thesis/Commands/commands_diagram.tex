@@ -1,0 +1,124 @@
+\definecolor{PaleRed}{RGB}{202,61,58}
+\definecolor{DeepRed}{RGB}{158,46,43}
+\definecolor{PaleBlue}{RGB}{100,180,250}
+
+\newcommand{\figDataContainer}[2]{%
+\coordinate (a) at #1;
+\coordinate (b) at ($(a) + (0.15,0.15)$);
+\coordinate (c) at ($(b) + (0.15,0.15)$);
+
+\shade [top color=PaleRed,bottom color=DeepRed]
+($(c) + (0,0)$) -- ($(c) + (0,-2)$)
+                to [out=340,in=180] ($(c) + (1,-2.2)$)
+                to [out=0,in=170] ($(c) + (4,-1.5)$)
+                -- ($(c) + (4,0)$);
+                
+\draw [very thick, opacity=0.1]
+($(c) + (0,0)$) -- ($(c) + (0,-2)$)
+                to [out=340,in=180] ($(c) + (1,-2.2)$)
+                to [out=0,in=170] ($(c) + (4,-1.5)$)
+                -- ($(c) + (4,0)$) 
+                -- ($(c) + (0,0)$); 
+                
+\shade [top color=PaleRed,bottom color=DeepRed]
+($(b) + (0,0)$) -- ($(b) + (0,-2)$)
+                to [out=340,in=180] ($(b) + (1,-2.2)$)
+                to [out=0,in=170] ($(b) + (4,-1.5)$)
+                -- ($(b) + (4,0)$);
+                
+\draw [very thick, opacity=0.1]
+($(b) + (0,0)$) -- ($(b) + (0,-2)$)
+                to [out=340,in=180] ($(b) + (1,-2.2)$)
+                to [out=0,in=170] ($(b) + (4,-1.5)$)
+                -- ($(b) + (4,0)$) 
+                -- ($(b) + (0,0)$); 
+                
+\shade [top color=PaleRed,bottom color=DeepRed]
+($(a) + (0,0)$) -- ($(a) + (0,-2)$)
+                to [out=340,in=180] ($(a) + (1,-2.2)$)
+                to [out=0,in=170] ($(a) + (4,-1.5)$)
+                -- ($(a) + (4,0)$);
+                
+\draw [thick, opacity=0.3]
+($(a) + (0,0)$) -- ($(a) + (0,-2)$)
+                to [out=340,in=180] ($(a) + (1,-2.2)$)
+                to [out=0,in=170] ($(a) + (4,-1.5)$)
+                -- ($(a) + (4,0)$) 
+                -- ($(a) + (0,0)$); 
+                
+\node at ($(a) + (2,-1)$) {\color{white}{#2}};
+}
+
+\newcommand{\figProcessingComponent}[2]{%
+\coordinate (a) at #1;
+\shade [top color=PaleBlue,bottom color=RoyalBlue]
+($(a) + (0,0)$) -- ($(a) + (0,-1)$)
+                -- ($(a) + (1,-1)$)
+                -- ($(a) + (1,0)$);
+\draw [thick, opacity=0.4]
+($(a) + (0,0)$) -- ($(a) + (0,-1)$)
+                -- ($(a) + (1,-1)$)
+                -- ($(a) + (1,0)$)
+                -- ($(a) + (0,0)$);
+                
+\node at ($(a) + (0.5,-0.5)$) {\color{white}{#2}};
+}
+
+\newcommand{\figFilter}[2]{%
+\coordinate (a) at #1;
+
+
+\coordinate (a) at #1;
+
+\shade [top color=LimeGreen,bottom color=OliveGreen]
+($(a) + ({0.5+sin(45)/2}, {-0.5+(sin(45)/2)})$) arc [radius=0.5,start angle=45,end angle=315] -- ++($(0,{cos(45)})$);
+
+\draw [thick, opacity=0.4]
+($(a) + ({0.5+sin(45)/2}, {-0.5+(sin(45)/2)})$) arc [radius=0.5,start angle=45,end angle=315] -- ++($(0,{cos(45)})$);
+
+\node at ($(a) + (0.5,-0.5)$) {\color{white}{#2}};
+}
+
+\newcommand{\figProcessingComponentBent}[2]{%
+\coordinate (a) at #1;
+
+\shade [top color=PaleBlue,bottom color=RoyalBlue]
+($(a) + (0.1,0)$) -- ($(a) + (1.35,0)$)
+                  -- ($(a) + (1.5,-0.5)$)
+                  -- ($(a) + (1.35,-1)$)
+                  -- ($(a) + (0.1,-1)$)
+                  to [out=115,in=270] ($(a) + (0.0,-0.5)$)
+                  to [out=90,in=245] ($(a) + (0.1,0)$);
+                  
+\draw [thick, opacity=0.4]
+($(a) + (0.1,0)$) -- ($(a) + (1.35,0)$)
+                  -- ($(a) + (1.5,-0.5)$)
+                  -- ($(a) + (1.35,-1)$)
+                  -- ($(a) + (0.1,-1)$)
+                  to [out=115,in=270] ($(a) + (0.0,-0.5)$)
+                  to [out=90,in=245] ($(a) + (0.1,0)$);
+
+\node at ($(a) + (0.75,-0.5)$) {\color{white}{#2}};
+}
+
+\newcommand{\figProcessingComponentBentUp}[2]{%
+\coordinate (a) at #1;
+
+\shade [top color=PaleBlue,bottom color=RoyalBlue]
+($(a) + (0,-1.4)$) -- ($(a) + (0,-0.15)$)
+                  -- ($(a) + (0.5,0)$)
+                  -- ($(a) + (1,-0.15)$)
+                  -- ($(a) + (1,-1.4)$)
+                  to [out=205,in=0] ($(a) + (0.5,-1.5)$)
+                  to [out=180,in=335] ($(a) + (0,-1.4)$);
+                  
+\draw [thick, opacity=0.4]
+($(a) + (0,-1.4)$) -- ($(a) + (0,-0.15)$)
+                  -- ($(a) + (0.5,0)$)
+                  -- ($(a) + (1,-0.15)$)
+                  -- ($(a) + (1,-1.4)$)
+                  to [out=205,in=0] ($(a) + (0.5,-1.5)$)
+                  to [out=180,in=335] ($(a) + (0,-1.4)$);
+
+\node at ($(a) + (0.5,-0.75)$) {\color{white}{#2}};
+}

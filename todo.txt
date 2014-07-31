@@ -1,0 +1,70 @@
+todo: define actions (attack, pick up, drop,...), ideally before the standard semantics
+
+* wumpus: if line of sight, approaches agent depending on temperature and distance
+    -> colder => agent can get closer without being attacked
+    -> colder => wumpus is weaker (but agent fatigues more)
+
+	* agent travel -> take into account fatigue and danger
+	
+	* agent engages with other agents
+	
+	* agent sees environment
+	
+	* agent drops/picks up items
+	
+	* agents stays in place -> traverses loop -> fatigue restore (per edge direction function)
+	
+	* fights wumpus, outcome depends on wumpus/agent strength and health
+	  (fatigue: attack power, health: defense)
+
+ * best fatigue regen in temperate temp, slower in freezing/hot
+ 
+ * agent: health regen each turn
+ * agent: health regen with eating plants
+ 
+ * plants regen after N turns
+ 
+ * agents can attack/be friendly with each other
+ * attack effectiveness depends on fatigue
+ * agents can give gold gifts to each other => increase friendliness
+ * small gold gifts => spite?
+   ** large gold gifts => impressed?
+   ** not handcrafted; depends on agent's affective state
+ 
+ * fixed set of actions: smile, flee, growl,...
+   * agent A sends signals; agent B interprets them - but possible incorrectly
+  
+ * temperature changes periodically
+ 
+ * pits cause death
+ 
+ * line of sight exists: ~5 squares
+ 
+ * agents can turn left/right
+ 
+ * killed wumpus drops meat => health regen
+ * meat and fruits can be gathered into inventories and gifted to other
+   agents, like gold
+   
+ * gold => one-time gathering
+ * plants => repeated gathering
+ * meat => hunting
+ 
+ *agents can attack/defend together against wumpuses
+ 
+ *wumpuses are territorial herbivores; move on their own. defend plants and kill agents.
+
+		\item[Agent]
+		* make decision => record
+			* fight wumpus
+			* pick up gold
+			* pick up fruit
+			* put down item
+			* travel
+	  * fall into pit
+	  * danger, fatigue
+			* interact with other agent
+	  * world offers: send gesture
+	  				  attack
+	  				  give item
+	  				  NOP

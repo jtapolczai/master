@@ -1,0 +1,12 @@
+	\begin{tikzpicture}[scale=3]
+		\draw [ultra thick, <->] (-1.1,0) -- (1.1,0);
+		\draw [ultra thick, <->] (0,-1.1) -- (0,1.1);
+		\draw [ultra thick, <->] ($({sqrt(2)/2}, {sqrt(2)/2})$) -- ($(-{sqrt(2)/2}, {-sqrt(2)/2})$);
+		
+		\node [left] at (-1.1,0) {trust};
+		\node [right] at (1.1,0) {distrust};
+		\node [below] at (0,-1.1) {contempt};
+		\node [above] at (0,1.1) {respect};
+		\node [below, right] at ($({sqrt(2)/2},{sqrt(2)/2})$) {sympathy};
+		\node [above, left] at ($({-sqrt(2)/2},{-sqrt(2)/2})$) {antipathy};
+	\end{tikzpicture}

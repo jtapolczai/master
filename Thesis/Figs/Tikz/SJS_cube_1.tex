@@ -1,0 +1,23 @@
+	\begin{tikzpicture}
+	
+		\cubeShape{(-1,-1)}{DeepRed} %tc
+		\cubeShape{(0,-1)}{yellow} %uc
+		\cubeShape{(-1,0)}{orange} %tr
+		\cubeShape{(0,0)}{yellow} %ur
+		
+		\draw [ultra thick, <->] (-1.1,0) -- (1.1,0);
+		\draw [ultra thick, <->] (0,-1.1) -- (0,1.1);
+		\draw [ultra thick, <-] ($({sqrt(2)/2}, {sqrt(2)/2})$) -- (0,0);
+		
+		\coordinate (tc) at (-1,-1.3);
+		\coordinate (uc) at (1.5,-1.2);
+		\coordinate (tr) at (-1,1.2);
+		\coordinate (ur) at (1.5,1.2);
+		
+		
+		\node [left] at (tc) {\cubeLabel{Bumbling fool}{trust, contempt}};
+		\node [right] at (uc) {\cubeLabel{Ineffectual villain}{distrust, contempt}};
+		\node [left] at (tr) {\cubeLabel{Arch enemy}{trust, respect}};
+		\node [right] at (ur) {\cubeLabel{Traitor}{distrust, respect}};
+	\end{tikzpicture}
+	

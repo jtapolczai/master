@@ -1,0 +1,23 @@
+	\begin{tikzpicture}
+	
+		\cubeShape{(-1,-1)}{DeepGreen} %tc
+		\cubeShape{(0,-1)}{green} %uc
+		\cubeShape{(-1,0)}{RoyalBlue} %tr
+		\cubeShape{(0,0)}{JungleGreen} %ur
+		
+		\draw [ultra thick, <->] ($({sqrt(2)/2},{sqrt(2)/2}) + (-1.1,0)$) --++ (2.2,0);
+		\draw [ultra thick, <->] ($({sqrt(2)/2},{sqrt(2)/2}) + (0,-1.1)$) --++ (0,2.2);
+		\draw [ultra thick, ->] ($({sqrt(2)/2},{sqrt(2)/2})$) --++ ($({-sqrt(2)/2}, {-sqrt(2)/2})$);
+		
+		\coordinate (tc) at (-1,-1.3);
+		\coordinate (uc) at (1.5,-1.2);
+		\coordinate (tr) at (-1,1.2);
+		\coordinate (ur) at (1.5,1.2);
+		
+		
+		\node [left] at (tc) {\cubeLabel{Lovable fool}{trust, contempt}};
+		\node [right] at (uc) {\cubeLabel{Scamp}{distrust, contempt}};
+		\node [left] at (tr) {\cubeLabel{Best friend}{trust, respect}};
+		\node [right] at (ur) {\cubeLabel{Unreliable friend}{distrust, respect}};
+	\end{tikzpicture}
+	

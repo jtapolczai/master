@@ -116,28 +116,7 @@ We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply 
 
 \begin{figure}
 	\centering
-	\begin{tikzpicture}[scale=0.8]
-		\draw (1,1) -- (5,1); \draw (7,1) -- (10,1);
-		\draw (0,2) -- (10,2);
-		\draw (0,3) -- (1,3); \draw (2,3) -- (4,3); \draw (6,3) -- (10,3);
-		\draw (0,4) -- (1,4); \draw (2,4) -- (4,4); \draw (6,4) -- (7,4); \draw (8,4) -- (9,4);
-		\draw (0,5) -- (1,5); \draw (2,5) -- (5,5);
-		\draw (0,6) -- (5,6); \draw (8,6) -- (9,6);
-		\draw (0,7) -- (2,7); \draw (4,7) -- (6,7); \draw (7,7) -- (10,7);
-		\draw (0,8) -- (2,8); \draw (3,8) -- (10,8);
-		\draw (3,9) -- (10,9);
-		
-		\draw (1,1) -- (1,2); \draw (1,3) -- (1,5); \draw (1,6) -- (1,8);
-		\draw (2,0) -- (2,5); \draw (2,6) -- (2,8);
-		\draw (3,0) -- (3,10);
-		\draw (4,1) -- (4,10);
-		\draw (5,0) -- (5,2);
-		\draw (5,5) -- (5,10);
-		\draw (6,2) -- (6,4); \draw (6,7) -- (6,10);
-		\draw (7,1) -- (7,4); \draw (7,7) -- (7,10);
-		\draw (8,0) -- (8,10);
-		\draw (9,0) -- (9,6); \draw (9,7) -- (9,10);
-	\end{tikzpicture}
+	\input{Figs/Tikz/2dgrid}
 	\caption{A segment of 2-dimensionally embeddable world. The vertices are its rooms, the edges are the connections between the rooms.}
 	\label{fig:2dgrid}
 \end{figure}
@@ -348,65 +327,7 @@ Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two
 %
 \begin{figure}
 	\centering
-	%\includegraphics{figs/los.png}
-	
-	\begin{tikzpicture}[scale=0.80]
-		\draw (1,-1) -- (5,-1); \draw (7,-1) -- (10,-1);
-		\draw (0,-2) -- (10,-2);
-		\draw (0,-3) -- (1,-3); \draw (2,-3) -- (4,-3); \draw (6,-3) -- (10,-3);
-		\draw (0,-4) -- (1,-4); \draw (2,-4) -- (4,-4); \draw (6,-4) -- (7,-4); \draw (8,-4) -- (9,-4);
-		\draw (0,-5) -- (1,-5); \draw (2,-5) -- (5,-5);
-		\draw (0,-6) -- (5,-6); \draw (8,-6) -- (9,-6);
-		\draw (0,-7) -- (2,-7); \draw (4,-7) -- (6,-7); \draw (7,-7) -- (10,-7);
-		\draw (0,-8) -- (2,-8); \draw (3,-8) -- (10,-8);
-		\draw (3,-9) -- (10,-9);
-		
-		\draw (1,-1) -- (1,-2); \draw (1,-3) -- (1,-5); \draw (1,-6) -- (1,-8);
-		\draw (2,0) -- (2,-5); \draw (2,-6) -- (2,-8);
-		\draw (3,0) -- (3,-10);
-		\draw (4,-1) -- (4,-10);
-		\draw (5,0) -- (5,-2);
-		\draw (5,-5) -- (5,-10);
-		\draw (6,-2) -- (6,-4); \draw (6,-7) -- (6,-10);
-		\draw (7,-1) -- (7,-4); \draw (7,-7) -- (7,-10);
-		\draw (8,0) -- (8,-10);
-		\draw (9,0) -- (9,-6); \draw (9,-7) -- (9,-10);
-		
-		\fill [white] (5,-5) circle [radius=0.15];
-		\fill [white] (6,-4) circle [radius=0.15];
-		\fill [white] (8,-5) circle [radius=0.15];
-		\fill [white] (7,-4) circle [radius=0.15];
-		\fill [white] (8,-4) circle [radius=0.15];
-		\draw (5,-5) circle [radius=0.15];
-		\draw (6,-4) circle [radius=0.15];
-		\draw (8,-5) circle [radius=0.15];
-		\draw (7,-4) circle [radius=0.15];
-		\draw (8,-4) circle [radius=0.15];
-		
-		\fill [color=PaleRed] (4,-5) circle [radius=0.15];
-		\fill [color=PaleRed] (4,-6) circle [radius=0.15];
-		\fill [color=PaleRed] (5,-6) circle [radius=0.15];
-		\fill [color=PaleRed] (5,-7) circle [radius=0.15];
-		\fill [color=PaleRed] (6,-7) circle [radius=0.15];
-		\fill [color=PaleRed] (7,-7) circle [radius=0.15];
-		\fill [color=PaleRed] (8,-6) circle [radius=0.15];
-		\fill [color=PaleRed] (4,-4) circle [radius=0.15];
-		\fill [color=PaleRed] (9,-5) circle [radius=0.15];
-		
-		\fill [red, opacity=0.3] (6,-8) -- ($(6,-8) + ({sqrt(2.25*4.5)},{sqrt(2.25*4.5)})$) arc [radius=4.5, start angle=45,end angle=135];
-		
-		\path [name path=delta, draw=none] (8,-7) -- ++(153.43:3);
-		\draw [name path=direct, color=DeepBlue] (6,-8) -- (8,-4) node [midway, left, above, rotate=63.43] {$l_{v,w}$};
-		
-		\path[name intersections={of = delta and direct}];
-		\coordinate (i) at (intersection-1);
-		
-		\draw [color=DeepBlue] (i) -- (8,-7) node [midway,above,rotate=-26.57] {$\Delta$};
-		
-		\draw (6,-8.3) node [right] {$v$};
-		\draw (8,-3.7) node [right] {$w$};
-		\draw (8,-7.3) node [right] {$d$};
-	\end{tikzpicture}
+	\input{Figs/Tikz/los}
 	\caption{Sight cone of an agent at $\field{light}(t) = 2$. The cone with width $\frac{\pi}{4}$ signifies that agent's range of vision. Red vertices in it are perceived; the hollow black ones are not because they are blocked by holes in the world. The line $l_{v,w}$ illustrates why the vertex $w$ is not visible from $v$: the shortest path from $v$ to $w$ runs through $d$, but the distance $\Delta$ between $d$ and the closest point along $l_{v,w}$ is larger than $\frac{\sqrt{2}}{2}$.}
 	\label{fig:los}
 \end{figure}
@@ -494,7 +415,27 @@ One objection might be that, while an agent can experience conflicting emotions 
 
 TODO: do the scrubber, which deletes anger-messages if "i am no longer angry"-messages get in.
 
-\paragraph{Social judgement system.}
+\paragraph{Social judgement system.} The SJS has the task of recognizing other agents as such and guiding friendly and hostile interactions with them. Real social behaviour is very complex and involves not only other agents as individuals, but the group itself. In the minds of tribal animals, the group exists as an entity unto itself, with its own will and mood. Our agents will not implement this group dynamic. Instead, they will appraise each other agent individually, according to three criteria:
+
+\begin{description}
+	\item[Sympathy.] This determines how much an agent likes another one. Liked agents will receive friendly gestures, assistance in the form of food and protection from Wumpuses and hostile agents, disliked agents will be denied these benefits, receive hostile gestures and, if the dislike is sufficient, might be attacked.
+	\item[Trust.] The trustworthiness of another agent influences the likelihood of two things: (1) the propensity to give out items in the hope of future reciprocation and (2) the aggressiveness if protection from the agent is present. The reasoning here is that the agent will be emboldened by the presence of trusted allies.
+	\item[Competence.] Competence judges the capabilities of another agent. Competent agents will be respected, incompetent ones will be held in contempt. Similarly to trust, the presence of friendly, competent agents emboldens the agent.
+\end{description}
+
+Sympathy is the primary axis of judgement, since it determines whether others are seen as friends or enemies. Trust and competence are secondary and help an agents ascertain the quality of its allies an enemies. The three criteria are illustrated in Figure~\ref{fig:SJS}.
+
+With the help of the agent's memory, it delivers judgements about a given other agent.
+
+\paragraph{Counterfactual perception.}
+
+\paragraph{Attention-control.}
+
+\paragraph{Decision-making.}
+
+\paragraph{Memory.}
+
+\paragraph{Relationship between components.}
 
 \newpage
 

@@ -423,11 +423,9 @@ TODO: do the scrubber, which deletes anger-messages if "i am no longer angry"-me
 	\item[Competence.] Competence judges the capabilities of another agent. Competent agents will be respected, incompetent ones will be held in contempt. Similarly to trust, the presence of friendly, competent agents emboldens the agent.
 \end{description}
 
-Sympathy is the primary axis of judgement, since it determines whether others are seen as friends or enemies. Trust and competence are secondary and help an agents ascertain the quality of its allies an enemies. The three criteria are illustrated in Figure~\ref{fig:SJS}.
+Sympathy is the primary axis of judgement, since it determines whether others are seen as friends or enemies. Trust and competence are secondary and help an agents ascertain the quality of its allies an enemies. The three criteria are illustrated in Figure~\ref{fig:SJS}. Figures~\ref{fig:SJS_enemy} and \ref{fig:SJS_friend} list the different antagonistic and sympathetic judgements.
 
-\begin{figure}
-
-\end{figure}
+The evocative mechanism is structurally similar to that of the PSBC, as we saw in Figure~\ref{fig:PSBC_system}, but with two crucial differences: first, social judgements are always attached to agents; second, the SJS models each of these three categories as a single emotions which can be positive or negative --- that is, an agent cannot simultaneously experience trust and distrust for another one, but only a single emotion (trust).
 
 \begin{figure}
 	\centering
@@ -445,7 +443,7 @@ Sympathy is the primary axis of judgement, since it determines whether others ar
 	\end{tabular}
 	
 	\caption{The four antipathic judgements. Enemies can be respected or held in contempt, and deemed trustworthy or untrustworhty. Respect for an enemy implies that an agent holds it to be competent. Trust implies that an agent knows its enemy to be basically honourable.}
-	\label{SJS_enemy}
+	\label{fig:SJS_enemy}
 \end{figure}
 
 \begin{figure}
@@ -457,8 +455,10 @@ Sympathy is the primary axis of judgement, since it determines whether others ar
 	\end{tabular}
 	
 	\caption{The four sympathic judgements. Friends, like enemies, respected or held in contempt, and deemed trustworthy or untrustworhty. Distrust renders the sympathetic judgement tentative, since the agent cannot be sure of the assistance of an untrustworthy friend. Contempt works similarly, but doubts a friend's ability, rather than loyalty.}
-	\label{SJS_friend}
+	\label{fig:SJS_friend}
 \end{figure}
+
+This system is a quite gross simplification of the real world. In reality, one does not simply possess an emotion called ``trust'', which is a
 
 With the help of the agent's memory, it delivers judgements about a given other agent.
 

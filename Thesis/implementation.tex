@@ -425,7 +425,7 @@ TODO: do the scrubber, which deletes anger-messages if "i am no longer angry"-me
 
 Sympathy is the primary axis of judgement, since it determines whether others are seen as friends or enemies. Trust and competence are secondary and help an agents ascertain the quality of its allies an enemies. The three criteria are illustrated in Figure~\ref{fig:SJS}. Figures~\ref{fig:SJS_enemy} and \ref{fig:SJS_friend} list the different antagonistic and sympathetic judgements.
 
-The evocative mechanism is structurally similar to that of the PSBC, as we saw in Figure~\ref{fig:PSBC_system}, but with two crucial differences: first, social judgements are always attached to agents; second, the SJS models each of these three categories as a single emotions which can be positive or negative --- that is, an agent cannot simultaneously experience trust and distrust for another one, but only a single emotion (trust).
+The evocative mechanism is structurally similar to that of the PSBC, as we saw in Figure~\ref{fig:PSBC_system}, but with two crucial differences: first, social judgements are always attached to agents; second, the SJS models each of these three categories as a single emotions which can be positive or negative --- that is, an agent cannot simultaneously experience trust and distrust for another one, but only a single emotion (trust). We see this system illustrated in Figure~\ref{fig:SJS_system}, which shows it to be largely analogous to the PSBC in Figure~\ref{fig:PSBC_system}.
 
 \begin{figure}
 	\centering
@@ -458,9 +458,16 @@ The evocative mechanism is structurally similar to that of the PSBC, as we saw i
 	\label{fig:SJS_friend}
 \end{figure}
 
-This system is a quite gross simplification of the real world. In reality, one does not simply possess an emotion called ``trust'', which is a
+\begin{figure}
+	\centering
+	%\input{Figs/Tikz/SJS_system}
+	\caption{The SJS {\em for one other agent} as a collection of a hormone storage and three emotion selectors. The neural components shown are {\em sympathy} ($\mathsf{S}$), {\em trust} ($\mathsf{T}$), and {\em respect} ($\mathsf{R}$). Every agent which is encountered has its own SJS instance.}
+	\label{fig:SJS_system}
+\end{figure}
 
-With the help of the agent's memory, it delivers judgements about a given other agent.
+This system is a quite gross simplification of the real world. In reality, one does not simply possess an emotion called ``trust'', the value of which can go from -1 to +1, but rather, one possesses different kinds of trust, and trust with respect to different matters. One can, for instance, have a gut feeling that someone is generally unreliable and shady, but one can, through reason, come to the conclusion that this person will keep his word in a certain situation in which punishment would ensue. This does given an assurance of loyalty, but does not change the fundamentally negative appraisal of that person. Similarly, one can have judgements which seem to lie halfway between reason and emotion, and which pertain only to certain situations, such as trusting someone with money, with completing a task on time, or with one's child.
+
+Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
 \paragraph{Counterfactual perception.}
 
@@ -473,15 +480,6 @@ With the help of the agent's memory, it delivers judgements about a given other 
 \paragraph{Relationship between components.}
 
 \newpage
-
-
-
-In this section, having sketched the underlying model and the relevant subsystems, I move on to the description of an implementation of an affective artificial agent. Its structure will necessarily be a gross simplification of any biological agent, but it will serve as a proof-of-concept.\\
-
-\noindent
-Note: instead of detailed partial descriptions, I, for now, sketch the rough outline of the proposed implementation to give a complete picture.
-
-Outline of algorithm (provisional):
 
 \begin{enumerate}
 	\item One agent is composed of the following components:

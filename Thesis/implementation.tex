@@ -481,72 +481,13 @@ At the very heart of the agent lies its decision-making component, which control
 
 The third part of the system is the attention-control, which also evaluates real and imagined emotions and outputs its data for the DM's usage. It's only purpose is to alert the agent to important or shocking information which demands immediate action. Its alerts cause the DM to cease its current course of action and re-plan based on the piece of information deemed important.
 
-\begin{tikzpicture}[auto,
- afblock/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center,
- 				   fill=DeepGreen, fill opacity=0.2},
- imblock/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center,
- 				   fill=NavyBlue, fill opacity=0.2},
- block/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center},
-tblock/.style = {draw, trapezium, minimum height=10mm, 
-                 trapezium left angle=75, trapezium right angle=105, align=center},
-                        ]
-               
-    \node [afblock] (psbc) {};
-    \node at (psbc) {PSBC};
-    \node [afblock,below=of psbc, yshift=0.7cm] (sjs) {};
-    \node at (sjs) {SJS};
-    \node at (psbc.north) [above] (affectTitle) {Affect};
-    \node [draw, color=DeepGreen, rounded corners=0.5em, ultra thick, fill=DeepGreen, opacity=0.6, fill opacity=0.15, fit={(affectTitle) (psbc) (sjs)}] (affect) {};
-    
-    
-    \node [imblock, right=of psbc, xshift=2cm, yshift=-0.7cm] (dm) {};
-    \node at (dm) {DM};
-    \node [block, below=of dm, yshift=-2cm] (cfp) {};
+\begin{figure}
+	\centering
+	\input{Figs/Tikz/cognitive_system}
+	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and CFP the imagination loop responsible for planning. The CFP, with External perception, makes up the perception system. The edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (counterfactual) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
+	\label{fig:cognitive_system}
+\end{figure}
 
-             
-    \fill [color=NavyBlue, opacity=0.2]
-       (cfp) -- ++(0,0) -- ++(0.5,0.5)
-             -- ++(0.9,0) -- ++(0,-1) -- ++(-1.9,0) -- ++(0.5,0.5); 
-    \node at (cfp.south) [below, yshift=-0.4cm] (imaginationTitle) {Imagination loop};
-    
-    \node [draw, color=NavyBlue, rounded corners=0.5em, ultra thick, fill=NavyBlue, opacity=0.4, fill opacity=0.1, fit={(imaginationTitle) (dm) (cfp)}] (imagination) {};
-    
-    \fill [color=white]
-       (cfp) -- ++(0,0) -- ++(-0.5,-0.5)
-             -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
-    \fill [color=orange, opacity=0.2]
-       (cfp) -- ++(0,0) -- ++(-0.5,-0.5)
-             -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
-    \node [block] at (cfp) {CFP};
-    
-    \node [block, fill=yellow, fill opacity=0.3, right=of dm, xshift=2cm] (ac) {};
-    \node at (ac.north) [above] (acTitle) {Attention};
-    \node [draw, color=yellow, rounded corners=0.5em, ultra thick, fill=yellow, opacity=0.6, fill opacity=0.15, fit={(acTitle) (ac)}] (acBox) {};
-    \node at (ac) {AC};
-    
-    \node [block, minimum width=40mm, fill=orange, fill opacity=0.2, above=of dm, yshift=3cm] (perception) {};
-    \node at (perception) {External Perception}; 
-    
-    \node [tblock, above=of ac, xshift=-3cm, yshift=-0.5cm] (ext) {External\\world};
-    
-    \node [left=of affect, xshift=2cm, yshift=3cm] (perceptionTitle) {Perception system};
-    \node [draw, color=orange, rounded corners=0.5em, ultra thick, fill=orange, opacity=0.4, fill opacity=0.1, fit={(perceptionTitle)}] (perceptionBox) {};
-    
-    \draw [color=orange, opacity=0.4, ultra thick] (perceptionBox) -- ++(0,1.7) -- ++(6.05,0);
-    \draw [color=orange, opacity=0.4, ultra thick] (perceptionBox) -- ++(0,-7.5) -- ++(6.65,0);
-    
-    \path (psbc) edge [bend left=10,->] node [above] {$\alpha_1$} (dm)
-          (sjs) edge [bend right=10,->] node [below] {$\alpha_2$} (dm)
-          (dm) edge [bend right=25,->] node [right, xshift=0.3cm] {$\iota$} (cfp)
-          (cfp) edge [bend right=25,->] (dm)
-          (perception) edge [bend right=30,->] node [above] {$\varphi$} (affect)
-          (perception) edge [->] node {$\varphi$} (dm)
-          (perception) edge [bend left=30,->] node {$\varphi$} (acBox)
-          (dm) edge [->] node {IO} (ext)
-          (cfp) edge [bend right=35,->] node {$\varphi_\iota$} (acBox)
-          (cfp) edge [bend left=35,->] node [above] {$\varphi_\iota$} (affect);
-    
-    \end{tikzpicture}
 
 \newpage
 

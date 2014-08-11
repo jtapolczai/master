@@ -487,27 +487,3 @@ The third part of the system is the attention-control, which also evaluates real
 	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and CFP the imagination loop responsible for planning. The CFP, with External perception, makes up the perception system. The edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (counterfactual) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
 	\label{fig:cognitive_system}
 \end{figure}
-
-
-\newpage
-
-\begin{enumerate}
-	\item One agent is composed of the following components:
-		\begin{enumerate}
-			\item Sensory perception
-			\item Affect
-			\item Planner and world simulator
-			\item Memory
-			\item Attention
-		\end{enumerate}
-	\item Sensory perception will be highly domain-dependent and, by necessity, simplified. Domains might be Blocks world or some custom-made game scenarios. In essence, it will deliver facts about objects and events in the world, bypassing the problem of faithfully implementing sight, hearing, smell, balance, pain, etc.
-	\item At each step, sensory facts are put into the neural system's message space and are consumed by the evocative systems (PSBC, attention-refocusing, SJS, AS).
-	\item The primitive parts of the PSBC can affect the executive system directly. Its higher-level parts, as well as the other three systems, work in the following way:
-		\begin{enumerate}
-			\item Attention-refocusing directs cognitive resources to stimuli it deems important. As a result, the priority of (certain) sensory messages is increased, increasing their influence on PSBC and the SJS.
-			\item PSBC and the SJS evoke certain emotions. Thereby, they might set goals for the agent. This setting of goals engages the planner and world simulator, which try to devise a plan to meet said goal --- this is implemented via DLV-hex programs. These DLV-hex program, in turn, call the emotional systems in order to modulate both the planner and the world simulator according to the emotional state of the agent.
-			\item Planned steps are committed to (short-term) memory.
-		\end{enumerate}
-	\item The PSBC's effects and the plans created by the agent are then translated into choices via conscious motor control, with the proviso that plans, even if deemed effective, are not executed under all circumstances: if some step is deemed too undesirable according to the emotional state of the agent at the time of execution, it might be abandoned and the planning stage starts anew. The kinds of actions that the agent executes are again highly dependent on the domain. Full physical simulation of a body would be prohibitively expensive, but simple, atomic actions like ``move left'' or ``attack'' would suffice for modelling purposes.
-	\item The AS and sub-conscious motor control will not be implemented for the time being, as they are only relevant in highly sophisticated worlds.
-\end{enumerate}

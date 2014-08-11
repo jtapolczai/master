@@ -1,4 +1,9 @@
-todo: define actions (attack, pick up, drop,...), ideally before the standard semantics
+* describe attack semantics
+* restructure "selected subsystems" into separate chapters
+* make chapter: global architecture
+* "counterfactual perception"... elegant solution to the problem of consciousness
+
+
 
 * wumpus: if line of sight, approaches agent depending on temperature and distance
     -> colder => agent can get closer without being attacked
@@ -31,17 +36,7 @@ todo: define actions (attack, pick up, drop,...), ideally before the standard se
    ** large gold gifts => impressed?
    ** not handcrafted; depends on agent's affective state
  
- * fixed set of actions: smile, flee, growl,...
-   * agent A sends signals; agent B interprets them - but possible incorrectly
-  
- * temperature changes periodically
- 
- * pits cause death
- 
- * line of sight exists: ~5 squares
- 
- * agents can turn left/right
- 
+
  * killed wumpus drops meat => health regen
  * meat and fruits can be gathered into inventories and gifted to other
    agents, like gold
@@ -61,10 +56,5 @@ todo: define actions (attack, pick up, drop,...), ideally before the standard se
 			* pick up fruit
 			* put down item
 			* travel
-	  * fall into pit
 	  * danger, fatigue
 			* interact with other agent
-	  * world offers: send gesture
-	  				  attack
-	  				  give item
-	  				  NOP

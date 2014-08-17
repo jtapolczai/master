@@ -264,7 +264,7 @@ where $W'$ is identical to $W$, except for the following changes.\\
 	
 	\item[Agent behavior] Agents always move after Wumpuses and, depending on their implementation, may choose one of the following actions:
 	
-	\begin{enumerate}
+	\begin{enumerate}\label{lst:agentBehavior}
 		\item[\action{move}] --- move along an edge $e$. If $\Delta(e) = 0$, restore $0.1$ of the agent's fatigue, otherwise reduce it by $0.05 \times \field{fatigue}(e)$. Additionally (if $\Delta(e) \neq 0$), apply $0.1$ damage with probability $\field{danger}(e)$.
 		
 		If an agent's fatigue is below $0.2$, it cannot choose this action.
@@ -467,13 +467,46 @@ This system is a quite gross simplification of the real world. In reality, one d
 
 Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
-\paragraph{Counterfactual perception.}
+\paragraph{Counterfactual perception.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and a existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
-This is where DLV comes in -> "play fast and loose with consistency" in "selected subsystems"
+\begin{definition}[Syntax: Disjunctive logic program]
+	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule is of the following form:
+	
+	$$
+		\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}.
+	$$
+	
+	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ such that $p_i$ is a predicate symbol and every $\field{a_{i,1},\dots,a_{i,n_i}}$ is either a variable or a constant \paren{$1 \leq i \leq m$}. We also call predicates {\em literals}. If a predicate only has constant arguments, it is called a {\em ground literal}. For every literal $c$, the literal $\neg c$ is called the {\em strong negation} of $c$.
+	
+	$\field{P_1 \vee \dots \vee P_h}$ is called the head of the rule, $\field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ B_{h+k+m}}$ the body. The predicates $\field{P_{h+1}, \dots, P_{h+k}}$ are asserted, the predicates $\field{P_{k+1}, \dots, P_{m}}$ are default-negated. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
+\end{definition}
+
+Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. Note that not knowing a predicate to be true is different from knowing it to be false. Answer-set solver computer so-called answer-sets of logic programs. An answer-set is defined as:
+
+\begin{definition}[Answer-set]
+Let $\Pi$ be a disjunctive logic program. A set of ground literals $\mathcal{A}$ is an answer-set of $\Pi$ if the following holds:
+
+\begin{description}
+	\item[Consistent.] There is no ground literal $c$ such that $\{c, \neg c\} \subseteq \mathcal{A}$.
+	\item[Complete.] For every rule $(\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}) \in \Pi$:\\ $\{P_{h+1},\dots, P_k \} \subseteq \mathcal{A}$ and $\{P_{k+1},\dots, P_m \} \cap \mathcal{A} = \emptyset$ together imply $\{P_1,\dots, P_h \} \cap \mathcal{A} \neq \emptyset$.
+	\item[No violated constraints.] There is no constraint $(\aspR \field{P_{1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}) \in \Pi$ such that $\{P_1,\dots, P_k \} \subseteq \mathcal{A}$ and $\{P_{k+1},\dots, P_m \} \cap \mathcal{A} = \emptyset$.
+	\item[Minimal.] $\mathcal{A}$ is minimal with respect to set inclusion, i.e. if any $\mathcal{A}'$ of $\Pi$ is consistent, complete, and doesn't violate any constraints, then $\mathcal{A}' \nsubseteq \mathcal{A}$.
+\end{description}
+\end{definition}
+
+Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it allows the outsourcing of literals: whenever the solver finds a so annotated literal, it consults an external program for its value instead of deriving its value internally. We will use this interface to implement the loop between the CFP and the DM: 
+
+ 
+ \todo[inline]{TODO: Describe usage of DLV. At each step, the atom \texttt{choice} is outsourced by DLVhex.}
 
 \paragraph{Attention-control.}
 
-\paragraph{Decision-making.}
+\paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the CFP and thus drives the planning process. Aside from the difference in target, both are modelled via a function
+$$
+	\field{choice} :: \type{s \rightarrow World \rightarrow \tuple{Action, s}}
+$$
+
+where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the CFP and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}
 
 \paragraph{Memory.}
 

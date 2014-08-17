@@ -499,7 +499,9 @@ Answer-sets are thus the smallest sets of knowledge that we can derive, starting
  
  \todo[inline]{TODO: Describe usage of DLV. At each step, the atom \texttt{choice} is outsourced by DLVhex.}
 
-\paragraph{Attention-control.}
+\paragraph{Attention-control.}\ \\
+
+\todo[inline]{TODO: Describe attention-control.}
 
 \paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the CFP and thus drives the planning process. Aside from the difference in target, both are modelled via a function
 $$
@@ -508,7 +510,9 @@ $$
 
 where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the CFP and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}
 
-\paragraph{Memory.}
+\paragraph{Memory.}\ \\
+
+\todo[inline]{TODO: Describe memory (knowledge-base).}
 
 \paragraph{Relationship between components.} Having defined the agents components, we now put them together into a functioning whole. The core of the agent's cognition will consist of the interplay between perception and decision-making, with the affective systems and attention control influencing the latter. We see the system sketched in Figure~\ref{fig:cognitive_system}.
 
@@ -522,3 +526,5 @@ The third part of the system is the attention-control, which also evaluates real
 	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and CFP the imagination loop responsible for planning. The CFP, with External perception, makes up the perception system. The edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (counterfactual) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
 	\label{fig:cognitive_system}
 \end{figure}
+
+ \todo[inline]{TODO: Specify the agent function.}

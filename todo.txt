@@ -1,3 +1,5 @@
+"play fast and loose with consistency" in "selected subsystems"
+
 * describe attack semantics
 * restructure "selected subsystems" into separate chapters
 * make chapter: global architecture

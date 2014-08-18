@@ -99,10 +99,10 @@ The way in which I just described the interaction between the world simulator an
 	\begin{enumerate}
 		\item $W$ be a world simulator for the world of propositions $\mathcal{P}$ in $(A,R)$,
 		\item $P$ a planner,
-		\item $St = \{s_1,\dots,s_p\}$ a set of messages about steps to take,
-		\item $Cat = \{K_1,\dots,K_q\}$ a list of message categories,
-		\item $\tt{cur}$ the current state of the world simulator,
-		\item $\tt{ins}\backslash 2$, $\tt{del}\backslash 1$ functions for inserting or deleting a state change into the world simulator or the planner,
+		\item $\mathrm{St} = \{s_1,\dots,s_p\}$ a set of messages about steps to take,
+		\item $\mathrm{Cat} = \{K_1,\dots,K_q\}$ a list of message categories,
+		\item $\field{cur} : W_S$ the current state of the world simulator,
+		\item $\field{ins} :: W_S \rightarrow \mathrm{St} \rightarrow W \rightarrow W$, $\field{del} :: \mathrm{St} \rightarrow W \rightarrow W$ functions for inserting or deleting a state change into the world simulator or the planner,
 		\item $t(i)$ and $b(i)$ functions which increase or decrease the likelihood of sending a message belonging to category $K_i$ and 
 		\item $\bot_{i}, \top_{i}$ the failure and success signals of a message belonging to the category $K_i$.
 	\end{enumerate}
@@ -111,14 +111,14 @@ One step of the interaction between $W$ and $P$, in a scenario where $P$ propose
 
 $$
 	\begin{array}{l l l}
-		T_{\mt{guess}}(\tt{step}) & \equiv & \sendsf{P}{\tt{ins}(\tt{cur}, \tt{step})}{\tt{step}}{\tt{step}}{\tt{ins}(\tt{cur}, \tt{step})}{W}\\
+		T_{\mt{guess}}(\tt{step}) & \equiv & \sendsf{P}{\tt{ins cur step})}{\tt{step}}{\tt{step}}{\tt{ins cur step})}{W}\\
 		\\
 		T_{\mt{check}}(\tt{step}) & \equiv &
 		\forall K_i \in Cat: K_i(\tt{step}) \Rightarrow\\
 		
-		& & \hspace{1cm} \mt{if } \exists (cur, s_j) \in R\ \mt{ then } \
-					\sendsf{W}{}{\top_i}{\top_i}{t(i)}{P}\\
-		& & \hspace{1cm} \mt{else }\ \sendsf{W}{\tt{del}(\tt{step})}{\bot_i}{\bot_i}{\tt{del}(\tt{step}), b(i)}{P}\\
+		& & \hspace{1cm} \mt{if } \exQ{s_j} (\field{cur}, s_j) \in R\ \mt{ then } \
+					\sendsf{W}{}{\top_i}{\top_i}{t\ i}{P}\\
+		& & \hspace{1cm} \mt{else }\ \sendsf{W}{\tt{del step})}{\bot_i}{\bot_i}{\tt{del step}, b\ i}{P}\\
 	\end{array}
 $$
 

@@ -574,12 +574,7 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 	Note: $\circ$ is function concatenation; the list of functions in $\field{agent}$ has to be read bottom-to-top.
 \end{definition}
 
-
-
-
-
-
-
+This agent function can now be plugged into the standard semantics we defined back in Definition~\ref{def:ssem}: the function $\ssem$ calls every agent with the world and its last internal state and receives a new internal agent state, together with the action the agent has chosen to perform at that time step.
 
 
 

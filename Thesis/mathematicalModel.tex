@@ -111,6 +111,47 @@ Since an ADT is merely the sum of product types, it is itself a type constructor
 	$\B$, $\Q$, $\C$ are the sets of Boolean number and rational/complex numbers, respectively. $\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both. $\type{[a]}$ denotes a list of values of type $\type{a}$.
 \end{example}
 
+\noindent
+We also define the usual convenience functions for these types:
+$$
+	\begin{array}{l l}
+		\begin{array}{r c l}
+			\field{isJust} & :: & \type{Maybe\ a \rightarrow Bool}\\
+			\field{isJust}(m) & = & \left\{
+				\begin{array}{l l}
+					\type{True} & \mt{if } m = \type{Just}\ x\\
+					\type{False} & \mt{otherwise}\\
+				\end{array}
+			\right.\\
+			\\
+			\field{fromJust} & :: & \type{Maybe\ a \rightarrow a}\\
+			\field{fromJust}(m) & = & \left\{
+				\begin{array}{l l}
+					x & \mt{if } m = \type{Just}\ x\\
+					\bot & \mt{otherwise}\\
+				\end{array}
+			\right.\\
+		\end{array}
+		&
+		\begin{array}{r c l}
+			\field{head} & :: & \type{[a] \rightarrow a}\\
+			\field{head}(l) & = & \left\{
+				\begin{array}{l l}
+					x & \mt{if } l = x:xs\\
+					\bot & \mt{otherwise}\\
+				\end{array}
+			\right.\\
+			\\
+			\field{tail} & :: & \type{[a] \rightarrow [a]}\\
+			\field{tail}(l) & = & \left\{
+				\begin{array}{l l}
+					xs & \mt{if } l = x:xs\\
+					\bot & \mt{otherwise}\\
+				\end{array}
+			\right.\\
+		\end{array}
+	\end{array}
+$$
 
 Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see Barendregt \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F$_\omega$ is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
 

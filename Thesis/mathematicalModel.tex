@@ -82,7 +82,7 @@ Henceforth, by convention, we will write type variables in lower-case and concre
 Function arrows allow the execution of functions in the obvious way:
 
 \begin{definition}[Function application]
-	Let $f :: \type{S} \rightarrow \type{T}$ and $x :: \type{T}$ Then $f(x) :: \type{T}$.
+	Let $f :: \type{S} \rightarrow \type{T}$ and $x :: \type{T}$. Then $f x :: \type{T}$.
 \end{definition}
 
 \noindent
@@ -117,7 +117,7 @@ $$
 	\begin{array}{l l}
 		\begin{array}{r c l}
 			\field{isJust} & :: & \type{Maybe\ a \rightarrow Bool}\\
-			\field{isJust}(m) & = & \left\{
+			\field{isJust}\ m & = & \left\{
 				\begin{array}{l l}
 					\type{True} & \mt{if } m = \type{Just}\ x\\
 					\type{False} & \mt{otherwise}\\
@@ -125,7 +125,7 @@ $$
 			\right.\\
 			\\
 			\field{fromJust} & :: & \type{Maybe\ a \rightarrow a}\\
-			\field{fromJust}(m) & = & \left\{
+			\field{fromJust}\ m & = & \left\{
 				\begin{array}{l l}
 					x & \mt{if } m = \type{Just}\ x\\
 					\bot & \mt{otherwise}\\
@@ -135,7 +135,7 @@ $$
 		&
 		\begin{array}{r c l}
 			\field{head} & :: & \type{[a] \rightarrow a}\\
-			\field{head}(l) & = & \left\{
+			\field{head}\ l & = & \left\{
 				\begin{array}{l l}
 					x & \mt{if } l = x:xs\\
 					\bot & \mt{otherwise}\\
@@ -143,7 +143,7 @@ $$
 			\right.\\
 			\\
 			\field{tail} & :: & \type{[a] \rightarrow [a]}\\
-			\field{tail}(l) & = & \left\{
+			\field{tail}\ l & = & \left\{
 				\begin{array}{l l}
 					xs & \mt{if } l = x:xs\\
 					\bot & \mt{otherwise}\\
@@ -198,7 +198,7 @@ We now give a notation for the sending and receiving of messages in a system. He
 The elements of a component statically determine which messages it can receive and send. Based on the behaviour of the filter, interpreter and processor of a component, we can express a number of properties.
 
 \begin{definition}[Message reception]
-	Let $C$ be a component and $m$ a message. $C$ can receive $m$ if and only if $\ft{C}(m) = \field{True}$ and $\int{C} = \field{Just } m'$ for some $m'$.
+	Let $C$ be a component and $m$ a message. $C$ can receive $m$ if and only if $\ft{C}\ m = \field{True}$ and $\int{C}\ m = \field{Just}\ m'$ for some $m'$.
 	When $C$ can receive all messages in $\{m_1,\dots,m_n\}$, we write:
 	$$
 		\canrec{m_1,\dots,m_n}{C}.
@@ -212,7 +212,7 @@ The elements of a component statically determine which messages it can receive a
 \end{definition}
 
 \begin{definition}[Message sending]
-	Let $C$ be a component and $m, m_1,\dots,m_n$ messages. $C$ can send out a message $m$ if and only if there exists a message $m_{\mt{in}}$ s.t. $\proc{C}(m_{\mt{in}}) = m$.
+	Let $C$ be a component and $m, m_1,\dots,m_n$ messages. $C$ can send out a message $m$ if and only if there exists a message $m_{\mt{in}}$ s.t. $\proc{C}\ m_{\mt{in}} = m$.
 	When $C$ can send all messages in $\{m_1,\dots,m_n\}$, we write:
 	
 	$$
@@ -277,7 +277,7 @@ Whereas the structural notation pertained to the static properties of a neural s
 \end{definition}
 
 \begin{definition}[Component mutation]
-	Let $f_1,f_2,\dots$ be functions $\compT{T}{I} \rightarrow \compT{T}{I}$ which preserve the names of components, $m,m'$ messages of type $T$, and let $C$ be a component of type $\compT{T}{I}$. When $C$ is changed into $f_n \circ \dots \circ f_1 (C)$ by a message $m$ it receives, or changed into $f_n \circ \dots \circ f_1 (C)$ by a message $m'$ it sends, we write, respectively:
+	Let $f_1,f_2,\dots$ be functions $\compT{T}{I} \rightarrow \compT{T}{I}$ which preserve the names of components, $m,m'$ messages of type $T$, and let $C$ be a component of type $\compT{T}{I}$. When $C$ is changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m$ it receives, or changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m'$ it sends, we write, respectively:
 	$$
 		\begin{array}{c}
 			\dots \rightarrow [m] \rightarrow \langle f_1,\dots,f_n \rangle C\\
@@ -296,7 +296,7 @@ Whereas the structural notation pertained to the static properties of a neural s
 	
 	\noindent
 	we omit the angle brackets.
-	The semantics are as follows: after by sending or receiving a message, $\co$ is replaced by $(\co - \{C\}) \cup \{f_n \circ \dots \circ f_1 (C) \}$.
+	The semantics are as follows: after by sending or receiving a message, $\co$ is replaced by $(\co - \{C\}) \cup \{(f_n \circ \dots \circ f_1)\ C \}$.
 \end{definition}
 
 \begin{definition}[Plastic and non-plastic neural systems]

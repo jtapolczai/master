@@ -539,15 +539,29 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 	
 	$$
 		\begin{array}{l}
-			\field{agent}\ w = \field{fromJust} \circ \field{head} \circ \field{dropWhile}\ \field{noResult} \circ \field{iterate}\ \field{loop}  \circ \field{perception}\ w\\
-			\quad \mt{where}\\
-			\quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S}\\
+			\begin{array}{l l}
+				\field{agent}\ w = & \field{fromJust}\\
+								   & \circ\ \field{getActionMessage}\\
+								   & \circ\ \field{head}\\
+								   & \circ\ \field{dropWhile}\ \field{noResult}\\
+								   & \circ\ \field{iterate}\ \field{loop}\\
+								   & \circ\ \field{perception}\ w\\
+			\end{array}\\
+			\quad \quad \mt{where}\\
+			\quad \quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S}\\
+			\quad \quad \quad \field{psbc}, \field{sjs}, \field{ac}, \field{dm}, \field{cfp} :: \type{S \rightarrow S}\\
 			\\
-			\quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]}\\
-			\quad \quad \field{iterate}\ f\ x = x : \field{iterate}(f x,x)\\
+			\quad \quad \quad \field{loop} :: \type{S \rightarrow S}\\
+			\quad \quad \quad \field{loop} = \field{cfp} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc}\\
 			\\
-			\quad \quad \field{dropWhile} :: \type{(a \rightarrow Bool) \rightarrow [a] \rightarrow [a]}\\
-			\quad \quad \field{dropWhile}\ p\ xs  = \left\{
+			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe Action}\\
+			\quad \quad \quad \field{noResult} = \field{not} \circ \field{isJust} \circ \field{getActionMessage}\\
+			\\
+			\quad \quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]}\\
+			\quad \quad \quad \field{iterate}\ f\ x = x : \field{iterate}(f x,x)\\
+			\\
+			\quad \quad \quad \field{dropWhile} :: \type{(a \rightarrow Bool) \rightarrow [a] \rightarrow [a]}\\
+			\quad \quad \quad \field{dropWhile}\ p\ xs  = \left\{
 				\begin{array}{l l}
 					h : \field{dropWhile}\ p\ t & \mt{if } xs = (h:t) \wedge (p\ h = \type{True})\\
 					xs & \mt{otherwise}\\
@@ -556,9 +570,9 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 		\end{array}
 	$$
 	
+	\noindent
+	Note: $\circ$ is function concatenation; the list of functions in $\field{agent}$ has to be read bottom-to-top.
 \end{definition}
-
-
 
 
 

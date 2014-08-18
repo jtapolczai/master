@@ -527,4 +527,49 @@ The third part of the system is the attention-control, which also evaluates real
 	\label{fig:cognitive_system}
 \end{figure}
 
- \todo[inline]{TODO: Specify the agent function.}
+We now have all the pieces we need to create the agent function $\field{agent}$:
+
+\begin{definition}[Agent function]
+	Let $S$ be a type. Then an agent function with internal data of type $S$ has type
+	$$
+		\field{agent}\ :: \type{\wjun \rightarrow S \rightarrow (S, Action)}.
+	$$
+	
+	That is, $\field{agent}$ takes the current world andits current internal state, and returns its new internal state, together with the action it wishes to perform. $\field{agent}$ is defined as:
+	
+	$$
+		\begin{array}{l}
+			\field{agent}\ w = \field{fromJust} \circ \field{head} \circ \field{dropWhile}\ \field{noResult} \circ \field{iterate}\ \field{loop}  \circ \field{perception}\ w\\
+			\quad \mt{where}\\
+			\quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S}\\
+			\\
+			\quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]}\\
+			\quad \quad \field{iterate}\ f\ x = x : \field{iterate}(f x,x)\\
+			\\
+			\quad \quad \field{dropWhile} :: \type{(a \rightarrow Bool) \rightarrow [a] \rightarrow [a]}\\
+			\quad \quad \field{dropWhile}\ p\ xs  = \left\{
+				\begin{array}{l l}
+					h : \field{dropWhile}\ p\ t & \mt{if } xs = (h:t) \wedge (p\ h = \type{True})\\
+					xs & \mt{otherwise}\\
+				\end{array}
+			\right.\\
+		\end{array}
+	$$
+	
+\end{definition}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -167,7 +167,8 @@ $$
 					 & = & \ \field{direction} :: \type{X_1^+ + X_1^- + X_2^+ + X_2^-},\\
 					 &   & \ \field{health} :: \R,\\
 					 &   & \ \field{fatigue} :: \R,\\
-					 &   & \ \field{inventory} :: [\type{\langle Item, \N \rangle}] \rangle
+					 &   & \ \field{inventory} :: [\type{\langle Item, \N \rangle}],\\
+					 &   & \ \field{state} :: \type{S} \rangle
 		\\
 		\\
 		\type{Wumpus} & = & \langle \field{health} :: \R,\\
@@ -175,7 +176,9 @@ $$
 	\end{array}
 $$
 
-Further, let $\mathrm{gl}$ be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
+The last component of $\type{Agent}$, $\field{state} :: \type{S}$, is the internal state of agents which we will discuss later.
+
+Let $\mathrm{gl}$ also be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
 \end{definition}
 
 Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, defined below.

@@ -1,8 +1,8 @@
-We now create a mathematical model for the description of the architecture of Section~\ref{sec:globalArchitecture}. This model will be split into two parts: the structural and the operational semantics. The structural semantics encode the static properties of neural systems, whereas the operational semantics describe the behaviour of such a system at runtime.
+We now create a mathematical model for the description of the architecture. This model will be split into two parts: the structural and the operational semantics. The structural semantics encode the static properties of neural systems, whereas the operational semantics describe the behaviour of such a system at runtime.
 
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
-Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. In this section the relevant notions will be introduced, without assuming any prior knowledge about the topic.
+Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. The following notions are from the $\lambda$ calculus and its attendant type systems. Anyone familiar with such can therefore skip this section. We will introduce types, type constructors, and their relation to functions, together with a few example types which will come in handy later on.
 
 \begin{definition}[Syntax: Type]\label{def:type}
 For our purposes, types are defined inductively thus:
@@ -82,7 +82,7 @@ Henceforth, by convention, we will write type variables in lower-case and concre
 Function arrows allow the execution of functions in the obvious way:
 
 \begin{definition}[Function application]
-	Let $f :: \type{S} \rightarrow \type{T}$ and $x :: \type{T}$. Then $f x :: \type{T}$.
+	Let $f :: \type{S} \rightarrow \type{T}$ and $x :: \type{T}$. Then $f\ x :: \type{T}$. Function application associates to the left, that is: $f\ x_1 \dots x_n = (\cdots((f\ x_1)\ x_2) \dots x_n)$.
 \end{definition}
 
 \noindent

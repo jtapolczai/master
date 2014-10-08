@@ -2,7 +2,7 @@ Having laid the theoretical framework, we come to the practical part of this the
 
 \subsection{World}
 
-The choice of world profoundly affects the implementation of the agent: its knowledge base, mechanism of perception and interaction, the required complexity of the implementation, etc. On one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other, the world should be sufficiently complex to allow the agent to shine. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. I shall first lay out the design goals and then evaluate three possible worlds for agents.
+The choice of world profoundly affects the implementation of the agent: its knowledge base, mechanism of perception and interaction, the required complexity of the implementation, etc. On the one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other hand, the world should be sufficiently complex to allow agents to distinguish themselves. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. I shall first lay out the design goals and then evaluate three possible worlds for agents.
 
 \paragraph{Design goals} The two most important criteria for prospective worlds are richness of interaction and world complexity, in that order. As said, an evaluation of affective agents is only possible if they can interact with their environment and other entities in a sufficiently complex way to allow agents with different emotional profiles to be distinguished from each other. Mechanisms of problem-solving like STRIPS \cite{fikesNilsson}, A* \cite{nilssonAStar}, ASP \cite{lifschitz}, forward-/backward-planning, etc. have been explored in the context of structurally simple worlds, generally those representable through propositional logic, cost-functions, decision tress, and the like. While these are useful, they are less appropriate in an affective scenario for the following two reasons:
 
@@ -21,7 +21,7 @@ It is of course still desirable to minimize complexity as far as possible. An ov
 
 Blocks worlds are the simplest type of abstract world, and many variations exist. They all have in common a number of shapes placed on top of each other in a 2-dimensional world. An agent can pick up and move a shape if and only if there are no other shapes on top of it (and if it is not already holding one). The goal generally consists of achieving some desired configuration of shapes, such as building or piecewise transporting a tower, or collecting all red triangles. 
 
-Micro-worlds like blocks worlds have extensively studied. In this, their simplicity has been their great advantage --- That very simplicity is serious problem for us, however. Affect is inherently a subtle and social phenomenon; it is not clear how it could be believably exhibited in such an abstract and simple world. The very same properties which expedite their theoretical study make them useless for our evaluation.
+Micro-worlds like blocks worlds have been extensively studied. In this, their simplicity has been their great advantage --- that very simplicity is a serious problem for us, however. Affect is inherently a subtle and social phenomenon; it is not clear how it could be believably exhibited in such an abstract and simple world. The very same properties which expedite their theoretical study make them useless for our evaluation.
 
 %\subsubsection{Real world}
 
@@ -66,17 +66,8 @@ We can interpret each vertex $v$ in the graph as a room with attached data $l(v)
 		Symmetrical & $\allQ{v_1,v_2 \in V(G)} (v_1,v_2) \in E(G) \Rightarrow (v_2,v_1) \in E(G)$\\ \addlinespace[0.7em]
 		Connected & $\allQ{v_1,v_2 \in V(G)}$ there exists a path from $v_1$ to $v_2$ in $G$\\ \addlinespace[0.7em]
 		
-		$n$-dimensionally embeddable
-		 &
-		\begin{minipage}[t]{0.65\textwidth}
-		there exists an infinite graph $S$ such that
-		\begin{enumerate}
-			\item $V(G) \subseteq V(S)$,
-			\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
-			\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
-			\item $(v_1,v_2) \in E(S)$ iff the distance between $v_1$ and $v_2$ in $\R^n$ is 1.
-		\end{enumerate}
-		\end{minipage}
+		$n$-dimensionally embeddable &
+		there exists an infinite, $n$-dimensional grid $S$ such that $G \subseteq S$\footnotemark
 		
 		\\ \addlinespace[0.5em]
 		\bottomrule
@@ -84,6 +75,14 @@ We can interpret each vertex $v$ in the graph as a room with attached data $l(v)
 		\end{tabular}
 	\end{center}
 \end{definition}
+
+\footnotetext{Formally, $G$ and $S$ must fulfil the following conditions:
+		\begin{enumerate}
+			\item $V(G) \subseteq V(S)$,
+			\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
+			\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
+			\item $(v_1,v_2) \in E(S)$ iff the Euclidean distance between $v_1$ and $v_2$ in $\R^n$ is 1.
+		\end{enumerate}}
 
 The first four properties speak for themselves. As for the fifth --- Figure~\ref{fig:2dgrid} shows an example of a 2-dimensionally embeddable frame. A frame $G$ is $n$-dimensionally embeddable if it is a fragment of an infinite, $n$-dimensional, square grid of nodes $S$, plus any loops $G$ might have. When we embed this infinite grid $S$ into $\R^n$ through an embedding, every edge corresponds to a vector of length 1 along exactly one dimension. If we additionally take $G$'s loops to correspond to null-vectors, this induces an {\em edge direction function} and a {\em position function}:
 
@@ -94,10 +93,10 @@ $$\Delta_n^\epsilon : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^-,\dots,x_n^+,x
 
 with $0$ corresponding to a loop and $x_i^+$/$x_i^-$ corresponding to forward/backward movement in the $i$th dimension. We also have a {\em position function}
 
-$$\pi^\epsilon :: V(G) \rightarrow \R^n.$$
+$$\pi^\epsilon :: V(G) \rightarrow \R^n,$$
 
-When the number of dimensions and the embedding are obvious, we omit $n$ and $\epsilon$.
-Since $\pi^\epsilon$ is injective, an inverse $(\pi^\epsilon)^{-1}$ also exists. Through it, we define the {\em indexing function} of $W$:
+with $pi^\epsilon(v) = r$ indicating that under $\epsilon$, $v$ was mapped to position $r$ in $\R^n$. When the number of dimensions and the embedding are obvious, we omit $n$ and $\epsilon$.
+Since $\pi^\epsilon$ is injective by definition, an inverse $(\pi^\epsilon)^{-1}$ also exists. Through it, we define the {\em indexing function} of $W$:
 
 $$
 	\begin{array}{l}
@@ -123,9 +122,11 @@ We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply 
 
 \begin{definition}[2D grid world]
 	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-type world \paren{with type variables $\type{T_v}, \type{T_e}, \type{T_g}$}. If $W$ is reflexive, connected, and 2-dimensionally embeddable $W$ is a {\em 2D grid world}.
-	Every 2D grid world has an associated function $\Delta_2 : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^- \}$.\\
-	Note: every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.
+	Every 2D grid world has an associated function $\Delta_2 : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^- \}$ and a position function $\pi : V(G) \rightarrow \R^2$.
 \end{definition}
+
+\noindent
+Note: every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.\\
 
 Grid worlds, as we have seen, are potentially infinite, n-dimensional grids, although their cells need not form a square or cube. Their shape can be irregular in that some rooms and connections may be missing, as long as the shape as a whole stays connected.
 
@@ -188,11 +189,11 @@ Let $\varphi$ be a function of type $\wjun \rightarrow \wjun$. $\varphi$ is call
 Now let $W$ be a \wjun-type world. The iterated application of $\varphi$ to $W$, given by the list ${[W, \varphi\ W, \varphi^2\ W, \varphi^3\ W, \dots]}$, is called a {\em run of $W$ \paren{with semantics $\varphi$}}. $\varphi^n\ W$ is referred to as the {\em state of $W$'s simulation at time $n$ \paren{with semantics $\varphi$}}.
 \end{definition}
 
-\begin{definition}[Standards semantics of \wjun-type worlds]
+\begin{definition}[Standard semantics of \wjun-type worlds]
 \label{def:ssem}
 The standard semantics for \wjun-type worlds are given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$ is defined as 
-$$\ssem\ (W = \tuple{G, \mathrm{gl}}) = \tuple{G', \mathrm{gl}'}, $$
-where $W'$ is identical to $W$, except for the following changes.\\
+$$\ssem\ \tuple{G, \mathrm{gl}} = \tuple{G', \mathrm{gl}'}, $$
+where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, except for the following changes:
 
 \begin{description}
 	\item[Environment] For all $v \in V(G)$, perform the following:
@@ -263,7 +264,7 @@ where $W'$ is identical to $W$, except for the following changes.\\
 		$$
 	\end{enumerate}
 	
-	Whenever a Wumpus travels along an edge $e$ with $\Delta(e) \neq 0$, apply $0.1$ damage with probability $\field{danger}(e)$.
+	Whenever a Wumpus travels along an edge $e$ with $\Delta\ e \neq 0$, apply $0.1$ damage with probability $\field{danger}\ e$.
 	
 	\item[Agent behavior] Agents always move after Wumpuses and, depending on their implementation, may choose one of the following actions:
 	
@@ -470,7 +471,7 @@ This system is a quite gross simplification of the real world. In reality, one d
 
 Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
-\paragraph{Counterfactual perception.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and a existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
+\paragraph{Counterfactual perception.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
 \begin{definition}[Syntax: Disjunctive logic program]
 	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule is of the following form:
@@ -479,14 +480,14 @@ Our agents will not implement the nuances of such concepts directly, but they wo
 		\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}.
 	$$
 	
-	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ such that $p_i$ is a predicate symbol and every $\field{a_{i,1},\dots,a_{i,n_i}}$ is either a variable or a constant \paren{$1 \leq i \leq m$}. We also call predicates {\em literals}. If a predicate only has constant arguments, it is called a {\em ground literal}. For every literal $c$, the literal $\neg c$ is called the {\em strong negation} of $c$.
+	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ is a first-order predicate \paren{$1 \leq i \leq m$}. For all predicates $\field{P}$, both $\field{P}$ and its {\em strong negation} $\neg \field{P}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
 	
 	$\field{P_1 \vee \dots \vee P_h}$ is called the head of the rule, $\field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ B_{h+k+m}}$ the body. The predicates $\field{P_{h+1}, \dots, P_{h+k}}$ are asserted, the predicates $\field{P_{k+1}, \dots, P_{m}}$ are default-negated. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
 \end{definition}
 
-Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. Note that not knowing a predicate to be true is different from knowing it to be false. Answer-set solver computer so-called answer-sets of logic programs. An answer-set is defined as:
+Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. Note that not knowing a predicate to be true is different from knowing it to be false. Answer-set solver computer so-called answer-sets of logic programs. An answer set is defined as:
 
-\begin{definition}[Answer-set]
+\begin{definition}[Answer set]
 Let $\Pi$ be a disjunctive logic program. A set of ground literals $\mathcal{A}$ is an answer-set of $\Pi$ if the following holds:
 
 \begin{description}
@@ -557,7 +558,7 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 			\quad \quad \quad \field{loop} :: \type{S \rightarrow S}\\
 			\quad \quad \quad \field{loop} = \field{cfp} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc}\\
 			\\
-			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe Action}\\
+			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe\ Action}\\
 			\quad \quad \quad \field{noResult} = \field{not} \circ \field{isJust} \circ \field{getActionMessage}\\
 			\\
 			\quad \quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]}\\

@@ -1,4 +1,4 @@
-The global architecture now specified, we will introduce three related subsystems and fit them into this global framework: sensory perception --- the processing of raw sensory input into an format intelligible to other brain components ---, counterfactual perception --- the imagination, which mimics the output of the senses ---, and affect --- broadly speaking, the emotional component of cognition.
+The global architecture now specified, we will introduce three related subsystems and fit them into this global framework: sensory perception --- the processing of raw sensory input into an format intelligible to other brain components ---, belief generation --- the imagination, which mimics the output of the senses ---, and affect --- broadly speaking, the emotional component of cognition.
 
 \subsection{Sensory perception}\label{sec:sensoryPerception}
 
@@ -35,12 +35,12 @@ In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown fo
 \end{figure}
 
 
-\subsection{Counterfactual perception and planning}\label{sec:worldSimulation}
+\subsection{Belief generation and planning}\label{sec:worldSimulation}
 
-Broadly speaking, counterfactual perception can be described as ``imagination'', and is closely related to sensory perception and world simulation. In examining the system, we might broadly classify its processes into three categories:
+Broadly speaking, belief generation can be described as ``imagination'', and is closely related to sensory perception and world simulation. In examining the system, we might broadly classify its processes into three categories:
 
 \begin{enumerate}
-	\item Counterfactual perception --- imagining sights, sounds, etc. Such experiences have much in common with those caused by our sensory organs, yet are marked not as real. In particular, imagined experiences evoke only parts of the conscious experience that accompanies real perceptions. Research by Berthoz and Lotze et al.\ suggests that (a) the brain indeed uses similar circuitry for real and imagined experiences and that (b) imagined experiences are prevented from being confused with real ones via inhibitory signals. Lotze et al.\ write \cite{lotze1999}:
+	\item Belief generation --- imagining sights, sounds, etc. Such experiences have much in common with those caused by our sensory organs, yet are marked not as real. In particular, imagined experiences evoke only parts of the conscious experience that accompanies real perceptions. Research by Berthoz and Lotze et al.\ suggests that (a) the brain indeed uses similar circuitry for real and imagined experiences and that (b) imagined experiences are prevented from being confused with real ones via inhibitory signals. Lotze et al.\ write \cite{lotze1999}:
 	\begin{quote}
 		The results of cortical activity support the hypothesis that motor imagery and motor performance possess similar neural substrates. The differential activation in the cerebellum during EM and IM is in accordance with the assumption that the posterior cerebellum is involved in the inhibition of movement execution during imagination.
 	\end{quote}
@@ -62,19 +62,19 @@ Broadly speaking, counterfactual perception can be described as ``imagination'',
 	\item Executive planning --- humans can plan both both in immediate and concrete terms (such as body movement) and in the abstract. It is likely that different circuitry is used for movement planning and for planning involving abstract reasoning, in both cases it is necessary that the brain simulate the world in some way. The simulation of the consequences of body movement is likely older than humanity and distinct from the kind of world simulation described above, but both share their function: the agent proposes as series of actions to take, inserts them into some mental world and judges the utility of those actions based on the predicted consequences.
 \end{enumerate}
 
-Needless to say, that this process in all its subtleties is immensely complex and thus I simply endeavour to sketch its possible structure only in extremely rough outlines. This sketch is shown in Figures~\ref{fig:imagination},  \ref{fig:planner}, and \ref{fig:worldSimulatorPlannerInteraction}: the world simulation is an ordinary component with a filter and interpreter which outputs, for simplicity's sake, messages marked as counterfactual. We can imagine such messages to be very much like ordinary sensory ones, with the exceptions that they have no accompanying sensation and, more importantly, that we are aware of their non-reality. The planning component receives instructions about desirable states and outputs hypothetical actions which the world simulator incorporates. The world simulator's output is in turn read by the planner, which then abandons the plan or decides to pursue it further.
+Needless to say, that this process in all its subtleties is immensely complex and thus I simply endeavour to sketch its possible structure only in extremely rough outlines. This sketch is shown in Figures~\ref{fig:imagination},  \ref{fig:planner}, and \ref{fig:worldSimulatorPlannerInteraction}: the world simulation is an ordinary component with a filter and interpreter which outputs, for simplicity's sake, messages marked as imaginary. We can imagine such messages to be very much like ordinary sensory ones, with the exceptions that they have no accompanying sensation and, more importantly, that we are aware of their non-reality. The planning component receives instructions about desirable states and outputs hypothetical actions which the world simulator incorporates. The world simulator's output is in turn read by the planner, which then abandons the plan or decides to pursue it further.
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/imagination.png}
-	\caption{Structure of of counterfactual perception \& world simulation: messages emulating the output of sensory perception are generated, but are marked as counterfactual by unknown means.}
+	\caption{Structure of of belief generation \& world simulation: messages emulating the output of sensory perception are generated, but are marked as imaginary by unknown means.}
 	\label{fig:imagination}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{figs/planner.png}
-	\caption{Planner with two kinds of inputs: (1) real sensory data and (2) counterfactual data which comes from world simulation. On the basis of these inputs, possible steps are developed and sent out as commands.}
+	\caption{Planner with two kinds of inputs: (1) real sensory data and (2) imaginary data which comes from world simulation. On the basis of these inputs, possible steps are developed and sent out as commands.}
 	\label{fig:planner}
 \end{figure}
 

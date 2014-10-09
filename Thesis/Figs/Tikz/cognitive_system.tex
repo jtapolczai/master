@@ -18,23 +18,23 @@ tblock/.style = {draw, trapezium, minimum height=10mm,
     
     \node [imblock, right=of psbc, xshift=2cm, yshift=-0.7cm] (dm) {};
     \node at (dm) {DM};
-    \node [block, below=of dm, yshift=-2cm] (cfp) {};
+    \node [block, below=of dm, yshift=-2cm] (bg) {};
 
              
     \fill [color=NavyBlue, opacity=0.2]
-       (cfp) -- ++(0,0) -- ++(0.5,0.5)
+       (bg) -- ++(0,0) -- ++(0.5,0.5)
              -- ++(0.9,0) -- ++(0,-1) -- ++(-1.9,0) -- ++(0.5,0.5); 
-    \node at (cfp.south) [below, yshift=-0.4cm] (imaginationTitle) {Imagination loop};
+    \node at (bg.south) [below, yshift=-0.4cm] (imaginationTitle) {Imagination loop};
     
-    \node [draw, color=NavyBlue, rounded corners=0.5em, ultra thick, fill=NavyBlue, opacity=0.4, fill opacity=0.1, fit={(imaginationTitle) (dm) (cfp)}] (imagination) {};
+    \node [draw, color=NavyBlue, rounded corners=0.5em, ultra thick, fill=NavyBlue, opacity=0.4, fill opacity=0.1, fit={(imaginationTitle) (dm) (bg)}] (imagination) {};
     
     \fill [color=white]
-       (cfp) -- ++(0,0) -- ++(-0.5,-0.5)
+       (bg) -- ++(0,0) -- ++(-0.5,-0.5)
              -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
     \fill [color=orange, opacity=0.2]
-       (cfp) -- ++(0,0) -- ++(-0.5,-0.5)
+       (bg) -- ++(0,0) -- ++(-0.5,-0.5)
              -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
-    \node [block] at (cfp) {CFP};
+    \node [block] at (bg) {BG};
     
     \node [block, fill=yellow, fill opacity=0.3, right=of dm, xshift=2cm] (ac) {};
     \node at (ac.north) [above] (acTitle) {Attention};
@@ -54,14 +54,14 @@ tblock/.style = {draw, trapezium, minimum height=10mm,
     
     \path (psbc) edge [bend left=10,->] node [above] {$\alpha$} (dm)
           (sjs) edge [bend right=10,->] node [below] {$\alpha$} (dm)
-          (dm) edge [bend right=25,->] node [left] {$\delta$} (cfp)
-          (cfp) edge [bend right=25,->] node [right] {$\varphi_{\mathrm{cf}}$} (dm)
+          (dm) edge [bend right=25,->] node [left] {$\delta$} (bg)
+          (bg) edge [bend right=25,->] node [right] {$\varphi_{\mathrm{cf}}$} (dm)
           (perception) edge [bend right=30,->] node [above] {$\varphi$} (affect)
           (perception) edge [->] node {$\varphi$} (dm)
           (perception) edge [bend left=30,->] node {$\varphi$} (acBox)
           (dm) edge [->] node {IO} (ext)
-          (cfp) edge [bend right=35,->] node [below] {$\varphi_{\mathrm{cf}}$} (acBox)
-          (cfp) edge [bend left=35,->] node [below] {$\varphi_{\mathrm{cf}}$} (affect)
+          (bg) edge [bend right=35,->] node [below] {$\varphi_{\mathrm{cf}}$} (acBox)
+          (bg) edge [bend left=35,->] node [below] {$\varphi_{\mathrm{cf}}$} (affect)
           (ac) edge [->] node [above] {$\delta$} (dm);
     
     \end{tikzpicture}

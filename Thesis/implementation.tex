@@ -363,10 +363,10 @@ In order to achieve this, three things are indispensable: (1) memory, (2) utilit
 \begin{description}
 	\item[Pre-social behaviour control (PSBC).] This controls aspects of an agents which, in principle, can work without other agents: fear, happiness, anger.  These emotions are evoked in social situations, but in principle, they would be useful in a world without any other agents present.
 	\item[Social judgement system (SJS).] Analogous to the \textsc{PSBC}, the \textsc{SJS} controls an agent's appraisal of other agents and thereby influences its decision-making.
-	\item[Counterfactual perception (CFP).] In essence, the imagination of an agent. Counterfactual perception allows reasoning and the internal simulation of parts of the world.
-	\item[Attention-control (AC).] Attention-control is the recognition of certain real or counterfactual percepts as {\em important}, leading to the allocation of cognitive resources to them.
+	\item[Belief generation (BG).] In essence, the imagination of an agent. belief generation allows reasoning and the internal simulation of parts of the world.
+	\item[Attention-control (AC).] Attention-control is the recognition of certain real or imaginary percepts as {\em important}, leading to the allocation of cognitive resources to them.
 	\item[Decision-making (DM)]. The executive component of an agent which includes both internal decision-making (IDM) --- {\em what to think} --- and external decision-making (EDM) --- {\em what to do}.
-	\item[Memory.] Memory is a log of counterfactual and real events that happened to an agent. This log is utilized chiefly by the \textsc{CFP} with the goal of providing world data.
+	\item[Memory.] Memory is a log of imagined and real events that happened to an agent. This log is utilized chiefly by the \textsc{BG} with the goal of providing world data.
 \end{description}
 
 As a side remark: these components make no claim to encompass the kind of intelligence humans have. In particular, there are no aesthetics, pure abstract reasoning,  purely self-centered emotions like grief or remorse, etc. Providing such mechanisms is, however, not the goal; we merely wish to make the agents complex enough to successfully navigate the world. For this purpose, a simple, social, and animalistic sort of intelligence suffices, one that, in complexity, is actually below even that of wolves an dogs.
@@ -471,7 +471,7 @@ This system is a quite gross simplification of the real world. In reality, one d
 
 Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
-\paragraph{Counterfactual perception.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
+\paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
 \begin{definition}[Syntax: Disjunctive logic program]
 	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule is of the following form:
@@ -498,7 +498,7 @@ Let $\Pi$ be a disjunctive logic program. A set of ground literals $\mathcal{A}$
 \end{description}
 \end{definition}
 
-Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it allows the outsourcing of literals: whenever the solver finds a so annotated literal, it consults an external program for its value instead of deriving its value internally. We will use this interface to implement the loop between the CFP and the DM: 
+Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it allows the outsourcing of literals: whenever the solver finds a so annotated literal, it consults an external program for its value instead of deriving its value internally. We will use this interface to implement the loop between the BG and the DM: 
 
  
  \todo[inline]{TODO: Describe usage of DLV. At each step, the atom \texttt{choice} is outsourced by DLVhex.}
@@ -507,12 +507,12 @@ Answer-sets are thus the smallest sets of knowledge that we can derive, starting
 
 \todo[inline]{TODO: Describe attention-control.}
 
-\paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the CFP and thus drives the planning process. Aside from the difference in target, both are modelled via a function
+\paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the BG and thus drives the planning process. Aside from the difference in target, both are modelled via a function
 $$
 	\field{choice} :: \type{s \rightarrow World \rightarrow \tuple{Action, s}}
 $$
 
-where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the CFP and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}
+where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}
 
 \paragraph{Memory.}\ \\
 
@@ -520,14 +520,14 @@ where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates 
 
 \paragraph{Relationship between components.} Having defined the agents components, we now put them together into a functioning whole. The core of the agent's cognition will consist of the interplay between perception and decision-making, with the affective systems and attention control influencing the latter. We see the system sketched in Figure~\ref{fig:cognitive_system}.
 
-At the very heart of the agent lies its decision-making component, which controls both the agent's actions and its counterfactual perception. The DM and the CFP form the {\em imagination loop} $\iota$ which develops plans by exploring the likely consequences of certain actions. In that capacity, the DM evaluate the CFP's simulated worlds for desirability and chooses which imagined steps to take next. These evaluations are influenced by the second group of systems: the affective ones. The PSBC and SJS process perceptions and feed their resultant emotional states into the DM. Through this coloring of its decision-making, agents with different emotional dispositions will act and think differently from each other.
+At the very heart of the agent lies its decision-making component, which controls both the agent's actions and its belief generation. The DM and the BG form the {\em imagination loop} $\iota$ which develops plans by exploring the likely consequences of certain actions. In that capacity, the DM evaluate the BG's simulated worlds for desirability and chooses which imagined steps to take next. These evaluations are influenced by the second group of systems: the affective ones. The PSBC and SJS process perceptions and feed their resultant emotional states into the DM. Through this coloring of its decision-making, agents with different emotional dispositions will act and think differently from each other.
 
 The third part of the system is the attention-control, which also evaluates real and imagined emotions and outputs its data for the DM's usage. It's only purpose is to alert the agent to important or shocking information which demands immediate action. Its alerts cause the DM to cease its current course of action and re-plan based on the piece of information deemed important.
 
 \begin{figure}
 	\centering
 	\input{Figs/Tikz/cognitive_system}
-	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and CFP the imagination loop responsible for planning. The CFP, with External perception, makes up the perception system. The edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (counterfactual) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
+	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and BG the imagination loop responsible for planning. The BG, with External perception, makes up the perception system. The edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (imagined) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
 	\label{fig:cognitive_system}
 \end{figure}
 
@@ -553,10 +553,10 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 			\end{array}\\
 			\quad \quad \mt{where}\\
 			\quad \quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S}\\
-			\quad \quad \quad \field{psbc}, \field{sjs}, \field{ac}, \field{dm}, \field{cfp} :: \type{S \rightarrow S}\\
+			\quad \quad \quad \field{psbc}, \field{sjs}, \field{ac}, \field{dm}, \field{bg} :: \type{S \rightarrow S}\\
 			\\
 			\quad \quad \quad \field{loop} :: \type{S \rightarrow S}\\
-			\quad \quad \quad \field{loop} = \field{cfp} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc}\\
+			\quad \quad \quad \field{loop} = \field{bg} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc}\\
 			\\
 			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe\ Action}\\
 			\quad \quad \quad \field{noResult} = \field{not} \circ \field{isJust} \circ \field{getActionMessage}\\

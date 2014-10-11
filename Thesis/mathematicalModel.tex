@@ -7,10 +7,11 @@ Since the mathematical model is built with implementation in mind, I will use so
 \begin{definition}[Syntax: Type]\label{def:type}
 For our purposes, types are defined inductively thus:
 	\begin{description}
-		\item[Basic type.] $\N$, $\R$, and $\emptyset$ are types.
+		\item[Basic type.] $\R$ and $\emptyset$ are types.
 		\item[Sum type.] If $\type{T_1},\type{T_2}$ are types, the {\em sum type} $\type{T_1 + T_2}$, is a type. 
 		\item[Product type.] If $\type{s}$ is a string and $\type{T_1},\dots,\type{T_n}$ are types, the {\em product type} $\type{s}\ \type{T_1} \dots \type{T_n}$, is a type. A special case is the {\em anonymous product type} \paren{tuple}, where $s=``\langle\rangle"$. There, we just write $\langle\type{T_1},\dots,T_n \rangle$.
 		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor \paren{see next definition}, then $\type{C\ T_1} \dots \type{T_n}$, is a type.
+		\item[$\mu$-abstraction.] If $\type{T}, \type{S}$ are types and $\type{S}$ occurs in $\type{T}$, then $\muQ{\alpha}\type{T}[\type{S}\backslash\alpha]$ (for a fresh variable name $\alpha$) is a type.
 	\end{description}
 \end{definition}
 
@@ -29,7 +30,7 @@ Every type is simply interpreted as a set of values which are of that type; type
 \begin{definition}[Semantics: Type]\label{def:typeSem}
 Let $\type{T}$ be a type. Its interpretation function $\tint(\type{T})$ is defined thus:.
 	\begin{description}
-		\item[Basic type.] $\N$ and $\R$ are interpreted as the natural and real numbers, respectively. $\tint(\emptyset) = \{\}$.
+		\item[Basic type.] $\R$ is interpreted as the set of real numbers. $\tint(\emptyset) = \{\}$.
 		\item[Sum type.] If $\type{T_1}, \type{T_2}$ are types, then $\tint(\type{T_1 + T_2}) = \tint(\type{T_1}) \cup \tint(\type{T_2})$.
 		\item[Product type.] If $\type{T_1},\dots,\type{T_n}$ are types and $\type{s}$ is a string, then
 		$$
@@ -45,6 +46,10 @@ Let $\type{T}$ be a type. Its interpretation function $\tint(\type{T})$ is defin
 		$$
 			\tint(\type{C}\ \type{T_1} \dots \type{T_n}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \left( \bigcup\limits_{C' \in\ \cint(C)} C'[x_1\backslash v_1,\dots, x_n\backslash v_n] \right).
 		$$
+		
+		\item[$\mu$-abstraction.] If $\muQ{\alpha}\type{T}$ is a type, then $$\tint(\muQ{\alpha}\type{T}) = \tint(\type{T}) \cup \tint(\type{T}[\alpha\backslash\type{T}]) \cup \tint(\type{T}[\alpha\backslash\type{T}][\alpha\backslash\type{T}]) \cup \dots$$
+		
+		with $\tint(\alpha) = \{\}$.
 	\end{description}
 \end{definition}
 
@@ -55,7 +60,7 @@ The partial interpretation function $\cint$ for type constructors is defined as 
 	$$
 \end{definition}
 
-Intuitively, sum types are simply unions, product types are named cartesian products, and full applications are instantiations of type constructors with all possible values. Type constructors themselves are just generic types.
+Intuitively, sum types are simply unions, product types are named cartesian products, and full applications are instantiations of type constructors with all possible values. $\mu$-abstraction represents recursive data types such as lists or trees. Type constructors themselves are just generic types.
 
 Whenever we want to assert that an expression has a specific type, we write:
 
@@ -94,21 +99,20 @@ Let $\type{s}$ be a string and $\type{C_1},\dots,\type{C_n}$ be type constructor
 
 Since an ADT is merely the sum of product types, it is itself a type constructor. If it has no type variables, it is also a type. Next, we define a couple of example ADTs, some of which we will use in the next section.
 
-\begin{example}[$\B$, $\Q$, $\C$,  Maybe, Either, List]
+\begin{example}[$\N$, $\B$, $\Q$, $\C$,  Maybe, Either, List]
 	$$
 		\begin{array}{l c l}
+			\N & = & \muQ{\alpha}\type{Z + S\ \alpha}\\ 
 			\B & = & \type{False + True}\\
 			\Q & = & \type{Rat}\ \N\ \N\\
 			\C & = & \type{Complex}\ \R\ \R\\
 			\type{Maybe\ t} & = & \type{Nothing + Just\ t}\\
 			\type{Either\ l\ r} & = & \type{Left\ l + Right\ r}\\
-			\type{[]\ a} & = & \type{[] + (a : [a])}\\
+			\type{List\ a} & = & \muQ{\alpha}\ \type{Nil + (a : \alpha)}\\
 		\end{array}
 	$$
 	
-	Here, $\type{False}$, $\type{True}$, $\type{Nothing}$, and $\type{[]}$ are nullary product types; $\type{Left}$, $\type{Right}$ are unary type constructors \paren{which can be instantiated into unary product types}. ``:'' is a binary type constructor, written infix. $\type{Rat}\ \N\ \N$ and $\type{Complex}\ \R\ \R$ are binary product types.\\
-	
-	$\B$, $\Q$, $\C$ are the sets of Boolean number and rational/complex numbers, respectively. $\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both. $\type{[a]}$ denotes a list of values of type $\type{a}$.
+	$\N$ is the usual Peano definition of natural numbers, with a nullary product type $\type{Z}$ representing zero, and a unary product type $\type{S}$, which allows recursion. $\B$, $\Q$, $\C$ are the sets of Boolean number and rational/complex numbers, respectively, with $\type{False}$ and $\type{True}$ being nullary product types, and with $\type{Rat}\ \N\ \N$ and $\type{Complex}\ \R\ \R$ being binary ones. $\mathtt{Maybe}$ represents an optional value, which may or may not be present. $\mathtt{Either}$ represents a choice between two values, of which either the left or the right one is present, but not both. $\type{List\ a}$ \paren{or just $\type{[a]}$ as a shorthand} denotes a list of values of type $\type{a}$. There, $\type{Nil}$ is the nullary type constructor for an empty list and $\type{:}$ is an infix binary type constructor that stores the head and tail of a list.
 \end{example}
 
 \noindent

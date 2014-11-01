@@ -182,7 +182,9 @@ The last component of $\type{Agent}$, $\field{state} :: \type{S}$, is the intern
 Let $\mathrm{gl}$ also be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
 \end{definition}
 
-Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, defined below.
+The intuitive meaning of \wjun is this: the two-dimensional grid world is inhabited by multiple agents and wumpuses, where the former act according to their agent function and the latter act mechanically. In addition, each cell in the world may have a plant, gold, or a deadly pit on it. Agents and wumpuses move in the world by traversing edges which have associated fatigue and danger levels, representing easy and difficult paths. Local information is available to expedite navigation: stench (emanating from wumpuses) and breeze (emanating from pits). Finally, the temperature and the time dictate global environmental conditions.
+
+Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, that have the world work in the manner of a simple ecosystem in which predators hunt for prey and compete with each other. The wumpuses fulfil the role of carnivorous predators which roam the world, hunting and attempting to kill agents on sight. Agents, in turn, are hunter-gatherer omnivores who can sustain themselves either through eating plants, killing Wumpuses for their meat, or by acquiring resources from other agents. They may carry meat or fruits in their inventory, or gold, which has no intrinsic use, but which may be used as an exchange medium, provided that multiple agents have the mental ability to facilitate bartering. The term ``jungle world'' reflects the uncertainty under which its actors must act. They only have access to quite limited local environmental information, and they possess no communication protocol upon which they could base their cooperation. Analogously to real-world situations, agents must rely on simple gestures to infer the intentions of their peers, and they cannot know whether they are misunderstanding these, or whether they are being deceived. The aim of this mechanism is to allow the experimentations with things like social adaptation, prejudice, and trust. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
 
 \begin{definition}[Semantics and runs of \wjun-type worlds]
 Let $\varphi$ be a function of type $\wjun \rightarrow \wjun$. $\varphi$ is called a {\em semantics of \wjun-type worlds}.
@@ -215,7 +217,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		$$
 	\end{description}
 	
-	\item[Global data] The {\em daylight function} is defined as
+	\item[Global data.] The {\em daylight function} is defined as
 	
 	$$
 			\field{cycle}\ t = 
@@ -250,7 +252,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		\end{array}
 	$$
 	
-	\item[Wumpus behavior] Every Wumpus has three behaviors:
+	\item[Wumpus behaviour.] Every Wumpus has three behaviors:
 	
 	\begin{enumerate}
 		\item If the Wumpus is adjacent to a player, it performs the \action{attack} action on that player.
@@ -266,7 +268,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	
 	Whenever a Wumpus travels along an edge $e$ with $\Delta\ e \neq 0$, apply $0.1$ damage with probability $\field{danger}\ e$.
 	
-	\item[Agent behavior] Agents always move after Wumpuses and, depending on their implementation, may choose one of the following actions:
+	\item[Agent behaviour.] Agents always move after Wumpuses and, depending on their implementation, may choose one of the following actions:
 	
 	\begin{enumerate}\label{lst:agentBehavior}
 		\item[\action{move}] --- move along an edge $e$. If $\Delta\ e = 0$, restore $0.1$ of the agent's fatigue, otherwise reduce it by $0.05 \times \field{fatigue}\ e$. Additionally (if $\Delta\ e \neq 0$), apply $0.1$ damage with probability $\field{danger}\ e$.
@@ -293,7 +295,18 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 \end{description}
 \end{definition}
 
-It should now be clear why \wjun\ is called a jungle world: it is a social hunter-gatherer scenario in which uncoordinated agents act and interact without any explicit performance measure. They can gather food or gold, rest, hunt wumpuses, communicate via gestures, and even develop friendships, but fundamentally, everyone is out for himself. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
+It ought to be said that the formulae and constants used in the above definitions are, fundamentally, judgement calls and that there is no theoretical reason for choosing them over others. Nonetheless, we can given them an intuitive meaning:
+\begin{description}
+	\item[Environment.]\ 
+	\begin{description}
+		\item[Wumpus.] Wumpuses carry around them a wafting stench, the strength of which drops off exponentially for three cells. It does not follow the wumpus with delay, however: when the wumpus comes into the vicinity of a cell, it begins to strengthen, and when it moves away, it begins to weaken, until it reaches its target value.
+		\item[Plant.] Fruits grow periodically on plants, although a plant can only bear one fruit at a time.
+		\item[Pit.] The breeze coming from pits works via the same mechanism as the stench of wumpuses, but as pits are immobile, the strength of a breeze does not change with time.
+	\end{description}
+	\item[Global data.] A day is segmented into 50 periods, where a time of 25 represents midday, and 0/50 represents midnight. The temperature is a function of the daytime, with midday being the hottest and midnight being the coldest.
+	\item[Wumpus behaviour.] Wumpuses are day-active and roam around randomly. At night, they are likely to sit still. When they sight an agent (depending on light conditions), they will invariably attempt to close the distance and attack.
+	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by traveling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up. 
+\end{description}
 
 \subsection{Agents}
 
@@ -474,29 +487,46 @@ Our agents will not implement the nuances of such concepts directly, but they wo
 \paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
 \begin{definition}[Syntax: Disjunctive logic program]
-	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule is of the following form:
+	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule $r$ is of the following form:
 	
 	$$
-		\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}.
+		\mathrm{head}(r) \leftarrow \mathrm{body}^+(r), \mathrm{body}^-(r)
 	$$
 	
-	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ is a first-order predicate \paren{$1 \leq i \leq m$}. For all predicates $\field{P}$, both $\field{P}$ and its {\em strong negation} $\neg \field{P}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
+	where $\mathrm{head}(r) = \field{P_1},\dots,\field{P_h}$, $\mathrm{body}^+(r) = \field{P_{h+1}},\dots,\field{P_k}$, and $\mathrm{body}^-(r) = \field{not\ P_{k+1}},\dots,\field{not\ P_m}$, with $P_i$ being a first-order predicate $(1\leq i \leq m)$. For all predicates $\field{P_i}$, both $\field{P_i}$ and its {\em strong negation} $\neg \field{P_i}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
+	If $\mathrm{body}^-(r) = \emptyset$ for all $r \in \Pi$, we call $\Pi$ as {\em positive} logic program.
 	
-	$\field{P_1 \vee \dots \vee P_h}$ is called the head of the rule, $\field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ B_{h+k+m}}$ the body. The predicates $\field{P_{h+1}, \dots, P_{h+k}}$ are asserted, the predicates $\field{P_{k+1}, \dots, P_{m}}$ are default-negated. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
+%		\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}.
+%	$$
+	
+%	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ is a first-order predicate \paren{$1 \leq i \leq m$}. 
+	
+	$\mathrm{head}(r) $ is called the head of the rule $r$, $\mathrm{body}^+(r),\mathrm{body}^-(r)$ its body. The predicates in $\mathrm{body}^+(r)$ are asserted and the predicates in $\mathrm{body}^-(r) $ are default-negated\footnote{That is, it is asserted that they cannot be derived, but not necessarily that their negation can be derived.}. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
 \end{definition}
 
-Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. Note that not knowing a predicate to be true is different from knowing it to be false. Answer-set solver computer so-called answer-sets of logic programs. An answer set is defined as:
+Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. We first define models for positive logic programs:
 
-\begin{definition}[Answer set]
-Let $\Pi$ be a disjunctive logic program. A set of ground literals $\mathcal{A}$ is an answer-set of $\Pi$ if the following holds:
-
-\begin{description}
-	\item[Consistent.] There is no ground literal $c$ such that $\{c, \neg c\} \subseteq \mathcal{A}$.
-	\item[Complete.] For every rule $(\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}) \in \Pi$:\\ $\{P_{h+1},\dots, P_k \} \subseteq \mathcal{A}$ and $\{P_{k+1},\dots, P_m \} \cap \mathcal{A} = \emptyset$ together imply $\{P_1,\dots, P_h \} \cap \mathcal{A} \neq \emptyset$.
-	\item[No violated constraints.] There is no constraint $(\aspR \field{P_{1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}) \in \Pi$ such that $\{P_1,\dots, P_k \} \subseteq \mathcal{A}$ and $\{P_{k+1},\dots, P_m \} \cap \mathcal{A} = \emptyset$.
-	\item[Minimal.] $\mathcal{A}$ is minimal with respect to set inclusion, i.e. if any $\mathcal{A}'$ of $\Pi$ is consistent, complete, and doesn't violate any constraints, then $\mathcal{A}' \nsubseteq \mathcal{A}$.
-\end{description}
+\begin{definition}[Sets closed under logic programs]
+	Let $\Pi$ be a positive logic program and let $X$ be a set of atoms. $X$ is {\em closed under} $\Pi$ if, for all $r \in \Pi$, $\mathrm{body}^+(r) \subseteq X$ implies that there exists a $\field{P} \in \mathrm{head}(r)$ such that $\field{P} \in X$.\\
+	
+	\noindent
+	The $\subseteq$-minimal set of atoms closed under $\Pi$ is called $\mathsf{Cn}(\Pi)$.
 \end{definition}
+
+Answer sets for general disjunctive logic programs are defined through the Gelfond-Lifschitz reduct:
+
+\begin{definition}[Reduct of a logic program]
+Let $\Pi$ be a (disjunctive) logic program and let $X$ be a set of atoms. Then the reduct $\Pi^X$ is
+	$$
+		\{ \mathrm{head}(r) \leftarrow \mathrm{body}^+(r)\ |\ r \in \Pi \mt{ and } \mathrm{body}^-(r) \cap X = \emptyset \}
+	$$
+\end{definition}
+
+\begin{definition}[Anser set]
+	A set of atoms $X$ is an {\em answer set} of a disjunctive logic program exactly if $\mathsf{Cn}(\Pi^X) = X$.
+\end{definition}
+
+$X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e. one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
 
 Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it allows the outsourcing of literals: whenever the solver finds a so annotated literal, it consults an external program for its value instead of deriving its value internally. We will use this interface to implement the loop between the BG and the DM: 
 

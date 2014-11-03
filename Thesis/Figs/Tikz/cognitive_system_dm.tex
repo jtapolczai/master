@@ -1,0 +1,46 @@
+\begin{tikzpicture}[auto,
+ afblock/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center,
+ 				   fill=DeepGreen, fill opacity=0.2},
+ imblock/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center,
+ 				   fill=NavyBlue, fill opacity=0.2},
+ block/.style = {draw, rectangle, minimum height=10mm, minimum width=28mm,align=center},
+tblock/.style = {draw, trapezium, minimum height=10mm, 
+                 trapezium left angle=75, trapezium right angle=105, align=center},
+                        ]
+               
+    \node [afblock] (psbc) {};
+    \node at (psbc) {PSBC};
+    \node [afblock,below=of psbc, yshift=0.7cm] (sjs) {};
+    \node at (sjs) {SJS};
+    \node at (psbc.north) [above] (affectTitle) {Affect};
+    \node [draw, color=DeepGreen, rounded corners=0.5em, ultra thick, fill=DeepGreen, opacity=0.6, fill opacity=0.15, fit={(affectTitle) (psbc) (sjs)}] (affect) {};
+    
+    
+    \node [imblock, right=of psbc, xshift=2cm, yshift=-0.7cm] (dm) {};
+    \node at (dm) {DM};
+    \node [block, below=of dm, yshift=-2cm] (bg) {};
+
+             
+    \fill [color=NavyBlue, opacity=0.2]
+       (bg) -- ++(0,0) -- ++(0.5,0.5)
+             -- ++(0.9,0) -- ++(0,-1) -- ++(-1.9,0) -- ++(0.5,0.5); 
+    \node at (bg.south) [below, yshift=-0.4cm] (imaginationTitle) {Imagination loop};
+    
+    \node [draw, color=NavyBlue, rounded corners=0.5em, ultra thick, fill=NavyBlue, opacity=0.4, fill opacity=0.1, fit={(imaginationTitle) (dm) (bg)}] (imagination) {};
+    
+    \fill [color=white]
+       (bg) -- ++(0,0) -- ++(-0.5,-0.5)
+             -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
+    \fill [color=orange, opacity=0.2]
+       (bg) -- ++(0,0) -- ++(-0.5,-0.5)
+             -- ++(-0.9,0) -- ++(0,1) -- ++(1.9,0) -- ++(-0.5,-0.5); 
+    \node [block] at (bg) {BG};
+    
+    
+    \path (psbc) edge [bend left=10,->] node [above] {$\alpha$} (dm)
+          (sjs) edge [bend right=10,->] node [below] {$\alpha$} (dm)
+          (dm) edge [bend right=25,->] node [left] {$\delta$} (bg)
+          (bg) edge [bend right=25,->] node [right] {$\varphi_{\mathrm{cf}}$} (dm)
+          (bg) edge [bend left=35,->] node [below] {$\varphi_{\mathrm{cf}}$} (affect);
+    
+    \end{tikzpicture}

@@ -496,11 +496,6 @@ Our agents will not implement the nuances of such concepts directly, but they wo
 	where $\mathrm{head}(r) = \field{P_1},\dots,\field{P_h}$, $\mathrm{body}^+(r) = \field{P_{h+1}},\dots,\field{P_k}$, and $\mathrm{body}^-(r) = \field{not\ P_{k+1}},\dots,\field{not\ P_m}$, with $P_i$ being a first-order predicate $(1\leq i \leq m)$. For all predicates $\field{P_i}$, both $\field{P_i}$ and its {\em strong negation} $\neg \field{P_i}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
 	If $\mathrm{body}^-(r) = \emptyset$ for all $r \in \Pi$, we call $\Pi$ as {\em positive} logic program.
 	
-%		\field{P_1 \vee \dots \vee P_h} \aspR \field{P_{h+1}, \dots, P_{k},\ not\ P_{k+1}, \dots,\ not\ P_{m}}.
-%	$$
-	
-%	where $\field{P_i = p_i(a_{i,1},\dots,a_{i,n_i})}$ is a first-order predicate \paren{$1 \leq i \leq m$}. 
-	
 	$\mathrm{head}(r) $ is called the head of the rule $r$, $\mathrm{body}^+(r),\mathrm{body}^-(r)$ its body. The predicates in $\mathrm{body}^+(r)$ are asserted and the predicates in $\mathrm{body}^-(r) $ are default-negated\footnote{That is, it is asserted that they cannot be derived, but not necessarily that their negation can be derived.}. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
 \end{definition}
 
@@ -528,10 +523,10 @@ Let $\Pi$ be a (disjunctive) logic program and let $X$ be a set of atoms. Then t
 
 $X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e. one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
 
-Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it allows the outsourcing of literals: whenever the solver finds a so annotated literal, it consults an external program for its value instead of deriving its value internally. We will use this interface to implement the loop between the BG and the DM: 
+Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
 
- 
- \todo[inline]{TODO: Describe usage of DLV. At each step, the atom \texttt{choice} is outsourced by DLVhex.}
+To determine its next action in the real world, the agent function calls \dlvhex\ with a proposed action. It, in turn, will begin simulating (i.e. imagining) the consequences of that action. The solver will know the rules of the world, but since it won't possess any information about its state, it will query the agent's memory and perception via external atoms. After deducing the world's future state based on this information, it will call an {\em action atom}, sending the world state back to the agent function for evaluation, which then either proposes another step or terminates the planning process.
+
 
 \paragraph{Attention-control.}\ \\
 

@@ -556,11 +556,29 @@ Nonetheless, this database is valuable for the agent. $\field{retrieve_V}$ and $
 
 \paragraph{Attention-control.}\ \\
 
-\todo[inline]{TODO: Describe attention-control.}
+Attention-control serves as an interrupt/prioritisation mechanism for the decision-making process. Whenever it is triggered by some percept that it deems important, it sends a message to the DM, directing it to abort its current activity and to deal with the stimulus instead. We thereby have a method of prioritising tasks that require immediate attention and to cut short, colloquially speaking, aimless deliberation. 
+
+For our agents, paying attention means to focus on a cell and a specific kind of stimulus. That is, attention-control deal with messages of the type
+
+$$
+	\type{Stimulus} = \type{Gold + Fruit + Meat + Agent String + Wumpus + Pit}
+$$
+
+The AC component then emits messages of type $\type{Stimulus}$ and is modelled via the functions
+
+$$
+	\field{attention} :: \type{\wjun \rightarrow Maybe\ \tuple{\mathnormal{V(G)}, Stimulus}}
+$$
+
+where $\type{s}$ is the internal state of the agent. Three things are of note here. First, $\field{attention}$ need not emit any message at all. It will indeed be a very common case that the agent perceives nothing of particular interest. During these periods, it will be inactive, leaving the agent's behaviour to the other components. As a result, decision-making will be largely dominated by the BG and the affective components, which do judge everything which the agent perceives.
+
+Second, at most one stimulus may marked as important. This reflects the intuition of the AC being a sort of ``gut reaction'' which does not deliberate, but keenly and quickly focuses the agent on a single object. 
+
+Third, the $\type{Stimulus}$ type does not unambiguously identify an object in the world. $\type{Gold}$, for instance, does not say how much gold there is in cell; $\type{Wumpus}$ does not identify any particular wumpus; $\type{Pit}$ may not mean that there is a pit on the indicated cell; only that the agent should watch out for one. This, too, is intended --- the AC should only serve pointers, not perform in-depth analysis of the situation. It is the task of the belief generator and the DM to examine specific parts of the environment and to deliberate about courses of action. This mimics the cognitive mechanism in real animals quite closely: in humans, attention is a subtle and immediate feeling; one that simply causes us to notice certain objects or events in the world. No conscious thinking, or even the experience of emotions, need accompany this experience. Such more complex cognitive processes might be induced, but they are clearly separate from the mere act of noticing.
 
 \paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the BG and thus drives the planning process. Aside from the difference in target, both are modelled via a function
 $$
-	\field{choice} :: \type{s \rightarrow World \rightarrow \tuple{Action, s}}
+	\field{choice} :: \type{s \rightarrow \wjun \rightarrow \tuple{Action, s}}
 $$
 
 where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}

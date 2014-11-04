@@ -567,10 +567,15 @@ $$
 The AC component then emits messages of type $\type{Stimulus}$ and is modelled via the functions
 
 $$
-	\field{attention} :: \type{\wjun \rightarrow Maybe\ \tuple{\mathnormal{V(G)}, Stimulus}}
+	\begin{array}{r c l}
+		\field{attention} & :: & \type{\wjun \rightarrow Maybe\ \tuple{\mathnormal{V(G)}, Stimulus}}\\
+		\field{ac} & :: & \type{s \rightarrow \wjun \rightarrow s}\\
+	\end{array}
 $$
 
-where $\type{s}$ is the internal state of the agent. Three things are of note here. First, $\field{attention}$ need not emit any message at all. It will indeed be a very common case that the agent perceives nothing of particular interest. During these periods, it will be inactive, leaving the agent's behaviour to the other components. As a result, decision-making will be largely dominated by the BG and the affective components, which do judge everything which the agent perceives.
+where $\type{s}$ is the internal state of the agent. $\field{ac}$ is just a wrapper around $\field{attention}$ which puts the latter's message into the agent's message space.
+
+Three things are of note here. First, $\field{attention}$ need not emit any message at all. It will indeed be a very common case that the agent perceives nothing of particular interest. During these periods, it will be inactive, leaving the agent's behaviour to the other components. As a result, decision-making will be largely dominated by the BG and the affective components, which do judge everything which the agent perceives.
 
 Second, at most one stimulus may marked as important. This reflects the intuition of the AC being a sort of ``gut reaction'' which does not deliberate, but keenly and quickly focuses the agent on a single object. 
 

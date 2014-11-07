@@ -2,7 +2,7 @@ We now create a mathematical model for the description of the architecture. This
 
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
-Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. The following notions are from the $\lambda$ calculus and its attendant type systems; anyone familiar with such can therefore freely skip this section. We will introduce types, type constructors, and their relation to functions, together with a few example types which will come in handy later on.
+Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. The following notions are from the $\lambda$ calculus and its attendant type systems; anyone familiar with such can therefore freely skip this section. We will introduce types, type constructors, and their relation to functions, together with a few example types which will come in handy later on. The following can be found in any introduction to type theory and was taken (with simplification) from \cite{Mendler:1988:IDT:913822}, \cite{typeIntroduction2}, and \cite{Jacobs97atutorial}.
 
 \begin{definition}[Syntax: Type]\label{def:type}
 For our purposes, types are defined inductively thus:
@@ -25,7 +25,7 @@ For our purposes, types are defined inductively thus:
 	\end{description}
 \end{definition}
 
-Every type is simply interpreted as a set of values which are of that type; type constructors are interpreted as universally quantified templates for actual types. Their formal semantics are as follows:
+Every type is interpreted as a set of values which are of that type; type constructors are interpreted as universally quantified templates for actual types. Their formal semantics are as follows:
 
 \begin{definition}[Semantics: Type]\label{def:typeSem}
 Let $\type{T}$ be a type. Its interpretation function $\tint(\type{T})$ is defined thus:.

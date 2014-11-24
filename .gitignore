@@ -226,3 +226,6 @@ proposed_model.pdf
 *.toc
 *.out
 *.txss
+
+#Old versions
+old/

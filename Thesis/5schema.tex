@@ -1,5 +1,28 @@
 We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
 
+\begin{figure}
+	\begin{center}
+		\begin{tabular}{l l}
+			\toprule
+			Symbol & Description\\
+			\midrule
+			
+			\begin{minipage}[t]{0.2\textwidth}
+				\includegraphics[width=80pt]{figs/legend_proc.png}
+			\end{minipage}
+			 & Processing component\\
+			\includegraphics[width=80pt]{figs/legend_choice.png} & Choice\\
+			\includegraphics[width=50pt]{figs/legend_container.png} & Data container (Queue, List, etc.)\\
+			\includegraphics[width=50pt]{figs/legend_data.png} & Data\\
+			\includegraphics[width=30pt]{figs/legend_generator.png} & Stream generator\\
+			\includegraphics[width=50pt]{figs/legend_imaginary.png} & Counterfactual (imaginary) data\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Notation for the diagrams in this and the following sections.}
+	\label{fig:diagramNotation}
+\end{figure}
+%
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width=400pt]{figs/global.png}

@@ -87,7 +87,7 @@ Henceforth, by convention, we will write type variables in lower-case and concre
 Function arrows allow the execution of functions in the obvious way:
 
 \begin{definition}[Function application]
-	Let $f :: \type{S} \rightarrow \type{T}$ and $x$ be an expression of $\type{S}$. Then $f\ x$ is an expression of type $\type{T}$. Function application associates to the left, that is: $f\ x_1 \dots x_n = (\cdots((f\ x_1)\ x_2) \dots x_n)$.
+	Let $f :: \type{S} \rightarrow \type{T}$ and $x$ be an expression of type $\type{S}$. Then $f\ x$ is an expression of type $\type{T}$. Function application associates to the left, that is: $f\ x_1 \dots x_n = (\cdots((f\ x_1)\ x_2) \dots x_n)$.
 \end{definition}
 
 \noindent
@@ -157,7 +157,7 @@ $$
 	\end{array}
 $$
 
-Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see Barendregt \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F$_\omega$ is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
+Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega$,\footnote{Specifically, the decidable fragment of System F$_\omega$ without higher kinds and only prenex-polymorphism. That is, type constructors can only take types as arguments and are of the form $\allQ{x_1,\dots,x_n} \type{C}$ for quantifier-free $\type{C}$. This is also called the Hindley-Milner type system. For details, see \cite{barendregt91}.} which is used to type expressions in the lambda calculus. Although System F$_\omega$ is strictly more powerful, our definitions are enough to provide a description language for the data types and functions in the rest of this work.
 
 
 \subsection{Neural systems}\label{sec:mathematicalNeuralSystem}

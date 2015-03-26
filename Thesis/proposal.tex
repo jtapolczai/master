@@ -1,0 +1,82 @@
+\documentclass[bibliography=totoc ]{scrartcl}
+
+\usepackage[usenames, dvipsnames]{xcolor}
+
+\definecolor{PaleRed}{RGB}{202,61,58}
+\definecolor{DeepRed}{RGB}{158,46,43}
+\definecolor{PaleBlue}{RGB}{100,180,250}
+\definecolor{DeepBlue}{RGB}{30,100,255}
+\definecolor{DeepGreen}{RGB}{60,150,30}
+\definecolor{LightGray}{RGB}{220,220,220}
+
+\usepackage[a4paper, left=40mm, right=40mm, top=50mm, bottom=40mm]{geometry}
+\usepackage[colorlinks=true, linkcolor=DeepBlue, citecolor=DeepGreen]{hyperref}
+\usepackage{url}
+
+\def\UrlBreaks{\do\/\do-}
+
+\title{{\huge Design and implementation of a biologically inspired agent architecture combining emotions and reasoning}}
+\author{Janos Tapolczai\\Thesis supervisor: A.o. Univ.-Prof. Dr. Hans Tompits}
+
+\begin{document}
+
+\maketitle
+
+\section{Problem statement}
+
+To date, emotions in AI has been very much occupied a niche; instead, problems like search, reasoning, pattern recognitions and statistics have dominated the field. People like Marvin Minsky and Aaron Sloman, however, have argued that emotions play key roles in cognition --- to wit, Minsky's famous saying:
+
+\begin{quote}
+bla bla
+and something else that is just here to fill up the line so we can see whether a new paragraph is created
+\end{quote}
+
+One of the major unsolved problems --- in biology as well as AI --- is the interaction between emotions and reasoning: how do they and how do they hinder the reasoning process? Could reasoning function without emotions? Are they just an external influence, or an integral part of reasoning?
+
+This thesis would build primarily on Minsky's \cite{emotionMachine} and Sloman's work \cite{slomanNiche}, who seek to answer these questions with the help of evolutionary neuroscience: by constraining their models through the criterion of evolvability --- by only considering cognitive architectures that could have gradually evolved --- they sketch plausible histories through the which the human brains might have gone, accruing one subsystem after another. The goal of this work would be the application of their method to affect and reasoning specifically, and to the development of a cognitive architecture that incorporates both.
+
+\section{Expected results}
+
+The goal of this project is to strike a pragmatic middle ground between the biologically inspired and the reasoning-driven approaches, with the aim of inching closer towards the kind of general, human-level AI to which people like Minsky, McCarthy, and Sloman aspire \cite{emotionMachine, mcCarthy2007, minsky2004}. This involves the creation of an affective toy-AI which does not perform reasoning as such, but uses emotions and rudimentary prediction of the future to choose its actions. Its architecture would be hard-wired, but it would be parametrisable via its emotional reactions to stimuli: whereas one agent might react to the sight of an animal with anger, another might react with fear.
+
+The expectation is that these agents will be able to effectively navigate a toy world which, to a rough approximation, resembles the typical environment of animals: competition for food, cooperation and conflict with other, similar agents, and reproduction. If the developed model works as intended, we should see patterns of behaviour similar to those we find in real organisms: some would be overly frightful, fleeing from every threat; some would react aggressively to almost anything; yet others would act out an iterated prisoner's dilemma in which they would slowly become more cooperative with agents with whom they had positive interactions in the past, yet would quickly develop a lasting aversion if a negative interaction occurred.
+
+This test scenario would (a) determine how successful the overall model is and (b) how successful different parameter sets within the confines of the model are. If at least some subset of agents can keep itself from extinction, we would have an indication that their behaviour at least matches that of some lower animal in terms of effectiveness.
+
+In case of a success, we would have at least a proof-of-concept that the evolutionary approach is workable and useful in the design of AIs, and that this sort of ``neurological archaeology'' has its place besides traditional approaches like neural networks and symbolic computation.
+
+\section{Methodology}
+
+The thesis would be split into two parts: a theoretical and a practical one. The first, theoretical part would analyse nervous systems and brain structures; the second, practical part propose a cognitive architecture based on the first and on the work of Aaron Sloman. The basis of the entire work would be an evolutionary model: with the help of biology, we would look at each subsystem in the brain --- how it developed, on what other subsystem it relied, what analogues exist in non-human species, how it interacts with other subsystems --- and consequently develop a cognitive architecture.
+
+The underlying hypothesis is that, since brains are evolved organs, their functioning can best be understood through re-tracing their development through various stages. By requiring each development in brain function to be relatively simple and useful by itself, we can constrain the space of possible designs. This approach of design space and (evolutionary) niche space was, as said above, proposed by Aaron Sloman \cite{slomanNiche} and is a running theme in many of his works \cite{sloman2000, sloman1993, sloman1997}.
+
+The interaction between affect and reasoning being the focus of this work, re-tracing brain development would involve giving an account of the following:
+
+\begin{enumerate}
+	\item the structure and purpose of affect;
+	\item the purpose and mechanism of planning; and
+	\item the structure of reasoning, as it relates to the above two, and as humans actually perform it.
+\end{enumerate}
+
+The second, practical part, would serve as a test for the developed model. He, we use simulation as a way of evaluation. The aim is to develop an AI that, in simple model worlds, can perform with comparable effectiveness as animals do in the real one. Hence, the agents would be tested in a toy world that poses the typical challenges that animals face (in an extremely simplified form, of course): collecting resources, fighting against animals (agents with a simple ``fight-or-flight'' AI), and interacting with other, similar agents. Successful agents would reproduce and their offspring would inherit their emotional profiles. To allow agents with different personalities to better differentiate themselves from others, the protocol of interaction would be minimalistic: an agent can outright attack another one, give it some food item, or send a gesture (a string) of its choosing. It would be incumbent upon the recipient of such gestures to interpret them in accordance with its emotional profile --- there would be no a priori knowledge about which gestures meant what; two different agents could interpret the same signal in completely different ways.
+
+\section{State of the art}
+
+Research into human-level AI is proceeding slowly. Though AIs can outperform humans at a variety of tasks (notably games like chess and bridge \cite{Schaeffer00} that are amenable to standard search techniques like A* and IDDFS), but also complex, real-world problems like driving cars \cite{googleCar, googleCar2} or reasoning \cite{asp1, acthex}), an artificial intelligence that can compete with a human at many different tasks has yet to be created. While most effort today goes into the creation of such weak AIs, there are a few influential people --- Marvin Minsky, John McCarthy, Nils Nilsson, and Patrick Winston, among others \cite[p. 27]{norvig} --- who wish to create programs that act in a believably human-like way.
+
+On the other hand, much research has been done in the field of affective neuroscience and the basis of emotions (for an overview, see \cite{cambridgeAff}). These findings have been applied to artificial intelligence to some degree --- examples being Cynthia Breazeal's work at MIT \cite{kismet, breazeal2003}, and the emotion-driven robots of Sandra Gadanho and John Hallam \cite{DBLP:journals/adb/GadanhoH01}.
+
+Lastly, a number of cognitive architectures exist, from the purely theoretical \cite{emotionMachine} to those actually implemented, such as CMU's 4CAPS \cite{4caps} and those based on R. A. Brooks' subsumption architecture \cite{brooksSubsumption}. In {\em Intelligence without Reason} \cite{Brooks91intelligencewithout}, Brooks does, in fact, come quite close to our goal: a biologically inspired architecture that does not have a priori knowledge about reasoning, but merely synthesizes it from the interplay of simpler components.
+
+\section{Context}
+
+This thesis deals with affective AI; as such, it relates very closely to the curriculum of Computational Intelligence.
+
+\pagebreak
+
+\bibliographystyle{plain}
+\bibliography{proposal}
+
+
+\end{document}

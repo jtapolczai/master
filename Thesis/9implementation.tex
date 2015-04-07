@@ -222,14 +222,14 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	\item[Global data.] The {\em daylight function} is defined as
 	
 	$$
-			\field{cycle}\ t = 
+			\field{light}\ t = 
 			\left\{
 				\begin{array}{l l l l}
-					0 & \mt{if } & 20 & \leq |n - 25|\\
-					1 & \mt{if } & 15 & \leq |n - 25| < 20\\
-					2 & \mt{if } & 10 & \leq |n - 25| < 15\\
-					3 & \mt{if } & 5 & \leq |n - 25| < 10\\
-					4 & \mt{if } & & \ \ \ |n - 25| < 5
+					0 & \mt{if } & 20 & \leq |t - 25|\\
+					1 & \mt{if } & 15 & \leq |t - 25| < 20\\
+					2 & \mt{if } & 10 & \leq |t - 25| < 15\\
+					3 & \mt{if } & 5 & \leq |t - 25| < 10\\
+					4 & \mt{if } & & \ \ \ |t - 25| < 5
 				\end{array}
 			\right.
 	$$
@@ -238,19 +238,20 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	
 	$$
 		\begin{array}{r c l}
-			\mathrm{gl}' & = & \langle \field{time}\ \mathrm{gl} + 1\ \mathrm{mod}\ 50,\\
-					   &   &       \ (\field{cycle} \circ \field{temperature})\ \mathrm{gl}' \rangle\\
-			\\
-			\field{temperature}\ t & = &
+		   \field{time'} & = &  \field{time}\ \mathrm{gl} + 1\ \mathrm{mod}\ 50\\
+		   \\
+			\field{temperature'} & = &
 			\left\{
 				\begin{array}{l l}
-					\type{Freezing} & \mt{if }\ \field{light}(t) = 0\\
-					\type{Cold} & \mt{if }\ \field{light}(t) = 1\\
-					\type{Temperate} & \mt{if }\ \field{light}(t) = 2\\
-					\type{Warm} & \mt{if }\ \field{light}(t) = 3\\
-					\type{Hot} & \mt{if }\ \field{light}(t) = 4
+					\type{Freezing} & \mt{if }\ \field{light}\ \field{time'} = 0\\
+					\type{Cold} & \mt{if }\ \field{light}\ \field{time'} = 1\\
+					\type{Temperate} & \mt{if }\ \field{light}\ \field{time'} = 2\\
+					\type{Warm} & \mt{if }\ \field{light}\ \field{time'} = 3\\
+					\type{Hot} & \mt{if }\ \field{light}\ \field{time'} = 4
 				\end{array}
 			\right.\\
+			\\
+			\mathrm{gl}' & = & \langle \field{time'},\ \field{temperature'} \rangle\\
 		\end{array}
 	$$
 	

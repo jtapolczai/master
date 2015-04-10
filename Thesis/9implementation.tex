@@ -203,19 +203,17 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	\item[Environment] For all $v \in V(G)$, perform the following:
 	
 	\begin{description}
-		\item[Wumpus.] If there is a Wumpus in a cell $w$ at $\leq 3$ distance from $v$, increase $v$'s stench by
+		\item[Wumpus.] Set $v$'s stench to
 		$$
-			\frac{
-				\log_{3}(3 - \dist{v}{w}) - \field{stench}\ l(v)
-			}{2}
+			\mathrm{max}\left\{0, 1 - \frac{\dist{v}{w}}{3}\right\}
 		$$
-		If there is no Wumpus within distance $\leq 3$, decrease $v$'s stench by $\frac{1}{3}$, to a minimum of 0.
+		where $w$ is the closest cell that has a Wumpus on it. If there are no Wumpuses, set $w$'s stench to 0.
 		
 		\item[Plant.] If there is a plant on $v$ and it has no fruit, increase its growth by $\frac{1}{10}$. If its growth thereby reaches $1$, add a fruit to the plant and reset the growth to 0.
 		
 		\item[Pit] If there is a pit in a cell $w$ at a distance $\leq 3$ from $v$, set the breeze to
  		$$
-			\log_{3}(3 - \dist{v}{w})
+			\mathrm{max}\left\{0, 1 - \frac{\dist{v}{w}}{3}\right\}
 		$$
 	\end{description}
 	

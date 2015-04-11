@@ -213,7 +213,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		
 		\item[Pit] If there is a pit in a cell $w$ at a distance $\leq 3$ from $v$, set the breeze to
  		$$
-			\mathrm{max}\left\{0, 1 - \frac{\dist{v}{w}-1}{3}\right\}.
+			\mathrm{max}\left\{0, 1 - \frac{\mathrm{max}\{0,\dist{v}{w}-1\}}{3}\right\}.
 		$$
 	\end{description}
 	

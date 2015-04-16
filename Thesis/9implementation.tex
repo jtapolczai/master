@@ -329,15 +329,20 @@ As we saw in Definitions~\ref{def:wjun} and \ref{def:ssem}, agents (1) have a bo
 
 What we are missing is the description of the agent's percepts in the world. As in the original Wumpus world, an agent can perceive everything on its cell:
 	\begin{enumerate}
-		\item the list other agents,
-		\item the list of (dead) Wumpuses,
 		\item the plant, if present,
 		\item the breeze,
 		\item the stench, and
 		\item the amount of gold.
 	\end{enumerate}
 	
-In addition to this local information, the agent also has a sense of sight, modelled via an approximately $\frac{\pi}{2}$ radians cone, the length of which depends on daylight. Formally:
+In addition to this local information, the agent also has access to the global world state:
+
+	\begin{enumerate}
+		\item the temperature and
+		\item the current time.
+	\end{enumerate}
+
+The most important means of perception will be the agent's sight, however. The sense of sight is modelled via an approximately $\frac{\pi}{4}$ radians sight cone which is oriented in the agent's direction and is shortened or lengthened, depending or daylight. Formally:
 
 \begin{definition}[Sight cone]
 	\label{def:los}
@@ -360,14 +365,13 @@ Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two
 	\label{fig:los}
 \end{figure}
 %
-If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the following data:
+If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the following:
 
 \begin{enumerate}
-	\item the list of agents on $w$,
-	\item the list of Wumpuses,
+	\item the agent or Wumpus on $w$ (excluding the agent's internal state),
 	\item the plant, it present,
 	\item the pit, if present, and
-	\item the amount of gold.
+	\item the amount of gold and meat
 \end{enumerate}
 
 The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.

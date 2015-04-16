@@ -140,11 +140,10 @@ Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be the following tuples:
 
 $$
 	\begin{array}{r c l}
-		\type{TV_{\mathrm{jun}}} & = & \langle \field{agents} :: [\type{Agent}],\\
-		           &   &       \ \field{wumpus} :: [\type{Wumpus}],\\
-		           &   & 	   \ \field{plants} :: \type{Maybe\ Plant},\\
-		           &   &       \ \field{stench} :: \R,\\
-		           &   &       \ \field{breeze} :: \R,\\
+		\type{TV_{\mathrm{jun}}} & = & \langle \field{entity} :: \type{Entity},\\
+		           &   & 	   \ \field{plant} :: \type{Maybe\ \R},\\
+		           &   &     \ \field{stench} :: \R,\\
+		           &   &     \ \field{breeze} :: \R,\\
 		           &   &	   \ \field{pit}    :: \B,\\
 		           &   &	   \ \field{gold}   :: \N \rangle 
 		\\
@@ -160,10 +159,12 @@ $$
 	\end{array}
 $$
 
-$\type{Agent}$ and $\type{Wumpus}$ are the following records:
+$\type{Entity}$, $\type{Item}$, $\type{Agent}$ and $\type{Wumpus}$ are the following records:
 
 $$
 	\begin{array}{r c l}
+		\type{Entity} & = & \type{Ag\ Agent + Wu\ Wumpus + None}\\
+		\\
 		\type{Item} & = & \type{Gold + Fruit + Meat}\\
 		\\
 		\type{Agent} & = & \langle \field{name} :: \type{String},\\ 
@@ -209,7 +210,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		$$
 		where $w$ is the closest cell that has a Wumpus on it. If there are no Wumpuses, set $w$'s stench to 0.
 		
-		\item[Plant.] If there is a plant on $v$ and it has no fruit, increase its growth by $\frac{1}{10}$. If its growth thereby reaches $1$, add a fruit to the plant and reset the growth to 0.
+		\item[Plant.] If there is a plant on $v$ and it has a growth value of $< 1$, increase its growth by $\frac{1}{10}$.
 		
 		\item[Pit] If there is a pit in a cell $w$ at a distance $\leq 3$ from $v$, set the breeze to
  		$$

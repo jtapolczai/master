@@ -296,10 +296,12 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		
 		\item[\action{collect}] --- if there is $n$ gold on the player's cell, take an amount $m$ ($1 \leq m \leq n$) of it an put it into the agent's inventory.
 		
-		\item[\action{eat}] --- eat a meat- or fruit-item $i$ from the agent's inventory. Restore $0.5$ health.
+		\item[\action{eat}] --- eat a meat- or fruit-item $i$ from the agent's inventory. Restore $0.5$ health, to a maximum of $2.0$.
 		
 		\item[\action{gesture}] --- expresses a gesture in the form of a string $s$. All other agents on the same cell receive $s$.
 	\end{enumerate}
+	
+	\item[Combat mechanics.] When two entities $\field{A}$, $\field{B}$ attack each other, an entity being either an agent or a Wumpus, the health of $\field{A}$ is subtracted from the health of $\field{B}$ and vice versa. Any entity whose health thereby reaches or goes below 0 dies.
 	
 \end{description}
 \end{definition}

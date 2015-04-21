@@ -303,6 +303,10 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	
 	\item[Combat mechanics.] When two entities $\field{A}$, $\field{B}$ attack each other, an entity being either an agent or a Wumpus, the health of $\field{A}$ is subtracted from the health of $\field{B}$ and vice versa. Any entity whose health thereby reaches or goes below 0 dies.
 	
+	Upon death in a fight, one meat is added to the cell. If the dead entity was an agent, the amount of gold, fruit, and meat in its inventory are added to values of the $\field{gold}$, $\field{fruit}$, and $\field{meat}$ fields of its cell.
+	
+	\item[Movement mechanics.] Agents and Wumpuses may only move to another cell if that movement does not reduce their fatigue below 0. Neither agent nor Wumpus may move onto a cell that already has another agent or Wumpus, or a plant. Any agent or Wumpus can move into a pit, but doing so deletes the agent/Wumpus from the world.
+	
 \end{description}
 \end{definition}
 
@@ -310,7 +314,7 @@ It ought to be said that the formulae and constants used in the above definition
 \begin{description}
 	\item[Environment.]\ 
 	\begin{description}
-		\item[Wumpus.] Wumpuses carry around them a wafting stench, the strength of which drops off exponentially for three cells. It does not follow the wumpus with delay, however: when the wumpus comes into the vicinity of a cell, it begins to strengthen, and when it moves away, it begins to weaken, until it reaches its target value.
+		\item[Wumpus.] Wumpuses carry around them a wafting stench, the strength of which drops off linearly for three cells.
 		\item[Plant.] Fruits grow periodically on plants, although a plant can only bear one fruit at a time.
 		\item[Pit.] The breeze coming from pits works via the same mechanism as the stench of wumpuses, but as pits are immobile, the strength of a breeze does not change with time.
 	\end{description}

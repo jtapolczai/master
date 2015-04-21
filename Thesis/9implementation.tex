@@ -145,6 +145,8 @@ $$
 		           &   &     \ \field{stench} :: \R,\\
 		           &   &     \ \field{breeze} :: \R,\\
 		           &   &	   \ \field{pit}    :: \B,\\
+		           &   &		\ \field{meat}    :: \N,\\
+		           &   &		\ \field{fruit}    :: \N,\\
 		           &   &	   \ \field{gold}   :: \N \rangle 
 		\\
 		\\
@@ -185,7 +187,7 @@ The last component of $\type{Agent}$, $\field{state} :: \type{S}$, is the intern
 Let $\mathrm{gl}$ also be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
 \end{definition}
 
-The intuitive meaning of \wjun is this: the two-dimensional grid world is inhabited by multiple agents and wumpuses, where the former act according to their agent function and the latter act mechanically. In addition, each cell in the world may have a plant, gold, or a deadly pit on it. Agents and wumpuses move in the world by traversing edges which have associated fatigue and danger levels, representing easy and difficult paths. Local information is available to expedite navigation: stench (emanating from wumpuses) and breeze (emanating from pits). Finally, the temperature and the time dictate global environmental conditions.
+The intuitive meaning of \wjun is this: the two-dimensional grid world is inhabited by multiple agents and wumpuses, where the former act according to their agent function and the latter act mechanically. In addition, each cell in the world may have a plant or a deadly pit on it, in addition to a certain amount of fruit, meat, and gold. Agents and wumpuses move in the world by traversing edges which have associated fatigue and danger levels, representing easy and difficult paths. Local information is available to expedite navigation: stench (emanating from wumpuses) and breeze (emanating from pits). Finally, the temperature and the time dictate global environmental conditions.
 
 Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, that have the world work in the manner of a simple ecosystem in which predators hunt for prey and compete with each other. The wumpuses fulfil the role of carnivorous predators which roam the world, hunting and attempting to kill agents on sight. Agents, in turn, are hunter-gatherer omnivores who can sustain themselves either through eating plants, killing Wumpuses for their meat, or by acquiring resources from other agents. They may carry meat or fruits in their inventory, or gold, which has no intrinsic use, but which may be used as an exchange medium, provided that multiple agents have the mental ability to facilitate bartering. The term ``jungle world'' reflects the uncertainty under which its actors must act. They only have access to quite limited local environmental information, and they possess no communication protocol upon which they could base their cooperation. Analogously to real-world situations, agents must rely on simple gestures to infer the intentions of their peers, and they cannot know whether they are misunderstanding these, or whether they are being deceived. The aim of this mechanism is to allow the experimentations with things like social adaptation, prejudice, and trust. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
 
@@ -336,7 +338,7 @@ What we are missing is the description of the agent's percepts in the world. As 
 		\item the plant, if present,
 		\item the breeze,
 		\item the stench, and
-		\item the amount of gold.
+		\item the amount of fruit, gold, and meat.
 	\end{enumerate}
 	
 In addition to this local information, the agent also has access to the global world state:
@@ -375,7 +377,7 @@ If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the fo
 	\item the agent or Wumpus on $w$ (excluding the agent's internal state),
 	\item the plant, it present,
 	\item the pit, if present, and
-	\item the amount of gold and meat
+	\item the amount of fruit, meat, and gold.
 \end{enumerate}
 
 The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.

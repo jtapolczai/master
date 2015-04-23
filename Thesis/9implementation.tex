@@ -309,10 +309,11 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	
 	\item[Movement mechanics.] Agents and Wumpuses may only move to another cell if that movement does not reduce their fatigue below 0. Neither agent nor Wumpus may move onto a cell that already has another agent or Wumpus, or a plant. Any agent or Wumpus can move into a pit, but doing so deletes the agent/Wumpus from the world.
 	
+	\item[Hunger.] If an agent doesn't eat a fruit or meat item, its health declines by 0.01. If its health thereby reaches 0, it dies and the contents of its inventory are added to the values of the $\field{gold}$, $\field{fruit}$, and $\field{meat}$ fields of its cell. However, not additional item of meat is created on the cell.
 \end{description}
 \end{definition}
 
-It ought to be said that the formulae and constants used in the above definitions are, fundamentally, judgement calls and that there is no theoretical reason for choosing them over others. Nonetheless, we can given them an intuitive meaning:
+It ought to be said that the formulae and constants used in the above definitions are, fundamentally, judgement calls and that there is no theoretical reason for choosing these over others. Nonetheless, we can given them an intuitive meaning:
 \begin{description}
 	\item[Environment.]\ 
 	\begin{description}
@@ -322,7 +323,8 @@ It ought to be said that the formulae and constants used in the above definition
 	\end{description}
 	\item[Global data.] A day is segmented into 50 periods, where a time of 25 represents midday, and 0/50 represents midnight. The temperature is a function of the daytime, with midday being the hottest and midnight being the coldest.
 	\item[Wumpus behaviour.] Wumpuses are day-active and roam around randomly. At night, they are likely to sit still. When they sight an agent (depending on light conditions), they will invariably attempt to close the distance and attack.
-	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by traveling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up. 
+	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by traveling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up.
+	\item[Combat and hunger.] Agents must compete with each other for finite resources. They can either eat fruits from plants, get meat from killed Wumpuses and agents, or they can kill other agents for the contents of their inventories. Because their health slowly but steadily decreases, they must periodically eat food. In addition, fatigue limits their ability to move, forcing periodic rests.
 \end{description}
 
 \subsection{Agents}

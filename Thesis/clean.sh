@@ -1,0 +1,11 @@
+rm *.aux
+rm *.bbl
+rm *.blg
+rm *.hd
+rm *.glo
+rm *.idx
+rm *.ilg
+rm *.ind
+rm *.log
+rm *.lot
+rm *.toc

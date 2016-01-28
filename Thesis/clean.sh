@@ -8,4 +8,5 @@ rm *.ilg
 rm *.ind
 rm *.log
 rm *.lot
+rm *.out
 rm *.toc

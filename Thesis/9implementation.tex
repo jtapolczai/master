@@ -577,9 +577,7 @@ We should note that a number of justified criticisms can be levelled against it.
 
 Nonetheless, this database is valuable for the agent. $\field{retrieve_V}$ and $\field{retrieve_E}$ can provide actionable information about the static aspects of the world such as the location of plants or dangerous paths. Even the information about its changing aspects, such as the location of wumpuses, will be reasonably good, since wumpuses, in the absence of agents, tend to stay in place over time\footnote{They approximately perform 2-dimensional random walks over time. The expectation $\mathsf{E}(W)$ of a random walk is the null-vector $\tuple{0,0,\dots,0}$. Given that they have a disproportionately high chance of just staying in place, depending on light conditions, their positions are even quite densely clustered around that.}.
 
-\paragraph{Attention-control.}\ \\
-
-Attention-control serves as an interrupt/prioritisation mechanism for the decision-making process. Whenever it is triggered by some percept that it deems important, it sends a message to the DM, directing it to abort its current activity and to deal with the stimulus instead. We thereby have a method of prioritising tasks that require immediate attention and to cut short, colloquially speaking, aimless deliberation. 
+\paragraph{Attention-control.} Attention-control serves as an interrupt/prioritisation mechanism for the decision-making process. Whenever it is triggered by some percept that it deems important, it sends a message to the DM, directing it to abort its current activity and to deal with the stimulus instead. We thereby have a method of prioritising tasks that require immediate attention and to cut short, colloquially speaking, aimless deliberation. 
 
 For our agents, paying attention means to focus on a cell and a specific kind of stimulus. That is, attention-control deal with messages of the type
 
@@ -609,9 +607,22 @@ $$
 	\field{choice} :: \type{s \rightarrow \wjun \rightarrow \tuple{Action, s}}
 $$
 
-where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.\todo[inline]{TODO: Detailed description of affective/ attentional influences upon \texttt{choice}.}
+where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.
 
-From the affective subsystem, the BG, and the DM, we can put together the imagination simulator loop described in previous chapters. In Figure~\ref{fig:cognitive_system_dm}, we see the DM issuing commands to the BG, which generates data for the affective systems and the IDM. The affective systems treat this data as if it were coming from the external world and generate affective messages, which are consumed by the IDM and inform its commands to the BG.
+An agent's decsion-making begins by observing the intensity of each of its four emotions (anger, fear, enthusiasm, contentment), and choosing the most intensely felt as its {\em dominant emotion}. The agent then evaluates each cell it perceives separately to determine which evokes its dominant emotion most strongly --- as described above, this cell is then designated the {\em target} of its planning in the current step, and we select one of the actions appropriate to the dominant emotion and the target. Each emotion has associated with it the following set of hardwired --- instinctive, if you will --- actions:
+
+\begin{description}
+	\item[Anger.] Moving/rotating towards the target, sending a hostile gesture, and attacking.
+	\item[Fear.] Moving away from the target.
+	\item[Enthusiasm.] Moving/rotating towards the target, sending a friendly gesture, giving an item, collecting an item, harvesting a plant.
+	\item[Contentment.] Doing nothing, i.e. resting.
+\end{description}
+
+If the dominant emotion is sufficiently strong, the chosen action is communicated directly to the EDM. Otherwise, the it is marked as hypothetical and remains within the IDM, where its consequences can be evaluated by the belief generator and the whole process can repeat.
+
+\subparagraph{Finalizing and aborting plans.} Once an agent begins taking hypothetical actions, it will continue to do so until its dominant emotion drops sufficiently --- we conceive of this event as the emotion being satisfied, in which case we begin executing the first step of the plan --- or until a conflicting emotion becomes stronger, in which case we retract a random number of steps from the plan and continue evaluating hypothetical actions. This entire process is subject to an upper bound which decreases each time a new hypothetical action is proposed. Should the agent not commit to a plan before this bound reaches, 0, it simply terminates the process and takes whatever action is associated with its dominant emotion.
+
+From the affective subsystem, the BG, and the DM, we can thus put together the imagination simulator loop described in previous chapters. In Figure~\ref{fig:cognitive_system_dm}, we see the DM issuing commands to the BG, which generates data for the affective systems and the IDM. The affective systems treat this data as if it were coming from the external world and generate affective messages, which are consumed by the IDM and inform its commands to the BG.
 
 \begin{figure}
 	\centering

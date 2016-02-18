@@ -301,6 +301,8 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		\item[\action{eat}] --- eat a meat- or fruit-item $i$ from the agent's inventory. Restore $0.5$ health, to a maximum of $2.0$.
 		
 		\item[\action{gesture}] --- expresses a gesture in the form of a string $s$. All other agents on the same cell receive $s$.
+		
+		\item[\action{nothing}] --- doing nothing this turn.
 	\end{enumerate}
 	
 	\item[Combat mechanics.] When two entities $\field{A}$, $\field{B}$ attack each other, an entity being either an agent or a Wumpus, the health of $\field{A}$ is subtracted from the health of $\field{B}$ and vice versa. Any entity whose health thereby reaches or goes below 0 dies.
@@ -577,30 +579,31 @@ We should note that a number of justified criticisms can be levelled against it.
 
 Nonetheless, this database is valuable for the agent. $\field{retrieve_V}$ and $\field{retrieve_E}$ can provide actionable information about the static aspects of the world such as the location of plants or dangerous paths. Even the information about its changing aspects, such as the location of wumpuses, will be reasonably good, since wumpuses, in the absence of agents, tend to stay in place over time\footnote{They approximately perform 2-dimensional random walks over time. The expectation $\mathsf{E}(W)$ of a random walk is the null-vector $\tuple{0,0,\dots,0}$. Given that they have a disproportionately high chance of just staying in place, depending on light conditions, their positions are even quite densely clustered around that.}.
 
-\paragraph{Attention-control.} Attention-control serves as an interrupt/prioritisation mechanism for the decision-making process. Whenever it is triggered by some percept that it deems important, it sends a message to the DM, directing it to abort its current activity and to deal with the stimulus instead. We thereby have a method of prioritising tasks that require immediate attention and to cut short, colloquially speaking, aimless deliberation. 
+\paragraph{Attention-control.} Attention-control serves as an prioritisation mechanism for the decision-making process. In addition to the emotional evaluation of the whole of the agent's perceptions, we also group incoming messages by cell and evaluate each of those groups separately to determine which locations in the world evoke the strongest emotions. We thereby have a method of prioritising cells and tasks that require immediate attention and to prevent, colloquially speaking, aimless deliberation on unimportant ones.
 
-For our agents, paying attention means to focus on a cell and a specific kind of stimulus. That is, attention-control deal with messages of the type
+For our agents, paying attention means to focus on a cell and making it the target of its decision-making. The cell can be another one with say, food or a Wumpus on it, or it can be the agent's own cell, which would be important in case of low health, say.
 
-$$
-	\type{Stimulus} = \type{Gold + Fruit + Meat + Agent\ String + Wumpus + Pit}
-$$
-
-The AC component then emits messages of type $\type{Stimulus}$ and is modelled via the functions
+The AC component then emits messages of type $\type{EmotionOnCell}$ and is modelled via the functions
 
 $$
 	\begin{array}{r c l}
-		\field{attention} & :: & \type{\wjun \rightarrow Maybe\ \tuple{\mathnormal{V(G)}, Stimulus}}\\
+		\type{Cell} & = & \type{\tuple{\N,\N}}\\
+		
+		\type{EmotionName} & = & \type{Anger + Fear + Enthusiasm + Contentment}\\
+		
+		\type{EmotionOnCell} & = & \type{EmotionOnCell\ Cell\ EmotionName\ \R}\\
+		
+		\\
+	
+		\field{attention} & :: & \type{s \rightarrow \wjun \rightarrow [EmotionOnCell]}\\
+		
 		\field{ac} & :: & \type{s \rightarrow \wjun \rightarrow s}\\
 	\end{array}
 $$
 
 where $\type{s}$ is the internal state of the agent. $\field{ac}$ is just a wrapper around $\field{attention}$ which puts the latter's message into the agent's message space.
 
-Three things are of note here. First, $\field{attention}$ need not emit any message at all. It will indeed be a very common case that the agent perceives nothing of particular interest. During these periods, it will be inactive, leaving the agent's behaviour to the other components. As a result, decision-making will be largely dominated by the BG and the affective components, which do judge everything which the agent perceives.
-
-Second, at most one stimulus may marked as important. This reflects the intuition of the AC being a sort of ``gut reaction'' which does not deliberate, but keenly and quickly focuses the agent on a single object. 
-
-Third, the $\type{Stimulus}$ type does not unambiguously identify an object in the world. $\type{Gold}$, for instance, does not say how much gold there is in cell; $\type{Wumpus}$ does not identify any particular wumpus; $\type{Pit}$ may not mean that there is a pit on the indicated cell; only that the agent should watch out for one. This, too, is intended --- the AC should only serve pointers, not perform in-depth analysis of the situation. It is the task of the belief generator and the DM to examine specific parts of the environment and to deliberate about courses of action. This mimics the cognitive mechanism in real animals quite closely: in humans, attention is a subtle and immediate feeling; one that simply causes us to notice certain objects or events in the world. No conscious thinking, or even the experience of emotions, need accompany this experience. Such more complex cognitive processes might be induced, but they are clearly separate from the mere act of noticing.
+We should note that the AC does not prescribe any specific action in relation to a cell or an emotion. Its role thus merely consists of noticing, so to speak, emotionally important places in the world and to communicate these to the DM which uses the AC's messages to guide its own planning process, described in detail below. The general scheme consists of selecting the globally most strongly felt emotion and then going through the messages of the AC, in descending order according to that most strongly felt emotion, and seeing what actions it might take.
 
 \paragraph{Decision-making.} Decision-making is split into two components: external decision-making, which controls the agent's actions, and internal decision-making, which controls the BG and thus drives the planning process. Aside from the difference in target, both are modelled via a function
 $$
@@ -619,6 +622,8 @@ An agent's decsion-making begins by observing the intensity of each of its four 
 \end{description}
 
 If the dominant emotion is sufficiently strong, the chosen action is communicated directly to the EDM. Otherwise, the it is marked as hypothetical and remains within the IDM, where its consequences can be evaluated by the belief generator and the whole process can repeat.
+
+Lastly, we note the corner case of no one emotion being sufficiently strong to serve as the dominant one. In this case, the agent judges that nothing need be done and forgoes the planning process altogether, delivering a \action{nothing}-action instead.
 
 \subparagraph{Finalizing and aborting plans.} Once an agent begins taking hypothetical actions, it will continue to do so until its dominant emotion drops sufficiently --- we conceive of this event as the emotion being satisfied, in which case we begin executing the first step of the plan --- or until a conflicting emotion becomes stronger, in which case we retract a random number of steps from the plan and continue evaluating hypothetical actions. This entire process is subject to an upper bound which decreases each time a new hypothetical action is proposed. Should the agent not commit to a plan before this bound reaches, 0, it simply terminates the process and takes whatever action is associated with its dominant emotion.
 

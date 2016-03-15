@@ -224,6 +224,7 @@ proposed_model.pdf
 *.bbl
 *.blg
 *.toc
+*.idx
 *.out
 *.txss
 

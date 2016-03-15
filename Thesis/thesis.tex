@@ -70,13 +70,19 @@
 		\todo{Enter your text here.}
 	\end{acknowledgements*}
 	
-	\begin{kurzfassung}
-		\todo{Ihr Text hier.}
-	\end{kurzfassung}
-	
 	\begin{abstract}
-		Modern AI is generally divided into two schools of thought, separated by the used level of abstraction. We have, on one hand, the biologically inspired, low-level modelling which uses neural networks to imitate the workings of brains. On the other, we have a logic-oriented, high-level approach that tries design and implement ideal ways of thinking. In recent decades, the latter approach has triumphed and has displaced computational model based on neural networks. In this practically oriented thesis, I shall make the case that this was perhaps too hasty, and that, despite their many applications, purely logic- and planning-based algorithms are insufficient to model authentic intelligence. This work is composed of two parts; the first is the creation of a theoretical model based on biological considerations, under the assumption that we can best understand the workings of a complex artefact like the animal brain by tracing its history; the second is a description of an implementation of a kind of affective agent based on these principles, serving as a proof-of-concept that one can create AIs which can navigate toy models of the real world with them.
+		We design and implement a hybrid AI that combines emotional reactions to stimuli with reasoning about the consequences of actions as a means of developing effective behaviour in a toy world. The fundamental task of our agents is to survive by periodically finding and eating food and by dealing with hostile predators, either through flight or through flight. Agents are free to cooperate, antagonize, or ignore each other and agents with different emotional profiles will pursue different strategies.
+		
+		The thesis begins with theoretical investigations of different models of computations and their relation to the biological brain. Our proposition is that the brain's function is, to a degree, analogous to a collection of white boxes, observable to each other. Accordingly, our agents are modeled as a collection of loosely coupled components which communicate with each other through messages. Any component is free to read any message and components have no knowledge which others will read messages they insert into the agent's message space.
+		
+		A relatively simple affective evaluation forms the basis of each agent's decision-making, though it is complemented by a belief generator which makes inferences about future world-states resulting from certain choices. Though evaluation of these future states as well, agents can optimize their behavior, as they can foresee likely positive or negative consequences of their actions.
+		
+		The thesis ends will a qualitative and a quantitative evaluation. We qualitatively evaluate agents qualitatively by placing agents in a number of simple scenarios and observing whether they perform tasks like collecting food or avoiding predators. We then evaluate them quantitatively by placing various populations into larger scenarios and recording the survival of different personality types over time.
 	\end{abstract}
+	
+	\begin{kurzfassung}
+		Wir entwerfen und implementieren eine hybride AI, welche emotionale Reaktionen auf Stimuli mit dem Schließen über den Folgen von Aktionen zum Zwecke der Ausarbeitung effektiven Verhaltens in einer einfachen Welt kombiniert. Die fundamentale Aufgabe unserer Agenten ist es, durch das Finden und Essen von Nahrung, sowie der Handhabung von Raubtieren durch Kampf oder Flucht, zu überleben.
+	\end{kurzfassung}
 	
 	% Select the language of the thesis, e.g., english or naustrian.
 	\selectlanguage{english}

@@ -82,6 +82,12 @@
 	
 	\begin{kurzfassung}
 		Wir entwerfen und implementieren eine hybride AI, welche emotionale Reaktionen auf Stimuli mit dem Schließen über den Folgen von Aktionen zum Zwecke der Ausarbeitung effektiven Verhaltens in einer einfachen Welt kombiniert. Die fundamentale Aufgabe unserer Agenten ist es, durch das Finden und Essen von Nahrung, sowie der Handhabung von Raubtieren durch Kampf oder Flucht, zu überleben.
+		
+		Die Arbeit beginnt mit einer theoretischen Untersuchung mehrerer komputationaler Modelle und ihrem Verhältnus zum biologischen Gehirn. Unserer Behauptung ist, dass das Gehirn zu einem gewissen Grad analog zu einer Ansammlung von \emph{White Boxes} ist, die die Arbeit der jeweils anderen beobachten können. Demgemäß sind unsere Agenten als lose gekoppelte Komponenten modelliert, die über Nachrichten miteinander kommunizieren. Jede Komponente kann jede Nachricht auslesen und keine Komponente weiß, welche anderen die Nachrichten lesen werden, welche sie in den zentralen \emph{Message Space} des Agenten einfügt.
+		
+		Eine relativ einfache affektive Evaluation ist die Grundlage der Entscheidungsfindung der Agenten, sie wird aber ergänzt durch einen \emph{Belief Generator}, der zukünftige Zustände der Welt als Folge bestimmter Aktionen simuliert. Durch die Evaluation dieser zukünftigen Zustände können Agenten ihr Verhalten anpassen und sowohl die negativen als auch die positiven Folgen ihrer Aktionen absehen.
+		
+		Die Arbeit endet mit einer qualitativen sowie einer quantitativen Evaluierung. Wir evaluieren die Agenten qualitativ, indem wir sie in einer reihe simpler Beispielszenarien ausprobieren und testen, ob sie einfache Aufgaben, wie das Sammeln von Essen oder die Flucht von Feinden, ausführen. Danach evaluieren wir sie quantativ mittels verschiedener Populationen in eine größeren Szenario, in dem wir die langfristige Überlebensrate verschiedener Persönlichkeitstypen festhalten.
 	\end{kurzfassung}
 	
 	% Select the language of the thesis, e.g., english or naustrian.

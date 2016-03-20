@@ -5,7 +5,7 @@ The goal is the creation of toy AI that semi-realistically mimics animal intelli
 \subsection{World}
 
 The choice of the world profoundly affects the implementation of the agent --- its knowledge base, mechanism of perception and interaction, the required complexity of the implementation. On the one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other hand, the world should be sufficiently complex to allow agents to distinguish themselves. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. I shall first lay out the design goals and then evaluate three possible worlds for agents.
-
+f
 \paragraph{Design Goals.} The two most important criteria for prospective worlds are richness of interaction and world complexity, in that order. As said, an evaluation of affective agents is only possible if they can interact with their environment and other entities in a sufficiently complex way to allow agents with different emotional profiles to be distinguished from each other. Mechanisms of problem-solving like STRIPS \cite{fikesNilsson}, A* \cite{nilssonAStar}, ASP \cite{asp1}, forward-/backward-planning, etc. have been explored in the context of structurally simple worlds, generally those representable through propositional logic, cost-functions, decision tress, and the like. While these are useful, they are less appropriate in an affective scenario for the following two reasons:
 
 \begin{enumerate}
@@ -29,7 +29,7 @@ Micro-worlds like blocks worlds have been extensively studied. In this, their si
 
 \subsubsection{Wumpus World}
 
-The traditional Wumpus world, as described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite[p. 236]{norvig}, is a grid-based, 4x4 cave world with one agent, one monster --- the Wumpus --- and gold placed in random rooms. The agent starts at position $\langle 1,1\rangle$ and can move forward or turn 90$^\circ$ to the left or right. If it enters a room with a pit or a live Wumpus, it dies; its goal is to find and collect the gold and then move back to position $\langle 1,1\rangle$ to climb out of the cave. In addition, it has one arrow which he can fire straight ahead to defend against the Wumpus. The agent has only the following local information \cite[p. 237]{norvig}:
+The traditional Wumpus world, as described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite[p.\ 236]{norvig}, is a grid-based, 4x4 cave world with one agent, one monster --- the Wumpus --- and gold placed in random rooms. The agent starts at position $\langle 1,1\rangle$ and can move forward or turn 90$^\circ$ to the left or right. If it enters a room with a pit or a live Wumpus, it dies; its goal is to find and collect the gold and then move back to position $\langle 1,1\rangle$ to climb out of the cave. In addition, it has one arrow which he can fire straight ahead to defend against the Wumpus. The agent has only the following local information \cite[p.\ 237]{norvig}:
 \begin{itemize}
 	\item In the square containing the Wumpus and in the directly (not diagonally) adjacent squares, the agent will perceive a {\em Stench}.
 	\item In the squares directly adjacent to a pit, the agent will perceive a {\em Breeze}.
@@ -509,48 +509,52 @@ This system is a quite gross simplification of the real world. In reality, one d
 
 Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
-\paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will use a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
+\paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will reuse the actual ontology of the Wumpus world and generate beliefs about future world-states with its \emph{semantics function} $\varphi$.
 
-\begin{definition}[Syntax: Disjunctive logic program]
-	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule $r$ is of the following form:
-	
-	$$
-		\mathrm{head}(r) \leftarrow \mathrm{body}^+(r), \mathrm{body}^-(r)
-	$$
-	
-	where $\mathrm{head}(r) = \field{P_1},\dots,\field{P_h}$, $\mathrm{body}^+(r) = \field{P_{h+1}},\dots,\field{P_k}$, and $\mathrm{body}^-(r) = \field{not\ P_{k+1}},\dots,\field{not\ P_m}$, with $P_i$ being a first-order predicate $(1\leq i \leq m)$. For all predicates $\field{P_i}$, both $\field{P_i}$ and its {\em strong negation} $\neg \field{P_i}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
-	If $\mathrm{body}^-(r) = \emptyset$ for all $r \in \Pi$, we call $\Pi$ as {\em positive} logic program.
-	
-	$\mathrm{head}(r) $ is called the head of the rule $r$, $\mathrm{body}^+(r),\mathrm{body}^-(r)$ its body. The predicates in $\mathrm{body}^+(r)$ are asserted and the predicates in $\mathrm{body}^-(r) $ are default-negated\footnote{That is, it is asserted that they cannot be derived, but not necessarily that their negation can be derived.}. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
-\end{definition}
+% a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
-Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. We first define models for positive logic programs:
+%\begin{definition}[Syntax: Disjunctive logic program]
+%	A finite set of rules $\Pi$ is a disjunctive logic program exactly if every rule $r$ is of the following form:
+%	
+%	$$
+%		\mathrm{head}(r) \leftarrow \mathrm{body}^+(r), \mathrm{body}^-(r)
+%	$$
+%	
+%	where $\mathrm{head}(r) = \field{P_1},\dots,\field{P_h}$, $\mathrm{body}^+(r) = \field{P_{h+1}},\dots,\field{P_k}$, and $\mathrm{body}^-(r) = \field{not\ P_{k+1}},\dots,\field{not\ P_m}$, with $P_i$ being a first-order predicate $(1\leq i \leq m)$. For all predicates $\field{P_i}$, both $\field{P_i}$ and its {\em strong negation} $\neg \field{P_i}$ are {\em literals}. If a literal only has constant arguments, it is called a {\em ground literal}.
+%	If $\mathrm{body}^-(r) = \emptyset$ for all $r \in \Pi$, we call $\Pi$ as {\em positive} logic program.
+%	
+%	$\mathrm{head}(r) $ is called the head of the rule $r$, $\mathrm{body}^+(r),\mathrm{body}^-(r)$ its body. The predicates in $\mathrm{body}^+(r)$ are asserted and the predicates in $\mathrm{body}^-(r) $ are default-negated\footnote{That is, it is asserted that they cannot be derived, but not necessarily that their negation can be derived.}. If the body of a rule is empty, the rule is called a {\em fact}; if its head is empty, the rule is called a {\em constraint}.
+%\end{definition}
+%
+%Intuitively, the semantics of logic programs are that, whenever all the asserted predicates in the body of a rule are true and we do {\em not} know any of the default-negated predicates to be true, one of the predicates in the head of the rule must be true. We first define models for positive logic programs:
+%
+%\begin{definition}[Sets closed under logic programs]
+%	Let $\Pi$ be a positive logic program and let $X$ be a set of atoms. $X$ is {\em closed under} $\Pi$ if, for all $r \in \Pi$, $\mathrm{body}^+(r) \subseteq X$ implies that there exists a $\field{P} \in \mathrm{head}(r)$ such that $\field{P} \in X$.\\
+%	
+%	\noindent
+%	The $\subseteq$-minimal set of atoms closed under $\Pi$ is called $\mathsf{Cn}(\Pi)$.
+%\end{definition}
+%
+%Answer sets for general disjunctive logic programs are defined through the Gelfond-Lifschitz reduct:
+%
+%\begin{definition}[Reduct of a logic program]
+%Let $\Pi$ be a (disjunctive) logic program and let $X$ be a set of atoms. Then the reduct $\Pi^X$ is
+%	$$
+%		\{ \mathrm{head}(r) \leftarrow \mathrm{body}^+(r)\ |\ r \in \Pi \mt{ and } \mathrm{body}^-(r) \cap X = \emptyset \}
+%	$$
+%\end{definition}
+%
+%\begin{definition}[Answer set]
+%	A set of atoms $X$ is an {\em answer set} of a disjunctive logic program exactly if $\mathsf{Cn}(\Pi^X) = X$.
+%\end{definition}
+%
+%$X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e. one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
+%
+%Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
 
-\begin{definition}[Sets closed under logic programs]
-	Let $\Pi$ be a positive logic program and let $X$ be a set of atoms. $X$ is {\em closed under} $\Pi$ if, for all $r \in \Pi$, $\mathrm{body}^+(r) \subseteq X$ implies that there exists a $\field{P} \in \mathrm{head}(r)$ such that $\field{P} \in X$.\\
-	
-	\noindent
-	The $\subseteq$-minimal set of atoms closed under $\Pi$ is called $\mathsf{Cn}(\Pi)$.
-\end{definition}
+The agent generates the immediate future world-state by reconstructing a segment of the present world from the facts stored in its memory. This will result in an internal world that might contains less information than the external, real one, but the internal world will not contradict the external one on any fact. Importantly, a representation of the agent itself --- let us call it $\type{I}$ to distinguish it from the real agent --- will be a part of this generated world. The belief generator then reads each action that the decision-maker has proposed (see below), configures $\type{I}$ to perform it, and calls $\varphi$ to advance the time by one step. $\type{I}$ will perform its action, its consequences will be simulated by $\varphi$, and $\type{I}$ will receive corresponding perceptions. The belief generator then reads out $\type{I}$'s message space and inserts these messages into the real agent's message space. It has thus utilized the agent's memory and $\varphi$ to infer the consequences of certain actions to the best of the agent's knowledge.
 
-Answer sets for general disjunctive logic programs are defined through the Gelfond-Lifschitz reduct:
-
-\begin{definition}[Reduct of a logic program]
-Let $\Pi$ be a (disjunctive) logic program and let $X$ be a set of atoms. Then the reduct $\Pi^X$ is
-	$$
-		\{ \mathrm{head}(r) \leftarrow \mathrm{body}^+(r)\ |\ r \in \Pi \mt{ and } \mathrm{body}^-(r) \cap X = \emptyset \}
-	$$
-\end{definition}
-
-\begin{definition}[Answer set]
-	A set of atoms $X$ is an {\em answer set} of a disjunctive logic program exactly if $\mathsf{Cn}(\Pi^X) = X$.
-\end{definition}
-
-$X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e. one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
-
-Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
-
-To determine its next action in the real world, the agent function calls \dlvhex\ with a proposed action. It, in turn, will begin simulating (i.e. imagining) the consequences of that action. The solver will know the rules of the world, but since it won't possess any information about its state, it will query the agent's memory and perception via external atoms. After deducing the world's future state based on this information, it will call an {\em action atom}, sending the world state back to the agent function for evaluation, which then either proposes another step or terminates the planning process.
+This simulated future world-state is then read out by the affective components, which emotionally evaluate it, as well as the decision-maker, which either proposes another action for the belief-generation to simulate, finalizes the plan if its satisfied with the predicted, or orders that a certain number of steps be retracted if the situation is deemed unfavourable. 
 
 \paragraph{Memory.} While real-world memory is complex phenomenon, for expediency's sake, our agents will possess only a simple analogue to it, in the form of a private database of world data which they perceived in the past. These data are of type $\type{TV_{\mathrm{jun}}}$, $\type{TE_{\mathrm{jun}}}$, which were given in Definition~\ref{def:wjun}. We store them on a per-cell and per-edge basis and update them whenever we perceive them anew. This gives rise to the following definition:
 

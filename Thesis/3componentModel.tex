@@ -1,4 +1,4 @@
-\section{The White-Box Model}\label{sec:whiteBoxModel2}
+\section{Components as White Boxes}\label{sec:whiteBoxModel2}
 
 We can imagine the components of the mind as white boxes which inform other components by their very functioning --- however, this does not lend itself to easy implementation. Instead, we can emulate this behaviour via a \caps{message space}, from which individual components take their input and into which they put their output. A \caps{component} is then a local processing unit which continuously scans the message space, running messages through its \caps{filter}. If the filter detects a relevant message, it is then passed to the \caps{interpreter}, which parses the message into the needed format and hands it over to the \caps{processor}. The processor, after having finished, puts its output back into the message space for other components to read. Figure~\ref{fig:global} illustrates this scheme. Note the lack of explicit hierarchical structure and central organising units.
 
@@ -101,8 +101,8 @@ Since the mathematical model is built with implementation in mind, I will use so
 	\begin{description}
 		\item[Base case.] Every type $\type{T}$ is a type constructor.
 		\item[Abstraction.] If $\type{C}$ is a type constructor and $\type{T}$ is a type, $\allQ{x} \type{C}[\type{T}\backslash x]$ is a type constructor.
-		\item[Sum types.] If $\type{C_1}\dots,\type{C_n}$ are type constructors with $\type{C_i} = \allQ{x^i_1\dots,x^i_n} \type{T_i}$ \paren{$1 \leq i \leq n$}, then\\ $\allQ{x_1,\dots,x_n} (\type{C_1} + \dots + \type{C_n})$ is a type constructor.
-		\item[Partial application.] If $\type{T_1},\dots,\type{T_i}$ \paren{$i < n$} are types and $\allQ{x_1,\dots,x_n} \type{T}$ is a type constructor,\\ then $\allQ{x_{i+1},\dots,x_n} \type{T}[x_1\backslash \type{T_1},\dots,x_i\backslash \type{T_i}]$ is a type constructor.
+		\item[Sum types.] If $\type{C_1}\dots,\type{C_n}$ are type constructors with $\type{C_i} = \allQ{\vec{X}_i} \type{T_i}$ \paren{$1 \leq i \leq n$}, then $\allQ{\vec{X}_1; \dots; \vec{X}_n} (\type{C_1} + \dots + \type{C_n})$ is a type constructor.
+		\item[Partial application.] If $\type{T_1},\dots,\type{T_i}$ \paren{$i < n$} are types and $\allQ{x_1,\dots,x_n} \type{T}$ is a type constructor, then $\allQ{x_{i+1},\dots,x_n} \type{T}[x_1\backslash \type{T_1},\dots,x_i\backslash \type{T_i}]$ is a type constructor.
 	\end{description}
 \end{definition}
 

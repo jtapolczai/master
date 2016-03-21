@@ -149,4 +149,25 @@
 		\draw [opacity=0.3] ($(a) + (1,0)$) -- ++(0,1);
 }
 
+% Simple cubes with a label
+
+\newcommand{\figSimpleCube}[3]{%
+	\coordinate (a) at #1;
+	\shade [top color=#3,bottom color=#3,fill opacity=0.5]
+	($(a) + (0,0)$) -- ($(a) + (0,-1)$)
+	-- ($(a) + (1,-1)$)
+	-- ($(a) + (1,0)$);
+	%\draw [thick, opacity=0.4]
+	%($(a) + (0,0)$) -- ($(a) + (0,-1)$)
+	%-- ($(a) + (1,-1)$)
+	%-- ($(a) + (1,0)$)
+	%-- ($(a) + (0,0)$);
+	
+	\node at ($(a) + (0.5,-0.5)$) {\color{black}{#2}};
+}
+
+\newcommand{\figBlueCube}[2]{\figSimpleCube{#1}{#2}{PaleBlue}}
+\newcommand{\figDarkGreenCube}[2]{\figSimpleCube{#1}{#2}{DeepGreen}}
+\newcommand{\figRedCube}[2]{\figSimpleCube{#1}{#2}{PaleRed}}
+
 \newcommand{\cubeLabel}[2]{\begin{tabular}{c}\textbf{``#1'':}\\\begin{tabular}{l}#2\end{tabular}\end{tabular}}

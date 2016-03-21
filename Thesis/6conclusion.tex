@@ -1,6 +1,113 @@
 \section{Results}\label{sec:results}
 
-results go here
+Our goal was to evaluate our agents in specific scenarios, and to compare different kinds of agents to each other. To this end, we introduced parametricity in their emotional reactions. While the interplay of affect, decision-making and belief generation was the same in all agents, as was the schema of their emotional reactions, the strength of these reactions varied --- while all agents feared dying, say, not all feared it to the same degree. While all felt fear in the proximity of a Wumpus, they felt it with diverse intensities.
+
+We parametrised our agents by five criteria, with two possible values for each. These were:
+
+\begin{itemize}
+	\item anger, with the possible values \emph{strong}/\emph{weak};
+	\item fear, with the possible values \emph{strong}/\emph{weak};
+	\item enthusiasm, with the possible values \emph{strong}/\emph{weak};
+	\item contentment, with the possible values \emph{strong}/\emph{weak};
+	\item hostility, with the values \emph{hostile}/\emph{friendly}.
+\end{itemize}
+
+Note that each emotion of the PSBC is represented by one criterion, while the emotions of the SJS were rolled into one for the sake of simplicity. For each emotion or \emph{personality fragment}, we constructed a graph consisting of approximately 1000-10000 nodes by hand, with output nodes that had configurable significances. These graphs are far too large for explication here\footnote{The code of the implementation is accessible at \url{https://github.com/jtapolczai/wumpus}.} and there was, indeed, no special theory behind their construction, but we did use common-sense assumptions which we will illustrate by listing a few output nodes:
+
+\begin{itemize}
+	\item High health reduced fear.
+	\item The presence of a Wumpus with low health increased anger. Closer Wumpuses generated more anger than distant ones.
+	\item Dying significantly increased fear.\footnote{While such a node might seem useless, agents can receive ``You have died''-messages from their belief generators.}
+	\item Items lying on the ground increased enthusiasm.
+	\item Low health also increased enthusiasm, so as to induce the enthusiasm-related action of eating,
+	\item Empty cells increased contentment.
+	\item Eating fruit or meat decreased enthusiasm as a way of signaling satisfaction.
+	\item Killing a Wumpus decreased anger.
+\end{itemize}
+
+Each output node had a variable significance which we varied according to whether we wanted the emotion to be strong or weak or hostile or friendly, respectively. The concrete values for these significances were, again, the product of intuition. For an agent with strong fear, dying increased the value by 0.8 out of a possible 1, making it almost certain that a ``You have died''-message would lead fear to override all other emotions. For weak fear, the value only increased by 0.5 --- still very high, but considerably lower, and possible to override if the agent's anger was strong enough. The five criteria induced 32 possibly combinations of values, with each combination representing a possible personality for an agent.
+
+For convenience, we will use the shorthand notation of Definition~\ref{def:personality} to specify an agent's personality.
+
+\begin{definition}\label{def:personality}
+   Let $A$ be an agent and let $P_A = \tuple{\field{X}_a, \field{X}_f, \field{X}_e, \field{X}_c, \field{X}_h}$ with $\field{X}_a, \field{X}_f, \field{X}_e, \field{X}_c \in \{ \type{W}, \type{S} \}$ and $\field{X}_h \in \{ \type{H}, \type{F} \}$.
+   
+   Then $P_A$ is a specification for a $A$'s personality, with $\field{X}_a$, $\field{X}_f$, $\field{X}_e$, $\field{X}_c$, $\field{X}_h$ representing the agent's personality fragments for anger, fear, enthusiasm, and hostility, respectively. The values $\type{W}$ and $\type{S}$ stand for a \emph{weak} or \emph{strong} fragment, while $\type{H}$ and $\type{F}$ will stand for a \emph{hostile} or \emph{friendly} value for hostility.
+\end{definition}
+
+\subsection{Qualitative Evaluation}
+
+To evaluate the general fitness of our architecture, we placed one or two agents in a number of scenarios with a clear expected outcome. Unless otherwise noted, we expected all personalities to perform in the same way.
+
+\paragraph{Scenario: harvesting a single plant.} The first scenario was a 5x5 world with two ripe plants and an agent with a health of 0.6 that had food in its inventory. The agent's health was low, but eating one plant would restore it to a level of 1.1. We expected the agent to move to the closest plant, harvest it, eat the fruit now it its inventory, and then rest. We can see the world in Figure~\ref{fig:evalWorld1} and the actions of the agent in Listing~\ref{lst:evalWorld1}. Coordinates are given in the format $(x,y)$.
+
+\begin{figure}
+	\centering
+	\input{Figs/Tikz/evalWorld1}
+	\caption{The first test world. In the South, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
+	\label{fig:evalWorld1}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions of the agent in the first five steps., label=lst:evalWorld1]
+   A at (2,0) moved North to (2,1).
+   A at (2,1) harvested a plant.
+   A at (2,1) ate Fruit.
+   A at (2,1) did nothing.
+   A at (2,1) did nothing.
+\end{lstlisting}
+
+As we can see, the agent performed according to our expectations.
+
+\paragraph{Scenario: harvesting all plants.} This scenario was identical to the previous one, save for the agent's health, which was set at 0.1. Very close to dying, we expected the agent to harvest both plants and eat both fruits in succession to increase its health above 1. We see the actions of the agent in in Listing~\ref{lst:evalWorld2}. The agent again performed according to our expectations.
+
+\begin{lstlisting}[caption=Actions of the agent in the first ten steps., label=lst:evalWorld2]
+   A at (2,0) moved North to (2,1).
+   A at (2,1) harvested a plant.
+   A at (2,1) ate Fruit.
+   A at (2,1) moved North to (2,2).
+   A at (2,2) moved North to (2,3).
+   A at (2,3) harvested a plant.
+   A at (2,3) ate Fruit.
+   A at (2,3) did nothing.
+   A at (2,3) did nothing.
+\end{lstlisting}
+
+\paragraph{Scenario: resting.} This scenario is the simplest: we place an agent in good health into an empty 5x5 world. We expect it to simply stay put for a short while, avoiding exertion, or to look around to ascertain its surroundings. Listing~\ref{lst:evalWorld3} shows the results. Since we had not built in any notion of curiosity into our agents, they simply remained in place, which we deemed acceptable behaviour.
+
+\begin{lstlisting}[caption=Actions of the agent in the first five steps., label=lst:evalWorld3]
+   A at (2,2) did nothing.
+   A at (2,2) did nothing.
+   A at (2,2) did nothing.
+   A at (2,2) did nothing.
+   A at (2,2) did nothing.
+\end{lstlisting}
+
+\paragraph{Scenario: killing a wounded Wumpus.} Here we put a Wumpus with 0.1 health at some distance from a healthy agent. 0.1 health is low enough that any agent would attack, regardless of personality. The world is shown in Figure~\ref{fig:evalWorld4} and the agent's actions are shown in Listing~\ref{lst:evalWorld4}. We can see that the agent indeed approached and killed the wounded Wumpus. However, Enthusiasm then replaced anger as its dominant emotion and the agent collected the meat from the corpse. This was both surprising and beneficial behaviour, as there was nothing else do and an agent can always use additional food in its inventory.
+
+\begin{figure}
+	\centering
+	\input{Figs/Tikz/evalWorld4}
+	\caption{The fourth test world. In the South, we have a single agent labelled $A$. To its north, we have wounded Wumpus labelled $W$.}
+	\label{fig:evalWorld4}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions of the agent in the first seven steps., label=lst:evalWorld4]
+   A at (2,0) moved North to (2,1).
+   A at (2,1) moved North to (2,2).
+   A at (2,2) attacked W to its North.
+   A at (2,2) moved North to (2,3).
+   A at (2,3) picked up Meat.
+   A at (2,3) did nothing.
+   A at (2,3) did nothing.
+\end{lstlisting}
+
+\paragraph{Scenario: picking up items.}
+
+\paragraph{Scenario: fight or flight.}
+
+\paragraph{Scenario: giving a gift to a friend.}
+
+\subsection{Quantitative Evaluation}
 
 \section{Future Work}\label{sec:futureWork}
 

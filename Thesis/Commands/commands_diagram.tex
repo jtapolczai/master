@@ -1,8 +1,10 @@
 \definecolor{PaleRed}{RGB}{202,61,58}
 \definecolor{DeepRed}{RGB}{158,46,43}
+\definecolor{LightRed}{RGB}{250,75,76}
 \definecolor{PaleBlue}{RGB}{100,180,250}
 \definecolor{DeepBlue}{RGB}{30,100,255}
 \definecolor{DeepGreen}{RGB}{60,150,30}
+\definecolor{LightGreen}{RGB}{100,180,60}
 \definecolor{LightGray}{RGB}{220,220,220}
 
 \newcommand{\figDataContainer}[2]{%
@@ -169,5 +171,7 @@
 \newcommand{\figBlueCube}[2]{\figSimpleCube{#1}{#2}{PaleBlue}}
 \newcommand{\figDarkGreenCube}[2]{\figSimpleCube{#1}{#2}{DeepGreen}}
 \newcommand{\figRedCube}[2]{\figSimpleCube{#1}{#2}{PaleRed}}
+\newcommand{\figLightGreenCube}[2]{\figSimpleCube{#1}{#2}{Green}}
+\newcommand{\figLightRedCube}[2]{\figSimpleCube{#1}{#2}{LightRed}}
 
 \newcommand{\cubeLabel}[2]{\begin{tabular}{c}\textbf{``#1'':}\\\begin{tabular}{l}#2\end{tabular}\end{tabular}}

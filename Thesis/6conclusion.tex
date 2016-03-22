@@ -101,7 +101,24 @@ As we can see, the agent performed according to our expectations.
    A at (2,3) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: picking up items.}
+\paragraph{Scenario: picking up items.} A Wumpus with low health was placed into a world in which two cells had items: one had 2 pieces of meat and another, most distant one, had 3 pieces of fruit. We expected the agent to collect the items and eat as many as necessary to restore its health to at least 1. Figure~\ref{fig:evalWorld5} shows the world and Listing~\ref{lst:evalWorld5} the results.
+
+\begin{figure}
+	\centering
+	\input{Figs/Tikz/evalWorld5}
+	\caption{The fifth test world. In the South, we have a single agent labelled $A$. To its north we have a cell with 2 pieces of meat, labelled $2M$, and another cell with 3 pieces of fruit, labelled $3F$.}
+	\label{fig:evalWorld5}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions of the agent in the first seven steps., label=lst:evalWorld5]
+   A at (2,0) moved North to (2,1).
+   A at (2,1) moved North to (2,2).
+   A at (2,2) picked up Meat.
+   A at (2,2) ate Meat.
+   A at (2,2) ate Meat.
+   A at (2,2) did nothing.
+   A at (2,2) did nothing.
+\end{lstlisting}
 
 \paragraph{Scenario: fight or flight.}
 

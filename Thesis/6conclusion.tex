@@ -44,7 +44,7 @@ To evaluate the general fitness of our architecture, we placed one or two agents
 \begin{figure}[h]
 	\centering
 	\input{Figs/Tikz/evalWorld1}
-	\caption{The first test world. In the South, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
+	\caption{The world of the scenario ``harvesting a single plant''. In the South, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
 	\label{fig:evalWorld1}
 \end{figure}
 
@@ -90,7 +90,7 @@ A at (2,2) did nothing.
 \begin{figure}
 	\centering
 	\input{Figs/Tikz/evalWorld4}
-	\caption{The fourth test world. In the South, we have a single agent labelled $A$. To its north, we have wounded Wumpus labelled $W$.}
+	\caption{The world of the scenario ``killing a wounded Wumpus''. In the South, we have a single agent labelled $A$. To its north, we have wounded Wumpus labelled $W$.}
 	\label{fig:evalWorld4}
 \end{figure}
 
@@ -113,7 +113,7 @@ A at (2,2) did nothing.
 \begin{figure}
 	\centering
 	\input{Figs/Tikz/evalWorld5}
-	\caption{The fifth test world. In the South, we have a single agent labelled $A$. To its north we have a cell with 2 pieces of meat, labelled $2M$, and another cell with 3 pieces of fruit, labelled $3F$.}
+	\caption{The world of the scenario ``picking up items''. In the South, we have a single agent labelled $A$. To its north we have a cell with 2 pieces of meat, labelled $2M$, and another cell with 3 pieces of fruit, labelled $3F$.}
 	\label{fig:evalWorld5}
 \end{figure}
 
@@ -127,12 +127,12 @@ A at (2,2) did nothing.
 A at (2,2) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: fight or flight.}  Similarly to the scenario ``killing a wounded Wumpus'', we placed an agent together with two Wumpuses, each with a health of 0.6. An agent was able to win the fight against both by first killing one, then eating its meat, and then killing the second. However, we expected agents with different personalities to react in different ways in this situation. Figure~\ref{evalWorld6} shows the world; Listing~\ref{lst:evalWorld6_1} shows the actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$, Listing~\ref{lst:evalWorld6_2} the actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$. Our expectation was that the first agent would try to take fly in the face of danger, whereas the second would try to fight, perhaps suicidally so.
+\paragraph{Scenario: fight or flight.}  Similarly to the scenario ``killing a wounded Wumpus'', we placed an agent together with two Wumpuses, each with a health of 0.6. An agent was able to win the fight against both by first killing one, eating its meat to restore its health, and then killing the second. In this scenario, we wanted to test the interplay between anger and fear --- accordingly, we expected agents with different personalities to react in different ways. Figure~\ref{evalWorld6} shows the world; Listing~\ref{lst:evalWorld6_1} shows the actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$, Listing~\ref{lst:evalWorld6_2} the actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$. Our expectation was that the first agent would try to take fly in the face of danger, whereas the second would try to fight, perhaps suicidally so.
 
 \begin{figure}
     \centering
     \input{Figs/Tikz/evalWorld6}
-    \caption{The sixth test world. We have an agent labelled $A$ and two Wumpuses labelled $W1$ and $W2$.}
+    \caption{The world of the scenario ``fight or flight''. We have an agent labelled $A$ and two Wumpuses labelled $W1$ and $W2$.}
     \label{fig:evalWorld6}
 \end{figure}
 
@@ -149,7 +149,7 @@ A at (2,2) did nothing.
 \begin{figure}
     \centering
     \input{Figs/Tikz/evalWorld7}
-    \caption{The seventh test world. We have an agent labelled $A$ and a cell with 5 pieces of meat labelled $5M$.}
+    \caption{The world of the scenario ``searching for food''. We have an agent labelled $A$ and a cell with 5 pieces of meat labelled $5M$.}
     \label{fig:evalWorld7}
 \end{figure}
 
@@ -162,7 +162,7 @@ A at (2,2) did nothing.
 \begin{figure}
     \centering
     \input{Figs/Tikz/evalWorld8}
-    \caption{The eighth test world. We have two agents labelled $A$ and $B$. $A$ has three pieces of fruit in its inventory.}
+    \caption{The world of the scenario ``giving a gift to a friend''. We have two agents labelled $A$ and $B$. $A$ has three pieces of fruit in its inventory.}
     \label{fig:evalWorld8}
 \end{figure}
 

@@ -179,7 +179,22 @@ A at (2,0) did nothing.
 B at (2,1) gestured 'love' to A to its South.
 \end{lstlisting}
 
+\subsubsection{Results}
+
+Our agents performed the basic tasks set to them reasonably well. Agents managed to acquire food if they knew the location of a food source, kill enemies if it seemed easy to do so, and have positive interactions with friendly agents. As we saw in the scenario ``fight or flight'', their personalities were also able to meaningfully influence their behaviour. Somewhat disappointing was the performance in ``searching for food'', where it became clear that the agents would have benefited from a drive to systematically explore their surroundings.
+
 \subsection{Quantitative Evaluation}
+
+For the second part of our evaluation, we placed 224 agents --- 7 of each of the 32 possible personalities in a hand-crafted, somewhat irregularly shaped, 100x100 world that contained some small forests of plants, seen in Figure~\ref{fig:evalWorldQuant}. We then distributed the agents, as well as $\left\lfloor 224/3 \right\rfloor = 74$ Wumpuses uniformly and randomly over all cells. We also placed additional plants and gold uniformly and randomly in the world s.t, for all cells $(x,y)$ in the world,
+
+$$P(\textrm{A plant is added to cell } (x,y)) = P(\textrm{1 gold is added to cell } (x,y)) = 0.01
+$$
+
+We simulated the world for 200 rounds or until at least half of the agents died -- whichever came sooner. During the simulation, we recorded the survival rate of each of the 32 populations and that of the Wumpuses. The results are listed in Table~\ref{tab:evalSurvival} and shown graphically in Figure~\ref{fig:evalSurvival}.
+
+TODO: table and graph here
+
+\subsubsection{Results}
 
 \section{Future Work}\label{sec:futureWork}
 

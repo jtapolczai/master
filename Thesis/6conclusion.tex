@@ -1,8 +1,8 @@
 \section{Results}\label{sec:results}
 
-Our goal was to evaluate our agents in specific scenarios, and to compare different kinds of agents to each other. To this end, we introduced parametricity in their emotional reactions. While the interplay of affect, decision-making and belief generation was the same in all agents, as was the schema of their emotional reactions, the strength of these reactions varied --- while all agents feared dying, say, not all feared it to the same degree. While all felt fear in the proximity of a Wumpus, they felt it with diverse intensities.
+Our goal was to evaluate our agents in specific scenarios, and to compare different kinds of agents to each other. To this end, we introduced parametricity in their emotional reactions. While the interplay of affect, decision-making and belief generation was the same in all agents, as was the schema of their emotional reactions, the strength of these reactions varied --- while all agents feared dying, for instance, not all feared it to the same degree. Similarly, while all felt fear in the proximity of a Wumpus, they felt it with different intensities.
 
-We parametrised our agents by five criteria, with two possible values for each. These were:
+We parametrised our agents through five criteria, with two possible values for each. These were:
 
 \begin{itemize}
 	\item anger, with the possible values \emph{strong}/\emph{weak};
@@ -12,7 +12,7 @@ We parametrised our agents by five criteria, with two possible values for each. 
 	\item hostility, with the values \emph{hostile}/\emph{friendly}.
 \end{itemize}
 
-Note that each emotion of the PSBC is represented by one criterion, while the emotions of the SJS were rolled into one for the sake of simplicity. For each emotion or \emph{personality fragment}, we constructed a graph consisting of approximately 1000-10000 nodes by hand, with output nodes that had configurable significances. These graphs are far too large for explication here\footnote{The code of the implementation is accessible at \url{https://github.com/jtapolczai/wumpus}.} and there was, indeed, no special theory behind their construction, but we did use common-sense assumptions which we will illustrate by listing a few output nodes:
+Note that each emotion of the PSBC is represented by one criterion, while the emotions of the SJS were rolled into one for the sake of simplicity. For each emotion or \emph{personality fragment}, we constructed a graph consisting of approximately $10^4$ nodes by hand\footnote{Of course, we generated large parts of these graphs through templating as well, as there had many repeating structures.}, with output nodes that had configurable significances. These graphs are far too large for explication here\footnote{The code of the implementation is accessible at \url{https://github.com/jtapolczai/wumpus}.} and there was, indeed, no special theory behind their construction, but we did use common-sense assumptions which we will illustrate by listing a few output nodes:
 
 \begin{itemize}
 	\item High health reduced fear.
@@ -41,48 +41,51 @@ To evaluate the general fitness of our architecture, we placed one or two agents
 
 \paragraph{Scenario: harvesting a single plant.} The first scenario was a 5x5 world with two ripe plants and an agent with a health of 0.6 that had food in its inventory. The agent's health was low, but eating one plant would restore it to a level of 1.1. We expected the agent to move to the closest plant, harvest it, eat the fruit now it its inventory, and then rest. We can see the world in Figure~\ref{fig:evalWorld1} and the actions of the agent in Listing~\ref{lst:evalWorld1}. Coordinates are given in the format $(x,y)$.
 
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\input{Figs/Tikz/evalWorld1}
 	\caption{The first test world. In the South, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
 	\label{fig:evalWorld1}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions of the agent in the first five steps., label=lst:evalWorld1]
-   A at (2,0) moved North to (2,1).
-   A at (2,1) harvested a plant.
-   A at (2,1) ate Fruit.
-   A at (2,1) did nothing.
-   A at (2,1) did nothing.
+\begin{lstlisting}[caption=Actions in the scenario ``harvesting a single plant''., label=lst:evalWorld1]
+A at (2,0) moved North to (2,1).
+A at (2,1) harvested a plant.
+A at (2,1) ate Fruit.
+A at (2,1) did nothing.
+A at (2,1) did nothing.
 \end{lstlisting}
 
 As we can see, the agent performed according to our expectations.
 
 \paragraph{Scenario: harvesting all plants.} This scenario was identical to the previous one, save for the agent's health, which was set at 0.1. Very close to dying, we expected the agent to harvest both plants and eat both fruits in succession to increase its health above 1. We see the actions of the agent in in Listing~\ref{lst:evalWorld2}. The agent again performed according to our expectations.
 
-\begin{lstlisting}[caption=Actions of the agent in the first ten steps., label=lst:evalWorld2]
-   A at (2,0) moved North to (2,1).
-   A at (2,1) harvested a plant.
-   A at (2,1) ate Fruit.
-   A at (2,1) moved North to (2,2).
-   A at (2,2) moved North to (2,3).
-   A at (2,3) harvested a plant.
-   A at (2,3) ate Fruit.
-   A at (2,3) did nothing.
-   A at (2,3) did nothing.
+\noindent
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption=Actions in the scenario ``harvesting all plants''., label=lst:evalWorld2]
+A at (2,0) moved North to (2,1).
+A at (2,1) harvested a plant.
+A at (2,1) ate Fruit.
+A at (2,1) moved North to (2,2).
+A at (2,2) moved North to (2,3).
+A at (2,3) harvested a plant.
+A at (2,3) ate Fruit.
+A at (2,3) did nothing.
+A at (2,3) did nothing.
 \end{lstlisting}
+\end{minipage}
 
 \paragraph{Scenario: resting.} This scenario is the simplest: we place an agent in good health into an empty 5x5 world. We expect it to simply stay put for a short while, avoiding exertion, or to look around to ascertain its surroundings. Listing~\ref{lst:evalWorld3} shows the results. Since we had not built in any notion of curiosity into our agents, they simply remained in place, which we deemed acceptable behaviour.
 
-\begin{lstlisting}[caption=Actions of the agent in the first five steps., label=lst:evalWorld3]
-   A at (2,2) did nothing.
-   A at (2,2) did nothing.
-   A at (2,2) did nothing.
-   A at (2,2) did nothing.
-   A at (2,2) did nothing.
+\begin{lstlisting}[caption=Actions in the scenario ``resting''., label=lst:evalWorld3]
+A at (2,2) did nothing.
+A at (2,2) did nothing.
+A at (2,2) did nothing.
+A at (2,2) did nothing.
+A at (2,2) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: killing a wounded Wumpus.} Here we put a Wumpus with 0.1 health at some distance from a healthy agent. 0.1 health is low enough that any agent would attack, regardless of personality. The world is shown in Figure~\ref{fig:evalWorld4} and the agent's actions are shown in Listing~\ref{lst:evalWorld4}. We can see that the agent indeed approached and killed the wounded Wumpus. However, Enthusiasm then replaced anger as its dominant emotion and the agent collected the meat from the corpse. This was both surprising and beneficial behaviour, as there was nothing else do and an agent can always use additional food in its inventory.
+\paragraph{Scenario: killing a wounded Wumpus.} Here we put a Wumpus with 0.1 health at some distance from a healthy agent, with the expectation that any agent would attack such a weak enemy, regardless of personality. The world is shown in Figure~\ref{fig:evalWorld4} and the agent's actions are shown in Listing~\ref{lst:evalWorld4}. We can see that the agent indeed approached and killed the wounded Wumpus. However, Enthusiasm then replaced anger as its dominant emotion and the agent collected the meat from the corpse. This was both surprising and beneficial behaviour, as there was nothing else do and an agent can always use additional food in its inventory.
 
 \begin{figure}
 	\centering
@@ -91,17 +94,21 @@ As we can see, the agent performed according to our expectations.
 	\label{fig:evalWorld4}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions of the agent in the first seven steps., label=lst:evalWorld4]
-   A at (2,0) moved North to (2,1).
-   A at (2,1) moved North to (2,2).
-   A at (2,2) attacked W to its North.
-   A at (2,2) moved North to (2,3).
-   A at (2,3) picked up Meat.
-   A at (2,3) did nothing.
-   A at (2,3) did nothing.
+\noindent
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption=Actions in the scenario ``killing a wounded Wumpus''., label=lst:evalWorld4]
+W at (2,3) moved South to (2,2).
+A at (2,0) moved North to (2,1).
+A at (2,1) attacked w1 to its North.
+A at (2,1) moved North to (2,2).
+A at (2,2) picked up Meat.
+A at (2,2) ate Meat.
+A at (2,2) did nothing.
+A at (2,2) did nothing.
 \end{lstlisting}
+\end{minipage}
 
-\paragraph{Scenario: picking up items.} A Wumpus with low health was placed into a world in which two cells had items: one had 2 pieces of meat and another, most distant one, had 3 pieces of fruit. We expected the agent to collect the items and eat as many as necessary to restore its health to at least 1. Figure~\ref{fig:evalWorld5} shows the world and Listing~\ref{lst:evalWorld5} the results.
+\paragraph{Scenario: picking up items.} An agent with low health was placed into a world in which two cells had items: one had 2 pieces of meat and another, most distant one, had 3 pieces of fruit. We expected the agent to collect the items and eat as many as necessary to restore its health to at least 1. Figure~\ref{fig:evalWorld5} shows the world and Listing~\ref{lst:evalWorld5} the results.
 
 \begin{figure}
 	\centering
@@ -110,19 +117,67 @@ As we can see, the agent performed according to our expectations.
 	\label{fig:evalWorld5}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions of the agent in the first seven steps., label=lst:evalWorld5]
-   A at (2,0) moved North to (2,1).
-   A at (2,1) moved North to (2,2).
-   A at (2,2) picked up Meat.
-   A at (2,2) ate Meat.
-   A at (2,2) ate Meat.
-   A at (2,2) did nothing.
-   A at (2,2) did nothing.
+\begin{lstlisting}[caption=Actions in the scenario ``picking up items''., label=lst:evalWorld5]
+A at (2,0) moved North to (2,1).
+A at (2,1) moved North to (2,2).
+A at (2,2) picked up Meat.
+A at (2,2) ate Meat.
+A at (2,2) ate Meat.
+A at (2,2) did nothing.
+A at (2,2) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: fight or flight.}
+\paragraph{Scenario: fight or flight.}  Similarly to the scenario ``killing a wounded Wumpus'', we placed an agent together with two Wumpuses, each with a health of 0.6. An agent was able to win the fight against both by first killing one, then eating its meat, and then killing the second. However, we expected agents with different personalities to react in different ways in this situation. Figure~\ref{evalWorld6} shows the world; Listing~\ref{lst:evalWorld6_1} shows the actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$, Listing~\ref{lst:evalWorld6_2} the actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$. Our expectation was that the first agent would try to take fly in the face of danger, whereas the second would try to fight, perhaps suicidally so.
 
-\paragraph{Scenario: giving a gift to a friend.}
+\begin{figure}
+    \centering
+    \input{Figs/Tikz/evalWorld6}
+    \caption{The sixth test world. We have an agent labelled $A$ and two Wumpuses labelled $W1$ and $W2$.}
+    \label{fig:evalWorld6}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_1]
+
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_2]
+
+\end{lstlisting}
+
+\paragraph{Scenario: searching for food.} We placed an agent with 0.5 health into a world with one pile of fruit outside of its sight cone. This scenario was interesting because, while the goal was clear, there was no obvious series of actions which the agent was supposed to take, nor was a goal immediately obvious. We expected it to search its surroundings in search of a source of food. The world is shown in Figure~\ref{fig:evalWorld7} and the results in Listing~\ref{lst:evalWorld7}. It should be noted that the agent's actions are largely random, as agents may randomly select a possible action if several equally beneficial are possible.
+
+\begin{figure}
+    \centering
+    \input{Figs/Tikz/evalWorld7}
+    \caption{The seventh test world. We have an agent labelled $A$ and a cell with 5 pieces of meat labelled $5M$.}
+    \label{fig:evalWorld7}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions in the scenario ``searching for food''., label=lst:evalWorld7]
+
+\end{lstlisting}
+
+\paragraph{Scenario: giving a gift to a friend.} Here we placed two agents with the personality $\personality{W}{W}{W}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld8} shows somewhat interesting the results. Instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. It seems that $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient.
+
+\begin{figure}
+    \centering
+    \input{Figs/Tikz/evalWorld8}
+    \caption{The eighth test world. We have two agents labelled $A$ and $B$. $A$ has three pieces of fruit in its inventory.}
+    \label{fig:evalWorld8}
+\end{figure}
+
+\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend''., label=lst:evalWorld8]
+A at (2,0) ate Fruit.
+B at (2,4) moved South to (2,3).
+A at (2,0) did nothing.
+B at (2,3) moved South to (2,2).
+A at (2,0) did nothing.
+B at (2,2) moved South to (2,1).
+A at (2,0) did nothing.
+B at (2,1) gestured 'love' to A to its South.
+A at (2,0) did nothing.
+B at (2,1) gestured 'love' to A to its South.
+\end{lstlisting}
 
 \subsection{Quantitative Evaluation}
 

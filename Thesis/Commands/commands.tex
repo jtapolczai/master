@@ -110,6 +110,25 @@
 \newcommand{\aspRule}[2]{\ensuremath{#1 \leftarrow #2}}
 
 % personalities
-\newcommand{\personality}[5]{\tuple{\type{#1},\type{#1}, \type{#1}, \type{#1}, \type{#1}}}
+\newcommand{\personality}[5]{\tuple{\type{#1},\type{#2}, \type{#3}, \type{#4}, \type{#5}}}
 
 \newenvironment{emquote}{\begin{quote}\em}{\end{quote}}
+
+
+\newcommand{\stdlisting}{%
+    \lstset{
+        basicstyle=\ttfamily,
+        frame=single,
+        captionpos=b,
+        rulecolor=\color{gray},
+        backgroundcolor=\color{VeryLightGray},
+        tabsize=4,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        framexleftmargin=0.3cm,
+        xleftmargin=0.3cm,
+        framextopmargin=0.2cm,
+        framexbottommargin=0.2cm,
+    }%
+}

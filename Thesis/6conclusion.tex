@@ -108,7 +108,7 @@ A at (2,2) did nothing.
 \end{lstlisting}
 \end{minipage}
 
-\paragraph{Scenario: picking up items.} An agent with low health was placed into a world in which two cells had items: one had 2 pieces of meat and another, most distant one, had 3 pieces of fruit. We expected the agent to collect the items and eat as many as necessary to restore its health to at least 1. Figure~\ref{fig:evalWorld5} shows the world and Listing~\ref{lst:evalWorld5} the results.
+\paragraph{Scenario: picking up items.} An agent with low health was placed into a world in which two cells had items: one had 2 pieces of meat and another, most distant one, had 3 pieces of fruit. We expected the agent to collect the items and eat as many as necessary to restore its health to at least 1. Figure~\ref{fig:evalWorld5} shows the world and Listing~\ref{lst:evalWorld5} the results. We can see that the agent was killed in both cases, though for different reasons: in the first, the agent killed the closer Wumpus, but this reduced its health to 0.4. When the second Wumpus came close, the agent began moving backwards until it reached the edge of the world, whereupon the Wumpus killed it. In the second case, the agent was controlled by anger, not by fear. It had picked up the meat from the first Wumpus as the second approached it but, instead of eating, the agent immediately and suicidally attacked the Wumpus. In both cases, the agent's behaviour was suboptimal, as it could have eaten the meat from the first Wumpus and thereby regain enough health to survive the second's attack --- however, if we conceive of the first agent running away in fear and the second attacking in blind anger, we can at least make intuitive sense of their actions.
 
 \begin{figure}
 	\centering
@@ -137,14 +137,37 @@ A at (2,2) did nothing.
 \end{figure}
 
 \begin{lstlisting}[caption=Actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_1]
-
+   A at (2,0) moved North to (2,1).
+   W1 at (2,3) moved South to (2,2).
+   W2 at (2,7) moved South to (2,6).
+   A at (2,1) attacked W1 to its North.
+   W2 at (2,6) moved South to (2,5).
+   A at (2,1) moved North to (2,2).
+   W2 at (2,5) moved South to (2,4).
+   A at (2,2) moved South to (2,1).
+   W2 at (2,4) moved South to (2,3).
+   A at (2,1) moved South to (2,0).
+   W2 at (2,3) moved South to (2,2).
+   A at (2,0) did nothing.
+   W2 at (2,2) moved South to (2,1).
+   A at (2,0) did nothing.
+   W2 at (2,1) attacked A to its South.
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_2]
-
+   A at (2,0) moved North to (2,1).
+   W1 at (2,3) moved South to (2,2).
+   W2 at (2,7) moved South to (2,6).
+   A at (2,1) attacked W2 to its North.
+   W2 at (2,6) moved South to (2,5).
+   A at (2,1) moved North to (2,2).
+   W2 at (2,5) moved South to (2,4).
+   A at (2,2) picked up Meat.
+   W2 at (2,4) moved South to (2,3).
+   A at (2,2) attacked W2 to its North.
 \end{lstlisting}
 
-\paragraph{Scenario: searching for food.} We placed an agent with 0.5 health into a world with one pile of fruit outside of its sight cone. This scenario was interesting because, while the goal was clear, there was no obvious series of actions which the agent was supposed to take, nor was a goal immediately obvious. We expected it to search its surroundings in search of a source of food. The world is shown in Figure~\ref{fig:evalWorld7} and the results in Listing~\ref{lst:evalWorld7}. It should be noted that the agent's actions are largely random, as agents may randomly select a possible action if several equally beneficial are possible.
+\paragraph{Scenario: searching for food.} We placed an agent with 0.5 health into a world with one pile of fruit outside of its sight cone. This scenario was interesting because, while the goal was clear, there was no obvious series of actions which the agent was supposed to take, nor was a goal immediately obvious. We expected it to search its surroundings in search of a source of food. The world is shown in Figure~\ref{fig:evalWorld7} and the results in Listing~\ref{lst:evalWorld7}. It should be noted that the agent's actions are largely random, as agents may randomly select a possible action if several equally beneficial are possible. As we can see, the results were somewhat unsatisfying. While the agent did eventually find the food, it spent many round aimlessly wandering and turning around. Due to the lack of any dedicated algorithm responsible for exploration and the lack of stimuli to guide it, the agent essentially moved around randomly until it eventually stumbled upon the cell with meat on it.
 
 \begin{figure}
     \centering
@@ -154,7 +177,39 @@ A at (2,2) did nothing.
 \end{figure}
 
 \begin{lstlisting}[caption=Actions in the scenario ``searching for food''., label=lst:evalWorld7]
-
+A at (3,0) moved North to (3,1).
+A at (3,1) turned West.
+A at (3,1) moved West to (2,1).
+A at (2,1) moved West to (1,1).
+A at (1,1) moved West to (0,1).
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) turned South.
+A at (0,1) turned North.
+A at (0,1) moved East to (1,1).
+A at (1,1) moved East to (2,1).
+A at (2,1) moved North to (2,2).
+A at (2,2) moved North to (2,3).
+A at (2,3) moved North to (2,4).
+A at (2,4) moved North to (2,5).
+A at (2,5) moved East to (3,5).
+A at (3,5) moved North to (3,6).
+A at (3,6) moved North to (3,7).
+A at (3,7) picked up Meat.
+A at (3,7) ate Meat.
+A at (3,7) did nothing.
 \end{lstlisting}
 
 \paragraph{Scenario: giving a gift to a friend.} Here we placed two agents with the personality $\personality{W}{W}{W}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld8} shows somewhat interesting the results. Instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. It seems that $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient.
@@ -185,7 +240,7 @@ Our agents performed the basic tasks set to them reasonably well. Agents managed
 
 \subsection{Quantitative Evaluation}
 
-For the second part of our evaluation, we placed 224 agents --- 7 of each of the 32 possible personalities in a hand-crafted, somewhat irregularly shaped, 100x100 world that contained some small forests of plants, seen in Figure~\ref{fig:evalWorldQuant}. We then distributed the agents, as well as $\left\lfloor 224/3 \right\rfloor = 74$ Wumpuses uniformly and randomly over all cells. We also placed additional plants and gold uniformly and randomly in the world s.t, for all cells $(x,y)$ in the world,
+For the second part of our evaluation, we placed 224 agents --- 7 of each of the 32 possible personalities in a hand-crafted, somewhat irregularly shaped, 100x100 world that contained some small forests of plants, seen in Figure~\ref{fig:evalWorldQuant}. We then distributed the agents, as well as $\left\lfloor 224/3 \right\rfloor = 74$ Wumpuses uniformly and randomly over all cells. We also placed additional plants and gold uniformly and randomly in the world such that, for all cells $(x,y)$ in the world,
 
 $$P(\textrm{A plant is added to cell } (x,y)) = P(\textrm{1 gold is added to cell } (x,y)) = 0.01
 $$

@@ -188,16 +188,6 @@ A at (0,1) turned South.
 A at (0,1) turned North.
 A at (0,1) turned South.
 A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
 A at (0,1) moved East to (1,1).
 A at (1,1) moved East to (2,1).
 A at (2,1) moved North to (2,2).
@@ -242,12 +232,22 @@ Our agents performed the basic tasks set to them reasonably well. Agents managed
 
 For the second part of our evaluation, we placed 224 agents --- 7 of each of the 32 possible personalities in a hand-crafted, somewhat irregularly shaped, 100x100 world that contained some small forests of plants, seen in Figure~\ref{fig:evalWorldQuant}. We then distributed the agents, as well as $\left\lfloor 224/3 \right\rfloor = 74$ Wumpuses uniformly and randomly over all cells. We also placed additional plants and gold uniformly and randomly in the world such that, for all cells $(x,y)$ in the world,
 
-$$P(\textrm{A plant is added to cell } (x,y)) = P(\textrm{1 gold is added to cell } (x,y)) = 0.01
+$$
+	\begin{array}{l l l}
+		P(\textrm{A plant is added to cell } (x,y)) & = & 0.05\\
+		P(\textrm{1 gold is added to cell } (x,y)) & = & 0.01\\
+		P(\textrm{A pit is added to cell } (x,y)) & = & 0.01
+	\end{array}
 $$
 
 We simulated the world for 200 rounds or until at least half of the agents died -- whichever came sooner. During the simulation, we recorded the survival rate of each of the 32 populations and that of the Wumpuses. The results are listed in Table~\ref{tab:evalSurvival} and shown graphically in Figure~\ref{fig:evalSurvival}.
 
-TODO: table and graph here
+\begin{figure}
+	\centering
+	\includegraphics[width=400pt]{Figs/evalWorldQuant.png}
+	\caption{The world of the quantitative evaluation, consisting of 100x100 cells. White pixels represent accessible cells, black pixels represent ones. Green pixels represent plants, ochre ones pits, red ones Wumpuses and blue ones agents, where the value of the blue channel is the agent's ID. Orange pixels represent gold. The world's island shape was created by hand, while all entities and items were distributed randomly.}
+	\label{fig:evalWorldQuant}
+\end{figure}
 
 \subsubsection{Results}
 

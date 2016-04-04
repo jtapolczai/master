@@ -202,7 +202,7 @@ A at (3,7) ate Meat.
 A at (3,7) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: giving a gift to a friend.} Here we placed two agents with the personality $\personality{W}{W}{W}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld8} shows somewhat interesting the results. Instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. It seems that $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient.
+\paragraph{Scenario: giving a gift to a friend.} Here we placed two agents, first with the personalities $\personality{W}{W}{W}{W}{F}$ and then $\personality{W}{W}{S}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld8_1} shows somewhat interesting the results. In the case of weak enthusiasm, instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient. In the second case, in which both agents had strong enthusiasm, $A$ was more charitable. As we seen in Listing~\ref{lst:evalWorld8_2}, $A$ chose to share after eating one item of meat.
 
 \begin{figure}
     \centering
@@ -211,7 +211,7 @@ A at (3,7) did nothing.
     \label{fig:evalWorld8}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend''., label=lst:evalWorld8]
+\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{W}{W}{F}$., label=lst:evalWorld8_1]
 A at (2,0) ate Fruit.
 B at (2,4) moved South to (2,3).
 A at (2,0) did nothing.
@@ -222,6 +222,19 @@ A at (2,0) did nothing.
 B at (2,1) gestured 'love' to A to its South.
 A at (2,0) did nothing.
 B at (2,1) gestured 'love' to A to its South.
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{S}{W}{F}$., label=list:evalWorld8_2]
+A at (2,0) moved North to (2,1).
+B at (2,4) moved South to (2,3).
+A at (2,1) moved North to (2,2).
+B at (2,3) gestured 'love' to 1 to its South.
+A at (2,2) gave Meat to 2 to its North.
+B at (2,3) gestured 'love' to 1 to its South.
+A at (2,2) gestured 'love' to 2 to its North.
+B at (2,3) gave Meat to 1 to its South.
+A at (2,2) gestured 'love' to 2 to its North.
+B at (2,3) gestured 'love' to 1 to its South.
 \end{lstlisting}
 
 \subsubsection{Results}
@@ -245,7 +258,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 \begin{figure}
 	\centering
 	\includegraphics[width=400pt]{Figs/evalWorldQuant.png}
-	\caption{The world of the quantitative evaluation, consisting of 100x100 cells. White pixels represent accessible cells, black pixels represent ones. Green pixels represent plants, ochre ones pits, red ones Wumpuses and blue ones agents, where the value of the blue channel is the agent's ID. Orange pixels represent gold. The world's island shape was created by hand, while all entities and items were distributed randomly.}
+	\caption{The world of the quantitative evaluation, consisting of 100x100 cells. White pixels represent accessible cells, black pixels represent inaccessible ones. Green pixels represent plants, ochre ones pits, red ones Wumpuses and blue ones agents, where the value of the blue channel is the agent's ID. Orange pixels represent gold. The world's island shape was created by hand, while all entities and items were distributed randomly.}
 	\label{fig:evalWorldQuant}
 \end{figure}
 

@@ -264,6 +264,24 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 
 \subsubsection{Results}
 
+We ran the trial with each personality and captured the following data as we did so: the number of
+
+\begin{itemize}
+	\item harvests,
+	\item attacks,
+	\item gifts given (split by gift type),
+	\item gestures sent,
+	\item items eaten,
+	\item surviving Wumpuses,
+	\item surviving agents.
+\end{itemize}
+
+In addition to recording the raw numbers, we also calculated their averages by personality fragment to see whether there was a clear relation between certain personality types and success.
+
+\paragraph{Number of harvests.} We see the number of harvests by personality type in Table~\ref{tab:numHarvests}, which shows a rather large difference between the personalities. Table~\ref{tab:numHarvestsAvg} shows the average number of harvests by personality fragment. As expected, strong enthusiasm and weak contentment led to the largest increase in harvest frequency, with fear, anger and hostility having negligible effects.
+
+\paragraph{Number of attacks.} Table~\ref{tab:numAttacks} shows the number of attacks and Table~\ref{tab:numAttacksAvg} the averages. All personality fragments seemed to play a role in the agents' aggression: anger predictably increased it and fear lowered it, but strong enthusiasm and contentment lowered the number as well. Surprisingly, hostile agents actually performed slightly less attacks, which might be explained with the fact that they spent more time sending hostile gestures than friendly, as we shall see below.
+
 \begin{table}
 	\centering
 	\makebox[0pt][c]{\parbox{\textwidth}{%
@@ -354,6 +372,40 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 
 \begin{table}
 	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+		\hline
+		Anger & 15.125 & 13.625\\
+		Fear & 13.125 & 15.625 \\
+		Enthusiasm & 12.75 & 16 \\
+		Contentment & 16.563 & 12.18 \\
+		Hostility & 14.188 & 14.563 \\
+		\hline
+	\end{tabular}
+	\caption{Average number of plant harvests, by personality fragment.}
+	\label{tab:numHarvestsAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+		\hline
+		Anger & 4.438 & 6.75 \\
+		Fear & 6.875 & 4.313 \\
+		Enthusiasm & 6.5 & 4.688 \\
+		Contentment & 6.375 & 4.813 \\
+		Hostility & 5.063 & 6.125 \\
+		\hline
+	\end{tabular}
+	\caption{Average number of attacks, by personality fragment.}
+	\label{tab:numAttacksAvg}
+\end{table}
+
+\paragraph{Gifts given.} Tables~\ref{tab:numFruitGiven}-\ref{tab:numGoldGiven} show the number of gifts given and Tables~\ref{tab:numFruitGivenAvg}-\ref{tab:numGoldGivenAvg} show the averages. Immediately, we can see that meat was the most popular gift, followed by gold and fruit, which almost no agents gave. Most interesting is the case of meat: we see quite starkly that strong anger, weak fear, high enthusiasm and low contentment resulted in a population of apex predators that spent much of their time killing Wumpuses (and each other) and built up inventories that they shared with the survivors. Gold, too, is of note: as its acquisition did not require killing, high contentment and friendliness significantly increased the chance that it would be given as a gift. The unpopularity of fruit as gift is somewhat contrary to our expectations and shows that agents did not guard plants are reliably sources of food and did not infer that they would regularly regrow.
+
+\begin{table}
+	\centering
 	\makebox[0pt][c]{\parbox{\textwidth}{%
 			\begin{minipage}[b]{0.30\hsize}\centering
 				\begin{tabular}{ l | c }
@@ -391,6 +443,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 					$\personality{W}{S}{S}{W}{H}$ & 1\\
 					$\personality{W}{S}{W}{W}{H}$ & 1\\
 					$\personality{W}{S}{S}{S}{F}$ & 3\\
+					\hline
 				\end{tabular}
 				\caption{Number of fruit items given as gifts after 50 rounds.}
 				\label{tab:numFruitGiven}
@@ -432,6 +485,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 					$\personality{W}{S}{S}{W}{H}$ & 17\\
 					$\personality{S}{W}{S}{W}{F}$ & 19\\
 					$\personality{S}{W}{S}{W}{H}$ & 19\\
+					\hline
 				\end{tabular}
 				\caption{Number of meat items given as gifts after 50 rounds.}
 				\label{tab:numMeatGiven}
@@ -473,6 +527,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 					$\personality{W}{W}{W}{W}{F}$ & 2\\
 					$\personality{S}{S}{S}{W}{H}$ & 5\\
 					$\personality{S}{W}{S}{W}{F}$ & 6\\
+					\hline
 				\end{tabular}
 				\caption{Number of gold items given as gifts after 50 rounds.}
 				\label{tab:numGoldGiven}
@@ -480,6 +535,59 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 			\hfill
 		}}
 \end{table}
+
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+		\hline
+		Anger & 0.313 & 0.063\\
+		Fear & 0.0 & 0.375\\
+		Enthusiasm & 0.063 & 0.313\\
+		Contentment & 0.188 & 0.188\\
+		Hostility & 0.188 & 0.188\\
+		\hline
+	\end{tabular}
+	\caption{Average number of fruit gifts given, by personality fragment.}
+	\label{tab:numFruitGivenAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+		\hline
+			Anger & 2.8125 & 3.25\\
+			Fear & 4.1875 & 1.875\\
+			Enthusiasm & 0.4375 & 5.625\\
+			Contentment & 5.4375 & 0.625\\
+			Hostility & 3.25 & 2.8125\\
+		\hline
+	\end{tabular}
+	\caption{Average number of meat gifts given, by personality fragment.}
+	\label{tab:numMeatGivenAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+		\hline
+		Anger & 0.5 & 1.125\\
+		Fear & 0.875 & 0.75\\
+		Enthusiasm & 0.625 & 1.0\\
+		Contentment & 1.438 & 0.188\\
+		Hostility & 0.688 & 0.938\\
+		\hline
+	\end{tabular}
+	\caption{Average number of gold items given, by personality fragment.}
+	\label{tab:numGoldGivenAvg}
+\end{table}
+
+\paragraph{Gestures.} Table~\ref{tab:numGestures} shows the number of gestures sent, Table~\ref{tab:numGesturesAvg} the averages. We can clearly see the dominant role of strong enthusiasm, followed distantly by weak contentment. This is very much according to our expectations, as gestures are primarily enthusiasm-associated. Anger, fear, and hostility only had relatively minor effects on the number of social interactions.
+	
+\paragraph{Items eaten.} We see the results and the averages in Table~\ref{tab:numMeals} and Table~\ref{tab:numMealsAvg}, respectively. Clearly, the two most significant factors here are strong enthusiasm and weak contentment. As eating is enthusiasm-related, it makes sense that agents with strong enthusiasm would eat more, as would agents with weak contentment, since food has to be acquired through action.
 	
 \begin{table}
 	\centering
@@ -520,6 +628,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 						$\personality{W}{W}{S}{S}{H}$ & 452\\
 						$\personality{W}{S}{S}{S}{H}$ & 494\\
 						$\personality{W}{W}{S}{S}{F}$ & 495\\
+						\hline
 				\end{tabular}
 				\caption{Number of gestures sent after 50 rounds.}
 				\label{tab:numGestures}
@@ -561,8 +670,9 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 						$\personality{W}{W}{S}{W}{F}$ & 20\\
 						$\personality{W}{W}{S}{W}{H}$ & 20\\
 						$\personality{W}{S}{S}{W}{H}$ & 24\\
+						\hline
 				\end{tabular}
-				\caption{Number of meals eaten after 50 rounds.}
+				\caption{Number of items eaten after 50 rounds.}
 				\label{tab:numMeals}
 			\end{minipage}
 			\hfill
@@ -571,10 +681,46 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 
 \begin{table}
 	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+		\hline
+			Anger & 254.5 & 234.375\\
+			Fear & 244.688 & 244.188\\
+			Enthusiasm & 84.75 & 404.125\\
+			Contentment & 255.375 & 233.5\\
+			Hostility & 251.375 & 237.5\\
+		\hline
+	\end{tabular}
+	\caption{Average number of gestures sent, by personality fragment.}
+	\label{tab:numGesturesAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+		\hline
+			Anger & 15.625 & 14.563\\
+			Fear & 14.5 & 15.688\\
+			Enthusiasm & 13.813 & 16.38\\
+			Contentment & 17.375 & 12.813\\
+			Hostility & 14.688 & 15.5\\
+		\hline
+	\end{tabular}
+	\caption{Average number items eaten, by personality fragment.}
+	\label{tab:numMealsAvg}
+\end{table}
+
+\paragraph{Surviving Wumpuses.} We see the absolute number of surviving Wumpuses and the averages in Table~\ref{tab:numWumpuses} and Table~\ref{tab:numWumpusesAvg}. Similarly to the number of meat gifts given, we see that strong anger, weak fear and low contentment all led to more Wumpuses being killed. Enthusiasm and hostility somewhat increased the Wumpuses' chances of survival --- here we might hypothesize that agents with strong enthusiasm spent more time gathering fruit and engaging in interactions with other agents, and that hostile agents spent more time attacking each other than they spent attacking Wumpuses.
+
+\paragraph{Surviving agents.} The absolute and average number of surviving agents are listed in Table~\ref{tab:numAgents} and Table~\ref{tab:numAgents}. While all other metrics were important as well, in the end, survival by whatever means is the measure of success in our evaluation. While all personality types managed to survive reasonable well, we can see significant differences between them. In Table~\ref{tab:numAgentsAvg}, we can see that agents with weak anger survived better than those with strong anger, as did agents with strong fear. This does make sense, as fighting was a dangerous tactic, despite the meat with which it provided the victor. High enthusiasm had a moderately beneficial effect on survival, which again makes since, as it is associated with low-cost, high-reward behaviour like the gathering of food and items and the sending of friendly gestures that might lead to gifts in the future. Contentment had relatively little effect and hostility actually increased survival. The case of hostility is somewhat odd, as we would have expected friendliness to have the same beneficial effect that enthusiasm in general had, but it seems that not being too friendly by perhaps giving away all of one's inventory to others might also be advantageous.
+
+\begin{table}
+	\centering
 	\makebox[0pt][c]{\parbox{\textwidth}{%
 			\begin{minipage}[b]{0.42\hsize}\centering
 				\begin{tabular}{ l | c }
-					\emph{Personality} & \emph{Gestures} \\
+					\emph{Personality} & \emph{Agents} \\
 					\hline
 					$\personality{S}{W}{W}{W}{H}$ & 20\\
 					$\personality{S}{W}{W}{S}{H}$ & 20\\
@@ -608,14 +754,15 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 					$\personality{W}{S}{W}{S}{F}$ & 26\\
 					$\personality{W}{W}{S}{W}{H}$ & 26\\
 					$\personality{W}{S}{W}{S}{H}$ & 27\\
+					\hline
 				\end{tabular}
-				\caption{Number of agents after 50 rounds.}
+				\caption{Number of surving agents after 50 rounds.}
 				\label{tab:numAgents}
 			\end{minipage}
 			\hfill
 			\begin{minipage}[b]{0.42\hsize}\centering
 				\begin{tabular}{ l | c }
-					\emph{Personality} & \emph{Meals} \\
+					\emph{Personality} & \emph{Wumpuses} \\
 					\hline
 					$\personality{S}{S}{W}{W}{F}$ & 3\\
 					$\personality{S}{W}{W}{W}{F}$ & 3\\
@@ -649,13 +796,59 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 					$\personality{W}{S}{S}{W}{F}$ & 8\\
 					$\personality{W}{W}{S}{S}{H}$ & 8\\
 					$\personality{W}{W}{W}{W}{H}$ & 8\\
+					\hline
 				\end{tabular}
-				\caption{Number of Wumpuses after 50 rounds.}
+				\caption{Number of surviving Wumpuses after 50 rounds.}
 				\label{tab:numWumpuses}
 			\end{minipage}
 			\hfill
 		}}
 	\end{table}
+	
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+		\hline
+			Anger & 24.25 & 22.313\\
+			Fear & 22.438 & 24.125\\
+			Enthusiasm & 22.75 & 23.8125\\
+			Contentment & 23.063 & 23.5\\
+			Hostility & 23.625 & 22.938\\
+		\hline
+	\end{tabular}
+	\caption{Average number of surviving agents, by personality fragment.}
+	\label{tab:numAgentsAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+			Anger & 6.688 & 5.75\\
+			Fear & 5.875 & 6.5625\\
+			Enthusiasm & 5.9375 & 6.5\\
+			Contentment & 5.625 & 6.813\\
+			Hostility & 6.438 & 6.0\\
+		\hline
+	\end{tabular}
+	\caption{Average number surviving Wumpuses, by personality fragment.}
+	\label{tab:numWumpusesAvg}
+\end{table}
+
+\subsection{Summary}
+
+In this thesis, we proposed an agent architecture that combined affective reactions with reasoning about future states of the world to achieve efficient behaviour. We began in Chapter~\ref{ch:preliminaryConsiderations} by listing related work in the fields of artificial intelligence and biology. Here we also made certain preliminary hypotheses that would undergird our architecture and our implementation. We proposed that the one might model brains as loosely, semi-independently evolved collections of components which listened in on each other's activity.
+
+From there, we proceeded to formalize these notions in the form of a component model in Chapter~\ref{ch:componentModel}. Our components had the ability to filter messages relevant to them from a larger message space, to interpret them, and to put back messages of their own. Although component were thus able to communicate, they were not, as such, aware of the existence of other components. In Chapter~\ref{ch:affectiveArchitecture}, we used the component model to construct our affective architecture, consisting of emotional components as well as components for reasoning. Agents evaluated their perceptions to generate pre-social emotions like anger and fear, as well as social emotions like sympathy or trust for other agents based on their positive or negative interactions with them. Guided by the agent's emotions, a decision-maker proposed hypothetical actions and a belief-generator generated future states of the world, which were again submitted to emotional evaluation. In this way, the agent constructed and evaluated plans until it was satisfied with the predicted outcome.
+
+Chapter~\ref{ch:implementation} detailed our implementation. We put our agents into a moderately complex world filled with plants, pits, items, and hostile Wumpuses. This world was round-based and in each round, each agent had to choose one of a pre-defined set of actions to perform.
+
+In Chapter~\ref{ch:conclusion}, we submitted our agents to both a qualitative evaluation consisting of eight simple test worlds with clear goals, as well as a quantitative evaluation in which we put 32 different population into a large, complex world and measured their performance over time. In the test worlds, all agents fulfilled their set tasks and almost all did so identically, showing the basic fitness for purpose of the artificial intelligence we designed.
+
+In the case of the quantitative evaluation, we were interested in two things: would the agents manage to survive in a complex world and would we see differences between various personalities. To both questions, the answer was ``yes''. We saw that all agents survived reasonably well, though they were marked differences in the strategies they chose. Aggressive agents killed many of the Wumpuses in their environment, but doing so was costly to their numbers. More peaceful agents that avoided conflict and spent more time harvesting plants survived better, even if they did not clear their worlds of hostile Wumpuses.
+
+These results show that our agents perform as well in their toy world as a simple animal like a crab or a small fish would in the real one. The agents, however, did not fully meet all expectations: despite their ability to predict the future, they failed to make inferences like the fact that plants regrow in 10 time-steps. Their lack of a theory of mind also meant that, while they were capable of liking other agents, they did not coordinate with them for hunting and for protection.
 
 \section{Future Work}\label{sec:futureWork}
 

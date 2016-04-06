@@ -269,7 +269,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 	\makebox[0pt][c]{\parbox{\textwidth}{%
 			\begin{minipage}[b]{0.42\hsize}\centering
 				\begin{tabular}{ l | c }
-					\emph{Personality} & \emph{Number of harvests} \\
+					\emph{Personality} & \emph{Harvests} \\
 					\hline
 					$\personality{S}{W}{W}{S}{F}$ & 8\\
 					$\personality{S}{W}{S}{S}{H}$ & 9\\
@@ -310,7 +310,7 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 			\hfill
 			\begin{minipage}[b]{0.42\hsize}\centering
 				\begin{tabular}{ l | c }
-					\emph{Personality} & \emph{Number of attacks} \\
+					\emph{Personality} & \emph{Attacks} \\
 					\hline
 						$\personality{S}{S}{S}{W}{H}$ & 1\\
 						$\personality{W}{S}{S}{W}{H}$ & 2\\
@@ -351,6 +351,311 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 			\hfill
 		}}
 \end{table}
+
+\begin{table}
+	\centering
+	\makebox[0pt][c]{\parbox{\textwidth}{%
+			\begin{minipage}[b]{0.30\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Gifts (fruit)} \\
+					\hline
+					$\personality{S}{W}{W}{W}{H}$ & 0\\
+					$\personality{S}{S}{S}{S}{F}$ & 0\\
+					$\personality{S}{S}{S}{S}{H}$ & 0\\
+					$\personality{S}{S}{S}{W}{F}$ & 0\\
+					$\personality{S}{S}{W}{S}{F}$ & 0\\
+					$\personality{S}{S}{W}{S}{H}$ & 0\\
+					$\personality{S}{S}{W}{W}{F}$ & 0\\
+					$\personality{S}{S}{W}{W}{H}$ & 0\\
+					$\personality{S}{W}{S}{S}{F}$ & 0\\
+					$\personality{S}{W}{S}{S}{H}$ & 0\\
+					$\personality{S}{W}{S}{W}{F}$ & 0\\
+					$\personality{S}{W}{S}{W}{H}$ & 0\\
+					$\personality{S}{W}{W}{S}{F}$ & 0\\
+					$\personality{S}{W}{W}{S}{H}$ & 0\\
+					$\personality{S}{W}{W}{W}{F}$ & 0\\
+					$\personality{W}{S}{S}{S}{H}$ & 0\\
+					$\personality{W}{S}{S}{W}{F}$ & 0\\
+					$\personality{W}{S}{W}{S}{F}$ & 0\\
+					$\personality{W}{S}{W}{S}{H}$ & 0\\
+					$\personality{W}{S}{W}{W}{F}$ & 0\\
+					$\personality{W}{W}{S}{S}{F}$ & 0\\
+					$\personality{W}{W}{S}{S}{H}$ & 0\\
+					$\personality{W}{W}{S}{W}{F}$ & 0\\
+					$\personality{W}{W}{S}{W}{H}$ & 0\\
+					$\personality{W}{W}{W}{S}{F}$ & 0\\
+					$\personality{W}{W}{W}{S}{H}$ & 0\\
+					$\personality{W}{W}{W}{W}{F}$ & 0\\
+					$\personality{W}{W}{W}{W}{H}$ & 0\\
+					$\personality{S}{S}{S}{W}{H}$ & 1\\
+					$\personality{W}{S}{S}{W}{H}$ & 1\\
+					$\personality{W}{S}{W}{W}{H}$ & 1\\
+					$\personality{W}{S}{S}{S}{F}$ & 3\\
+				\end{tabular}
+				\caption{Number of fruit items given as gifts after 50 rounds.}
+				\label{tab:numFruitGiven}
+			\end{minipage}
+			\hfill
+			\begin{minipage}[b]{0.30\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Gifts (meat)} \\
+					\hline
+					$\personality{S}{W}{W}{W}{H}$ & 0\\
+					$\personality{S}{S}{S}{S}{F}$ & 0\\
+					$\personality{S}{S}{S}{S}{H}$ & 0\\
+					$\personality{S}{S}{S}{W}{H}$ & 0\\
+					$\personality{S}{S}{W}{S}{F}$ & 0\\
+					$\personality{S}{S}{W}{S}{H}$ & 0\\
+					$\personality{S}{S}{W}{W}{F}$ & 0\\
+					$\personality{S}{S}{W}{W}{H}$ & 0\\
+					$\personality{S}{W}{S}{S}{F}$ & 0\\
+					$\personality{S}{W}{S}{S}{H}$ & 0\\
+					$\personality{S}{W}{W}{S}{H}$ & 0\\
+					$\personality{W}{S}{S}{S}{F}$ & 0\\
+					$\personality{W}{S}{S}{S}{H}$ & 0\\
+					$\personality{W}{S}{S}{W}{F}$ & 0\\
+					$\personality{W}{S}{W}{S}{F}$ & 0\\
+					$\personality{W}{S}{W}{S}{H}$ & 0\\
+					$\personality{W}{S}{W}{W}{F}$ & 0\\
+					$\personality{W}{W}{S}{S}{H}$ & 0\\
+					$\personality{W}{W}{W}{S}{F}$ & 0\\
+					$\personality{W}{W}{W}{W}{F}$ & 0\\
+					$\personality{W}{W}{W}{W}{H}$ & 0\\
+					$\personality{S}{W}{W}{S}{F}$ & 1\\
+					$\personality{S}{W}{W}{W}{F}$ & 2\\
+					$\personality{W}{S}{W}{W}{H}$ & 2\\
+					$\personality{W}{W}{W}{S}{H}$ & 2\\
+					$\personality{W}{W}{S}{W}{F}$ & 5\\
+					$\personality{W}{W}{S}{S}{F}$ & 7\\
+					$\personality{S}{S}{S}{W}{F}$ & 11\\
+					$\personality{W}{W}{S}{W}{H}$ & 12\\
+					$\personality{W}{S}{S}{W}{H}$ & 17\\
+					$\personality{S}{W}{S}{W}{F}$ & 19\\
+					$\personality{S}{W}{S}{W}{H}$ & 19\\
+				\end{tabular}
+				\caption{Number of meat items given as gifts after 50 rounds.}
+				\label{tab:numMeatGiven}
+			\end{minipage}
+			\hfill
+			\begin{minipage}[b]{0.30\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Gifts (gold)} \\
+					\hline
+					$\personality{S}{S}{S}{S}{F}$ & 0\\
+					$\personality{S}{S}{S}{S}{H}$ & 0\\
+					$\personality{S}{S}{W}{S}{F}$ & 0\\
+					$\personality{S}{S}{W}{S}{H}$ & 0\\
+					$\personality{S}{W}{S}{S}{F}$ & 0\\
+					$\personality{S}{W}{S}{S}{H}$ & 0\\
+					$\personality{S}{W}{S}{W}{H}$ & 0\\
+					$\personality{S}{W}{W}{S}{F}$ & 0\\
+					$\personality{S}{W}{W}{S}{H}$ & 0\\
+					$\personality{W}{S}{S}{S}{F}$ & 0\\
+					$\personality{W}{S}{S}{S}{H}$ & 0\\
+					$\personality{W}{S}{S}{W}{F}$ & 0\\
+					$\personality{W}{S}{S}{W}{H}$ & 0\\
+					$\personality{W}{S}{W}{S}{F}$ & 0\\
+					$\personality{W}{S}{W}{S}{H}$ & 0\\
+					$\personality{W}{W}{S}{W}{F}$ & 0\\
+					$\personality{W}{W}{S}{W}{H}$ & 0\\
+					$\personality{W}{W}{W}{S}{F}$ & 0\\
+					$\personality{W}{W}{W}{S}{H}$ & 0\\
+					$\personality{S}{W}{W}{W}{H}$ & 1\\
+					$\personality{S}{S}{W}{W}{F}$ & 1\\
+					$\personality{S}{W}{W}{W}{F}$ & 1\\
+					$\personality{W}{S}{W}{W}{F}$ & 1\\
+					$\personality{W}{S}{W}{W}{H}$ & 1\\
+					$\personality{W}{W}{S}{S}{H}$ & 1\\
+					$\personality{W}{W}{W}{W}{H}$ & 1\\
+					$\personality{S}{S}{S}{W}{F}$ & 2\\
+					$\personality{S}{S}{W}{W}{H}$ & 2\\
+					$\personality{W}{W}{S}{S}{F}$ & 2\\
+					$\personality{W}{W}{W}{W}{F}$ & 2\\
+					$\personality{S}{S}{S}{W}{H}$ & 5\\
+					$\personality{S}{W}{S}{W}{F}$ & 6\\
+				\end{tabular}
+				\caption{Number of gold items given as gifts after 50 rounds.}
+				\label{tab:numGoldGiven}
+			\end{minipage}
+			\hfill
+		}}
+\end{table}
+	
+\begin{table}
+	\centering
+	\makebox[0pt][c]{\parbox{\textwidth}{%
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Gestures} \\
+					\hline
+						$\personality{W}{W}{W}{S}{H}$ & 30\\
+						$\personality{S}{W}{W}{S}{H}$ & 32\\
+						$\personality{S}{W}{W}{S}{F}$ & 34\\
+						$\personality{W}{W}{W}{S}{F}$ & 40\\
+						$\personality{W}{S}{W}{S}{H}$ & 46\\
+						$\personality{S}{S}{W}{S}{H}$ & 61\\
+						$\personality{W}{S}{W}{S}{F}$ & 66\\
+						$\personality{S}{S}{W}{S}{F}$ & 69\\
+						$\personality{S}{W}{W}{W}{F}$ & 92\\
+						$\personality{S}{W}{W}{W}{H}$ & 116\\
+						$\personality{S}{S}{W}{W}{F}$ & 120\\
+						$\personality{W}{S}{W}{W}{F}$ & 124\\
+						$\personality{W}{S}{W}{W}{H}$ & 129\\
+						$\personality{W}{W}{W}{W}{F}$ & 129\\
+						$\personality{W}{W}{W}{W}{H}$ & 132\\
+						$\personality{S}{S}{W}{W}{H}$ & 136\\
+						$\personality{S}{W}{S}{W}{F}$ & 309\\
+						$\personality{S}{S}{S}{S}{H}$ & 335\\
+						$\personality{W}{S}{S}{W}{F}$ & 359\\
+						$\personality{W}{S}{S}{W}{H}$ & 361\\
+						$\personality{W}{W}{S}{W}{F}$ & 373\\
+						$\personality{S}{S}{S}{S}{F}$ & 388\\
+						$\personality{S}{W}{S}{S}{F}$ & 394\\
+						$\personality{S}{W}{S}{S}{H}$ & 397\\
+						$\personality{W}{S}{S}{S}{F}$ & 403\\
+						$\personality{S}{S}{S}{W}{F}$ & 405\\
+						$\personality{S}{S}{S}{W}{H}$ & 411\\
+						$\personality{W}{W}{S}{W}{H}$ & 439\\
+						$\personality{S}{W}{S}{W}{H}$ & 451\\
+						$\personality{W}{W}{S}{S}{H}$ & 452\\
+						$\personality{W}{S}{S}{S}{H}$ & 494\\
+						$\personality{W}{W}{S}{S}{F}$ & 495\\
+				\end{tabular}
+				\caption{Number of gestures sent after 50 rounds.}
+				\label{tab:numGestures}
+			\end{minipage}
+			\hfill
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Meals} \\
+					\hline
+						$\personality{S}{W}{S}{S}{H}$ & 10\\
+						$\personality{S}{W}{S}{S}{F}$ & 11\\
+						$\personality{S}{W}{W}{S}{F}$ & 11\\
+						$\personality{S}{W}{W}{S}{H}$ & 11\\
+						$\personality{S}{S}{W}{S}{H}$ & 12\\
+						$\personality{W}{W}{S}{S}{F}$ & 12\\
+						$\personality{W}{W}{S}{S}{H}$ & 12\\
+						$\personality{W}{W}{W}{S}{H}$ & 12\\
+						$\personality{S}{W}{W}{W}{H}$ & 13\\
+						$\personality{S}{S}{S}{S}{H}$ & 13\\
+						$\personality{S}{S}{W}{S}{F}$ & 13\\
+						$\personality{W}{S}{S}{S}{H}$ & 13\\
+						$\personality{S}{S}{W}{W}{H}$ & 14\\
+						$\personality{W}{S}{W}{S}{H}$ & 14\\
+						$\personality{W}{S}{W}{W}{H}$ & 14\\
+						$\personality{W}{W}{W}{W}{H}$ & 14\\
+						$\personality{S}{S}{S}{S}{F}$ & 15\\
+						$\personality{S}{S}{W}{W}{F}$ & 15\\
+						$\personality{W}{S}{W}{S}{F}$ & 15\\
+						$\personality{W}{S}{W}{W}{F}$ & 15\\
+						$\personality{W}{W}{W}{S}{F}$ & 15\\
+						$\personality{W}{W}{W}{W}{F}$ & 15\\
+						$\personality{W}{S}{S}{S}{F}$ & 16\\
+						$\personality{S}{W}{S}{W}{F}$ & 18\\
+						$\personality{S}{W}{W}{W}{F}$ & 18\\
+						$\personality{S}{S}{S}{W}{H}$ & 19\\
+						$\personality{W}{S}{S}{W}{F}$ & 19\\
+						$\personality{S}{S}{S}{W}{F}$ & 20\\
+						$\personality{S}{W}{S}{W}{H}$ & 20\\
+						$\personality{W}{W}{S}{W}{F}$ & 20\\
+						$\personality{W}{W}{S}{W}{H}$ & 20\\
+						$\personality{W}{S}{S}{W}{H}$ & 24\\
+				\end{tabular}
+				\caption{Number of meals eaten after 50 rounds.}
+				\label{tab:numMeals}
+			\end{minipage}
+			\hfill
+		}}
+\end{table}
+
+\begin{table}
+	\centering
+	\makebox[0pt][c]{\parbox{\textwidth}{%
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Gestures} \\
+					\hline
+					$\personality{S}{W}{W}{W}{H}$ & 20\\
+					$\personality{S}{W}{W}{S}{H}$ & 20\\
+					$\personality{S}{S}{W}{W}{F}$ & 21\\
+					$\personality{S}{W}{S}{S}{H}$ & 21\\
+					$\personality{S}{W}{S}{W}{F}$ & 21\\
+					$\personality{S}{W}{W}{S}{F}$ & 21\\
+					$\personality{W}{S}{S}{W}{F}$ & 21\\
+					$\personality{W}{W}{S}{W}{F}$ & 21\\
+					$\personality{S}{S}{S}{S}{H}$ & 22\\
+					$\personality{S}{S}{W}{S}{F}$ & 22\\
+					$\personality{S}{S}{W}{W}{H}$ & 22\\
+					$\personality{S}{W}{S}{S}{F}$ & 22\\
+					$\personality{S}{W}{W}{W}{F}$ & 22\\
+					$\personality{W}{W}{W}{S}{H}$ & 22\\
+					$\personality{W}{W}{W}{W}{H}$ & 22\\
+					$\personality{W}{W}{W}{S}{F}$ & 23\\
+					$\personality{W}{W}{W}{W}{F}$ & 23\\
+					$\personality{S}{S}{S}{S}{F}$ & 24\\
+					$\personality{S}{S}{S}{W}{F}$ & 24\\
+					$\personality{S}{S}{W}{S}{H}$ & 24\\
+					$\personality{W}{S}{W}{W}{H}$ & 24\\
+					$\personality{S}{W}{S}{W}{H}$ & 25\\
+					$\personality{W}{S}{W}{W}{F}$ & 25\\
+					$\personality{W}{W}{S}{S}{F}$ & 25\\
+					$\personality{W}{W}{S}{S}{H}$ & 25\\
+					$\personality{S}{S}{S}{W}{H}$ & 26\\
+					$\personality{W}{S}{S}{S}{F}$ & 26\\
+					$\personality{W}{S}{S}{S}{H}$ & 26\\
+					$\personality{W}{S}{S}{W}{H}$ & 26\\
+					$\personality{W}{S}{W}{S}{F}$ & 26\\
+					$\personality{W}{W}{S}{W}{H}$ & 26\\
+					$\personality{W}{S}{W}{S}{H}$ & 27\\
+				\end{tabular}
+				\caption{Number of agents after 50 rounds.}
+				\label{tab:numAgents}
+			\end{minipage}
+			\hfill
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Meals} \\
+					\hline
+					$\personality{S}{S}{W}{W}{F}$ & 3\\
+					$\personality{S}{W}{W}{W}{F}$ & 3\\
+					$\personality{S}{W}{W}{W}{H}$ & 4\\
+					$\personality{S}{W}{S}{W}{H}$ & 4\\
+					$\personality{W}{W}{S}{W}{F}$ & 4\\
+					$\personality{S}{W}{W}{S}{H}$ & 5\\
+					$\personality{W}{S}{W}{W}{H}$ & 5\\
+					$\personality{S}{S}{S}{W}{F}$ & 6\\
+					$\personality{S}{S}{S}{W}{H}$ & 6\\
+					$\personality{S}{S}{W}{S}{F}$ & 6\\
+					$\personality{S}{W}{S}{S}{F}$ & 6\\
+					$\personality{S}{W}{S}{S}{H}$ & 6\\
+					$\personality{S}{W}{S}{W}{F}$ & 6\\
+					$\personality{W}{S}{S}{S}{F}$ & 6\\
+					$\personality{W}{S}{W}{W}{F}$ & 6\\
+					$\personality{W}{W}{S}{W}{H}$ & 6\\
+					$\personality{W}{W}{W}{S}{F}$ & 6\\
+					$\personality{S}{S}{W}{S}{H}$ & 7\\
+					$\personality{S}{S}{W}{W}{H}$ & 7\\
+					$\personality{S}{W}{W}{S}{F}$ & 7\\
+					$\personality{W}{S}{S}{W}{H}$ & 7\\
+					$\personality{W}{S}{W}{S}{F}$ & 7\\
+					$\personality{W}{S}{W}{S}{H}$ & 7\\
+					$\personality{W}{W}{S}{S}{F}$ & 7\\
+					$\personality{W}{W}{W}{S}{H}$ & 7\\
+					$\personality{W}{W}{W}{W}{F}$ & 7\\
+					$\personality{S}{S}{S}{S}{F}$ & 8\\
+					$\personality{S}{S}{S}{S}{H}$ & 8\\
+					$\personality{W}{S}{S}{S}{H}$ & 8\\
+					$\personality{W}{S}{S}{W}{F}$ & 8\\
+					$\personality{W}{W}{S}{S}{H}$ & 8\\
+					$\personality{W}{W}{W}{W}{H}$ & 8\\
+				\end{tabular}
+				\caption{Number of Wumpuses after 50 rounds.}
+				\label{tab:numWumpuses}
+			\end{minipage}
+			\hfill
+		}}
+	\end{table}
 
 \section{Future Work}\label{sec:futureWork}
 

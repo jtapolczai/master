@@ -264,6 +264,94 @@ We simulated the world for 200 rounds or until at least half of the agents died 
 
 \subsubsection{Results}
 
+\begin{table}
+	\centering
+	\makebox[0pt][c]{\parbox{\textwidth}{%
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Number of harvests} \\
+					\hline
+					$\personality{S}{W}{W}{S}{F}$ & 8\\
+					$\personality{S}{W}{S}{S}{H}$ & 9\\
+					$\personality{S}{W}{W}{S}{H}$ & 9\\
+					$\personality{S}{W}{W}{W}{H}$ & 11\\
+					$\personality{S}{S}{W}{S}{H}$ & 11\\
+					$\personality{S}{W}{S}{S}{F}$ & 11\\
+					$\personality{W}{W}{S}{S}{F}$ & 11\\
+					$\personality{W}{W}{W}{S}{H}$ & 11\\
+					$\personality{S}{S}{W}{S}{F}$ & 12\\
+					$\personality{W}{W}{S}{S}{H}$ & 12\\
+					$\personality{S}{S}{S}{S}{H}$ & 13\\
+					$\personality{S}{S}{W}{W}{F}$ & 13\\
+					$\personality{W}{S}{S}{S}{H}$ & 13\\
+					$\personality{W}{W}{W}{W}{H}$ & 13\\
+					$\personality{S}{S}{W}{W}{H}$ & 14\\
+					$\personality{S}{W}{W}{W}{F}$ & 14\\
+					$\personality{W}{W}{W}{S}{F}$ & 14\\
+					$\personality{W}{W}{W}{W}{F}$ & 14\\
+					$\personality{S}{S}{S}{S}{F}$ & 15\\
+					$\personality{W}{S}{W}{S}{F}$ & 15\\
+					$\personality{W}{S}{W}{S}{H}$ & 15\\
+					$\personality{W}{S}{W}{W}{F}$ & 15\\
+					$\personality{W}{S}{W}{W}{H}$ & 15\\
+					$\personality{W}{S}{S}{S}{F}$ & 16\\
+					$\personality{W}{W}{S}{W}{F}$ & 17\\
+					$\personality{S}{W}{S}{W}{H}$ & 18\\
+					$\personality{W}{S}{S}{W}{F}$ & 18\\
+					$\personality{S}{W}{S}{W}{F}$ & 19\\
+					$\personality{W}{W}{S}{W}{H}$ & 19\\
+					$\personality{S}{S}{S}{W}{H}$ & 20\\
+					$\personality{S}{S}{S}{W}{F}$ & 21\\
+					$\personality{W}{S}{S}{W}{H}$ & 24\\
+				\end{tabular}
+				\caption{Number of plant harvests after 50 rounds.}
+				\label{tab:numHarvests}
+			\end{minipage}
+			\hfill
+			\begin{minipage}[b]{0.42\hsize}\centering
+				\begin{tabular}{ l | c }
+					\emph{Personality} & \emph{Number of attacks} \\
+					\hline
+						$\personality{S}{S}{S}{W}{H}$ & 1\\
+						$\personality{W}{S}{S}{W}{H}$ & 2\\
+						$\personality{W}{W}{S}{S}{F}$ & 2\\
+						$\personality{W}{W}{S}{S}{H}$ & 2\\
+						$\personality{S}{S}{S}{S}{F}$ & 3\\
+						$\personality{W}{S}{S}{S}{H}$ & 3\\
+						$\personality{W}{S}{W}{S}{F}$ & 3\\
+						$\personality{W}{S}{W}{S}{H}$ & 3\\
+						$\personality{S}{S}{S}{S}{H}$ & 4\\
+						$\personality{S}{S}{W}{S}{H}$ & 4\\
+						$\personality{W}{S}{S}{S}{F}$ & 4\\
+						$\personality{W}{S}{W}{W}{F}$ & 4\\
+						$\personality{S}{S}{S}{W}{F}$ & 5\\
+						$\personality{W}{S}{W}{W}{H}$ & 5\\
+						$\personality{W}{W}{W}{S}{F}$ & 5\\
+						$\personality{W}{W}{W}{S}{H}$ & 5\\
+						$\personality{S}{S}{W}{W}{H}$ & 6\\
+						$\personality{S}{W}{S}{S}{H}$ & 6\\
+						$\personality{S}{W}{S}{W}{H}$ & 6\\
+						$\personality{W}{S}{S}{W}{F}$ & 6\\
+						$\personality{W}{W}{S}{W}{H}$ & 6\\
+						$\personality{W}{W}{W}{W}{F}$ & 6\\
+						$\personality{W}{W}{W}{W}{H}$ & 6\\
+						$\personality{S}{S}{W}{S}{F}$ & 7\\
+						$\personality{S}{W}{S}{S}{F}$ & 8\\
+						$\personality{S}{W}{S}{W}{F}$ & 8\\
+						$\personality{S}{W}{W}{S}{F}$ & 8\\
+						$\personality{S}{S}{W}{W}{F}$ & 9\\
+						$\personality{W}{W}{S}{W}{F}$ & 9\\
+						$\personality{S}{W}{W}{S}{H}$ & 10\\
+						$\personality{S}{W}{W}{W}{F}$ & 11\\
+						$\personality{S}{W}{W}{W}{H}$ & 12\\
+				\end{tabular}
+				\caption{Number of attacks after 50 rounds.}
+				\label{tab:numAttacks}
+			\end{minipage}
+			\hfill
+		}}
+\end{table}
+
 \section{Future Work}\label{sec:futureWork}
 
 In the course of the implementation and evaluation of the proof-of-concept accompanying this thesis, a number of possible improvement arose, which were not explored further but which can form the basis of fruitful future investigation. Specifically:

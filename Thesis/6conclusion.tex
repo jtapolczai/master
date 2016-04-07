@@ -1,3 +1,5 @@
+In this final chapter, we present the results of our evaluation and and give a brief summary. The last section will list possible future work and enhancements one could make to the toy artificial intelligence we designed.
+
 \section{Results}\label{sec:results}
 
 Our goal was to evaluate our agents in specific scenarios, and to compare different kinds of agents to each other. To this end, we introduced parametricity in their emotional reactions. While the interplay of affect, decision-making and belief generation was the same in all agents, as was the schema of their emotional reactions, the strength of these reactions varied --- while all agents feared dying, for instance, not all feared it to the same degree. Similarly, while all felt fear in the proximity of a Wumpus, they felt it with different intensities.
@@ -128,7 +130,7 @@ A at (2,2) did nothing.
 A at (2,2) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: fight or flight.}  Similarly to the scenario ``killing a wounded Wumpus'', we placed an agent together with two Wumpuses, each with a health of 0.6. An agent was able to win the fight against both by first killing one, eating its meat to restore its health, and then killing the second. In this scenario, we wanted to test the interplay between anger and fear --- accordingly, we expected agents with different personalities to react in different ways. Figure~\ref{evalWorld6} shows the world; Listing~\ref{lst:evalWorld6_1} shows the actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$, Listing~\ref{lst:evalWorld6_2} the actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$. Our expectation was that the first agent would try to take fly in the face of danger, whereas the second would try to fight, perhaps suicidally so.
+\paragraph{Scenario: fight or flight.}  Similarly to the scenario ``killing a wounded Wumpus'', we placed an agent together with two Wumpuses, each with a health of 0.6. An agent was able to win the fight against both by first killing one, eating its meat to restore its health, and then killing the second. In this scenario, we wanted to test the interplay between anger and fear --- accordingly, we expected agents with different personalities to react in different ways. Figure~\ref{fig:evalWorld6} shows the world; Listing~\ref{lst:evalWorld61} shows the actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$, Listing~\ref{lst:evalWorld62} the actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$. Our expectation was that the first agent would try to take fly in the face of danger, whereas the second would try to fight, perhaps suicidally so.
 
 \begin{figure}
     \centering
@@ -137,7 +139,7 @@ A at (2,2) did nothing.
     \label{fig:evalWorld6}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_1]
+\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld61]
    A at (2,0) moved North to (2,1).
    W1 at (2,3) moved South to (2,2).
    W2 at (2,7) moved South to (2,6).
@@ -155,7 +157,7 @@ A at (2,2) did nothing.
    W2 at (2,1) attacked A to its South.
 \end{lstlisting}
 
-\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld6_2]
+\begin{lstlisting}[caption=Actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$ in the scenario ``fight or flight''., label=lst:evalWorld62]
    A at (2,0) moved North to (2,1).
    W1 at (2,3) moved South to (2,2).
    W2 at (2,7) moved South to (2,6).
@@ -203,7 +205,7 @@ A at (3,7) ate Meat.
 A at (3,7) did nothing.
 \end{lstlisting}
 
-\paragraph{Scenario: giving a gift to a friend.} Here we placed two agents, first with the personalities $\personality{W}{W}{W}{W}{F}$ and then $\personality{W}{W}{S}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld8_1} shows somewhat interesting the results. In the case of weak enthusiasm, instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient. In the second case, in which both agents had strong enthusiasm, $A$ was more charitable. As we seen in Listing~\ref{lst:evalWorld8_2}, $A$ chose to share after eating one item of meat.
+\paragraph{Scenario: giving a gift to a friend.} Here we placed two agents, first with the personalities $\personality{W}{W}{W}{W}{F}$ and then $\personality{W}{W}{S}{W}{F}$ in a 5x5 world and added fruit to the inventory of $A$. Though their disposition towards each other was neutral, we expected them to interact in a friendly way, by giving items and sending sympathy-related gestures. Figure~\ref{fig:evalWorld8} shows the world and Listing~\ref{lst:evalWorld81} shows somewhat interesting the results. In the case of weak enthusiasm, instead of approaching $B$, $A$ just ate the food and then remained in place, content. $B$, on the other hand, approached $A$ and started sending the gesture \emph{love}, which we hard-coded as the friendly one. $A$'s contentment overwhelmed its enthusiasm once its health was sufficiently high. Though this behaviour was unexpected and we could have changed it by adjusting emotional filters, we did deem $A$ selfishness in its interaction with what was essentially a stranger efficient. In the second case, in which both agents had strong enthusiasm, $A$ was more charitable. As we seen in Listing~\ref{lst:evalWorld82}, $A$ chose to share after eating one item of meat.
 
 \begin{figure}
     \centering
@@ -212,7 +214,7 @@ A at (3,7) did nothing.
     \label{fig:evalWorld8}
 \end{figure}
 
-\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{W}{W}{F}$., label=lst:evalWorld8_1]
+\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{W}{W}{F}$., label=lst:evalWorld81]
 A at (2,0) ate Fruit.
 B at (2,4) moved South to (2,3).
 A at (2,0) did nothing.
@@ -225,7 +227,7 @@ A at (2,0) did nothing.
 B at (2,1) gestured 'love' to A to its South.
 \end{lstlisting}
 
-\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{S}{W}{F}$., label=list:evalWorld8_2]
+\begin{lstlisting}[caption=Actions in the scenario ``giving a gift to a friend'' when both agents had the personality $\personality{W}{W}{S}{W}{F}$., label=lst:evalWorld82]
 A at (2,0) moved North to (2,1).
 B at (2,4) moved South to (2,3).
 A at (2,1) moved North to (2,2).
@@ -256,7 +258,7 @@ $$
 
 The aim of these parameters was the creation of a world in which food was somewhat readily available, gold was a rare item, and Wumpuses presented a threat, but not such an overwhelming one that they could kill all the agents. We see the created world in Figure~\ref{fig:evalWorldQuant}.
 
-We then simulated this world for 32 times, giving our population a different one of the 32 possible personalities each time. The simulations ran for 50 rounds or until at least half of the agents died --- whichever came sooner. During the simulation, we recorded the survival rate of each population and that of the Wumpuses, along with a number of other metrics. The results are listed in Table~\ref{tab:evalSurvival} and shown graphically in Figure~\ref{fig:evalSurvival}.
+We then simulated this world for 32 times, giving our population a different one of the 32 possible personalities each time. The simulations ran for 50 rounds or until at least half of the agents died --- whichever came sooner. During the simulation, we recorded the survival rate of each population and that of the Wumpuses, along with a number of other metrics. The results are listed in Tables~\ref{tab:numHarvests}-\ref{tab:numWumpusesAvg}.
 
 \begin{figure}
 	\centering
@@ -839,20 +841,6 @@ In addition to recording the raw numbers, we also calculated their averages by p
 	\label{tab:numWumpusesAvg}
 \end{table}
 
-\subsection{Summary}
-
-In this thesis, we proposed an agent architecture that combined affective reactions with reasoning about future states of the world to achieve efficient behaviour. We began in Chapter~\ref{ch:preliminaryConsiderations} by listing related work in the fields of artificial intelligence and biology. Here we also made certain preliminary hypotheses that would undergird our architecture and our implementation. We proposed that the one might model brains as loosely, semi-independently evolved collections of components which listened in on each other's activity.
-
-From there, we proceeded to formalize these notions in the form of a component model in Chapter~\ref{ch:componentModel}. Our components had the ability to filter messages relevant to them from a larger message space, to interpret them, and to put back messages of their own. Although component were thus able to communicate, they were not, as such, aware of the existence of other components. In Chapter~\ref{ch:affectiveArchitecture}, we used the component model to construct our affective architecture, consisting of emotional components as well as components for reasoning. Agents evaluated their perceptions to generate pre-social emotions like anger and fear, as well as social emotions like sympathy or trust for other agents based on their positive or negative interactions with them. Guided by the agent's emotions, a decision-maker proposed hypothetical actions and a belief-generator generated future states of the world, which were again submitted to emotional evaluation. In this way, the agent constructed and evaluated plans until it was satisfied with the predicted outcome.
-
-Chapter~\ref{ch:implementation} detailed our implementation. We put our agents into a moderately complex world filled with plants, pits, items, and hostile Wumpuses. This world was round-based and in each round, each agent had to choose one of a pre-defined set of actions to perform.
-
-In Chapter~\ref{ch:conclusion}, we submitted our agents to both a qualitative evaluation consisting of eight simple test worlds with clear goals, as well as a quantitative evaluation in which we put 32 different population into a large, complex world and measured their performance over time. In the test worlds, all agents fulfilled their set tasks and almost all did so identically, showing the basic fitness for purpose of the artificial intelligence we designed.
-
-In the case of the quantitative evaluation, we were interested in two things: would the agents manage to survive in a complex world and would we see differences between various personalities. To both questions, the answer was ``yes''. We saw that all agents survived reasonably well, though they were marked differences in the strategies they chose. Aggressive agents killed many of the Wumpuses in their environment, but doing so was costly to their numbers. More peaceful agents that avoided conflict and spent more time harvesting plants survived better, even if they did not clear their worlds of hostile Wumpuses.
-
-These results show that our agents perform as well in their toy world as a simple animal like a crab or a small fish would in the real one. The agents, however, did not fully meet all expectations: despite their ability to predict the future, they failed to make inferences like the fact that plants regrow in 10 time-steps. Their lack of a theory of mind also meant that, while they were capable of liking other agents, they did not coordinate with them for hunting and for protection.
-
 \section{Future Work}\label{sec:futureWork}
 
 In the course of the implementation and evaluation of the proof-of-concept accompanying this thesis, a number of possible improvement arose, which were not explored further but which can form the basis of fruitful future investigation. Specifically:
@@ -875,3 +863,19 @@ In the course of the implementation and evaluation of the proof-of-concept accom
 	 
 	 \item[Theory of mind.] Our belief generator currently makes no attempt at predicting the actions of other agents; it merely models them as completely passive entities. It would be an interesting, if difficult, addition to utilize levels of trust, sympathy, and respect felt towards certain other agent, as well as some general theory of mind to reason about likely actions that other agents will take.
 \end{description}
+
+\section{Summary}
+
+In this thesis, we proposed an agent architecture that combined affective reactions with reasoning about future states of the world to achieve efficient behaviour. We began in Chapter~\ref{ch:preliminaryConsiderations} by listing related work in the fields of artificial intelligence and biology. Here we also made certain preliminary hypotheses that would undergird our architecture and our implementation. We proposed that the one might model brains as loosely, semi-independently evolved collections of components which listened in on each other's activity.
+
+From there, we proceeded to formalize these notions in the form of a component model in Chapter~\ref{ch:componentModel}. Our components had the ability to filter messages relevant to them from a larger message space, to interpret them, and to put back messages of their own. Although component were thus able to communicate, they were not, as such, aware of the existence of other components. In Chapter~\ref{ch:affectiveArchitecture}, we used the component model to construct our affective architecture, consisting of emotional components as well as components for reasoning. Agents evaluated their perceptions to generate pre-social emotions like anger and fear, as well as social emotions like sympathy or trust for other agents based on their positive or negative interactions with them. Guided by the agent's emotions, a decision-maker proposed hypothetical actions and a belief-generator generated future states of the world, which were again submitted to emotional evaluation. In this way, the agent constructed and evaluated plans until it was satisfied with the predicted outcome.
+
+Chapter~\ref{ch:implementation} detailed our implementation. We put our agents into a moderately complex world filled with plants, pits, items, and hostile Wumpuses. This world was round-based and in each round, each agent had to choose one of a pre-defined set of actions to perform.
+
+In Chapter~\ref{ch:conclusion}, we submitted our agents to both a qualitative evaluation consisting of eight simple test worlds with clear goals, as well as a quantitative evaluation in which we put 32 different population into a large, complex world and measured their performance over time. In the test worlds, all agents fulfilled their set tasks and almost all did so identically, showing the basic fitness for purpose of the artificial intelligence we designed.
+
+In the case of the quantitative evaluation, we were interested in two things: would the agents manage to survive in a complex world and would we see differences between various personalities. To both questions, the answer was ``yes''. We saw that all agents survived reasonably well, though they were marked differences in the strategies they chose. Aggressive agents killed many of the Wumpuses in their environment, but doing so was costly to their numbers. More peaceful agents that avoided conflict and spent more time harvesting plants survived better, even if they did not clear their worlds of hostile Wumpuses.
+
+These results show that our agents perform as well in their toy world as a simple animal like a crab or a small fish would in the real one. The agents, however, did not fully meet all expectations: despite their ability to predict the future, they failed to make inferences like the fact that plants regrow in 10 time-steps. Their lack of a theory of mind also meant that, while they were capable of liking other agents, they did not coordinate with them for hunting and for protection.
+
+Lastly, we listed possible future work. Though those items lay outside of the scope of this work, they present interesting avenues for the improvement of our artificial intelligence.

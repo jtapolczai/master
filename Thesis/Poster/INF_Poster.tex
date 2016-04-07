@@ -104,7 +104,7 @@
                 $~$
                 
                 \textbf{Wumpus World}\\
-                As our setting, we chose and elaborate version of the well-known Wumpus world: a 2D-grid world with Wumpuses that try to kill agents, plants that can be harvested, and items that can be picked up. Agents have to avoid being killed and have to periodically eat either the fruit from plants or the meat from Wumpuses whom they can fight.
+                We set our agents in a 2D-grid world with predators that try to kill agents, plants that can be harvested. Agents have to avoid being killed and eat to survive.
             \end{block}
             
             \begin{block}{Combining Affect and Reasoning}                
@@ -125,12 +125,11 @@
                 \textbf{Emotions}
                 \begin{itemize}
                 	\item Evolutionarily speaking, organisms felt fear and anger long before they felt social emotions.
-                	\item We thus divided the emotions into pre-social and social ones.
-                	\item The pre-social emotions are put into four categories based on neurological research: anger, fear, enthusiasm, contentment.
-                	\item Anger is negative and approach-related,
-                	\item Fear is negative and avoidance-related.
-                	\item Enthusiasm is positive and approach-related,
-                	\item Contentment is negative and avoidance-related, inasmuch as it leads the organism to avoid action because its needs are met.
+                	\item We implemented four emotions: anger, fear, enthusiasm, contentment.
+                	\item Anger: \textbf{negative} and \textbf{approach-related},
+                	\item Fear: \textbf{negative} and \textbf{avoidance-related}.
+                	\item Enthusiasm: \textbf{positive} and \textbf{approach-related},
+                	\item Contentment: \textbf{positive} and \textbf{avoidance-related},\\ (the organism avoids action because its needs are met).
                 \end{itemize}
                 
                 $~$
@@ -155,9 +154,9 @@
                 \textbf{World simulation}
                 \begin{itemize}
                     \item Implements the semantics of the Wumpus world.
-                    \item Offers a number of actions: rotate, move, pick up item, give item, attack etc.
-                    \item Provides agents with perceptions: visual data, breeze from pits, stench from Wumpuses, location, direction.
-                    \item Treats AIs as black boxes that need only implement a \texttt{getAction}-function.
+                    \item Possible actions: rotate, move, pick up item, give item, attack, etc.
+                    \item Agents get perceptions: visual data, breeze from pits, stench from predators, location, direction.
+                    \item AIs are interfaces that implement a \texttt{getAction}-function.
                 \end{itemize}
                 
                 $~$
@@ -168,9 +167,9 @@
                     \item Components are called sequentially in each round.
                     \item Each component can read the previous messages and insert its own.
                     \item The pre-social behaviour control (PSBC) and social judgment system (SJS) provide emotional reactions.
-                    \item The decision makes takes hypothetical or real actions.
-                    \item The belief generator simulates the consequences of actions.
-                    \item The attention module selects important targets like fruit or nearby hostile agents.
+                    \item The decision maker (DM) takes actions.
+                    \item The belief generator (BG) simulates the consequences of actions.
+                    \item The attention control (AC) selects important targets.
                 \end{itemize}
                 
                 $~$
@@ -182,11 +181,9 @@
             \end{block}
             
             \begin{block}{Evaluation}
-                We put the AIs in a number of test worlds to see whether they would perform reasonable actions:
                 \begin{itemize}
-                    \item Harvesting a plant and eating its fruit when hungry,
-                    \item Fleeing from a Wumpus when low on health.
-                    \item Attacking a Wumpus when in good health.
+                    \item The AIs had to perform tasks in simple test worlds (harvesting plants, fleeing, attacking weak enemies).
+                    \item Different populations with different personalities were compared.
                 \end{itemize}
             \end{block}
             
@@ -197,7 +194,7 @@
                         \begin{itemize}
                             \item We created a hybrid AI that combines emotions and reasoning.
                             \item There are no explicit goal functions, only conflicting emotions.
-                            \item The AI performs well on rudimentary tasks.
+                            \item The AI performs well on simple tasks and in complex environments. Different personalities have different success rates.
                         \end{itemize}
                     \end{column}
                     % print the download link

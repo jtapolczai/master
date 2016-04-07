@@ -263,7 +263,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		\end{array}
 	$$
 	
-	\item[Wumpus behaviour.] Every Wumpus has three behaviors:
+	\item[Wumpus behaviour.] Every Wumpus has three behaviours:
 	
 	\begin{enumerate}
 		\item If the Wumpus is adjacent to a player, it performs the \action{attack} action on that player.
@@ -288,7 +288,7 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		
 		\item[\action{rotate}] --- the agent changes the direction into which it is facing to a value in ${x_1^+,x_1^-,x_2^+,x_2^-}$.
 		
-		\item[\action{attack}] --- move along an edge $e$ to attack an agent or wumpus.
+		\item[\action{attack}] --- move along an edge $e$ to attack an agent or Wumpus.
 		
 		\item[\action{give}] --- give an item $i$ from the agent's inventory to another agent $a$.
 		
@@ -325,7 +325,7 @@ It ought to be said that the formulae and constants used in the above definition
 	\end{description}
 	\item[Global data.] A day is segmented into 50 periods, where a time of 25 represents midday, and 0/50 represents midnight. The temperature is a function of the daytime, with midday being the hottest and midnight being the coldest.
 	\item[Wumpus behaviour.] Wumpuses are day-active and roam around randomly. At night, they are likely to sit still. When they sight an agent (depending on light conditions), they will invariably attempt to close the distance and attack.
-	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by traveling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up.
+	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by travelling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up.
 	\item[Combat and hunger.] Agents must compete with each other for finite resources. They can either eat fruits from plants, get meat from killed Wumpuses and agents, or they can kill other agents for the contents of their inventories. Because their health slowly but steadily decreases, they must periodically eat food. In addition, fatigue limits their ability to move, forcing periodic rests.
 \end{description}
 
@@ -482,7 +482,7 @@ The evocative mechanism is structurally similar to that of the PSBC, as we saw i
 	\input{Figs/Tikz/SJS_cube_1}\\
 	\end{tabular}
 	
-	\caption{The four antipathic judgements. Enemies can be respected or held in contempt, and deemed trustworthy or untrustworhty. Respect for an enemy implies that an agent holds it to be competent. Trust implies that an agent knows its enemy to be basically honourable.}
+	\caption{The four antipathic judgements. Enemies can be respected or held in contempt, and deemed trustworthy or untrustworthy. Respect for an enemy implies that an agent holds it to be competent. Trust implies that an agent knows its enemy to be basically honourable.}
 	\label{fig:SJS_enemy}
 \end{figure}
 
@@ -494,7 +494,7 @@ The evocative mechanism is structurally similar to that of the PSBC, as we saw i
 	\input{Figs/Tikz/SJS_cube_2}\\
 	\end{tabular}
 	
-	\caption{The four sympathic judgements. Friends, like enemies, respected or held in contempt, and deemed trustworthy or untrustworthy. Distrust renders the sympathetic judgement tentative, since the agent cannot be sure of the assistance of an untrustworthy friend. Contempt works similarly, but doubts a friend's ability, rather than loyalty.}
+	\caption{The four sympathetic judgements. Friends, like enemies, respected or held in contempt, and deemed trustworthy or untrustworthy. Distrust renders the sympathetic judgement tentative, since the agent cannot be sure of the assistance of an untrustworthy friend. Contempt works similarly, but doubts a friend's ability, rather than loyalty.}
 	\label{fig:SJS_friend}
 \end{figure}
 
@@ -548,9 +548,9 @@ Our agents will not implement the nuances of such concepts directly, but they wo
 %	A set of atoms $X$ is an {\em answer set} of a disjunctive logic program exactly if $\mathsf{Cn}(\Pi^X) = X$.
 %\end{definition}
 %
-%$X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e. one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
+%$X$ being answer set thus means that it is a consistent, subset-minimal, and stable model of $\Pi$, i.e.\ one that, for any rule $r \in \Pi$, contains a predicate in $\mathrm{head}(r)$ exactly if it contains all predicates in $\mathrm{body}^+(r)$ and none of the predicates in $\mathrm{body}^-(r)$.
 %
-%Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g. CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
+%Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g.\ CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
 
 The agent generates the immediate future world-state by reconstructing a segment of the present world from the facts stored in its memory. This will result in an internal world that might contains less information than the external, real one, but the internal world will not contradict the external one on any fact. Importantly, a representation of the agent itself --- let us call it $\type{I}$ to distinguish it from the real agent --- will be a part of this generated world. The belief generator then reads each action that the decision-maker has proposed (see below), configures $\type{I}$ to perform it, and calls $\varphi$ to advance the time by one step. $\type{I}$ will perform its action, its consequences will be simulated by $\varphi$, and $\type{I}$ will receive corresponding perceptions. The belief generator then reads out $\type{I}$'s message space and inserts these messages into the real agent's message space. It has thus utilized the agent's memory and $\varphi$ to infer the consequences of certain actions to the best of the agent's knowledge.
 
@@ -623,13 +623,13 @@ $$
 
 which inserts the messages of $\field{choice}$ into the agent's message space. If $\field{choice}$ non-imaginary action, its is marked accordingly. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.
 
-An agent's decsion-making begins by observing the intensity of each of its four emotions (anger, fear, enthusiasm, contentment), and choosing the most intensely felt as its {\em dominant emotion}. The agent then evaluates each cell it perceives separately to determine which evokes its dominant emotion most strongly --- as described above, this cell is then designated the {\em target} of its planning in the current step, and we select one of the actions appropriate to the dominant emotion and the target. Each emotion has associated with it the following set of hardwired --- instinctive, if you will --- actions:
+An agent's decision-making begins by observing the intensity of each of its four emotions (anger, fear, enthusiasm, contentment), and choosing the most intensely felt as its {\em dominant emotion}. The agent then evaluates each cell it perceives separately to determine which evokes its dominant emotion most strongly --- as described above, this cell is then designated the {\em target} of its planning in the current step, and we select one of the actions appropriate to the dominant emotion and the target. Each emotion has associated with it the following set of hard-wired --- instinctive, if you will --- actions:
 
 \begin{description}
 	\item[Anger.] Moving/rotating towards the target, sending a hostile gesture, and attacking.
 	\item[Fear.] Moving away from the target.
 	\item[Enthusiasm.] Moving/rotating towards the target, sending a friendly gesture, giving an item, collecting an item, harvesting a plant.
-	\item[Contentment.] Doing nothing, i.e. resting.
+	\item[Contentment.] Doing nothing, i.e.\ resting.
 \end{description}
 
 If the dominant emotion is sufficiently strong, the chosen action is communicated directly to the EDM. Otherwise, the it is marked as hypothetical and remains within the IDM, where its consequences can be evaluated by the belief generator and the whole process can repeat.
@@ -649,14 +649,14 @@ From the affective subsystem, the BG, and the DM, we can thus put together the i
 
 \paragraph{Relationship between components.} Having defined the agent's components, we now put them together into a functioning whole. The core of the agent's cognition will consist of the interplay between perception and decision-making, with the affective systems and attention control influencing the latter. We see the system sketched in Figure~\ref{fig:cognitive_system}.
 
-At the very heart of the agent lies its decision-making component, which controls both the agent's actions and its belief generation. The DM and the BG form the {\em imagination loop} $\iota$ which develops plans by exploring the likely consequences of certain actions. In that capacity, the DM evaluate the BG's simulated worlds for desirability and chooses which imagined steps to take next. These evaluations are influenced by the second group of systems: the affective ones. The PSBC and SJS process perceptions and feed their resultant emotional states into the DM. Through this coloring of its decision-making, agents with different emotional dispositions will act and think differently from each other.
+At the very heart of the agent lies its decision-making component, which controls both the agent's actions and its belief generation. The DM and the BG form the {\em imagination loop} $\iota$ which develops plans by exploring the likely consequences of certain actions. In that capacity, the DM evaluate the BG's simulated worlds for desirability and chooses which imagined steps to take next. These evaluations are influenced by the second group of systems: the affective ones. The PSBC and SJS process perceptions and feed their resultant emotional states into the DM. Through this colouring of its decision-making, agents with different emotional dispositions will act and think differently from each other.
 
 The third part of the system is the attention-control, which also evaluates real and imagined emotions and outputs its data for the DM's usage. It's only purpose is to alert the agent to important or shocking information which demands immediate action. Its alerts cause the DM to cease its current course of action and re-plan based on the piece of information deemed important.
 
 \begin{figure}
 	\centering
 	\input{Figs/Tikz/cognitive_system}
-	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in colored boxes. The PSBC and the SJS comprise the affective group; the DM and BG the imagination loop responsible for planning. The BG, with External perception, makes up the perception system. As in the previous figure, the edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (imagined) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
+	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in coloured boxes. The PSBC and the SJS comprise the affective group; the DM and BG the imagination loop responsible for planning. The BG, with External perception, makes up the perception system. As in the previous figure, the edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (imagined) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
 	\label{fig:cognitive_system}
 \end{figure}
 
@@ -668,7 +668,7 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 		\field{agent}\ :: \type{\wjun \rightarrow S \rightarrow \tuple{S, Action}}.
 	$$
 	
-	That is, $\field{agent}$ takes the current world andits current internal state, and returns its new internal state, together with the action it wishes to perform. $\field{agent}$ is defined as:
+	That is, $\field{agent}$ takes the current world and its current internal state, and returns its new internal state, together with the action it wishes to perform. $\field{agent}$ is defined as:
 	
 	$$
 		\begin{array}{l}

@@ -21,7 +21,7 @@ Note that each emotion of the PSBC is represented by one criterion, while the em
 	\item Items lying on the ground increased enthusiasm.
 	\item Low health also increased enthusiasm, so as to induce the enthusiasm-related action of eating,
 	\item Empty cells increased contentment.
-	\item Eating fruit or meat decreased enthusiasm as a way of signaling satisfaction.
+	\item Eating fruit or meat decreased enthusiasm as a way of signalling satisfaction.
 	\item Killing a Wumpus decreased anger.
 \end{itemize}
 
@@ -756,7 +756,7 @@ In addition to recording the raw numbers, we also calculated their averages by p
 					$\personality{W}{S}{W}{S}{H}$ & 27\\
 					\hline
 				\end{tabular}
-				\caption{Number of surving agents after 50 rounds.}
+				\caption{Number of surviving agents after 50 rounds.}
 				\label{tab:numAgents}
 			\end{minipage}
 			\hfill
@@ -860,7 +860,7 @@ In the course of the implementation and evaluation of the proof-of-concept accom
 	
 	 It thus stands to reason that, during the planning process, one ought to consider a sort of {\em causal distance} --- that is, the number of actions which the agent regards as qualitatively distinct. As soon as we begin to group actions together and distinguish temporal from causal distance, the question during planning ceases to be ``how long will it take to achieve X?'' and becomes ``how complicated is it to achieve X?''
 	 
-	 \item[Goal-based planning.] Our planning scheme first selects an emotion to serve as the guiding one and then  proceeds to create hypothetical steps until the guiding emotion is either satisfied, leading the the plan's execution, or until a conflicting emotion overpowers it, leading to the plan's abortion. This is, once again, basically functional, but one could improve upon it by associating certain outcomes --- e.g. sating one's hunger or killing a Wumpus --- with certain emotions and selecting one of these as goals to reach. Agents would thus no longer seek to satisfy their dominant emotions by any means possibly, but by working towards specific goals. 
+	 \item[Goal-based planning.] Our planning scheme first selects an emotion to serve as the guiding one and then  proceeds to create hypothetical steps until the guiding emotion is either satisfied, leading the the plan's execution, or until a conflicting emotion overpowers it, leading to the plan's abortion. This is, once again, basically functional, but one could improve upon it by associating certain outcomes --- e.g.\ sating one's hunger or killing a Wumpus --- with certain emotions and selecting one of these as goals to reach. Agents would thus no longer seek to satisfy their dominant emotions by any means possibly, but by working towards specific goals. 
 	 
 	 \item[Emotional learning.] In conjunction with goal-based planning, one might also make the association of outcomes with emotions a dynamic one. Instead of outcomes being permanently associated with this or that emotion, agents would be able to learn what constitutes a ``good'' or ``bad'', or a ``pleasurable'', ``painful'' outcome. 
 	 

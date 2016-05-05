@@ -6,11 +6,11 @@ If an agent is to efficiently navigate a complex environment, it has to possess 
 
 \subsection{Sensory Perception}\label{sec:sensoryPerception}
 
-The model presented herein is inspired by Marvin Minsky's ``The Emotion Machine'' \cite{emotionMachine}. Therein, Minsky proposes a layered mental structure where each successive layer operates on more and more abstract representations of the world, starting with primitive sensations and proceeding all the way to self-conscious reflection and rational planning. Figure~\ref{fig:brainLayers} shows such a layered structure.
+The model presented herein is inspired by Marvin Minsky's \emph{The Emotion Machine} \cite{emotionMachine}. Therein, Minsky proposes a layered mental structure where each successive layer operates on more and more abstract representations of the world, starting with primitive sensations and proceeding all the way to self-conscious reflection and rational planning. Figure~\ref{fig:brainLayers} shows such a layered structure.
 
- \begin{figure}[!h]
+ \begin{figure}[t]
  	\centering
- 	\includegraphics[width=300pt]{Figs/emotionMachine_brainLayers.png}
+ 	\includegraphics[width=200pt]{Figs/emotionMachine_brainLayers.png}
  	\caption{Layered perception of the world, from \cite[p.\ 100]{emotionMachine}.}
  	\label{fig:brainLayers}
  \end{figure}
@@ -19,21 +19,21 @@ The model presented herein is inspired by Marvin Minsky's ``The Emotion Machine'
  
 The diagram is explained thus \cite[p.\ 100]{emotionMachine}:
 
-\begin{quote}
+\begin{emquote}
 	Now suppose that your A-Brain gets some signals from the external world (via such organs as eyes, ears, nose, and skin) --- and that it also can react to these by sending signals that make your muscles move. By itself, the A-Brain is a separate animal that only reacts to external events but has no sense of what they might mean. For example, when the fingertips of two lovers come into intimate physical contact, {\em the resulting sensations, by themselves, have no particular implications}. For there is no significance in those signals themselves: their meanings to those lovers {\em lie in how they represent and process them in the higher levels of their minds.}
-\end{quote}
+\end{emquote}
 
 If we apply this to the architecture of Section~\ref{fig:global}, we can devise a system in which each sense $S$ has an associated component $C_S$ which does two things:
 \begin{enumerate}
-	\item Consume the raw sensory information delivered by various organs and output processed input for higher brain functions;
-	\item as a side a effect of this processing, cause  instinctive, low-level reactions in the body, such as pulling away from pain or jumping at a sudden fright.
+	\item It consumes the raw sensory information delivered by various organs and output processed input for higher brain functions;
+	\item as a side effect of this processing, it causes instinctive, low-level reactions in the body, such as pulling away from pain or jumping at a sudden fright.
 \end{enumerate}
 
-In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown for visual, auditory, olfactory/gustatory and tactile sensation. The produced data can be of two kinds: one is more abstract than the input and facilitates deliberative action, and the other contains instructions for instinctive behaviour for the body.
+In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown for visual, auditory, olfactory/gustatory, and tactile sensation. The produced data can be of two kinds: one is more abstract than the input and facilitates deliberative action, and the other contains instructions for instinctive behaviour for the body.
 
-\begin{figure}[!h]
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=325pt]{Figs/sensoryPerception.png}
+	\includegraphics[width=250pt]{Figs/sensoryPerception.png}
 	\caption{Partial structure of sensory perception - raw sensory data is processed and made available to higher functions such as the affective subsystem. The comment ``Possible side-effect: sensory experience'' signifies the fact that conscious and subconscious sensory experiences might occur as a side-effect of this processing. However, it is currently unknown to neuroscience whether this is indeed the case.}
 	\label{fig:sensoryPerception}
 \end{figure}
@@ -44,21 +44,21 @@ In Figure~\ref{fig:sensoryPerception}, a slice of just such a system is shown fo
 Broadly speaking, belief generation can be described as ``imagination'', and is closely related to sensory perception and world simulation. In examining the system, we might broadly classify its processes into three categories:
 
 \begin{enumerate}
-	\item Belief generation --- imagining sights, sounds, etc. Such experiences have much in common with those caused by our sensory organs, yet are marked not as real. In particular, imagined experiences evoke only parts of the conscious experience that accompanies real perceptions. Research by Berthoz and Lotze et al.\ suggests that (a) the brain indeed uses similar circuitry for real and imagined experiences and that (b) imagined experiences are prevented from being confused with real ones via inhibitory signals. Lotze et al.\ write \cite{lotze1999}:
-	\begin{quote}
+	\item Belief generation --- imagining sights, sounds, etc. Such experiences have much in common with those caused by our sensory organs, yet are marked not as real. In particular, imagined experiences evoke only parts of the conscious experience that accompanies real perceptions. Research by Berthoz \cite{8713551} and Lotze et al.\ \cite{lotze1999} suggests that (a) the brain indeed uses similar circuitry for real and imagined experiences and that (b) imagined experiences are prevented from being confused with real ones via inhibitory signals. Lotze et al.\ write:
+	\begin{emquote}
 		The results of cortical activity support the hypothesis that motor imagery and motor performance possess similar neural substrates. The differential activation in the cerebellum during EM and IM is in accordance with the assumption that the posterior cerebellum is involved in the inhibition of movement execution during imagination.
-	\end{quote}
+	\end{emquote}
 	
-	From the abstract of Berthoz's paper \cite{8713551}:
+	From the abstract of Berthoz's paper:
 	
-	\begin{quotation}
+	\begin{emquote}
 		\ellipses experimental evidence suggesting that the brain can use the same mechanisms for the imagination and the execution of movement. In particular the fact that adaptation of the vestibulo-ocular reflex can be obtained by pure mental effort and not solely by conflicting visual and vestibular cues has been suggestive of the fact that the brain could internally simulate conflicts and use the same adaptive mechanisms used when actual sensory cues were in conflict.
-	\end{quotation}
+	\end{emquote}
 	
 	\item World simulation --- the imagination of future states. Simulating worlds goes beyond the imagination of sensory experiences; it involves constructing models of worlds and simulating their behaviour. The details of this process are unknown, but we can assert that it is capable of a number of things:
-	\begin{enumerate}
+	\begin{enumerate}[label={(\alph*)}]
 		\item construction of non-physical worlds, such as mathematical models,
-		\item extrapolation into the future and the past
+		\item extrapolation into the future and the past, and
 		\item simulation of the minds itself and other agents.
 	\end{enumerate}
 	
@@ -68,16 +68,16 @@ Broadly speaking, belief generation can be described as ``imagination'', and is 
 
 Needless to say, that this process in all its subtleties is immensely complex and thus we simply endeavour to sketch its possible structure only in extremely rough outlines. This sketch is shown in Figures~\ref{fig:imagination},  \ref{fig:planner}, and \ref{fig:worldSimulatorPlannerInteraction}: the world simulation is an ordinary component with a filter and interpreter which outputs, for simplicity's sake, messages marked as imaginary. We can imagine such messages to be very much like ordinary sensory ones, with the exceptions that they have no accompanying sensation and, more importantly, that we are aware of their non-reality. The planning component receives instructions about desirable states and outputs hypothetical actions which the world simulator incorporates. The world simulator's output is in turn read by the planner, which then abandons the plan or decides to pursue it further.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=\textwidth]{Figs/imagination.png}
+	\includegraphics[width=0.6\textwidth]{Figs/imagination.png}
 	\caption{Structure of of belief generation \& world simulation: messages emulating the output of sensory perception are generated, but are marked as imaginary by unknown means.}
 	\label{fig:imagination}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=\textwidth]{Figs/planner.png}
+	\includegraphics[width=0.6\textwidth]{Figs/planner.png}
 	\caption{Planner with two kinds of inputs: (1) real sensory data and (2) imaginary data which comes from world simulation. On the basis of these inputs, possible steps are developed and sent out as commands.}
 	\label{fig:planner}
 \end{figure}
@@ -89,15 +89,15 @@ The planner, minimally, has to perform two functions --- first, it has to judge 
 	\item If earlier proposed steps turn out to fulfil some goal, contact the agent's executive component.
 \end{enumerate}
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=\textwidth]{Figs/worldSimulatorPlannerInteraction.png}
+	\includegraphics[width=0.6\textwidth]{Figs/worldSimulatorPlannerInteraction.png}
 	\caption{Interaction between world simulator and planner: the planner devises possible steps and feeds them into the world simulator, which, in turn, tries to calculate their effects. The results are fed back to the planner.}
 	\label{fig:worldSimulatorPlannerInteraction}
 \end{figure}
 
 \subsubsection{World Simulation as Rationality}
-The way in which we just described the interaction between the world simulator and the planner suggests that they function as a pair of guesser and checker: the planner generates ideas on what to do and the world simulation tests their viability in some setting. Indeed, we can model rational thinking as embedded in the world simulator, especially if we make use of a plastic neural system. The proposed steps of the planner might be quite chaotic and irrational, but when given to the world simulator, it recognises them as such and returns a failure signal to the planner, causing it to abandon ``bad'' paths of cognition. A plastic planner can learn from the consistent failure of certain kinds of steps and, in time, propose them less and less often. Observed as a whole, this system of planner and simulator appears to simply deliver good plans by intuition, even though, in isolation, neither part is very clever.\footnote{We do not wish to idealize rationality too much; world simulation is only partly rational and, given faulty information about the world, will err considerably and in documented ways. Similarly, it is certainly possible for the planner to derange the world simulator by evaluating certain states as so desirable/undesirable that it will pursue even scenarios which the world simulator reports as highly unlikely.}
+The way in which we just described the interaction between the world simulator and the planner suggests that they function as a pair of guesser and checker: the planner generates ideas on what to do and the world simulation tests their viability in some setting. Indeed, we can model rational thinking as embedded in the world simulator, especially if we make use of a plastic neural system. The proposed steps of the planner might be quite chaotic and irrational, but when given to the world simulator, it recognises them as such and returns a failure signal to the planner, causing it to abandon ``bad'' paths of cognition. A plastic planner can learn from the consistent failure of certain kinds of steps and, in time, propose them less and less often. Observed as a whole, this system of planner and simulator appears to simply deliver good plans by intuition, even though, in isolation, neither part is very clever.\footnote{We do not wish to idealise rationality too much; world simulation is only partly rational and, given faulty information about the world, will err considerably and in documented ways. Similarly, it is certainly possible for the planner to derange the world simulator by evaluating certain states as so desirable/undesirable that it will pursue even scenarios which the world simulator reports as highly unlikely.}
 
 \paragraph{Model.} In a simplified way, we can model the process of logical deduction in a formal system $F = (A, R)$, where $A$ is a recursive set of axioms and $R$ is a recursive set of production rules of the form $(r_{\mt{from}}, r_{\mt{to}})$ s.t. $r_{\mt{from}} \rightarrow r_{\mt{to}}$ is a valid production in the system. Let
 	\begin{enumerate}
@@ -112,17 +112,16 @@ The way in which we just described the interaction between the world simulator a
 	\end{enumerate}
 	
 One step of the interaction between $W$ and $P$, in a scenario where $P$ proposes steps $s_{i_1},\dots,s_{i_n}$, can then be modelled with two traces $T_{\mt{guess}}$ and $T_{\mt{check}}$:
-
 $$
 	\begin{array}{l l l}
-		T_{\mt{guess}}(\tt{step}) & \equiv & \sendsf{P}{\tt{ins cur step})}{\tt{step}}{\tt{step}}{\tt{ins cur step})}{W}\\
+		T_{\mt{guess}}(\tt{step}) & \equiv & \sendsf{P}{\tt{ins cur step})}{\tt{step}}{\tt{step}}{\tt{ins cur step})}{W};\\
 		\\
 		T_{\mt{check}}(\tt{step}) & \equiv &
 		\forall K_i \in Cat: K_i(\tt{step}) \Rightarrow\\
 		
 		& & \hspace{1cm} \mt{if } \exQ{s_j} (\field{cur}, s_j) \in R\ \mt{ then } \
 					\sendsf{W}{}{\top_i}{\top_i}{t\ i}{P}\\
-		& & \hspace{1cm} \mt{else }\ \sendsf{W}{\tt{del step})}{\bot_i}{\bot_i}{\tt{del step}, b\ i}{P}\\
+		& & \hspace{1cm} \mt{else }\ \sendsf{W}{\tt{del step})}{\bot_i}{\bot_i}{\tt{del step}, b\ i}{P}.\\
 	\end{array}
 $$
 
@@ -160,9 +159,9 @@ $$
 	\end{array}
 $$
 
-\begin{figure}[!h]
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=400pt]{Figs/affectiveSubsystem.png}
+	\includegraphics[width=250pt]{Figs/affectiveSubsystem.png}
 	\caption{Affective subsystem; specialisation of the global neural architecture. In plastic neural systems, selections may change over time.}
 	\label{fig:affectiveSubsystem}
 \end{figure}
@@ -172,39 +171,39 @@ The main advantage of Gadanho's and Hallam's model is that (a) it is sufficientl
 
 \subsubsection{Affective Subsystems}
 
-In this section, We will develop the concept of ``emotion'' in greater detail. The process shown in Figure~\ref{fig:affectiveSubsystem} might suggest we simply have a collection of emotions and that all emotions are essentially equal, but we submit that this is not so. Instead, we propose the existence of various subsystems, each responsible for a group of emotions, and each with its own history and distinctive tasks. In the rest of this work, the following two assumptions will be made:
+We now develop the concept of ``emotion'' in greater detail. The process shown in Figure~\ref{fig:affectiveSubsystem} might suggest we simply have a collection of emotions and that all emotions are essentially equal, but we submit that this is not so. Instead, we propose the existence of various subsystems, each responsible for a group of emotions, and each with its own history and distinctive tasks. In the rest of this work, the following two assumptions will be made:
 
 \begin{enumerate}
-	\item {\em ``Emotion'' is not a singular phenomenon.} Specifically, this is contradicts many-dimensional models of emotions which propose one, two, three or four axes and a corresponding vector space in which every emotion is a point. Such a view implies that all emotions share a neurological template which is parametrized with coordinates to result in different experiences.
+	\item {\em ``Emotion'' is not a singular phenomenon.} Specifically, this is contradicts many-dimensional models of emotions which propose one, two, three or four axes and a corresponding vector space in which every emotion is a point. Such a view implies that all emotions share a neurological template which is parametrised with coordinates to result in different experiences.
 	\item {\em There exist emotions which are both different in kind and which pertain to different subsystems in the brain.} This implies that emotions cannot morally be seen as a homogeneous set $\{E_1,\dots,E_n\}$. Instead, a number of distinct subsystems are necessitated, each responsible for the causation and processing of a group of emotions. Given this, the only substantial aspect any two emotions might have in common would be our referring to both of them as ``emotion''.
 \end{enumerate}
 
 Both of these assumptions are rather concrete and thus deserve evidence. In 1999, Davidson and Irwin, using PET and fMRI scanning, found two different systems mediating approach- and avoidance related behaviours \cite[p.\ 13]{davidson1999}:
 
-\begin{quote}
+\begin{emquote}
 A large body of lesion, neuroimaging and electrophysiological data supports the view that the prefrontal cortex (PFC) is an important part of the circuitry that implements both positive and negative affect. ($\dots$)
 A number of early studies that evaluated mood subsequent to brain damage suggested that patients with damage to the left hemisphere, particularly in PFC, were more likely to develop depressive symptoms compared with patients having lesions in homologous regions of the right hemisphere. ($\dots$)
 The general finding of left dorso-lateral PFC damage increasing the likelihood of depressive symptoms has been interpreted to reflect the contribution of this cortical territory to certain features of positive affect, which, when disrupted, increases the probability of depressive symptomatology.
-\end{quote}
+\end{emquote}
 
 In this, they echo earlies findings by Cacioppo et al.\ \cite{cacioppo1999}, Gray \cite{gray1994} and Lang et al.\ \cite{lang1990} that affect is lateralised, with different hemispheres being responsible for different categories of feeling. It therefore stands to reason that different emotions, being generated by different brain regions, should therefore also be different in their character.
 
-Further, much research has been done in the area of so-called {\em basic emotions} --- a small set of emotions are acknowledged as being both elementary and characteristically distinct from each other. The Cambridge Handbook of Affective Neuroscience provides a good overview of the basic emotion theory \cite[pp.\ 9-10]{cambridgeAff}. Matsumoto and Eckman \cite{matsumoto2009}, for instance, identified seven basic emotions: happiness, surprise, contempt, sadness, fear, disgust, and anger.
+Further, much research has been done in the area of so-called {\em basic emotions} --- a small set of emotions are acknowledged as being both elementary and characteristically distinct from each other. The \emph{Cambridge Handbook of Affective Neuroscience} provides a good overview of the basic emotion theory \cite[pp.\ 9-10]{cambridgeAff}. Matsumoto and Eckman \cite{matsumoto2009}, for instance, identified seven basic emotions: happiness, surprise, contempt, sadness, fear, disgust, and anger.
 
 Damasio \cite{damasio1998}, drawing upon neuroscientific findings, sketches a model of affect mainly involving the prefrontal cortex, but also the amygdala, the hypothalamus, and the anterior cingulate cortex, as seen in Figure~\ref{fig:damasioSystem}.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=250pt]{Figs/damasioSystem.png}
+	\includegraphics[width=200pt]{Figs/damasioSystem.png}
 	\caption{Neurological structure of affect, according to Damasio \cite{damasio1998}.}
 	\label{fig:damasioSystem}
 \end{figure}
 
-In the same article, he describes how different brain regions are responsible for different kinds of emotion:
+In the same article, he describes how different brain regions are responsible for different kinds of emotion (emphasis ours):
 
-\begin{quotation}
-	Equally problematic is the widespread view that the limbic system is the neural basis for all emotions. A rich body of evidence tells us that this is just not the case. Both within and around the limbic system, circuitry connection varied neural sites supports the operation of different emotion. For instance, work on aversive conditioning in rodents has shown that the amygdala is certainly involved in negative emotions such as fear [10,6]. {\em Work in humans, on the other hand, has not only confirmed the amygdala's involvement in negative emotions such as fear and anger, but also shown that the amygdala is not involved in the processing of positive emotions such as happiness, or negative emotions such as disgust.} [emphasis mine]
-\end{quotation}
+\begin{emquote}
+	Equally problematic is the widespread view that the limbic system is the neural basis for all emotions. A rich body of evidence tells us that this is just not the case. Both within and around the limbic system, circuitry connection varied neural sites supports the operation of different emotion. For instance, work on aversive conditioning in rodents has shown that the amygdala is certainly involved in negative emotions such as fear [10,6]. \emph{Work in humans, on the other hand, has not only confirmed the amygdala's involvement in negative emotions such as fear and anger, but also shown that the amygdala is not involved in the processing of positive emotions such as happiness, or negative emotions such as disgust.}
+\end{emquote}
 
 The last sentence of that quotation is especially revealing: it states that the neurological distinction is not simply one between positive and negative, or one between approach- or avoidance-related emotions, but that each emotion has its own profile of neurological activity and involves its own peculiar set of brain structures.
 
@@ -212,19 +211,19 @@ These facts make it quite clear that emotions are not simply homogeneous phenome
 
 \paragraph{Structure of affect.} The system depicted in Figure~\ref{fig:affectiveSubsystem} left several parts unspecified: the sensory processor $\Pr$, the emotion selectors $S_1,\dots,S_n$ and the messages sent by the chosen emotions into the message space. In the following paragraphs, we will flesh out that model in greater detail, building principally on the work of Sander, Grandjean and Scherer \cite{DBLP:journals/nn/SanderGS05}. Sander and colleagues partitioned the emotion process into four stages, as shown in Figure~\ref{fig:sanderSystem}. The first is {\em relevance}, which functions as a filter and detects the intrinsic pleasantness and the level of (emotional) attention that a stimulus demands. The processes of this stage, roughly speaking, correspond to the work of the sensory processor $\Pr$. The second stage is {\em implication}, where reasoning becomes engaged in order to determine the cause, likely outcome, and urgency of the perceived facts. At this stage, emotions like joy, anger, contentment, disgust, etc. are evoked, together with approach- and avoidance-related behaviours --- this corresponds to the emotion selectors $S_1,\dots,S_n$. Deliberate strategies come only in the next stage: {\em coping}. In it, reasoning and planning become fully engaged. The fourth stage is {\em normative significance} and deals, in essence, with moral concerns, both internal and those of other agents.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\includegraphics[width=440pt]{Figs/sanderSystem.png}
+	\includegraphics[width=350pt]{Figs/sanderSystem.png}
 	\caption{The four-stage emotion process according to Sander et al, consisting of relevance, implication, coping and normative significance.}
 	\label{fig:sanderSystem}
 \end{figure}
 
-Sander et al.\ give a good, detailed account of the interactions of affect with other systems, although we would argue that theirs is unduly suggestive of a simple {\em pipeline}, rather than a mesh of systems into which the affective ones are embedded. In addition, it does not address the interactions with perception, memory, and reasoning. Based on the evidence discussed above, we shall now present a more horizontal view and construct a model of the hypothesized emotional subsystems and their interactions with other parts of the brain. Since no established vocabulary seems to exist in this specific are we shall first introduce a number of terms.
+Sander et al.\ give a good, detailed account of the interactions of affect with other systems, although we would argue that theirs is unduly suggestive of a simple {\em pipeline}, rather than a mesh of systems into which the affective ones are embedded. In addition, it does not address the interactions with perception, memory, and reasoning. Based on the evidence discussed above, we shall now present a more horizontal view and construct a model of the hypothesised emotional subsystems and their interactions with other parts of the brain. Since no established vocabulary seems to exist in this specific are we shall first introduce a number of terms.
 
 \begin{definition}[Evocative system]
 An evocative system is a subsystem in the brain responsible for evoking consciously experienced affect within an agent based on internal or external stimuli.
 \end{definition} 
-
+\vspace{-2mm}
 Various such evocative systems can be imagined. For the purposes of this thesis, we will work with the following rough categorization:
 
 \begin{description}
@@ -250,21 +249,21 @@ The emotions just listed can all be found in the more extensive taxonomies, chie
 The evoked feelings tie into and directly influence the agent's actions. This includes conscious, deliberate ones, such as avoiding an unsympathetic person, but also subconscious ones and those that are purely internal, such as the focusing one's attention to an important topic. These actions all fall under the umbrella term of {\em executive system}:
 
 \begin{definition}[Executive system]
-An executive system is a subsystem in the brain which makes decisions about the behaviour of an agent's mind or muscular system.
+An \emph{executive system} is a subsystem in the brain which makes decisions about the behaviour of an agent's mind or muscular system.
 \end{definition}
-
+\vspace{-2mm}
 This definition leaves open what exactly a decision is. In principle, any neural activity in a part of the brain could be seen as a decision of sorts, since it influences neural activity in other parts. While we do perceive certain processes as deliberate and others as automatic, this is simply what our introspection tells us and does not reflect the underlying reality; (conscious) decision-making is as mechanical as any other process in the brain, the chief difference being that we are aware of the workings of that process and perceive the control it exerts over cognition as coming from us.\footnote{We should add that we are not even aware of the entirety of our decision-making. This is especially apparent when we are asked to make trivial or random choices. A person who is asked to press a left or a right button, for example, will choose one, seemingly at random, but will not be able to explain why one button was chosen over another. Moreover, there is evidence that the choice is made before the person {\em knows} that a choice was made: Soon et al. \cite{soon2008} instructed subjects to press a button and to record when they thought they made the decision to do so. Brain scanning revealed spikes in the activity of the lateral and medial frontopolar cortices and the posterior cingulate cortex {\em before} the subjects claimed their decisions were made. In effect, they only became aware of their supposedly free decisions after they had already been made. From their conscious perspective, the decision simply ``popped into their heads''.}
 
 Nonetheless, there are properties by which we can identify executive systems in the brain: on a sufficiently high level of abstraction, we can see that certain components are receptive to control signals. Certain other components --- these are the executive systems --- have as their {\em chief purpose} the sending of such control signals. The former accomplish some conceptually small task and essentially serve as building blocks. The latter structure the work and assemble the small building blocks into compound actions. See Section~\ref{sec:worldSimulation}, where planner and world simulator work in tandem, with the world simulator bearing the workload and the planner having control.
 
 We can now distinguish certain kinds of action. While those performed with the ``body'' (i.e.\ the skeletomuscular system) are the most visible ones, we, as shown, also make decisions regarding the contents of our minds --- we decide {\em what to think about}. We then add the distinction between consciously and subconsciously made actions and get the following four categories of executive system:
 
-\begin{description}
-	\item[Subconscious motor control:] instinctive reaction, such as the jerking away from pain, jumping when startled, and turning towards interesting visual stimuli.
-	\item[Conscious motor control:] deliberate, planned action which the agent experiences as a choice.
-	\item[Subconscious mental control:] involuntary but consciously experienced changes to the mind-state of an agent which are perceived as activity rather than mere feeling. This includes like obsessing over an issue, manias, fantasies insofar as involuntary, etc.
-	\item[Conscious mental control:] deliberate mental changes of an agent. This includes the making of decisions, the deliberate focusing of attention, deliberate planning, deliberate strategy selection, and so forth.
-\end{description}
+\begin{itemize}
+	\item \emph{Subconscious motor control:} instinctive reaction, such as the jerking away from pain, jumping when startled, and turning towards interesting visual stimuli.
+	\item \emph{Conscious motor control:} deliberate, planned action which the agent experiences as a choice.
+	\item \emph{Subconscious mental control:} involuntary but consciously experienced changes to the mind-state of an agent which are perceived as activity rather than mere feeling. This includes like obsessing over an issue, manias, fantasies insofar as involuntary, etc.
+	\item \emph{Conscious mental control:} deliberate mental changes of an agent. This includes the making of decisions, the deliberate focusing of attention, deliberate planning, deliberate strategy selection, and so forth.
+\end{itemize}
 
 We stress that these are {\em categories} of systems, not systems themselves. We control our minds and our bodies in a variety of ways and there is no evidence that there is some sort of master control system anywhere in the brain responsible for these tasks. The planner from Section~\ref{sec:worldSimulation} only controls one other component --- and it might very well be that it does not even exist in the brain as one compact component. It might be that a variety of smaller systems are tugging and vying for control and balanced against each other in such a way that the illusion of dedicated planning component is created.
 

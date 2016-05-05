@@ -12,14 +12,14 @@ We can imagine the components of the mind as white boxes which inform other comp
 			\midrule
 			
 			\begin{minipage}[t]{0.2\textwidth}
-				\includegraphics[width=80pt]{Figs/legend_proc.png}
+				\includegraphics[width=60pt]{Figs/legend_proc.png}
 			\end{minipage}
 			& Processing component\\
-			\includegraphics[width=80pt]{Figs/legend_choice.png} & Choice\\
-			\includegraphics[width=50pt]{Figs/legend_container.png} & Data container (Queue, List, etc.)\\
-			\includegraphics[width=50pt]{Figs/legend_data.png} & Data\\
-			\includegraphics[width=30pt]{Figs/legend_generator.png} & Stream generator\\
-			\includegraphics[width=50pt]{Figs/legend_imaginary.png} & Counterfactual (imaginary) data\\
+			\includegraphics[width=60pt]{Figs/legend_choice.png} & Choice\\
+			\includegraphics[width=40pt]{Figs/legend_container.png} & Data container (Queue, List, etc.)\\
+			\includegraphics[width=40pt]{Figs/legend_data.png} & Data\\
+			\includegraphics[width=20pt]{Figs/legend_generator.png} & Stream generator\\
+			\includegraphics[width=40pt]{Figs/legend_imaginary.png} & Counterfactual (imaginary) data\\
 			\bottomrule
 		\end{tabular}
 	\end{center}
@@ -27,16 +27,8 @@ We can imagine the components of the mind as white boxes which inform other comp
 	\label{fig:diagramNotation}
 \end{figure}
 %
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=400pt]{Figs/global.png}
-	\caption{Global neural architecture.}
-	\label{fig:global}
-\end{figure}
 
-However, as we will show in the next section, this model is generic enough to accommodate such special-purpose structures. Figure~\ref{fig:global} shows the message-passing scheme, but it also specifies a graph in which the nodes are the components and fixed, while the edges are the accepted messages and are determined by the nodes; through their filters, components control the shape of the graph. By imposing invariants on these filters, we can have the graph take any shape we desire. In particular, we can model the kinds of structures that occur in many other cognitive models and in empirical research: central organisers, sequences of components (``pipelines''), localized messages affecting only a small part of the mind, a component reading its own messages, loops and iterative messages between two or more components et cetera.
-
-\pagebreak
+However, as we will show in the next section, this model is generic enough to accommodate special-purpose structures like a message space. Figure~\ref{fig:global} shows the message-passing scheme, but it also specifies a graph in which the nodes are the components and fixed, while the edges are the accepted messages and are determined by the nodes; through their filters, components control the shape of the graph. By imposing invariants on these filters, we can have the graph take any shape we desire. In particular, we can model the kinds of structures that occur in many other cognitive models and in empirical research: central organisers, sequences of components (``pipelines''), localized messages affecting only a small part of the mind, a component reading its own messages, loops and iterative messages between two or more components et cetera.
 
 \paragraph{Messages.}
 
@@ -46,16 +38,9 @@ We may now ask how such messages between components are structured. Here, I make
 	\item they are effectively unstructured.
 \end{enumerate}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=150pt]{Figs/message.png}
-	\caption{Structure of a neural message.}
-	\label{fig:message}
-\end{figure}
+To the best of our knowledge, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p.\ 222]{emotionMachine}:
 
-To the best of my knowledge, the veracity of either has thus far not been determined by neuroscience. For the first, Marvin Minsky's ``The Emotion Machine'' provides some circumstantial evidence \cite[p.\ 222]{emotionMachine}:
-
-\begin{quote}
+\begin{emquote}
 	Of course, when one activates two or more Critics or Selectors, this is likely to cause some conflicts, because two different resources might try to turn on a third resource both {\em on} and {\em off}. To deal with this, we could design the system to use various policies like these:
 	
 	\begin{enumerate}
@@ -64,15 +49,29 @@ To the best of my knowledge, the veracity of either has thus far not been determ
 		\item Choose the one that gives the most specific advice.
 		\item Have them all compete in some ``marketplace''.
 	\end{enumerate}
-\end{quote}
+\end{emquote}
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Figs/global.png}
+	\caption{Global neural architecture.}
+	\label{fig:global}
+\end{figure}
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=120pt]{Figs/message.png}
+	\caption{Structure of a neural message.}
+	\label{fig:message}
+\end{figure}
 
 The selection strategies Minsky lists imply that there is some mechanism in the brain to determine the urgency of a signal. While it is possible that higher brain functions like reasoning or affect make an additional, rational evaluation, sensations like intense pain, bright lights, or great sadness can likely be communicated most easily by the appropriate components causing a flood of activity which, by its very intensity, informs other components of the urgency of their messages.
 
 The second claim --- that messages are essentially unstructured --- means that there is no common, agreed-upon format in which they are stored. In addition to the evolutionary implausibility of such a format being created, an unstructured message format is in line with the white-box nature of components: since components merely ``listen in'' on others, and since each components will have its own pattern of activity, a listener would simply have to try and make sense of this activity as best it could. The proposed structure of messages is thus shown in Figure~\ref{fig:message}: every message comprises a priority header, together with an unstructured body which, for our purposes, is simply a string of bits.
 
-\paragraph{Filters.} Before a component can respond to a message by another, such a message must be assessed for the presence of relevant information. Conceptually, this happens via a \emph{filter} in each component, which pattern-matches incoming messages and, if a certain threshold is reached, signals relevance and hands the message over the \emph{interpreter} for parsing. Figure~\ref{fig:filter} shows such a filter: it is composed of a directed graph of nodes, and a node is activated if it detects some specific content in the message. Nodes, in turn, are connected via edges of strength $\in [0,1]$. When a node is activated, it sends a charge proportional to the strength of its link to its neighbours, contributing to their activation as well. Some nodes are marked as {\em output nodes}; if enough such output nodes become activated, the message is deemed to be sufficiently relevant. This model of filters is inspired by the {\em spiking neural P Systems} of Georghe Pa\u{u}n et al. (\cite[p.\ 337]{membraneComputing} and \cite{spikingNeural}), in which charges sent along directed graphs of neurons are used to compute functions.
+\paragraph{Filters.} Before a component can respond to a message by another, such a message must be assessed for the presence of relevant information. Conceptually, this happens via a \emph{filter} in each component, which pattern-matches incoming messages and, if a certain threshold is reached, signals relevance and hands the message over the \emph{interpreter} for parsing. Figure~\ref{fig:filter} shows such a filter: it is composed of a directed graph of nodes, and a node is activated if it detects some specific content in the message. Nodes, in turn, are connected via edges of strength within the interval $[0,1]$. When a node is activated, it sends a charge proportional to the strength of its link to its neighbours, contributing to their activation as well. Some nodes are marked as {\em output nodes}; if enough such output nodes become activated, the message is deemed to be sufficiently relevant. This model of filters is inspired by the {\em spiking neural P Systems} of Georghe Pa\u{u}n et al. (\cite[p.\ 337]{membraneComputing} and \cite{spikingNeural}), in which charges sent along directed graphs of neurons are used to compute functions.
 
-\begin{figure}[!h]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=168pt]{Figs/filter.png}
 	\caption{A pattern-matching filter for a component $C_i$.}
@@ -85,37 +84,37 @@ We now create a mathematical model for the description of the architecture. This
 
 \subsection{Preliminaries}\label{sec:mathematicalPreliminaries}
 
-Since the mathematical model is built with implementation in mind, I will use some basic type theory in the coming sections. The following notions are from the $\lambda$-calculus and its attendant type systems; anyone familiar with such can therefore freely skip this section. We will introduce types, type constructors, and their relation to functions, together with a few example types which will come in handy later on. The following can be found in any introduction to type theory and was taken (with simplification) from \cite{Mendler:1988:IDT:913822}, \cite{typeIntroduction2}, and \cite{Jacobs97atutorial}.
+Since the mathematical model is built with implementation in mind, we will use some basic type theory in the coming sections. The following notions are from the $\lambda$-calculus and its attendant type systems; anyone familiar with such can therefore freely skip this section. We will introduce types, type constructors, and their relation to functions, together with a few example types which will come in handy later on. The following can be found in any introduction to type theory and was taken (with simplification) from \cite{Mendler:1988:IDT:913822}, \cite{typeIntroduction2}, and \cite{Jacobs97atutorial}.
 
 \begin{definition}[Syntax: Type]\label{def:type}
 	For our purposes, types are defined inductively thus:
-	\begin{description}
-		\item[Basic type.] $\R$ and $\emptyset$ are types.
-		\item[Sum type.] If $\type{T_1},\type{T_2}$ are types, the {\em sum type} $\type{T_1 + T_2}$, is a type. 
-		\item[Product type.] If $\type{s}$ is a string and $\type{T_1},\dots,\type{T_n}$ are types, the {\em product type} $\type{s}\ \type{T_1} \dots \type{T_n}$, is a type. A special case is the {\em anonymous product type} \paren{tuple}, where $s=``\langle\rangle"$. There, we just write $\langle\type{T_1},\dots,T_n \rangle$.
-		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor \paren{see next definition}, then $\type{C\ T_1} \dots \type{T_n}$, is a type.
-		\item[$\mu$-abstraction.] If $\type{T}, \type{S}$ are types and $\type{S}$ occurs in $\type{T}$, then $\muQ{\alpha}\type{T}[\type{S}\backslash\alpha]$ \paren{for a fresh variable name $\alpha$} is a type.
-	\end{description}
+	\begin{enumerate}
+		\item {\upshape Basic type:} $\R$ and $\emptyset$ are types.
+		\item {\upshape Sum type:} If $\type{T_1},\type{T_2}$ are types, the {\em sum type} $\type{T_1 + T_2}$ is a type. 
+		\item {\upshape Product type:} If $\type{s}$ is a string and $\type{T_1},\dots,\type{T_n}$ are types, the {\em product type} $\type{s}\ \type{T_1} \dots \type{T_n}$ is a type. A special case is the {\em anonymous product type} \paren{tuple}, where $s=``\langle\rangle"$. There, we just write $\langle\type{T_1},\dots,T_n \rangle$.
+		\item {\upshape Full application:} If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor \paren{see next definition}, then $\type{C\ T_1} \dots \type{T_n}$ is a type.
+		\item {\upshape $\mu$-abstraction:} If $\type{T}, \type{S}$ are types and $\type{S}$ occurs in $\type{T}$, then $\muQ{\alpha}\type{T}[\type{S}\backslash\alpha]$ \paren{for a fresh variable name $\alpha$} is a type.
+	\end{enumerate}
 \end{definition}
 
 \begin{definition}[Syntax: Type constructor]\label{def:typeCon}\
 	Type constructors are the defined thus:
-	\begin{description}
-		\item[Base case.] Every type $\type{T}$ is a type constructor.
-		\item[Abstraction.] If $\type{C}$ is a type constructor and $\type{T}$ is a type, $\allQ{x} \type{C}[\type{T}\backslash x]$ is a type constructor.
-		\item[Sum types.] If $\type{C_1}\dots,\type{C_n}$ are type constructors with $\type{C_i} = \allQ{\vec{X}_i} \type{T_i}$ \paren{$1 \leq i \leq n$}, then $\allQ{\vec{X}_1; \dots; \vec{X}_n} (\type{C_1} + \dots + \type{C_n})$ is a type constructor.
-		\item[Partial application.] If $\type{T_1},\dots,\type{T_i}$ \paren{$i < n$} are types and $\allQ{x_1,\dots,x_n} \type{T}$ is a type constructor, then $\allQ{x_{i+1},\dots,x_n} \type{T}[x_1\backslash \type{T_1},\dots,x_i\backslash \type{T_i}]$ is a type constructor.
-	\end{description}
+	\begin{enumerate}
+		\item {\upshape Base case:} Every type $\type{T}$ is a type constructor.
+		\item {\upshape Abstraction:} If $\type{C}$ is a type constructor and $\type{T}$ is a type, $\allQ{x} \type{C}[\type{T}\backslash x]$ is a type constructor.
+		\item {\upshape Sum types:} If $\type{C_1}\dots,\type{C_n}$ are type constructors with $\type{C_i} = \allQ{\vec{X}_i} \type{T_i}$ \paren{$1 \leq i \leq n$}, then $\allQ{\vec{X}_1; \dots; \vec{X}_n} (\type{C_1} + \dots + \type{C_n})$ is a type constructor.
+		\item {\upshape Partial application:} If $\type{T_1},\dots,\type{T_i}$ \paren{$i < n$} are types and $\allQ{x_1,\dots,x_n} \type{T}$ is a type constructor, then $\allQ{x_{i+1},\dots,x_n} \type{T}[x_1\backslash \type{T_1},\dots,x_i\backslash \type{T_i}]$ is a type constructor.
+	\end{enumerate}
 \end{definition}
 
 Every type is interpreted as a set of values which are of that type; type constructors are interpreted as universally quantified templates for actual types. Their formal semantics are as follows:
 
 \begin{definition}[Semantics: Type]\label{def:typeSem}
 	Let $\type{T}$ be a type. Its interpretation function $\tint(\type{T})$ is defined thus:.
-	\begin{description}
-		\item[Basic type.] $\R$ is interpreted as the set of real numbers. $\tint(\emptyset) = \{\}$.
-		\item[Sum type.] If $\type{T_1}, \type{T_2}$ are types, then $\tint(\type{T_1 + T_2}) = \tint(\type{T_1}) \cup \tint(\type{T_2})$.
-		\item[Product type.] If $\type{T_1},\dots,\type{T_n}$ are types and $\type{s}$ is a string, then
+	\begin{enumerate}
+		\item {\upshape Basic type:} $\R$ is interpreted as the set of real numbers. $\tint(\emptyset) = \{\}$.
+		\item {\upshape Sum type:} If $\type{T_1}, \type{T_2}$ are types, then $\tint(\type{T_1 + T_2}) = \tint(\type{T_1}) \cup \tint(\type{T_2})$.
+		\item {\upshape Product type:} If $\type{T_1},\dots,\type{T_n}$ are types and $\type{s}$ is a string, then
 		$$
 		\tint(\type{s}\ \type{T_1} \dots \type{T_n}) = \left\{
 		\begin{array}{l l}
@@ -125,15 +124,15 @@ Every type is interpreted as a set of values which are of that type; type constr
 		\right.
 		$$
 		
-		\item[Full application.] If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor, then
+		\item {\upshape Full application:} If $\type{T_1},\dots,\type{T_n}$ are types and $\allQ{x_1,\dots,x_n} \type{C}$ is a type constructor, then
 		$$
 		\tint(\type{C}\ \type{T_1} \dots \type{T_n}) = \bigcup\limits_{v_1 \in\ \tint(\type{T_1})} \cdots \bigcup\limits_{v_n \in\ \tint(\type{T_n})} \left( \bigcup\limits_{C' \in\ \cint(C)} C'[x_1\backslash v_1,\dots, x_n\backslash v_n] \right).
 		$$
 		
-		\item[$\mu$-abstraction.] If $\muQ{\alpha}\type{T}$ is a type, then $$\tint(\muQ{\alpha}\type{T}) = \tint(\type{T}) \cup \tint(\type{T}[\alpha\backslash\type{T}]) \cup \tint(\type{T}[\alpha\backslash\type{T}][\alpha\backslash\type{T}]) \cup \dots$$
+		\item {\upshape $\mu$-abstraction:} If $\muQ{\alpha}\type{T}$ is a type, then $$\tint(\muQ{\alpha}\type{T}) = \tint(\type{T}) \cup \tint(\type{T}[\alpha\backslash\type{T}]) \cup \tint(\type{T}[\alpha\backslash\type{T}][\alpha\backslash\type{T}]) \cup \dots$$
 		
 		with $\tint(\alpha) = \{\}$.
-	\end{description}
+	\end{enumerate}
 \end{definition}
 
 \begin{definition}[Semantics: Type constructor]\label{def:typeConSem}
@@ -154,12 +153,11 @@ Whenever we want to assert that an expression has a specific type, we write:
 Henceforth, by convention, we will write type variables in lower-case and concrete types in upper-case, omitting the explicit $\forall$-blocks. That is, a type like $\allQ{x,y,z} \type{C\ x\ (\N + T_1)\ y\ z}$ will simply be written as $\type{C\ x\ (\N + T_1)\ y\ z}$ and it will be clear that $\type{x}, \type{y}, \type{z}$ are type variables, while $\N, \type{T_1}$ are concrete types. A special kind of type constructor is the function arrow ($\rightarrow$) which induces the function type:
 
 \begin{example}[Function arrow]
-	If we take, say, the type $\rightarrow \type{S1}\ \type{S2}$ (a product type with the product types $\type{S1}$ and $\type{S2}$ as arguments) and abstract twice, we get $\allQ{s,t} \rightarrow \type{s}\ \type{t}$. $\rightarrow \type{s}\ \type{t}$ is the type constructor for unary functions from $\type{s}$ to $\type{t}$, also written infix as $\type{s} \rightarrow \type{t}$. Functions with multiple arguments, mapping $\type{t_1},\dots,\type{t_{n-1}}$ to $\type{t_n}$, can be modelled in two ways: either through n-tuples, or through nested function arrows:
-	
+	If we take, say, the type $\rightarrow \type{S1}\ \type{S2}$ \paren{a product type with the product types $\type{S1}$ and $\type{S2}$ as arguments} and abstract twice, we get $\allQ{s,t} \rightarrow \type{s}\ \type{t}$. Here, $\rightarrow \type{s}\ \type{t}$ is the type constructor for unary functions from $\type{s}$ to $\type{t}$, also written infix as $\type{s} \rightarrow \type{t}$. Functions with multiple arguments, mapping $\type{t_1},\dots,\type{t_{n-1}}$ to $\type{t_n}$, can be modelled in two ways: either through n-tuples, or through nested function arrows:
 	$$
 	\begin{array}{l}
-	\tuple{\type{t_1}, \type{t_2}, \dots \type{t_{n-1}}} \rightarrow \type{t_n}\\
-	\type{t_1} \rightarrow (\type{t_2} \rightarrow \dots \rightarrow (\type{t_{n-1}} \rightarrow \type{t_n})\cdots)
+	\tuple{\type{t_1}, \type{t_2}, \dots \type{t_{n-1}}} \rightarrow \type{t_n};\\
+	\type{t_1} \rightarrow (\type{t_2} \rightarrow \dots \rightarrow (\type{t_{n-1}} \rightarrow \type{t_n})\cdots).
 	\end{array}
 	$$
 	
@@ -184,14 +182,14 @@ Since an ADT is merely the sum of product types, it is itself a type constructor
 
 \begin{example}[$\N$, $\B$, $\Q$, $\C$,  Maybe, Either, List]
 	$$
-	\begin{array}{l c l}
-	\N & = & \muQ{\alpha}\type{Z + S\ \alpha}\\ 
-	\B & = & \type{False + True}\\
-	\Q & = & \type{Rat}\ \N\ \N\\
-	\C & = & \type{Complex}\ \R\ \R\\
-	\type{Maybe\ t} & = & \type{Nothing + Just\ t}\\
-	\type{Either\ l\ r} & = & \type{Left\ l + Right\ r}\\
-	\type{List\ a} & = & \muQ{\alpha}\ \type{Nil + (a : \alpha)}\\
+	\begin{array}{r c l}
+	\N & = & \muQ{\alpha}\type{Z + S\ \alpha};\\ 
+	\B & = & \type{False + True};\\
+	\Q & = & \type{Rat}\ \N\ \N;\\
+	\C & = & \type{Complex}\ \R\ \R;\\
+	\type{Maybe\ t} & = & \type{Nothing + Just\ t};\\
+	\type{Either\ l\ r} & = & \type{Left\ l + Right\ r};\\
+	\type{List\ a} & = & \muQ{\alpha}\ \type{Nil + (a : \alpha)}.\\
 	\end{array}
 	$$
 	
@@ -203,37 +201,37 @@ We also define the usual convenience functions for these types:
 $$
 \begin{array}{l l}
 \begin{array}{r c l}
-\field{isJust} & :: & \type{Maybe\ a \rightarrow Bool}\\
+\field{isJust} & :: & \type{Maybe\ a \rightarrow Bool};\\
 \field{isJust}\ m & = & \left\{
 \begin{array}{l l}
-\type{True} & \mt{if } m = \type{Just}\ x\\
-\type{False} & \mt{otherwise}\\
+\type{True} & \mt{if } m = \type{Just}\ x,\\
+\type{False} & \mt{otherwise};\\
 \end{array}
 \right.\\
 \\
-\field{fromJust} & :: & \type{Maybe\ a \rightarrow a}\\
+\field{fromJust} & :: & \type{Maybe\ a \rightarrow a};\\
 \field{fromJust}\ m & = & \left\{
 \begin{array}{l l}
-x & \mt{if } m = \type{Just}\ x\\
-\bot & \mt{otherwise}\\
+x & \mt{if } m = \type{Just}\ x,\\
+\bot & \mt{otherwise};\\
 \end{array}
 \right.\\
 \end{array}
 &
 \begin{array}{r c l}
-\field{head} & :: & \type{[a] \rightarrow a}\\
+\field{head} & :: & \type{[a] \rightarrow a};\\
 \field{head}\ l & = & \left\{
 \begin{array}{l l}
-x & \mt{if } l = x:xs\\
-\bot & \mt{otherwise}\\
+x & \mt{if } l = x:xs,\\
+\bot & \mt{otherwise};\\
 \end{array}
 \right.\\
 \\
-\field{tail} & :: & \type{[a] \rightarrow [a]}\\
+\field{tail} & :: & \type{[a] \rightarrow [a]};\\
 \field{tail}\ l & = & \left\{
 \begin{array}{l l}
-xs & \mt{if } l = x:xs\\
-\bot & \mt{otherwise}\\
+xs & \mt{if } l = x:xs,\\
+\bot & \mt{otherwise}.\\
 \end{array}
 \right.\\
 \end{array}
@@ -265,13 +263,13 @@ Definitions~\ref{def:type}--\ref{def:ADT} specify a fragment of System F$_\omega
 A set of neural components, together with a set of messages, induces a {\em neural system}:
 
 \begin{definition}[Neural system]
-	Let $T$ be any type and let $I$ be an index set. Then, a neural system with message type $T$ and component names from $I$ is a tuple
+	Let $T$ be any type and let $I$ be an index set. Then, a \emph{neural system} with message type $T$ and component names from $I$ is a tuple
 	$$
 	\langle \textbf{Co}, \textbf{Me} \rangle
 	$$
 	where
 	\begin{itemize}
-		\item $\textbf{Co}$ is a set of neural components (with message type $T$ and names from $I$) and
+		\item $\textbf{Co}$ is a set of neural components \paren{with message type $T$ and names from $I$} and
 		\item $\textbf{Me}$ is a set of elements of type $T$, called the {\em set of messages}.
 	\end{itemize}
 \end{definition}
@@ -291,22 +289,20 @@ The elements of a component statically determine which messages it can receive a
 	\canrec{m_1,\dots,m_n}{C}.
 	$$
 	
-	We denote the opposite statement --- that $C$ cannot receive any message in $\{m_1,\dots,m_n\}$ --- by:
-	
+	We denote the opposite statement, that $C$ cannot receive any message in $\{m_1,\dots,m_n\}$,~by:
 	$$
 	\cantrec{m_1,\dots,m_n}{C}.
 	$$
 \end{definition}
 
 \begin{definition}[Message sending]
-	Let $C$ be a component and $m, m_1,\dots,m_n$ messages. $C$ can send out a message $m$ if and only if there exists a message $m_{\mt{in}}$ s.t. $\proc{C}\ m_{\mt{in}} = m$.
+	Let $C$ be a component and $m, m_1,\dots,m_n$ messages. $C$ can send out a message $m$ if and only if there exists a message $m_{\mt{in}}$ such that $\proc{C}\ m_{\mt{in}} = m$.
 	When $C$ can send all messages in $\{m_1,\dots,m_n\}$, we write:
-	
 	$$
 	\cansend{C}{m_1,\dots,m_n}.
 	$$
 	
-	The opposite statement --- that $C$ cannot send any message in $\{m_1,\dots,m_n\}$ --- is denoted by:
+	The opposite statement, that $C$ cannot send any message in $\{m_1,\dots,m_n\}$, is denoted by:
 	$$
 	\cantsend{m_1,\dots,m_n}{C}.
 	$$
@@ -314,13 +310,11 @@ The elements of a component statically determine which messages it can receive a
 
 \begin{definition}[Receiving set]
 	The set of components which can receive a message $m$ is denoted by
-	
 	$$
 	\rec{m} \equiv \{C \in \co\ |\ \canrec{m}{C} \}.
 	$$
 	
 	$\field{rec}$ can also be overloaded to refer to the set of components which can receive and interpret at least some message of a component $C$:
-	
 	$$
 	\rec{C} \equiv \{C_i \in \co\ |\ \exists m:\ \cansend{C}{m} \wedge \canrec{m}{C_i} \}.
 	$$
@@ -333,12 +327,11 @@ Whereas the structural notation pertained to the static properties of a neural s
 
 \begin{definition}[Message action]
 	When a component $C_i$ outputs a message $m_{out}$ that another component $C_j$ receives and interprets as message $m_{in}$, we write
-	
 	$$
 	C_i \rightarrow [m_{out}, m_{in}] \rightarrow C_j.
 	$$
 	
-	We refer to this as {\em message action}. If it's clear that the message $m$ does not change, we just write
+	We refer to this as {\em message action}. If it is clear that the message $m$ does not change, we just write
 	
 	$$
 	C_i \rightarrow [m] \rightarrow C_j.
@@ -346,7 +339,7 @@ Whereas the structural notation pertained to the static properties of a neural s
 \end{definition}
 
 \begin{definition}[Trace]
-	Traces are defined inductively thus:
+	\emph{Traces} are defined inductively thus:
 	\begin{enumerate}
 		\item Every message action is a trace.
 		\item If $T_1$ and $T_2$ are traces, $T_1;T_2$ is a trace.
@@ -364,11 +357,11 @@ Whereas the structural notation pertained to the static properties of a neural s
 \end{definition}
 
 \begin{definition}[Component mutation]
-	Let $f_1,f_2,\dots$ be functions $\compT{T}{I} \rightarrow \compT{T}{I}$ which preserve the names of components, $m,m'$ messages of type $T$, and let $C$ be a component of type $\compT{T}{I}$. When $C$ is changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m$ it receives, or changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m'$ it sends, we write, respectively:
+	Let $f_1,f_2,\dots$ be functions $\compT{T}{I} \rightarrow \compT{T}{I}$ which preserve the names of components, $m,m'$ messages of type $T$ and $C$ a component of type $\compT{T}{I}$. When $C$ is changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m$ it receives, or changed into $(f_n \circ \dots \circ f_1)\ C$ by a message $m'$ it sends, we write, respectively:
 	$$
 	\begin{array}{c}
-	\dots \rightarrow [m] \rightarrow \langle f_1,\dots,f_n \rangle C\\
-	C\langle f_1,\dots,f_n \rangle \rightarrow [m'] \rightarrow \dots
+	\dots \rightarrow [m] \rightarrow \langle f_1,\dots,f_n \rangle C;\\
+	C\langle f_1,\dots,f_n \rangle \rightarrow [m'] \rightarrow \dots.
 	\end{array}
 	$$
 	
@@ -387,23 +380,39 @@ Whereas the structural notation pertained to the static properties of a neural s
 \end{definition}
 
 \begin{definition}[Plastic and non-plastic neural systems]
-	If, for all messages $m$ and components $C, C'$ in a neural system, the following holds:
+	If, for all messages $m$ and components $C, C'$ in a neural system:
 	$$
 	C\langle\rangle \rightarrow [m] \rightarrow \langle\rangle C'
 	$$
 	
 	\noindent
-	we call the system non-plastic. Otherwise, we call it plastic.
+	holds, we call the system \emph{non-plastic}. Otherwise, we call it \emph{plastic}.
 \end{definition}
 
 
 This definition intends to roughly convey the notion of neuroplasticity, as used in neuroscience: areas in the brain are changed over time through specific patterns of activity. Here, such change is modelled by the execution of functions and the replacement of $C$ in the system by $f_n \circ \dots \circ f_1 (C)$.
 
+\begin{figure}[t]
+	\centering
+	\begin{subfigure}[t]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{Figs/c_co.png}
+		\caption{Components communicating via a central organising mechanism.}
+		\label{fig:centralOrganizer}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.35\textwidth}
+		\includegraphics[width=\textwidth]{Figs/c_sequence.png}
+		\caption{A sequence of components.}
+		\label{fig:cSequence}
+	\end{subfigure}
+	\caption{Two special-purpose component arrangements.}
+\end{figure}
+
 \subsection{Invariants}
 
-Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is found in \cite{DBLP:journals/nn/SanderGS05} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
+Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is discussed by Sander et al.\ \cite{DBLP:journals/nn/SanderGS05} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
 
 \begin{invariant}[Central organiser]
+	\label{inv:centralOrganiser}
 	$$
 	\begin{array}{l}
 	[\forall i \in \{1\dots,n\}] [\forall m]:\\
@@ -412,7 +421,9 @@ Such a model does not necessitate the existence of special structures, such as c
 	$$
 \end{invariant}
 
-Figure~\ref{fig:centralOrganizer} depicts such an organizer. Similarly, sequences can be created by components $C_{1},\dots,C_{n}$, where each components reads the message of the last one.
+Figure~\ref{fig:centralOrganizer} depicts such an organiser, and Invariant~\ref{inv:centralOrganiser} gives a symbolic definition. In words, the invariant states that, for all messages $m$, if one of the peripheral components $C_1,\dots,C_n$ emits $m$, then the central component $C_{co}$ must receive it. In addition, at least one peripheral component must be able to receive each message which the central component $C_{co}$ outputs.
+
+Similarly, sequences can be created by components $C_{1},\dots,C_{n}$, where each components reads the message of the last one. We see such an invariant depicted in Figure~\ref{fig:c_sequence} and formally described in Invariant~\ref{inv:cSequence}. The invariant simply states that the messages sent by a component $C_{i-1}$ can only be received by the next component $C_i$.
 
 \begin{invariant}[Sequence]
 	$$
@@ -420,16 +431,3 @@ Figure~\ref{fig:centralOrganizer} depicts such an organizer. Similarly, sequence
 	$$
 \end{invariant}
 
-\begin{figure}
-	\centering
-	\begin{subfigure}[t]{0.45\textwidth}
-		\includegraphics[width=\textwidth]{Figs/c_co.png}
-		\caption{Components communicating via a central organising mechanism.}
-		\label{fig:centralOrganizer}
-	\end{subfigure}
-	\begin{subfigure}[t]{0.45\textwidth}
-		\includegraphics[width=\textwidth]{Figs/c_sequence.png}
-		\caption{A sequence of components.}
-		\label{fig:c_sequence}
-	\end{subfigure}
-\end{figure}

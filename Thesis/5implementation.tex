@@ -1,12 +1,12 @@
 Having laid the theoretical framework, we come to the practical part of this thesis --- a proof-of-concept implementation of multiple affective agents interacting with each other. This chapter describes the world in which the agents and the Wumpuses will act, as well as the architecture of these agents.
 
-The goal is the creation of toy AI that semi-realistically mimics animal intelligence, the operative word being "mimic". As Sloman \cite{sloman2000} pointed out, naming a variable \emph{anger} or \emph{love} does not give a program some qualitative experience. No; our much more modest goal is to \emph{emulate} the behaviours that are associated with certain mental states --- and to show how such emotional states, interacting with reasoning, can help an agent thrive in its environment. These programs will really only be soulless automata, employed to illustrate a point about living beings with brains, acting with incomplete information.
+The goal is the creation of a toy AI that semi-realistically mimics animal intelligence, the operative word being ``mimic''. As Sloman \cite{sloman2000} pointed out, naming a variable \emph{anger} or \emph{love} does not give a program some qualitative experience. Indeed, our much more modest goal is to \emph{emulate} the behaviours that are associated with certain mental states --- and to show how such emotional states, interacting with reasoning, can help an agent thrive in its environment. These programs will really only be soulless automata, employed to illustrate a point about living beings with brains, acting with incomplete information.
 
-\subsection{World}
+\section{World}
 
-The choice of the world profoundly affects the implementation of the agent --- its knowledge base, mechanism of perception and interaction, the required complexity of the implementation. On the one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other hand, the world should be sufficiently complex to allow agents to distinguish themselves. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. I shall first lay out the design goals and then evaluate three possible worlds for agents.
-f
-\paragraph{Design Goals.} The two most important criteria for prospective worlds are richness of interaction and world complexity, in that order. As said, an evaluation of affective agents is only possible if they can interact with their environment and other entities in a sufficiently complex way to allow agents with different emotional profiles to be distinguished from each other. Mechanisms of problem-solving like STRIPS \cite{fikesNilsson}, A* \cite{nilssonAStar}, ASP \cite{asp1}, forward-/backward-planning, etc. have been explored in the context of structurally simple worlds, generally those representable through propositional logic, cost-functions, decision tress, and the like. While these are useful, they are less appropriate in an affective scenario for the following two reasons:
+The choice of the world profoundly affects the implementation of the agent --- its knowledge base, mechanism of perception and interaction, the required complexity of the implementation. On the one hand, the world should be simple enough to permit a reasonably small and effective agent which does not have to solve hard AI problems (like human-level sight) to deal with what we, in this context, might call details --- but on the other hand, the world should be sufficiently complex to allow agents to distinguish themselves. This is especially true in the case of an affective agent whose actions should be visibly influenced in rich and subtle ways by its emotional state. We shall first lay out the design goals and then evaluate three possible worlds for agents.
+
+\paragraph{Design Goals.} The two most important criteria for prospective worlds are richness of interaction and world complexity, in that order. As said, an evaluation of affective agents is only possible if they can interact with their environment and other entities in a sufficiently complex way to allow agents with different emotional profiles to be distinguished from each other. Mechanisms of problem-solving like STRIPS \cite{fikesNilsson}, A* search \cite{nilssonAStar}, answer-set programming \cite{asp1}, forward-/backward-planning, etc. have been explored in the context of structurally simple worlds, generally those representable through propositional logic, cost-functions, decision tress, and the like. While these are useful, they are less appropriate in an affective scenario for the following two reasons:
 
 \begin{enumerate}
 	\item they are geared towards finding provably optimal solutions to computationally expensive but conceptually simple problems like planning or game-playing and
@@ -15,103 +15,89 @@ f
 
 For a world to be useful to us and to avoid these pitfalls, it should be in some sense realistic: it should permit a large number of different kinds of interactions, and it should not provide agents in it with perfect knowledge about its rules. 
 
-I admit that I here stand in opposition with Marvin Minsky, who famously recommended the use of idealized micro-worlds to study artificial intelligence, in that same vein in which physics makes use of ideal, frictionless planes and perfect spheres. His argument certainly has merit, but I believe that emotion is too complex a phenomenon for such abstract scenarios. In too simple a setting, pure reasoning not only easily outperforms emotional behaviour, but avenues for exhibiting emotional behaviour are scarce to begin with. For this reason, I propose that, in this context, rich interactions should take precedence over idealization and simplicity.
+We admit that we, in this matter, stand in opposition with Marvin Minsky, who famously recommended the use of idealised micro-worlds to study artificial intelligence, in that same vein in which physics makes use of ideal, frictionless planes and perfect spheres. His argument certainly has merit, but we believe that emotion is too complex a phenomenon for such abstract scenarios. In too simple a setting, pure reasoning not only easily outperforms emotional behaviour, but avenues for exhibiting emotional behaviour are scarce to begin with. For this reason, we propose that, in this context, rich interactions should take precedence over idealization and simplicity.
 
-It is of course still desirable to minimize complexity as far as possible. An overwhelmingly complex world has two obvious drawbacks: first, the required complexity of an agent scales with the complexity of the world; second, the more complex the world, the harder it is to reason about it. If there are a hundred ways to succeed, for instance, agent performance becomes quite difficult to measure.
-
-\subsubsection{Block World}
-
-Block worlds are the simplest type of abstract world, and many variations exist. They all have in common a number of shapes placed on top of each other in a 2-dimensional world. An agent can pick up and move a shape if and only if there are no other shapes on top of it (and if it is not already holding one). The goal generally consists of achieving some desired configuration of shapes, such as building or piecewise transporting a tower, or collecting all red triangles. 
-
-Micro-worlds like blocks worlds have been extensively studied. In this, their simplicity has been their great advantage --- that very simplicity is a serious problem for us, however. Affect is inherently a subtle and social phenomenon; it is not clear how it could be believably exhibited in such an abstract and simple world. The very same properties which expedite their theoretical study make them useless for our evaluation.
-
+It is of course still desirable to minimise complexity as far as possible. An overwhelmingly complex world has two obvious drawbacks: first, the required complexity of an agent scales with the complexity of the world; second, the more complex the world, the harder it is to reason about it. If there are a hundred ways to succeed, for instance, agent performance becomes quite difficult to measure.
+%
+%\subsubsection{Block World}
+%
+%Block worlds are the simplest type of abstract world, and many variations exist. They all have in common a number of shapes placed on top of each other in a 2-dimensional world. An agent can pick up and move a shape if and only if there are no other shapes on top of it (and if it is not already holding one). The goal generally consists of achieving some desired configuration of shapes, such as building or piecewise transporting a tower, or collecting all red triangles. 
+%
+%Micro-worlds like blocks worlds have been extensively studied. In this, their simplicity has been their great advantage --- that very simplicity is a serious problem for us, however. Affect is inherently a subtle and social phenomenon; it is not clear how it could be believably exhibited in such an abstract and simple world. The very same properties which expedite their theoretical study make them useless for our evaluation.
+%
 %\subsubsection{Real world}
+%
+\subsection{Wumpus World}
 
-\subsubsection{Wumpus World}
-
-The traditional Wumpus world, as described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite[p.\ 236]{norvig}, is a grid-based, 4x4 cave world with one agent, one monster --- the Wumpus --- and gold placed in random rooms. The agent starts at position $\langle 1,1\rangle$ and can move forward or turn 90$^\circ$ to the left or right. If it enters a room with a pit or a live Wumpus, it dies; its goal is to find and collect the gold and then move back to position $\langle 1,1\rangle$ to climb out of the cave. In addition, it has one arrow which he can fire straight ahead to defend against the Wumpus. The agent has only the following local information \cite[p.\ 237]{norvig}:
-\begin{itemize}
-	\item In the square containing the Wumpus and in the directly (not diagonally) adjacent squares, the agent will perceive a {\em Stench}.
-	\item In the squares directly adjacent to a pit, the agent will perceive a {\em Breeze}.
-	\item In the square where the gold is, the agent will perceive a {\em Glitter}.
-	\item When an agent walks into a wall, it will perceive a {\em Bump}.
-	\item When the Wumpus is killed, it emits a woeful {\em Scream} that can be perceived anywhere in the cave.
-\end{itemize}
-
+The traditional Wumpus world, as described in Russell and Norvig's {\em Artificial Intelligence: A Modern Approach} \cite[p.\ 236]{norvig}, is a grid-based, 4x4 cave world with one agent, one monster --- the Wumpus --- and gold placed in random rooms. The agent starts at position $\langle 1,1\rangle$ and can move forward or turn 90$^\circ$ to the left or right. If it enters a room with a pit or a live Wumpus, it dies; its goal is to find and collect the gold and then move back to position $\langle 1,1\rangle$ to climb out of the cave. In addition, it has one arrow which he can fire straight ahead to defend against the Wumpus. The agent cannot see, that is, it only has access to information about its own cell and cannot directly observer other ones. To quote Russell and Norvig, the agent has only the following local information \cite[p.\ 237]{norvig}:
+\begin{emquote}
+	\begin{itemize}
+		\item In the square containing the Wumpus and in the directly (not diagonally) adjacent squares, the agent will perceive a {\em Stench}.
+		\item In the squares directly adjacent to a pit, the agent will perceive a {\em Breeze}.
+		\item In the square where the gold is, the agent will perceive a {\em Glitter}.
+		\item When an agent walks into a wall, it will perceive a {\em Bump}.
+		\item When the Wumpus is killed, it emits a woeful {\em Scream} that can be perceived anywhere in the cave.
+	\end{itemize}
+\end{emquote}
+\vspace{-3mm}
 This type of world is simple enough to be amenable to rule-based reasoning, although it can contain ambiguous situations where the agent does not have enough information to make the best choice. For example, if an agent moves to position $\langle p_x,p_y \rangle$ and experiences a breeze, 1, 2, or 3 adjacent rooms may contain pits, but it cannot be safely determined which ones these are. Thus,  occasionally, the agent must choose between climbing out without the gold and risking death by pit or Wumpus.
 
 For our purposes, this is a bit too simple, however. Caution/bravery is the only axis along which agents can be differentiated and although various complex behaviours --- such as trying one dangerous cell, then going back and trying another one to explore the world --- are possible, these do not have a clear relation to emotional states.
 
 Let us, while staying true to the spirit of the original, now define a type of extended Wumpus world \wext\ that allows more varied interaction between agent an environment.
 
-\begin{definition}[\wext-type world]\label{def:wext}
-	Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be arbitrary types. Further, let $G$ be a directed graph with vertex labels of type $\type{T_v}$ and edge labels of type $\type{T_e}$, and let $\mathrm{gl}$ be an object of type $\type{T_g}$. Then the tuple \tuple{G, \mathrm{gl}} is a \wext-type world \paren{with type parameters $\type{T_v}$, $\type{T_e}$, $\type{T_g}$}. We call $G$ the {\em world frame} and $\mathrm{gl}$ the {\em world data}.
+\begin{definition}[$\bm{\wext}$-type world]\label{def:wext}
+	Let $\type{T_v}$, $\type{T_e}$, $\type{T_g}$ be arbitrary types. Further, let $G$ be a directed graph with vertex labels of type $\type{T_v}$ and edge labels of type $\type{T_e}$, and let $\mathrm{gl}$ be an object of type $\type{T_g}$. Then, the tuple \tuple{G, \mathrm{gl}} is a \emph{\wext-type world} \paren{with type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$}. We call $G$ the {\em world frame} and $\mathrm{gl}$ the {\em world data}.
 \end{definition}
 
-We can interpret each vertex $v$ in the graph as a room with attached data $l(v)$ of type $\type{T_v}$, and each edge $e$ as an unidirectional connection between rooms with attached data (such as path costs) $l(e)$ of type $\type{T_e}$. $\mathrm{gl}$ is the global world data. Next, we specify some properties of the world frame:
+We can interpret each vertex $v$ in the graph as a room with attached data $l(v)$ of type $\type{T_v}$, and each edge $e$ as an unidirectional connection between rooms with attached data (such as path costs) $l(e)$ of type $\type{T_e}$. The object $\mathrm{gl}$ is the global world data.
+
+Next, we specify some properties of the world frame:
 
 \begin{definition}[World properties]
-	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-world. We say that $W$ has property $X$ iff it fulfils the first-order sentence corresponding to $X$. The following properties are of importance:
-	
-	
-
-	\begin{center}
-		\begin{tabular}[b]{l l}
-		\toprule
-		\textbf{Property name} & \textbf{FO sentence}\\
-		\midrule\addlinespace[0.7em]
-		Reflexive & $\allQ{v \in V(G)} (v,v) \in E(G)$\\ \addlinespace[0.7em]
-		Non-Euclidean &
-		\begin{minipage}[t]{0.65\textwidth}
-			$\allQ{\textit{ pairwise distinct } v_1,v_2,v_3 \in V(G)}$\\$\{(v_1,v_2),(v_1,v_3)\} \subseteq E(G) \Rightarrow (v_2,v_3) \notin E(G)$
-		\end{minipage}\\ \addlinespace[0.7em]
-		Symmetrical & $\allQ{v_1,v_2 \in V(G)} (v_1,v_2) \in E(G) \Rightarrow (v_2,v_1) \in E(G)$\\ \addlinespace[0.7em]
-		Connected & $\allQ{v_1,v_2 \in V(G)}$ there exists a path from $v_1$ to $v_2$ in $G$\\ \addlinespace[0.7em]
-		
-		$n$-dimensionally embeddable &
-		there exists an infinite, $n$-dimensional grid $S$ such that $G \subseteq S$\footnotemark
-		
-		\\ \addlinespace[0.5em]
-		\bottomrule
-		
-		\end{tabular}
-	\end{center}
+	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-world. Then, $W$ is
+	\begin{enumerate}
+		\item {\upshape reflexive}, if, for all $v \in V(G)$, $(v,v) \in E(G)$,
+		\item {\upshape non-Euclidean}, if for all pairwise distinct $v_1,v_2,v_3 \in V(G)$, $\{(v_1,v_2),(v_1,v_3)\} \subseteq E(G) \Rightarrow (v_2,v_3) \notin E(G)$,
+		\item {\upshape symmetrical}, if for all $v_1,v_2 \in V(G)$, $(v_1,v_2) \in E(G) \Rightarrow (v_2,v_1) \in E(G)$,
+		\item {\upshape connected}, if for all $v_1,v_2 \in V(G)$, there exists a path from $v_1$ to $v_2$ in $G$, and
+		\item {\upshape n-dimensionally embeddable}, if there exists an infinite, $n$-dimensional grid $S$ such that $G \subseteq S$.%\footnote{Formally, $G$ and $S$ must fulfil the following conditions:
+%			\begin{enumerate}
+%				\item $V(G) \subseteq V(S)$,
+%				\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
+%				\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
+%				\item $(v_1,v_2) \in E(S)$ iff the Euclidean distance between $v_1$ and $v_2$ in $\R^n$ is 1.
+%			\end{enumerate}}
+	\end{enumerate}
 \end{definition}
-
-\footnotetext{Formally, $G$ and $S$ must fulfil the following conditions:
-		\begin{enumerate}
-			\item $V(G) \subseteq V(S)$,
-			\item $E(G) \subseteq E(S) \cup \{ (v,v)\ |\ (v,v) \in E(G) \}$,
-			\item $S$'s drawing, embedded into $\R^n$, forms a regular tiling, and
-			\item $(v_1,v_2) \in E(S)$ iff the Euclidean distance between $v_1$ and $v_2$ in $\R^n$ is 1.
-		\end{enumerate}}
 
 The first four properties speak for themselves. As for the fifth --- Figure~\ref{fig:2dgrid} shows an example of a 2-dimensionally embeddable frame. A frame $G$ is $n$-dimensionally embeddable if it is a fragment of an infinite, $n$-dimensional, square grid of nodes $S$, plus any loops $G$ might have. When we embed this infinite grid $S$ into $\R^n$ through an embedding, every edge corresponds to a vector of length 1 along exactly one dimension. If we additionally take $G$'s loops to correspond to null-vectors, this induces an {\em edge direction function} and a {\em position function}:
 
 \begin{definition}[Edge direction and position]
-Let $W = \tuple{G, \mathrm{gl}}$ be an $n$-dimensionally embeddable world (for some $n$) and $\epsilon$ an embedding of $W$ into $\R^n$. Then we have an {\em edge direction function} 
-
-$$\Delta_n^\epsilon : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^-,\dots,x_n^+,x_n^-\}$$
-
-with $0$ corresponding to a loop and $x_i^+$/$x_i^-$ corresponding to forward/backward movement in the $i$th dimension. We also have a {\em position function}
-
-$$\pi^\epsilon :: V(G) \rightarrow \R^n,$$
-
+Let $W = \tuple{G, \mathrm{gl}}$ be an $n$-dimensionally embeddable world \paren{for some $n$} and $\epsilon$ an embedding of $W$ into $\R^n$. Then, the {\em edge direction function} is given by
+$$
+   \Delta_n^\epsilon : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^-,\dots,x_n^+,x_n^-\}
+$$
+with $0$ corresponding to a loop and $x_i^+$/$x_i^-$ corresponding to forward/backward movement in the $i$th dimension. Furthermore, a {\em position function} is an injective mapping
+$$
+   \pi^\epsilon :: V(G) \rightarrow \R^n,
+$$
 with $pi^\epsilon(v) = r$ indicating that under $\epsilon$, $v$ was mapped to position $r$ in $\R^n$. When the number of dimensions and the embedding are obvious, we omit $n$ and $\epsilon$.
-Since $\pi^\epsilon$ is injective by definition, an inverse $(\pi^\epsilon)^{-1}$ also exists. Through it, we define the {\em indexing function} of $W$:
-
+Finally, the {\em indexing function} of $W$ is given by:
 $$
 	\begin{array}{l}
-		[.] : n\textit{-dimensionally embeddable world} \rightarrow \R^n \rightarrow \type{Maybe}\ V(G)\\
+		[.] : n\textit{-dimensionally embeddable world} \rightarrow \R^n \rightarrow \type{Maybe}\ V(G),\\
 		W[p] \equiv \left\{
 			\begin{array}{l l}
-				\type{Just } ((\pi^\epsilon)^{-1}\ p) & \textit{if } (\pi^\epsilon)^{-1}\ p \textit{ is defined}\\
-				\type{Nothing} & \textit{otherwise}
+				\type{Just } ((\pi^\epsilon)^{-1}\ p) & \textit{if } (\pi^\epsilon)^{-1}\ p \textit{ is defined},\\
+				\type{Nothing} & \textit{otherwise}.
 			\end{array}
 			\right.
 	\end{array}
 $$
 \end{definition}
+
+Note that, since $\pi^\epsilon$ is injective by definition, an inverse $(\pi^\epsilon)^{-1}$ also exists.
 
 We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply $\Delta$ and $\pi$) to allow them to determine their position and direction in the world. Providing such information might seem problematic, but we thereby free ourselves from having to insert things like landmarks, wind currents, stars, and other navigational aids into the world. Given that navigation is not the focus of this thesis, this seems an appropriate simplification. Using the above properties, we can specify a subtype of \wext-type worlds:
 
@@ -126,13 +112,12 @@ We will give agents access to $\Delta_n^\epsilon$ and $\pi^\epsilon$ (or simply 
 	Let $W = \tuple{G,\mathrm{gl}}$ be a \wext-type world \paren{with type variables $\type{T_v}, \type{T_e}, \type{T_g}$}. If $W$ is reflexive, connected, and 2-dimensionally embeddable $W$ is a {\em 2D grid world}.
 	Every 2D grid world has an associated function $\Delta_2 : E(G) \rightarrow \{0,x_1^+,x_1^-,x_2^+,x_2^- \}$ and a position function $\pi : V(G) \rightarrow \R^2$.
 \end{definition}
-
 \noindent
-Note: every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.\\
+Note that every $n$-dimensionally embeddable world is also symmetrical and non-Euclidean.
 
 Grid worlds, as we have seen, are potentially infinite, n-dimensional grids, although their cells need not form a square or cube. Their shape can be irregular in that some rooms and connections may be missing, as long as the shape as a whole stays connected.
 
-2D grid worlds are representationally the same as \wext-type worlds; they just have some structural invariants on their frames. If we additionally specialize the representation through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$, we arrive at the type of world which will serve as the environment for our agents: the ``jungle world'' \wjun.
+2D grid worlds are representationally the same as \wext-type worlds; they just have some structural invariants on their frames. If we additionally specialise the representation through the type parameters $\type{T_v}$, $\type{T_e}$, and $\type{T_g}$, we arrive at the type of world which will serve as the environment for our agents: the ``jungle world'' \wjun.
 
 \begin{definition}[\wjun]
 \label{def:wjun}
@@ -147,17 +132,17 @@ $$
 		           &   &	   \ \field{pit}    :: \B,\\
 		           &   &		\ \field{meat}    :: \N,\\
 		           &   &		\ \field{fruit}    :: \N,\\
-		           &   &	   \ \field{gold}   :: \N \rangle 
+		           &   &	   \ \field{gold}   :: \N \rangle,
 		\\
 		\\
 		\type{TE_{\mathrm{jun}}} & = & \langle \field{danger} :: \R,\\
-				   &   &       \ \field{fatigue} :: \R \rangle
+				   &   &       \ \field{fatigue} :: \R \rangle,
 		\\
 		\\
-		\type{Temp} & = & \type{Freezing} + \type{Cold} + \type{Temperate} + \type{Warm} + \type{Hot}\\
+		\type{Temp} & = & \type{Freezing} + \type{Cold} + \type{Temperate} + \type{Warm} + \type{Hot},\\
 		\\
 		\type{TG_{\mathrm{jun}}} & = & \langle \field{time} :: \N,\\
-				   &   &       \ \field{temperature} :: \type{Temp} \rangle
+				   &   &       \ \field{temperature} :: \type{Temp} \rangle.
 	\end{array}
 $$
 
@@ -165,20 +150,20 @@ $\type{Entity}$, $\type{Item}$, $\type{Agent}$ and $\type{Wumpus}$ are the follo
 
 $$
 	\begin{array}{r c l}
-		\type{Entity} & = & \type{Ag\ Agent + Wu\ Wumpus + None}\\
+		\type{Entity} & = & \type{Ag\ Agent + Wu\ Wumpus + None},\\
 		\\
-		\type{Item} & = & \type{Gold + Fruit + Meat}\\
+		\type{Item} & = & \type{Gold + Fruit + Meat},\\
 		\\
 		\type{Agent} & = & \langle \field{name} :: \type{String},\\ 
 					 &   & \ \field{direction} :: \type{X_1^+ + X_1^- + X_2^+ + X_2^-},\\
 					 &   & \ \field{health} :: \R,\\
 					 &   & \ \field{fatigue} :: \R,\\
 					 &   & \ \field{inventory} :: [\type{\langle Item, \N \rangle}],\\
-					 &   & \ \field{state} :: \type{S} \rangle
+					 &   & \ \field{state} :: \type{S} \rangle,
 		\\
 		\\
 		\type{Wumpus} & = & \langle \field{health} :: \R,\\
-					  &   & \ \field{fatigue} :: \R\rangle
+					  &   & \ \field{fatigue} :: \R\rangle.
 	\end{array}
 $$
 
@@ -187,38 +172,38 @@ The last component of $\type{Agent}$, $\field{state} :: \type{S}$, is the intern
 Let $\mathrm{gl}$ also be a value of type $\type{TG}_{\mathrm{jun}}$ and let $G$ be any 2D grid world with node labels of type $\type{TV}_{\mathrm{jun}}$ and edge labels of type $\type{TE}_{\mathrm{jun}}$. Then, $\tuple{G, \mathrm{gl}}$ is a \wjun-type jungle world.
 \end{definition}
 
-The intuitive meaning of \wjun is this: the two-dimensional grid world is inhabited by multiple agents and wumpuses, where the former act according to their agent function and the latter act mechanically. In addition, each cell in the world may have a plant or a deadly pit on it, in addition to a certain amount of fruit, meat, and gold. Agents and wumpuses move in the world by traversing edges which have associated fatigue and danger levels, representing easy and difficult paths. Local information is available to expedite navigation: stench (emanating from wumpuses) and breeze (emanating from pits). Finally, the temperature and the time dictate global environmental conditions.
+The intuitive meaning of \wjun is the following: the two-dimensional grid world is inhabited by multiple agents and wumpuses, where the former act according to their agent function and the latter act mechanically. In addition, each cell in the world may have a plant or a deadly pit on it, in addition to a certain amount of fruit, meat, and gold. Agents and wumpuses move in the world by traversing edges which have associated fatigue and danger levels, representing easy and difficult paths. Local information is available to expedite navigation: stench (emanating from wumpuses) and breeze (emanating from pits). Finally, the temperature and the time dictate global environmental conditions.
 
 Although the field names are suggestive of the way in which a \wjun-type world works, the type, strictly speaking, only specifies the data and frame properties. We can employ such worlds in any sort of scenario, with whatever semantics we wish. Notwithstanding, our implementation will use a straightforward {\em standard semantics}, that have the world work in the manner of a simple ecosystem in which predators hunt for prey and compete with each other. The wumpuses fulfil the role of carnivorous predators which roam the world, hunting and attempting to kill agents on sight. Agents, in turn, are hunter-gatherer omnivores who can sustain themselves either through eating plants, killing Wumpuses for their meat, or by acquiring resources from other agents. They may carry meat or fruits in their inventory, or gold, which has no intrinsic use, but which may be used as an exchange medium, provided that multiple agents have the mental ability to facilitate bartering. The term ``jungle world'' reflects the uncertainty under which its actors must act. They only have access to quite limited local environmental information, and they possess no communication protocol upon which they could base their cooperation. Analogously to real-world situations, agents must rely on simple gestures to infer the intentions of their peers, and they cannot know whether they are misunderstanding these, or whether they are being deceived. The aim of this mechanism is to allow the experimentations with things like social adaptation, prejudice, and trust. The goal of simulating affective agents in such a world is to see which behavioural profiles are successful, how they develop over multiple generations, and how they engage each other.
 
-\begin{definition}[Semantics and runs of \wjun-type worlds]
-Let $\varphi$ be a function of type $\wjun \rightarrow \wjun$. $\varphi$ is called a {\em semantics of \wjun-type worlds}.
-Now let $W$ be a \wjun-type world. The iterated application of $\varphi$ to $W$, given by the list ${[W, \varphi\ W, \varphi^2\ W, \varphi^3\ W, \dots]}$, is called a {\em run of $W$ \paren{with semantics $\varphi$}}. $\varphi^n\ W$ is referred to as the {\em state of $W$'s simulation at time $n$ \paren{with semantics $\varphi$}}.
+\begin{definition}[Semantics and runs of $\bm{\wjun}$-type worlds]
+A function $\varphi$ of type $\wjun \rightarrow \wjun$ is called a {\em semantics of \wjun-type worlds}.
+For a \wjun-type world, $W$, the iterated application of $\varphi$ to $W$, given by the list ${[W, \varphi\ W, \varphi^2\ W, \varphi^3\ W, \dots]}$, is called a {\em run of $W$ \paren{with semantics $\varphi$}}. Furthermore, $\varphi^n\ W$ is referred to as the {\em state of $W$'s simulation at time $n$ \paren{with semantics $\varphi$}}.
 \end{definition}
 
-\begin{definition}[Standard semantics of \wjun-type worlds]
+\begin{definition}[Standard semantics of $\bm{\wjun}$-type worlds]
 \label{def:ssem}
-The standard semantics for \wjun-type worlds are given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$ is defined as 
+The standard semantics for \wjun-type worlds is given by the function $\ssem :: \type{\wjun \rightarrow \wjun}$. $\ssem$, defined as 
 $$\ssem\ \tuple{G, \mathrm{gl}} = \tuple{G', \mathrm{gl}'}, $$
 where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, except for the following changes:
 
-\begin{description}
-	\item[Environment] For all $v \in V(G)$, perform the following:
+\begin{enumerate}
+	\item {\upshape Environment:} For all $v \in V(G)$, the following is defined:
 	
-	\begin{description}
-		\item[Wumpus.] Set $v$'s stench to
+	\begin{enumerate}[label={(\alph*)}]
+		\item {\upshape Wumpus:} Set $v$'s stench to
 		$$
 			\mathrm{max}\left\{0, 1 - \frac{\mathrm{max}\{0,\dist{v}{w}-1\}}{3}\right\}
 		$$
 		where $w$ is the closest cell that has a Wumpus on it. If there are no Wumpuses, set $w$'s stench to 0.
 		
-		\item[Plant.] If there is a plant on $v$ and it has a growth value of $< 1$, increase its growth by $\frac{1}{10}$.
+		\item {\upshape Plant:} If there is a plant on $v$ and it has a growth value of $< 1$, increase its growth by $\frac{1}{10}$.
 		
-		\item[Pit] If there is a pit in a cell $w$ at a distance $\leq 3$ from $v$, set the breeze to
+		\item {\upshape Pit:} If there is a pit in a cell $w$ at a distance $\leq 3$ from $v$, set the breeze to
  		$$
 			\mathrm{max}\left\{0, 1 - \frac{\mathrm{max}\{0,\dist{v}{w}-1\}}{3}\right\}.
 		$$
-	\end{description}
+	\end{enumerate}
 	
 	\begin{figure}
 		\centering
@@ -227,17 +212,17 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 		\caption{Graph of the intensity of the stench/breeze, as a function of the distance from a Wumpus/pit.}
 	\end{figure}
 	
-	\item[Global data.] The {\em daylight function} is defined as
+	\item {\upshape Global data:} The {\em daylight function} is defined as
 	
 	$$
 			\field{light}\ t = 
 			\left\{
 				\begin{array}{l l l l}
-					0 & \mt{if } & 20 & \leq |t - 25|\\
-					1 & \mt{if } & 15 & \leq |t - 25| < 20\\
-					2 & \mt{if } & 10 & \leq |t - 25| < 15\\
-					3 & \mt{if } & 5 & \leq |t - 25| < 10\\
-					4 & \mt{if } & & \ \ \ |t - 25| < 5
+					0 & \mt{if } & 20 & \leq |t - 25|,\\
+					1 & \mt{if } & 15 & \leq |t - 25| < 20,\\
+					2 & \mt{if } & 10 & \leq |t - 25| < 15,\\
+					3 & \mt{if } & 5 & \leq |t - 25| < 10,\\
+					4 & \mt{if } & & \ \ \ |t - 25| < 5.
 				\end{array}
 			\right.
 	$$
@@ -246,94 +231,93 @@ where $\tuple{G', \mathrm{gl}'}$ is identical to $\tuple{G, \mathrm{gl}}$, excep
 	
 	$$
 		\begin{array}{r c l}
-		   \field{time'} & = &  \field{time}\ \mathrm{gl} + 1\ \mathrm{mod}\ 50\\
+		   \field{time'} & = &  \field{time}\ \mathrm{gl} + 1\ \mathrm{mod}\ 50,\\
 		   \\
 			\field{temperature'} & = &
 			\left\{
 				\begin{array}{l l}
-					\type{Freezing} & \mt{if }\ \field{light}\ \field{time'} = 0\\
-					\type{Cold} & \mt{if }\ \field{light}\ \field{time'} = 1\\
-					\type{Temperate} & \mt{if }\ \field{light}\ \field{time'} = 2\\
-					\type{Warm} & \mt{if }\ \field{light}\ \field{time'} = 3\\
-					\type{Hot} & \mt{if }\ \field{light}\ \field{time'} = 4
+					\type{Freezing} & \mt{if }\ \field{light}\ \field{time'} = 0,\\
+					\type{Cold} & \mt{if }\ \field{light}\ \field{time'} = 1,\\
+					\type{Temperate} & \mt{if }\ \field{light}\ \field{time'} = 2,\\
+					\type{Warm} & \mt{if }\ \field{light}\ \field{time'} = 3,\\
+					\type{Hot} & \mt{if }\ \field{light}\ \field{time'} = 4,
 				\end{array}
 			\right.\\
 			\\
-			\mathrm{gl}' & = & \langle \field{time'},\ \field{temperature'} \rangle\\
+			\mathrm{gl}' & = & \langle \field{time'},\ \field{temperature'} \rangle.\\
 		\end{array}
 	$$
 	
-	\item[Wumpus behaviour.] Every Wumpus has three behaviours:
+	\item {\upshape Wumpus behaviour:} Every Wumpus has three behaviours:
 	
-	\begin{enumerate}
+	\begin{itemize}
 		\item If the Wumpus is adjacent to a player, it performs the \action{attack} action on that player.
 		
-		\item If there is a player reachable with at most $(\field{light} \circ \field{time})\ \mathrm{gl}$ edges, move along the edge that minimizes the distance to that player (in $\R^2$). If there are multiple players, choose one at random as target. This target choice remains until the player is no longer within range.
+		\item If there is a player reachable with at most $(\field{light} \circ \field{time})\ \mathrm{gl}$ edges, move along the edge that minimises the distance to that player \paren{in $\R^2$}. If there are multiple players, choose one at random as target. This target choice remains until the player is no longer within range.
 		
 		\item If there is no player within range, move in a random direction with probability
-		
 		$$
 			0.2 \times (1 + (\field{light} \circ \field{temperature})\ \mathrm{gl}).
 		$$
-	\end{enumerate}
+	\end{itemize}
 	
 	Whenever a Wumpus travels along an edge $e$ with $\Delta\ e \neq 0$, apply $0.1$ damage with probability $\field{danger}\ e$.
 	
-	\item[Agent behaviour.] Agents always act after Wumpuses and, depending on their implementation, may choose one of the following actions:
+	\item {\upshape Agent behaviour:} Agents always act after Wumpuses and, depending on their implementation, may choose one of the following actions:
 	
-	\begin{enumerate}\label{lst:agentBehavior}
-		\item[\action{move}] --- move along an edge $e$. If $\Delta\ e = 0$, restore $0.1$ of the agent's fatigue, otherwise reduce it by $0.05 \times \field{fatigue}\ e$. Additionally (if $\Delta\ e \neq 0$), apply $0.1$ damage with probability $\field{danger}\ e$.
+	\begin{itemize}\label{lst:agentBehavior}
+		\item \action{move}: Move along an edge $e$. If $\Delta\ e = 0$, restore $0.1$ of the agent's fatigue, otherwise reduce it by $0.05 \times \field{fatigue}\ e$. Additionally \paren{if $\Delta\ e \neq 0$}, apply $0.1$ damage with probability $\field{danger}\ e$.
 		
 		If an agent's fatigue is below $0.2$, it cannot choose this action.
 		
-		\item[\action{rotate}] --- the agent changes the direction into which it is facing to a value in ${x_1^+,x_1^-,x_2^+,x_2^-}$.
+		\item\action{rotate}: The agent changes the direction into which it is facing to a value in ${x_1^+,x_1^-,x_2^+,x_2^-}$.
 		
-		\item[\action{attack}] --- move along an edge $e$ to attack an agent or Wumpus.
+		\item\action{attack}: Move along an edge $e$ to attack an agent or Wumpus.
 		
-		\item[\action{give}] --- give an item $i$ from the agent's inventory to another agent $a$.
+		\item\action{give}: Give an item $i$ from the agent's inventory to another agent $a$.
 		
-		\item[\action{gather}] --- if there is a plant with a fruit on the agent's cell, take the fruit and put it in the agent's inventory.
+		\item\action{gather}: If there is a plant with a fruit on the agent's cell, take the fruit and put it in the agent's inventory.
 		
-		\item[\action{butcher}] --- if there is a dead Wumpus on the agent's cell, remove it and add an item of meat to the agent's inventory.
+		\item\action{butcher}: If there is a dead Wumpus on the agent's cell, remove it and add an item of meat to the agent's inventory.
 		
-		\item[\action{collect}] --- if there is $n$ gold on the player's cell, take an amount $m$ ($1 \leq m \leq n$) of it an put it into the agent's inventory.
+		\item\action{collect}: If there is $n$ gold on the player's cell, take an amount $m$ \paren{$1 \leq m \leq n$} of it an put it into the agent's inventory.
 		
-		\item[\action{eat}] --- eat a meat- or fruit-item $i$ from the agent's inventory. Restore $0.5$ health, to a maximum of $2.0$.
+		\item\action{eat}: Eat a meat- or fruit-item $i$ from the agent's inventory. Restore $0.5$ health, to a maximum of $2.0$.
 		
-		\item[\action{gesture}] --- expresses a gesture in the form of a string $s$. All other agents on the same cell receive $s$.
+		\item\action{gesture}: Expresses a gesture in the form of a string $s$. All other agents on the same cell receive $s$.
 		
-		\item[\action{nothing}] --- doing nothing this turn.
-	\end{enumerate}
+		\item\action{nothing}: Doing nothing this turn.
+	\end{itemize}
 	
-	\item[Combat mechanics.] When two entities $\field{A}$, $\field{B}$ attack each other, an entity being either an agent or a Wumpus, the health of $\field{A}$ is subtracted from the health of $\field{B}$ and vice versa. Any entity whose health thereby reaches or goes below 0 dies.
+	\item {\upshape Combat mechanics:} When two entities $\field{A}$, $\field{B}$ attack each other, an entity being either an agent or a Wumpus, the health of $\field{A}$ is subtracted from the health of $\field{B}$ and vice versa. Any entity whose health thereby reaches or goes below 0 dies.
 	
 	Upon death in a fight, one meat is added to the cell. If the dead entity was an agent, the amount of gold, fruit, and meat in its inventory are added to values of the $\field{gold}$, $\field{fruit}$, and $\field{meat}$ fields of its cell.
 	
-	\item[Movement mechanics.] Agents and Wumpuses may only move to another cell if that movement does not reduce their fatigue below 0. Neither agent nor Wumpus may move onto a cell that already has another agent or Wumpus, or a plant. Any agent or Wumpus can move into a pit, but doing so deletes the agent/Wumpus from the world.
+	\item {\upshape Movement mechanics:} Agents and Wumpuses may only move to another cell if that movement does not reduce their fatigue below 0. Neither an agent nor a Wumpus may move onto a cell that already has another agent or a Wumpus, or a plant. Any agent or Wumpus can move into a pit, but doing so deletes either of them from the world.
 	
-	\item[Hunger.] If an agent doesn't eat a fruit or meat item, its health declines by 0.01. If its health thereby reaches 0, it dies and the contents of its inventory are added to the values of the $\field{gold}$, $\field{fruit}$, and $\field{meat}$ fields of its cell. However, not additional item of meat is created on the cell.
-\end{description}
+	\item {\upshape Hunger:} If an agent does not eat a fruit or a meat item, its health declines by 0.01. If its health thereby reaches 0, it dies and the contents of its inventory are added to the values of the $\field{gold}$, $\field{fruit}$, and $\field{meat}$ fields of its cell. However, no additional item of meat is created on the cell.
+\end{enumerate}
 \end{definition}
 
-It ought to be said that the formulae and constants used in the above definitions are, fundamentally, judgement calls and that there is no theoretical reason for choosing these over others. Nonetheless, we can given them an intuitive meaning:
-\begin{description}
-	\item[Environment.]\ 
-	\begin{description}
-		\item[Wumpus.] Wumpuses carry around them a wafting stench, the strength of which drops off linearly for three cells.
-		\item[Plant.] Fruits grow periodically on plants, although a plant can only bear one fruit at a time.
-		\item[Pit.] The breeze coming from pits works via the same mechanism as the stench of wumpuses, but as pits are immobile, the strength of a breeze does not change with time.
-	\end{description}
-	\item[Global data.] A day is segmented into 50 periods, where a time of 25 represents midday, and 0/50 represents midnight. The temperature is a function of the daytime, with midday being the hottest and midnight being the coldest.
-	\item[Wumpus behaviour.] Wumpuses are day-active and roam around randomly. At night, they are likely to sit still. When they sight an agent (depending on light conditions), they will invariably attempt to close the distance and attack.
-	\item[Agent behaviour.] Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by travelling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up.
-	\item[Combat and hunger.] Agents must compete with each other for finite resources. They can either eat fruits from plants, get meat from killed Wumpuses and agents, or they can kill other agents for the contents of their inventories. Because their health slowly but steadily decreases, they must periodically eat food. In addition, fatigue limits their ability to move, forcing periodic rests.
-\end{description}
+It ought to be said that the formulae and constants used in the above definitions are, fundamentally, judgement calls and that there is no theoretical reason for choosing these over others. Nonetheless, we can give them an intuitive meaning:
+\begin{enumerate}
+	\item \emph{Environment:}\ 
+	\begin{itemize}
+		\item \emph{Wumpus:} Wumpuses carry around them a wafting stench, the strength of which drops off linearly for three cells.
+		\item \emph{Plant:} Fruits grow periodically on plants, although a plant can only bear one fruit at a time.
+		\item \emph{Pit:} The breeze coming from pits works via the same mechanism as the stench of wumpuses, but as pits are immobile, the strength of a breeze does not change with time.
+	\end{itemize}
+	\item \emph{Global data:} A day is segmented into 50 periods, where a time of 25 represents midday, and 0/50 represents midnight. The temperature is a function of the daytime, with midday being the hottest and midnight being the coldest.
+	\item \emph{Wumpus behaviour:} Wumpuses are day-active and roam around randomly. At night, they are likely to sit still. When they sight an agent (depending on light conditions), they will invariably attempt to close the distance and attack.
+	\item \emph{Agent behaviour:} Agents are free to do choose any action they wish. They may move around, attack wumpuses and other agents, gather items (fruit from plants, meat from dead wumpuses, gold lying around), consume food, give items to other agents, or communicate with them. They are limited by their health, which is depleted by travelling along dangerous paths and by fights, and by fatigue. They must thus periodically eat and rest to keep both up.
+	\item \emph{Combat and hunger:} Agents must compete with each other for finite resources. They can either eat fruits from plants, get meat from killed Wumpuses and agents, or they can kill other agents for the contents of their inventories. Because their health slowly but steadily decreases, they must periodically eat food. In addition, fatigue limits their ability to move, forcing periodic rests.
+\end{enumerate}
 
-\subsection{Agents}
+\section{Agents}
 
 The agents of our simulation are composed of two parts: their minds and their bodies. Their minds constitute their sensors and agents functions; their bodies, make up their actuators, although they are more than that. An agent's body can be damaged and healed, perceived by others, and it can hold items. As such, the bodies are actually part of the world. From the point of view of the agent's mind, they are external objects they happen to control.
 
-\subsubsection{Body and Percepts}
+\subsection{Body and Percepts}
 
 As we saw in Definitions~\ref{def:wjun} and \ref{def:ssem}, agents (1) have a body composed of a name, health, fatigue, and an inventory of items they carry, and (2) can execute one of a fixed set of actions at each step. These data function in the obvious way: the name is publicly available information other agents can use for identification, the agent is killed when its health drops to zero, fatigue determines the effectiveness when attacking and prevents movement when low, and the inventory is used to store items which the agent can use for itself or give away to others.
 
@@ -346,27 +330,24 @@ What we are missing is the description of the agent's percepts in the world. As 
 	\end{enumerate}
 	
 In addition to this local information, the agent also has access to the global world state:
-
 	\begin{enumerate}
 		\item the temperature and
 		\item the current time.
 	\end{enumerate}
-
 The most important means of perception will be the agent's sight, however. The sense of sight is modelled via an approximately $\frac{\pi}{4}$ radians sight cone which is oriented in the agent's direction and is shortened or lengthened, depending or daylight. Formally:
 
 \begin{definition}[Sight cone]
 	\label{def:los}
-	Let $W = \tuple{G, \mathrm{gl}}$ be a 2D grid world. Let an agent be on vertex $v \in V(G)$, facing into direction $d$. Let further $l_d$ be the line starting at $v$ and extending infinitely into direction $d$, and $l_{v,w}$ be the line from $v$ to $w$. Then, any other vertex $w \in V(G)$ falls into the agent's sight cone exactly if:
-	
+	Let $W = \tuple{G, \mathrm{gl}}$ be a 2D grid world and let an agent be on vertex $v \in V(G)$, facing into direction $d$. Let further $l_d$ be the line starting at $v$ and extending infinitely into direction $d$, and $l_{v,w}$ be the line from $v$ to $w$. Then, any other vertex $w \in V(G)$ falls into the agent's sight cone exactly if:
 	\begin{enumerate}
-		\item the angle between $l_{v,w}$ and $l_d$ is $\leq \frac{\pi}{4}$,
+		\item the angle between $l_{v,w}$ and $l_d$ is less than or equal to $ \frac{\pi}{4}$,
 		\item $\dist{v}{w} \leq 1.5 \times (((\field{light} \circ \field{time})\ \mathrm{gl}) + 1)$, and
 		\item there is a path $v_1, v_2, \dots, v_n$ from $v$ to $w$ in $G$ such that
-		the distance between $v_i$ and the closest point along $l_{v,w}$ is $\leq \frac{\sqrt{2}}{2}$ ($1 \leq i \leq n$).
+		the distance between $v_i$ and the closest point along $l_{v,w}$ is less than or equal to $ \frac{\sqrt{2}}{2}$ \paren{$1 \leq i \leq n$}.
 	\end{enumerate}
 \end{definition}
 
-Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two limits its length based on light conditions; criterion three demands rough line-of-sight, saying that the path in $G$ may never deviate more than one cell from the line in $\R^2$. Figure~\ref{fig:los} illustrates the working of this mechanism.
+Criterion 1 restricts the sight cone to $\frac{\pi}{4}$ radians; criterion 2 limits its length based on light conditions; criterion 3 demands rough line-of-sight, saying that the path in $G$ may never deviate more than one cell from the line in $\R^2$. Figure~\ref{fig:los} illustrates the working of this mechanism.
 %
 \begin{figure}
 	\centering
@@ -376,15 +357,13 @@ Criterion one restricts the sight cone to $\frac{\pi}{4}$ radians; criterion two
 \end{figure}
 %
 If vertex $w$ falls into an agent's sight cone, it perceives $\pi(w)$ and the following:
-
 \begin{enumerate}
 	\item the agent or Wumpus on $w$ (excluding the agent's internal state),
 	\item the plant, it present,
 	\item the pit, if present, and
 	\item the amount of fruit, meat, and gold.
 \end{enumerate}
-
-The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion two in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it's in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.
+The breeze and the stench, being non-visual, are not thus perceived. As we can see from criterion 2 in Definition~\ref{def:los} and the formulae for breeze and stench in Definition~\ref{def:ssem}, sight reaches farther, but is directed. The non-visual cues can tell an agent that it is in danger, but not from which direction that danger comes. If that agent consequently fails to look around, it may be attacked or wander into a pit.
 
 \subsubsection{Cognition}
 
@@ -396,46 +375,46 @@ In order to achieve this, three things are indispensable: (1) memory, (2) utilit
 
 \paragraph{Design goals and dynamism.} As with the world, the cognitive structure of agents is a compromise between intricacy and simplicity. Ideally, we would make every aspect of an agent's thinking dynamic and malleable under evolution, but this would necessitate a prohibitively high implementation effort. Instead, based on the description of \emph{filters} in Section~\ref{sec:mathematicalModel}, we make the following compromise: the {\em evocation} of an emotion will be dynamic and different from agent to agent; the effects of emotions, however, will always be the same. As an example, different agents might become angry in different situations and to different degrees, but the behavioural consequences that follow from the emotion of anger will always be the same.
 
-\paragraph{Cognitive components.} Based on the considerations outlines in earlier sections, I propose that agents be made out of the following six components:
+\paragraph{Cognitive components.} Based on the considerations outlines in earlier sections, we propose that agents be made out of the following six components:
 
-\begin{description}
-	\item[Pre-social behaviour control (PSBC).] This controls aspects of an agents which, in principle, can work without other agents: fear, happiness, anger.  These emotions are evoked in social situations, but in principle, they would be useful in a world without any other agents present.
-	\item[Social judgement system (SJS).] Analogous to the \textsc{PSBC}, the \textsc{SJS} controls an agent's appraisal of other agents and thereby influences its decision-making.
-	\item[Belief generation (BG).] In essence, the imagination of an agent. belief generation allows reasoning and the internal simulation of parts of the world.
-	\item[Attention-control (AC).] Attention-control is the recognition of certain real or imaginary percepts as {\em important}, leading to the allocation of cognitive resources to them.
-	\item[Decision-making (DM)]. The executive component of an agent which includes both internal decision-making (IDM) --- {\em what to think} --- and external decision-making (EDM) --- {\em what to do}.
-	\item[Memory.] Memory is a log of imagined and real events that happened to an agent. This log is utilized chiefly by the \textsc{BG} with the goal of providing world data.
-\end{description}
+\begin{itemize}
+	\item \emph{Pre-social behaviour control \paren{PSBC}:} This controls aspects of an agents which, in principle, can work without other agents: fear, happiness, anger.  These emotions are evoked in social situations, but in principle, they would be useful in a world without any other agents present.
+	\item \emph{Social judgement system \paren{SJS}:} Analogous to the \textsc{PSBC}, the \textsc{SJS} controls an agent's appraisal of other agents and thereby influences its decision-making.
+	\item \emph{Belief generation \paren{BG}:} Belief generation describes, in essence, the imagination of an agent. It allows reasoning and the internal simulation of parts of the world.
+	\item \emph{Attention-control \paren{AC}:} Attention-control is the recognition of certain real or imaginary percepts as {\em important}, leading to the allocation of cognitive resources to them.
+	\item \emph{Decision-making \paren{DM}:} This component captures the executive function of an agent and includes both internal decision-making (IDM) --- {\em what to think} --- and external decision-making (EDM) --- {\em what to do}.
+	\item \emph{Memory:} Memory is a log of imagined and real events that happened to an agent. This log is utilised chiefly by the \textsc{BG} with the goal of providing world data.
+\end{itemize}
 
-As a side remark: these components make no claim to encompass the kind of intelligence humans have. In particular, there are no aesthetics, pure abstract reasoning,  purely self-centered emotions like grief or remorse, etc. Providing such mechanisms is, however, not the goal; we merely wish to make the agents complex enough to successfully navigate the world. For this purpose, a simple, social, and animalistic sort of intelligence suffices, one that, in complexity, is actually below even that of wolves an dogs.
+As a side remark, these components make no claim to encompass the kind of intelligence humans have. In particular, there are no aesthetics, pure abstract reasoning,  purely self-centered emotions like grief or remorse, etc. Providing such mechanisms is, however, not the goal her; we merely wish to make the agents complex enough to successfully navigate the world. For this purpose, a simple, social, and animalistic sort of intelligence suffices, one that, in complexity, is actually below even that of wolves and dogs.
 
 \paragraph{Pre-social behaviour control.} The \textsc{PSBC} is responsible for evoking the kinds of emotions that non-social animals have, in some form. Here ``pre-social'' does not refer to the current use of this system, but to its evolutionary history: past animals were able to experience anger and fear, or something analogous to anger and fear, before they developed social lives. The fight-or-flight instinct, and deciding when to engage in activity and when to abstain from it are necessary for survival even in solitary animals. A social system, of course, does impact these emotions, but a social system is not necessary for them to be there.
-We categorize the experienced emotions according to approach/avoidance and positivity/negativity, based on the work of Davidson and Irwin \cite{davidson1999}. The four combinations are:
+We categorise the experienced emotions according to approach/avoidance and positivity/negativity, based on the work of Davidson and Irwin \cite{davidson1999}. The four combinations are:
 
 \begin{enumerate}
 	\item Anger, which is approach-related and negative. Anger causes \action{attack}-actions against Wumpuses and other agents, and \action{gesture}-actions with parameters the agent deems to be aggressive.
-	\item Fear, which is avoidance-related and negative. Fear, causes flight and \action{gesture}-actions which the agent deems submissive.
+	\item Fear, which is avoidance-related and negative. Fear causes flight and \action{gesture}-actions which the agent deems submissive.
 	\item Enthusiasm, which is approach-related and positive. Enthusiasm has a wide range of effects: \action{gesture}-actions with positive contents, fatigue-inducing activity, and the gathering and sharing of resources with other agents.
 	\item Contentment, which is avoidance-related and positive. Contentment is concerned primarily with the conservation of resources. Its chief effect is thus the is the cessation of action.
 \end{enumerate}
 
-Figure~\ref{fig:PSBC} illustrates these four emotions. Each of them can be evoked with a {\em valence} $\in [-1,1]$. Higher-valence emotions exert a greater pressure on decision-making and attention control. The figure, with its two axes, should not mislead us into thinking that emotions are just vectors in $\R^2$. There is, for example, weak/intense enthusiasm and there is weak/intense contentment, but there is no emotion halfway between contentment and enthusiasm. It {\em is} possible that a stimulus should activate two emotions at once, but those will actually be two emotions, not one ``hybrid'' emotion.
+Figure~\ref{fig:PSBC} illustrates these four emotions. Each of them can be evoked with a {\em valence} within the interval $[-1,1]$. Higher-valence emotions exert a greater pressure on decision-making and attention control. The figure, with its two axes, should not mislead us into thinking that emotions are just vectors in $\R^2$. There is, for example, weak/intense enthusiasm and there is weak/intense contentment, but there is no emotion halfway between contentment and enthusiasm. It {\em is} possible that a stimulus should activate two emotions at once, but those will actually be two emotions, not one ``hybrid'' emotion.
 
-\begin{figure}[!h]
+\begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/PSBC}
 	\caption{Emotions evoked by the \textsc{PSBC}.The left half contains the positive emotions of enthusiasm and contentment, whereas the right contains the negative emotions of anger and fear. Enthusiasm and anger are both approach-related, causing action, whereas contentment and fear are approach-related, causing flight or abstinence from action.}
 	\label{fig:PSBC}
 \end{figure}
 
-In terms of implementation, this is realized via the system we saw in Figure~\ref{fig:affectiveSubsystem}, Section~\ref{sec:someImportantSubsystems}: each of the four emotions has a \emph{selector} reads percepts and the \emph{hormone storage}, using them to decide whether and how intensely to activate and emotion. Emotions, once active, flow into the \emph{hormone storage} and send messages into the global message space. The scheme is illustrated in Figure~\ref{fig:PSBC_system}: the filters of each emotions continually check the agent's percepts for relevant data. If a filter is activated, the message is passed the component's interpreter (to determine its urgency), which hands it to the processor. It then puts the message ``I feel emotion $E$ with intensity $\pi_E$'' into the message space. In this, it takes the \emph{hormone storage} into account: experiencing an emotion increases the corresponding hormone level, and, conversely, a high hormone level intensifies the emotion. Formally, the hormone storage is defined thus:
+In terms of implementation, this is realised via the system we saw in Figure~\ref{fig:affectiveSubsystem}, Section~\ref{sec:someImportantSubsystems}: each of the four emotions has a \emph{selector} that reads percepts and the \emph{hormone storage}, using them to decide whether and how intensely to activate an emotion. Emotions, once active, flow into the \emph{hormone storage} and send messages into the global message space. The scheme is illustrated in Figure~\ref{fig:PSBC_system}: the filters of each emotions continually check the agent's percepts for relevant data. If a filter is activated, the message is passed the component's interpreter (to determine its urgency), which hands it to the processor. It then puts the message ``I feel emotion $E$ with intensity $\pi_E$'' into the message space. In this, it takes the \emph{hormone storage} into account: experiencing an emotion increases the corresponding hormone level, and, conversely, a high hormone level intensifies the emotion. Formally, the hormone storage is defined thus:
 
 \begin{definition}[Hormone storage]
-	Let $E_1,\dots,E_n$ be the names of emotions. A hormone storage for the emotions $E_1,\dots,E_n$ is the ADT $\type{H}_n = \tuple{h_1 :: \R, \dots, h_n :: \R}$, together with the functions $\field{receive} :: \type{H}_n \rightarrow \N \rightarrow \R \rightarrow \type{H}_n$ and $\field{tick} :: \type{H}_n \rightarrow \type{H}_n$, given by
+	Let $E_1,\dots,E_n$ be the names of emotions. A \emph{hormone storage} for the emotions $E_1,\dots,E_n$ is the ADT $\type{H}_n = \tuple{h_1 :: \R, \dots, h_n :: \R}$, together with the functions $\field{receive} :: \type{H}_n \rightarrow \N \rightarrow \R \rightarrow \type{H}_n$ and $\field{tick} :: \type{H}_n \rightarrow \type{H}_n$, given by
 	
 	$$
 		\begin{array}{r c l}
-			\field{receive}\ h\ e\ \pi & = & 2\pi * \log_2(1-\field{get}\ h\ e)\\
+			\field{receive}\ h\ e\ \pi & = & 2\pi * \log_2(1-\field{get}\ h\ e),\\
 			\\
 			\field{tick}\ h & = & \langle \field{get}_1\ h - 2\log(\field{get}_1\ h),\\
 							 &   & \ \ \dots\\
@@ -446,35 +425,35 @@ In terms of implementation, this is realized via the system we saw in Figure~\re
 
 The idea is that hormone level increases and decreases logarithmically: whenever an agent receives a message about an experienced emotion $e$ with intensity $\pi$, the corresponding level $h_e$ is increased proportionally to $\pi$ and the logarithm of the current level. The levels also decay at each time step, returning the agent to a neutral state over time if no stimuli are experienced.
 
-One objection might be that, while an agent can experience conflicting emotions if multiple components are activated, different emotions cannot directly interact with each other. This is true; however, they can interact indirectly, through the message space: if a component $C_X$ reads the message of component $C_Y$ as a percept and, because of that, begins sending negatively-valenced messages, the emotion $X$ is effectively shutting down the emotion $Y$ --- even though the process is controlled by $C_Y$. I of course do not claim that this mechanism accurately reflects nature, that being an empirical question, but at the very least, it gives us a way to implement both ambivalence and quick mood changes.
+One objection might be that, while an agent can experience conflicting emotions if multiple components are activated, different emotions cannot directly interact with each other. This is true; however, they can interact indirectly, through the message space: if a component $C_X$ reads the message of component $C_Y$ as a percept and, because of that, begins sending negatively-valenced messages, the emotion $X$ is effectively shutting down the emotion $Y$ --- even though the process is controlled by $C_Y$. Of course, we do not claim that this mechanism accurately reflects nature, that being an empirical question, but at the very least, it gives us a way to implement both ambivalence and quick mood changes.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/PSBC_system}
-	\caption{The PSBC as a collection of a hormone storage and four emotion selectors. The neural components shown are {\em anger} ($\mathsf{A}$), {\em contentment} ($\mathsf{C}$), {\em enthusiasm} ($\mathsf{E}$), and {\em fear} ($\mathsf{F}$).}
+	\caption{The PSBC as a collection of a hormone storage and four emotion selectors. The neural components are {\em anger} ($\mathsf{A}$), {\em contentment} ($\mathsf{C}$), {\em enthusiasm}~($\mathsf{E}$), and {\em fear}~($\mathsf{F}$).}
 	\label{fig:PSBC_system}
 \end{figure}
 
-\paragraph{Social judgement system.} The SJS has the task of recognizing other agents as such and guiding friendly and hostile interactions with them. Real social behaviour is very complex and involves not only other agents as individuals, but the group itself. In the minds of tribal animals, the group exists as an entity unto itself, with its own will and mood. Our agents will not implement this group dynamic. Instead, they will appraise each other agent individually, according to three criteria:
+\paragraph{Social judgement system.} The social judgement system (SJS) has the task of recognizing other agents as such and guiding friendly and hostile interactions with them. Real social behaviour is very complex and involves not only other agents as individuals, but the group itself. In the minds of tribal animals, the group exists as an entity unto itself, with its own will and mood. Our agents will not implement this group dynamic. Instead, they will appraise each other agent individually, according to three criteria:
 
-\begin{description}
-	\item[Sympathy.] This determines how much an agent likes another one. Liked agents will receive friendly gestures, assistance in the form of food and protection from Wumpuses and hostile agents, disliked agents will be denied these benefits, receive hostile gestures and, if the dislike is sufficient, might be attacked.
-	\item[Trust.] The trustworthiness of another agent influences the likelihood of two things: (1) the propensity to give out items in the hope of future reciprocation and (2) the aggressiveness if protection from the agent is present. The reasoning here is that the agent will be emboldened by the presence of trusted allies.
-	\item[Competence.] Competence judges the capabilities of another agent. Competent agents will be respected, incompetent ones will be held in contempt. Similarly to trust, the presence of friendly, competent agents emboldens the agent.
-\end{description}
+\begin{itemize}
+	\item \emph{Sympathy:} This determines how much an agent likes another one. Liked agents will receive friendly gestures, assistance in the form of food and protection from Wumpuses and hostile agents, disliked agents will be denied these benefits, receive hostile gestures and, if the dislike is sufficient, might be attacked.
+	\item \emph{Trust:} The trustworthiness of another agent influences the likelihood of two things: (1) the propensity to give out items in the hope of future reciprocation and (2) the aggressiveness if protection from the agent is present. The reasoning here is that the agent will be emboldened by the presence of trusted allies.
+	\item \emph{Competence:} Competence judges the capabilities of another agent. Competent agents will be respected, incompetent ones will be held in contempt. Similarly to trust, the presence of friendly, competent agents emboldens the agent.
+\end{itemize}
 
 Sympathy is the primary axis of judgement, since it determines whether others are seen as friends or enemies. Trust and competence are secondary and help an agents ascertain the quality of its allies an enemies. The three criteria are illustrated in Figure~\ref{fig:SJS}. Figures~\ref{fig:SJS_enemy} and \ref{fig:SJS_friend} list the different antagonistic and sympathetic judgements.
 
 The evocative mechanism is structurally similar to that of the PSBC, as we saw in Figure~\ref{fig:PSBC_system}, but with two crucial differences: first, social judgements are always attached to agents; second, the SJS models each of these three categories as a single emotions which can be positive or negative --- that is, an agent cannot simultaneously experience trust and distrust for another one, but only a single emotion (trust). We see this system illustrated in Figure~\ref{fig:SJS_system}, which shows it to be largely analogous to the PSBC in Figure~\ref{fig:PSBC_system}.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/SJS}\\
 	\caption{Emotions evoked by the SJS. The primary is axis is sympathy/antipathy, since it distinguishes friend from foe. Trust/distrust judges the loyalty/honor of another agent, whereas respect/contempt judges its competence.}
 	\label{fig:SJS}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\begin{tabular}{c}
 	\textbf{\Large Enemy segment}\\
@@ -486,7 +465,7 @@ The evocative mechanism is structurally similar to that of the PSBC, as we saw i
 	\label{fig:SJS_enemy}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\begin{tabular}{c}
 	\textbf{\Large Friend segment}\\
@@ -498,18 +477,18 @@ The evocative mechanism is structurally similar to that of the PSBC, as we saw i
 	\label{fig:SJS_friend}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/SJS_system}
-	\caption{The SJS {\em for one other agent} as a collection of a hormone storage and three emotion selectors. The neural components shown are {\em sympathy} ($\mathsf{S}$), {\em trust} ($\mathsf{T}$), and {\em respect} ($\mathsf{R}$). Every agent which is encountered has its own SJS instance.}
+	\caption{The SJS {\em for one other agent} as a collection of a hormone storage and three emotion selectors. The neural components are {\em sympathy} ($\mathsf{S}$), {\em trust} ($\mathsf{T}$), and {\em respect} ($\mathsf{R}$). Every agent which is encountered has its own SJS instance.}
 	\label{fig:SJS_system}
 \end{figure}
 
 This system is a quite gross simplification of the real world. In reality, one does not simply possess an emotion called ``trust'', the value of which can go from -1 to +1, but rather, one possesses different kinds of trust, and trust with respect to different matters. One can, for instance, have a gut feeling that someone is generally unreliable and shady, but one can, through reason, come to the conclusion that this person will keep his word in a certain situation in which punishment would ensue. This does given an assurance of loyalty, but does not change the fundamentally negative appraisal of that person. Similarly, one can have judgements which seem to lie halfway between reason and emotion, and which pertain only to certain situations, such as trusting someone with money, with completing a task on time, or with one's child.
 
-Our agents will not implement the nuances of such concepts directly, but they won't completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
+Our agents will not implement the nuances of such concepts directly, but they will not completely neglect them either. As we will see in the sections about memory and the relationship between components, the two affective systems will make use of memory and imagination in order to deliver situational judgements. To stay with our example about trust: if an agent imagines a situation in which another was loyal, or remembers such an event, it will be able to judge that other agent as trustworthy (in that situation.)
 
-\paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilize learning and construct its own ontologies and ways of thinking from scratch, we will reuse the actual ontology of the Wumpus world and generate beliefs about future world-states with its \emph{semantics function} $\varphi$.
+\paragraph{Belief generation.} World-simulation is probably the most complex identifiable part of human cognition. Our version of it, therefore, will only be a minimalistic reproduction. Instead of constructing a system which is able to extensively utilise learning and construct its own ontologies and ways of thinking from scratch, we will reuse the actual ontology of the Wumpus world and generate beliefs about future world-states with its \emph{semantics function} $\varphi$.
 
 % a fixed ontology, and an existing reasoning tool called \dlvhex\ \cite{dlvhex}. \dlvhex\ is a solver for answer-set programming. Answer-sets are a specific kind of solutions to (disjunctive) logic programs, which are reasoning schemes that take both the presence and the absence of knowledge into account. Extensive descriptions can be found in \cite{lifschitz2008} and \cite{baral2003}. I will give the compressed definitions:
 
@@ -552,15 +531,15 @@ Our agents will not implement the nuances of such concepts directly, but they wo
 %
 %Answer-sets are thus the smallest sets of knowledge that we can derive, starting from the facts of a logic program. A variety of ASP tools exist besides \dlvhex, e.g.\ CLASP \cite{clasp}, GnT \cite{gnt}, and Platypus \cite{platypus}. The main advantage of \dlvhex\ over them is that it provides and implementation of the \acthex\ language\cite{acthex}, which extends logic programs with bidirectional access to the external world. Whenever \dlvhex finds a so annotated input atom, it queries an external information source; whenever it finds an action atom, it performs some specified IO action against. We will use this mechanism to implement the planner/world simulator loop between the ASP solver and the agent function.
 
-The agent generates the immediate future world-state by reconstructing a segment of the present world from the facts stored in its memory. This will result in an internal world that might contains less information than the external, real one, but the internal world will not contradict the external one on any fact. Importantly, a representation of the agent itself --- let us call it $\type{I}$ to distinguish it from the real agent --- will be a part of this generated world. The belief generator then reads each action that the decision-maker has proposed (see below), configures $\type{I}$ to perform it, and calls $\varphi$ to advance the time by one step. $\type{I}$ will perform its action, its consequences will be simulated by $\varphi$, and $\type{I}$ will receive corresponding perceptions. The belief generator then reads out $\type{I}$'s message space and inserts these messages into the real agent's message space. It has thus utilized the agent's memory and $\varphi$ to infer the consequences of certain actions to the best of the agent's knowledge.
+The agent generates the immediate future world-state by reconstructing a segment of the present world from the facts stored in its memory. This will result in an internal world that might contains less information than the external, real one, but the internal world will not contradict the external one on any fact. Importantly, a representation of the agent itself --- let us call it $\type{I}$ to distinguish it from the real agent --- will be a part of this generated world. The belief generator then reads each action that the decision-maker has proposed (see below), configures $\type{I}$ to perform it, and calls $\varphi$ to advance the time by one step. $\type{I}$ will perform its action, its consequences will be simulated by $\varphi$, and $\type{I}$ will receive corresponding perceptions. The belief generator then reads out $\type{I}$'s message space and inserts these messages into the real agent's message space. It has thus utilised the agent's memory and $\varphi$ to infer the consequences of certain actions to the best of the agent's knowledge.
 
-This simulated future world-state is then read out by the affective components, which emotionally evaluate it, as well as the decision-maker, which either proposes another action for the belief-generation to simulate, finalizes the plan if its satisfied with the predicted, or orders that a certain number of steps be retracted if the situation is deemed unfavourable. 
+This simulated future world-state is then read out by the affective components, which emotionally evaluate it, as well as the decision-maker, which either proposes another action for the belief-generation to simulate, finalises the plan if it is satisfied with the predicted, or orders that a certain number of steps be retracted if the situation is deemed unfavourable. 
 
 \paragraph{Memory.} While real-world memory is complex phenomenon, for expediency's sake, our agents will possess only a simple analogue to it, in the form of a private database of world data which they perceived in the past. These data are of type $\type{TV_{\mathrm{jun}}}$, $\type{TE_{\mathrm{jun}}}$, which were given in Definition~\ref{def:wjun}. We store them on a per-cell and per-edge basis and update them whenever we perceive them anew. This gives rise to the following definition:
 
 
 \begin{definition}
-	Let $\tuple{G,\mathrm{gl}}$ be a \wjun-type world and let $A$ be an agent. The memory database of $A$ is given has type
+	Let $\tuple{G,\mathrm{gl}}$ be a \wjun-type world and let $A$ be an agent. The memory database of $A$ has type
 	$$
 		\type{Memory} = \field{Memory}\ \type{(Map\ \mathnormal{V(G)}\ TV_{\mathrm{jun}})\ (Map\ \mathnormal{E(G)}\ TE_{\mathrm{jun}})}
 	$$
@@ -569,43 +548,41 @@ This simulated future world-state is then read out by the affective components, 
 	
 	$$
 		\begin{array}{r c l}
-			\field{store} & :: & \type{\wjun \rightarrow Memory \rightarrow Memory}\\
-			\field{retrieve_V} & :: & \type{Memory \rightarrow V(G) \rightarrow Maybe\ TV_{\mathrm{jun}}}\\
-			\field{retrieve_E} & :: & \type{Memory \rightarrow E(G) \rightarrow Maybe\ TE_{\mathrm{jun}}}\\
-			\field{retreive_A} & :: & \type{Memory \rightarrow String \rightarrow [Action]}
+			\field{store} & :: & \type{\wjun \rightarrow Memory \rightarrow Memory},\\
+			\field{retrieve_V} & :: & \type{Memory \rightarrow V(G) \rightarrow Maybe\ TV_{\mathrm{jun}}},\\
+			\field{retrieve_E} & :: & \type{Memory \rightarrow E(G) \rightarrow Maybe\ TE_{\mathrm{jun}}},\\
+			\field{retreive_A} & :: & \type{Memory \rightarrow String \rightarrow [Action]},
 		\end{array}
 	$$
 	
-	where $\field{store}$ updates the database with the edges and cells of the world which the agent can perceive. $\field{receive_V}$ and $\field{receive_E}$ return the values associated with a given cell or edge, provided that data for the given cell/edge is stored. $\field{receive_A}$ takes the name of an agent $B$ as a key and returns the list of actions $A$ has observed $B$ perform.
+	where $\field{store}$ updates the database with the edges and cells of the world which the agent can perceive; $\field{receive_V}$ and $\field{receive_E}$ return the values associated with a given cell or edge, provided that data for the given cell/edge is stored. The function $\field{receive_A}$ takes the name of an agent $B$ as a key and returns the list of actions $A$ has observed that $B$ performs.
 \end{definition}
 
-We should note that a number of justified criticisms can be levelled against it. For one, it does not deal with uncertain data that are either old, or were not inaccurately perceived. It only records past states, but not sequences of events. Most direly, it doesn't provide enough information to contextualise the actions of other agents. Suppose that $A$ observes $B$ attacking $C$. $A$ may infer that $B$ is powerful or aggressive, but the list of actions returned by $\field{retrieve_A}$ are not enough to construct a theory of mind for either $B$ or $C$. $A$ thus does not know whether $B$'s attack was revenge, opportunism, betrayal, or plain hostility.
+We should note that a number of justified criticisms can be levelled against it. For one, it does not deal with uncertain data that are either old, or were not inaccurately perceived. It only records past states, but not sequences of events. Most direly, it does not provide enough information to contextualise the actions of other agents. Suppose that $A$ observes $B$ attacking $C$. $A$ may infer that $B$ is powerful or aggressive, but the list of actions returned by $\field{retrieve_A}$ are not enough to construct a theory of mind for either $B$ or $C$. $A$ thus does not know whether $B$'s attack was revenge, opportunism, betrayal, or plain hostility.
 
-Nonetheless, this database is valuable for the agent. $\field{retrieve_V}$ and $\field{retrieve_E}$ can provide actionable information about the static aspects of the world such as the location of plants or dangerous paths. Even the information about its changing aspects, such as the location of wumpuses, will be reasonably good, since wumpuses, in the absence of agents, tend to stay in place over time\footnote{They approximately perform 2-dimensional random walks over time. The expectation $\mathsf{E}(W)$ of a random walk is the null-vector $\tuple{0,0,\dots,0}$. Given that they have a disproportionately high chance of just staying in place, depending on light conditions, their positions are even quite densely clustered around that.}.
+Nonetheless, this database is valuable for the agent. The functions $\field{retrieve_V}$ and $\field{retrieve_E}$ can provide actionable information about the static aspects of the world such as the location of plants or dangerous paths. Even the information about its changing aspects, such as the location of wumpuses, will be reasonably good, since wumpuses, in the absence of agents, tend to stay in place over time\footnote{They approximately perform 2-dimensional random walks over time. The expectation $\mathsf{E}(W)$ of a random walk is the null-vector $\tuple{0,0,\dots,0}$. Given that they have a disproportionately high chance of just staying in place, depending on light conditions, their positions are even quite densely clustered around that.}.
 
-\paragraph{Attention-control.} Attention-control serves as an prioritisation mechanism for the decision-making process. In addition to the emotional evaluation of the whole of the agent's perceptions, we also group incoming messages by cell and evaluate each of those groups separately to determine which locations in the world evoke the strongest emotions. We thereby have a method of prioritising cells and tasks that require immediate attention and to prevent, colloquially speaking, aimless deliberation on unimportant ones.
+\paragraph{Attention-control.} Attention-control serves as a prioritisation mechanism for the decision-making process. In addition to the emotional evaluation of the whole of the agent's perceptions, we also group incoming messages by cell and evaluate each of those groups separately to determine which locations in the world evoke the strongest emotions. We thereby have a method of prioritising cells and tasks that require immediate attention and to prevent, colloquially speaking, aimless deliberation on unimportant ones.
 
 For our agents, paying attention means to focus on a cell and making it the target of its decision-making. The cell can be another one with say, food or a Wumpus on it, or it can be the agent's own cell, which would be important in case of low health, say.
 
 The AC component then emits messages of type $\type{EmotionOnCell}$ and is modelled via the functions
-
 $$
 	\begin{array}{r c l}
-		\type{Cell} & = & \type{\tuple{\N,\N}}\\
+		\type{Cell} & = & \type{\tuple{\N,\N}},\\
 		
-		\type{EmotionName} & = & \type{Anger + Fear + Enthusiasm + Contentment}\\
+		\type{EmotionName} & = & \type{Anger + Fear + Enthusiasm + Contentment},\\
 		
-		\type{EmotionOnCell} & = & \type{EmotionOnCell\ Cell\ EmotionName\ \R}\\
+		\type{EmotionOnCell} & = & \type{EmotionOnCell\ Cell\ EmotionName\ \R},\\
 		
 		\\
 	
-		\field{attention} & :: & \type{s \rightarrow \wjun \rightarrow [EmotionOnCell]}\\
+		\field{attention} & :: & \type{s \rightarrow \wjun \rightarrow [EmotionOnCell]},\\
 		
-		\field{ac} & :: & \type{s \rightarrow \wjun \rightarrow s}\\
+		\field{ac} & :: & \type{s \rightarrow \wjun \rightarrow s},\\
 	\end{array}
 $$
-
-where $\type{s}$ is the internal state of the agent. $\field{ac}$ is just a wrapper around $\field{attention}$ which puts the latter's message into the agent's message space.
+where $\type{s}$ is the internal state of the agent. The function $\field{ac}$ is just a wrapper around $\field{attention}$ which puts the latter's message into the agent's message space.
 
 We should note that the AC does not prescribe any specific action in relation to a cell or an emotion. Its role thus merely consists of noticing, so to speak, emotionally important places in the world and to communicate these to the DM which uses the AC's messages to guide its own planning process, described in detail below. The general scheme consists of selecting the globally most strongly felt emotion and then going through the messages of the AC, in descending order according to that most strongly felt emotion, and seeing what actions it might take.
 
@@ -613,37 +590,36 @@ We should note that the AC does not prescribe any specific action in relation to
 $$
 	\field{choice} :: \type{s \rightarrow \wjun \rightarrow \tuple{Action, s}}
 $$
-
-where $\type{s}$ is the internal state of the agent. $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Enumeration~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. $\field{choice}$ is wrapped into another function
+where $\type{s}$ is the internal state of the agent. The function $\field{choice}$ evaluates a world and the previous state of the agent and then gives a new internal state, together with a proposed action from the list in Definition~\ref{lst:agentBehavior} --- that is, one of the following: \action{move}, \action{rotate}, \action{attack}, \action{give}, \action{gather}, \action{butcher}, \action{collect}, \action{eat}, \action{gesture}. The function $\field{choice}$ is wrapped into another function
 
 $$
 \field{dm} :: \type{s \rightarrow \wjun \rightarrow s}
 $$
 
 
-which inserts the messages of $\field{choice}$ into the agent's message space. If $\field{choice}$ non-imaginary action, its is marked accordingly. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick no longer consulted until the next one.
+which inserts the messages of $\field{choice}$ into the agent's message space. If $\field{choice}$ non-imaginary action, its is marked accordingly. The actions proposed by the internal decision-making component (IDM) are instructions for the BG and, in principle, can go on as long as the agent wishes to deliberate. Those of the external decision-maker are translated into the real world. Once the simulation program receives the return value of an agent's EDM, that agent is done, so to speak: it has performed its action for that tick and is no longer consulted until the next one.
 
 An agent's decision-making begins by observing the intensity of each of its four emotions (anger, fear, enthusiasm, contentment), and choosing the most intensely felt as its {\em dominant emotion}. The agent then evaluates each cell it perceives separately to determine which evokes its dominant emotion most strongly --- as described above, this cell is then designated the {\em target} of its planning in the current step, and we select one of the actions appropriate to the dominant emotion and the target. Each emotion has associated with it the following set of hard-wired --- instinctive, if you will --- actions:
 
-\begin{description}
-	\item[Anger.] Moving/rotating towards the target, sending a hostile gesture, and attacking.
-	\item[Fear.] Moving away from the target.
-	\item[Enthusiasm.] Moving/rotating towards the target, sending a friendly gesture, giving an item, collecting an item, harvesting a plant.
-	\item[Contentment.] Doing nothing, i.e.\ resting.
-\end{description}
+\begin{itemize}
+	\item \emph{Anger:} moving/rotating towards the target, sending a hostile gesture, and attacking;
+	\item \emph{Fear:} moving away from the target;
+	\item \emph{Enthusiasm:} moving/rotating towards the target, sending a friendly gesture, giving an item, collecting an item, harvesting a plant;
+	\item \emph{Contentment:} doing nothing, i.e.,\ resting.
+\end{itemize}
 
-If the dominant emotion is sufficiently strong, the chosen action is communicated directly to the EDM. Otherwise, the it is marked as hypothetical and remains within the IDM, where its consequences can be evaluated by the belief generator and the whole process can repeat.
+If the dominant emotion is sufficiently strong, the chosen action is communicated directly to the EDM. Otherwise, it is marked as hypothetical and remains within the IDM, where its consequences can be evaluated by the belief generator and the whole process can repeat.
 
-Lastly, we note the corner case of no one emotion being sufficiently strong to serve as the dominant one. In this case, the agent judges that nothing need be done and forgoes the planning process altogether, delivering a \action{nothing}-action instead.
+Lastly, we note the corner case of no emotion being sufficiently strong to serve as the dominant one. In this case, the agent judges that nothing need be done and forgoes the planning process altogether, delivering a \action{nothing}-action instead.
 
-\subparagraph{Finalizing and aborting plans.} Once an agent begins taking hypothetical actions, it will continue to do so until its dominant emotion drops sufficiently --- we conceive of this event as the emotion being satisfied, in which case we begin executing the first step of the plan --- or until a conflicting emotion becomes stronger, in which case we retract a random number of steps from the plan and continue evaluating hypothetical actions. This entire process is subject to an upper bound which decreases each time a new hypothetical action is proposed. Should the agent not commit to a plan before this bound reaches, 0, it simply terminates the process and takes whatever action is associated with its dominant emotion.
+\paragraph{Finalizing and aborting plans.} Once an agent begins taking hypothetical actions, it will continue to do so until its dominant emotion drops sufficiently --- we conceive of this event as the emotion being satisfied, in which case we begin executing the first step of the plan --- or until a conflicting emotion becomes stronger, in which case we retract a random number of steps from the plan and continue evaluating hypothetical actions. This entire process is subject to an upper bound which decreases each time a new hypothetical action is proposed. Should the agent not commit to a plan before this bound reaches, 0, it simply terminates the process and takes whatever action is associated with its dominant emotion.
 
 From the affective subsystem, the BG, and the DM, we can thus put together the imagination simulator loop described in previous chapters. In Figure~\ref{fig:cognitive_system_dm}, we see the DM issuing commands to the BG, which generates data for the affective systems and the IDM. The affective systems treat this data as if it were coming from the external world and generate affective messages, which are consumed by the IDM and inform its commands to the BG.
 
-\begin{figure}
+\begin{figure}[t]
 	\centering
-	\input{Figs/Tikz/cognitive_system_dm}
-	\caption{Imagination loop, influenced by affect. The edge labels denote the type of signal: $\alpha$ for affective information, $\delta$ for control signals, $\varphi_{\mathrm{cf}}$ for imagined perceptions.}
+	\includegraphics[width=0.5\textwidth]{Figs/Tikz/cognitive_system_dm}
+	\caption{Imagination loop, influenced by affect. The edge labels denote the type of signal: $\alpha$ for affective information, $\delta$ for control signals, and $\varphi_{\mathrm{cf}}$ for imagined perceptions.}
 	\label{fig:cognitive_system_dm}
 \end{figure}
 
@@ -655,20 +631,20 @@ The third part of the system is the attention-control, which also evaluates real
 
 \begin{figure}
 	\centering
-	\input{Figs/Tikz/cognitive_system}
-	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in coloured boxes. The PSBC and the SJS comprise the affective group; the DM and BG the imagination loop responsible for planning. The BG, with External perception, makes up the perception system. As in the previous figure, the edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (imagined) perceptions, $\delta$ for control signals. IO corresponds to real actions in the world.}
+	\includegraphics[width=0.8\textwidth]{Figs/Tikz/cognitive_system}
+	\caption{High-level view of the cognitive structure of agents, with groups of systems shown in coloured boxes. The PSBC and the SJS comprise the affective group; the DM and BG the imagination loop responsible for planning. The BG, with external perception, makes up the perception system. As in the previous figure, the edge labels show which kind of message the system sends out: $\alpha$ for affective information, $\varphi$ and $\varphi_{\mathrm{cf}}$ for (imagined) perceptions, and $\delta$ for control signals. IO corresponds to real actions in the world.}
 	\label{fig:cognitive_system}
 \end{figure}
 
 We now have all the pieces we need to create the agent function $\field{agent}$:
 
 \begin{definition}[Agent function]
-	Let $S$ be a type. Then an agent function with internal data of type $S$ has type
+	Let $S$ be a type. Then an \emph{agent function} with internal data of type $S$ has type
 	$$
-		\field{agent}\ :: \type{\wjun \rightarrow S \rightarrow \tuple{S, Action}}.
+		\field{agent}\ :: \type{\wjun \rightarrow S \rightarrow \tuple{S, Action}}
 	$$
 	
-	That is, $\field{agent}$ takes the current world and its current internal state, and returns its new internal state, together with the action it wishes to perform. $\field{agent}$ is defined as:
+	and $\field{agent}$ is defined as:
 	
 	$$
 		\begin{array}{l}
@@ -678,38 +654,40 @@ We now have all the pieces we need to create the agent function $\field{agent}$:
 								   & \circ\ \field{head}\\
 								   & \circ\ \field{dropWhile}\ \field{noResult}\\
 								   & \circ\ \field{iterate}\ \field{loop}\\
-								   & \circ\ \field{perception}\ w\\
+								   & \circ\ \field{perception}\ w,\\
 			\end{array}\\
 			\quad \quad \mt{where}\\
-			\quad \quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S}\\
-			\quad \quad \quad \field{psbc}, \field{sjs}, \field{ac}, \field{dm}, \field{bg} :: \type{S \rightarrow S}\\
+			\quad \quad \quad \field{perception} :: \type{\wjun \rightarrow S \rightarrow S},\\
+			\quad \quad \quad \field{psbc}, \field{sjs}, \field{ac}, \field{dm}, \field{bg} :: \type{S \rightarrow S},\\
 			\\
-			\quad \quad \quad \field{loop} :: \type{S \rightarrow S}\\
-			\quad \quad \quad \field{loop} = \field{memory} \circ \field{bg} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc}\\
+			\quad \quad \quad \field{loop} :: \type{S \rightarrow S},\\
+			\quad \quad \quad \field{loop} = \field{memory} \circ \field{bg} \circ \field{dm} \circ \field{ac} \circ \field{sjs} \circ \field{psbc},\\
 			\\
-			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe\ Action}\\
-			\quad \quad \quad \field{noResult} = \field{not} \circ \field{isJust} \circ \field{getActionMessage}\\
+			\quad \quad \quad \field{getActionMessage} :: \type{S \rightarrow Maybe\ Action},\\
+			\quad \quad \quad \field{getActionMessage}\ S = \textnormal{the first message in the message-space of $S$}\\ \hspace{5.35cm} \textnormal{which is a non-imaginary action},\\
+			\quad \quad \quad \field{noResult} :: \type{S \rightarrow Bool},\\
+			\quad \quad \quad \field{noResult} = \field{not} \circ \field{isJust} \circ \field{getActionMessage},\\
 			\\
-			\quad \quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]}\\
-			\quad \quad \quad \field{iterate}\ f\ x = x : \field{iterate}(f x,x)\\
+			\quad \quad \quad \field{iterate} :: \type{(a \rightarrow a) \rightarrow a \rightarrow [a]},\\
+			\quad \quad \quad \field{iterate}\ f\ x = x : \field{iterate}(f x,x),\\
 			\\
-			\quad \quad \quad \field{dropWhile} :: \type{(a \rightarrow Bool) \rightarrow [a] \rightarrow [a]}\\
+			\quad \quad \quad \field{dropWhile} :: \type{(a \rightarrow Bool) \rightarrow [a] \rightarrow [a]},\\
 			\quad \quad \quad \field{dropWhile}\ p\ xs  = \left\{
 				\begin{array}{l l}
-					h : \field{dropWhile}\ p\ t & \mt{if } xs = (h:t) \wedge (p\ h = \type{True})\\
-					xs & \mt{otherwise}\\
+					h : \field{dropWhile}\ p\ t & \mt{if } xs = (h:t) \wedge (p\ h = \type{True}),\\
+					xs & \mt{otherwise}.\\
 				\end{array}
 			\right.\\
 		\end{array}
 	$$
-	
-	\noindent
-	Note: $\circ$ is function concatenation; the list of functions in $\field{agent}$ has to be read bottom-to-top.
 \end{definition}
+
+That is, $\field{agent}$ takes the current world and its current internal state, and returns its new internal state, together with the action it wishes to perform. Note that $\circ$ is function concatenation; the list of functions in $\field{agent}$ has to be read bottom-to-top.
 
 This agent function can now be plugged into the standard semantics we defined back in Definition~\ref{def:ssem}: the function $\ssem$ calls every agent with the world and its last internal state and receives a new internal agent state, together with the action the agent has chosen to perform at that time step.
 
-
+\section{Implementation Details}
+A prototype implementation of the agent architecture was written in Haskell and can be downloaded from the URL \url{https://github.com/jtapolczai/wumpus}. The test worlds discussed in the next chapter, as well as functions to randomly generate new worlds, are included in it.
 
 
 

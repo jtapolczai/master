@@ -32,7 +32,7 @@ However, as we will show in the next section, this model is generic enough to ac
 
 \paragraph{Messages.}
 
-We may now ask how such messages between components are structured. Here, I make two empirical claims:
+We may now ask how such messages between components are structured. Here, we make two empirical claims:
 \begin{enumerate}
 	\item messages have a priority and
 	\item they are effectively unstructured.
@@ -409,10 +409,11 @@ This definition intends to roughly convey the notion of neuroplasticity, as used
 
 \subsection{Invariants}
 
-Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is discussed by Sander et al.\ \cite{DBLP:journals/nn/SanderGS05} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components.
+Such a model does not necessitate the existence of special structures, such as central organizers or sequences of components, one activated after another,\footnote{An example of such a sequence is discussed by Sander et al.\ \cite{DBLP:journals/nn/SanderGS05} where the authors model the emotion process as a four-step pipeline of relevance, implication, coping and normative significance.} but it does not preclude them either. In fact, we can enforce certain features via first-order invariants. For example, a central organizing units for the components $C_1,\dots,C_n$ can be emulated by a component $C_{co}$ which accepts messages and transforms them into an appropriate format for the some other components. Figure~\ref{fig:centralOrganizer} depicts such an organiser, and Invariant~\ref{inv:centralOrganiser} gives a symbolic definition.
 
 \begin{invariant}[Central organiser]
 	\label{inv:centralOrganiser}
+	Let $C_1,\dots,C_n, C_{co}$ be components, with $C_1,\dots,C_n$ being \emph{peripheral components} and $C_{co}$ being the the \emph{central organiser}. Then, the invariant encoding that $C_1,\dots,C_n$ communicate with each other by sending messages via the central organiser $C_{co}$ is
 	$$
 	\begin{array}{l}
 	[\forall i \in \{1\dots,n\}] [\forall m]:\\
@@ -421,11 +422,11 @@ Such a model does not necessitate the existence of special structures, such as c
 	$$
 \end{invariant}
 
-Figure~\ref{fig:centralOrganizer} depicts such an organiser, and Invariant~\ref{inv:centralOrganiser} gives a symbolic definition. In words, the invariant states that, for all messages $m$, if one of the peripheral components $C_1,\dots,C_n$ emits $m$, then the central component $C_{co}$ must receive it. In addition, at least one peripheral component must be able to receive each message which the central component $C_{co}$ outputs.
-
-Similarly, sequences can be created by components $C_{1},\dots,C_{n}$, where each components reads the message of the last one. We see such an invariant depicted in Figure~\ref{fig:c_sequence} and formally described in Invariant~\ref{inv:cSequence}. The invariant simply states that the messages sent by a component $C_{i-1}$ can only be received by the next component $C_i$.
+Similarly, sequences can be created by components $C_{1},\dots,C_{n}$, where each components reads the message of the last one. We see such an invariant depicted in Figure~\ref{fig:cSequence} and formally described in Invariant~\ref{inv:cSequence}.
 
 \begin{invariant}[Sequence]
+	\label{inv:cSequence}
+	Let $C_1,\dots,C_n$ be components. Then, the invariant encoding that, for $1 \leq i < n$, a component $C_i$ may only send messages to the next component $C_{i+1}$ is
 	$$
 	[\forall i \in \{2\dots,n\}]:\ \rec{C_{i-1}} = \{C_i\}.
 	$$

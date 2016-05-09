@@ -45,12 +45,12 @@ To evaluate the general fitness of our architecture, we placed one or two agents
 \begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/evalWorld1}
-	\caption{The world of Scenario 1. In the South, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
+	\caption{The world of Scenario 1. In the south, we have a single agent labelled $A$. The green squares labelled $P$ indicate plants.}
 	\label{fig:evalWorld1}
 \end{figure}
 
 \begin{lstlisting}[caption=Actions in Scenario 1., label=lst:evalWorld1, float=t]
-A at (2,0) moved North to (2,1).
+A at (2,0) moved north to (2,1).
 A at (2,1) harvested a plant.
 A at (2,1) ate fruit.
 A at (2,1) did nothing.
@@ -60,11 +60,11 @@ A at (2,1) did nothing.
 \paragraph{Scenario 2: Harvesting all plants.} This scenario was identical to the previous one, save for the agent's health, which was set at 0.1. Very close to dying, we expected the agent to harvest both plants and eat both fruits in succession to increase its health above 1. We see the actions of the agent in Listing~\ref{lst:evalWorld2}. The agent again performed according to our expectations.
 
 \begin{lstlisting}[caption=Actions in Scenario 2., label=lst:evalWorld2, float=t]
-A at (2,0) moved North to (2,1).
+A at (2,0) moved north to (2,1).
 A at (2,1) harvested a plant.
 A at (2,1) ate fruit.
-A at (2,1) moved North to (2,2).
-A at (2,2) moved North to (2,3).
+A at (2,1) moved north to (2,2).
+A at (2,2) moved north to (2,3).
 A at (2,3) harvested a plant.
 A at (2,3) ate fruit.
 A at (2,3) did nothing.
@@ -86,15 +86,15 @@ A at (2,2) did nothing.
 \begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/evalWorld4}
-	\caption{The world of Scenario 4. In the South, we have a single agent labelled $A$. To its north, we have wounded Wumpus labelled $W$.}
+	\caption{The world of Scenario 4. In the south, we have a single agent labelled $A$. To its north, we have wounded Wumpus labelled $W$.}
 	\label{fig:evalWorld4}
 \end{figure}
 
 \begin{lstlisting}[caption=Actions in Scenario 4., label=lst:evalWorld4, float=t]
-W at (2,3) moved South to (2,2).
-A at (2,0) moved North to (2,1).
-A at (2,1) attacked w1 to its North.
-A at (2,1) moved North to (2,2).
+W at (2,3) moved south to (2,2).
+A at (2,0) moved north to (2,1).
+A at (2,1) attacked w1 to its north.
+A at (2,1) moved north to (2,2).
 A at (2,2) picked up meat.
 A at (2,2) ate meat.
 A at (2,2) did nothing.
@@ -106,13 +106,13 @@ A at (2,2) did nothing.
 \begin{figure}[t]
 	\centering
 	\input{Figs/Tikz/evalWorld5}
-	\caption{The world of Scenario 5. In the South, we have a single agent labelled $A$. To its north we have a cell with two pieces of meat, labelled $2M$, and another cell with 3 pieces of fruit, labelled $3F$.}
+	\caption{The world of Scenario 5. In the south, we have a single agent labelled $A$. To its north we have a cell with two pieces of meat, labelled $2M$, and another cell with 3 pieces of fruit, labelled $3F$.}
 	\label{fig:evalWorld5}
 \end{figure}
 
 \begin{lstlisting}[caption=Actions in Scenario 5., label=lst:evalWorld5, float=t]
-A at (2,0) moved North to (2,1).
-A at (2,1) moved North to (2,2).
+A at (2,0) moved north to (2,1).
+A at (2,1) moved north to (2,2).
 A at (2,2) picked up meat.
 A at (2,2) ate meat.
 A at (2,2) ate meat.
@@ -130,34 +130,34 @@ A at (2,2) did nothing.
 \end{figure}
 
 \begin{lstlisting}[caption=Actions of an agent with the personality $\personality{W}{W}{W}{W}{F}$ in Scenario 6., label=lst:evalWorld61, float=t]
-   A at (2,0) moved North to (2,1).
-   W1 at (2,3) moved South to (2,2).
-   W2 at (2,7) moved South to (2,6).
-   A at (2,1) attacked W1 to its North.
-   W2 at (2,6) moved South to (2,5).
-   A at (2,1) moved North to (2,2).
-   W2 at (2,5) moved South to (2,4).
-   A at (2,2) moved South to (2,1).
-   W2 at (2,4) moved South to (2,3).
-   A at (2,1) moved South to (2,0).
-   W2 at (2,3) moved South to (2,2).
+   A at (2,0) moved north to (2,1).
+   W1 at (2,3) moved south to (2,2).
+   W2 at (2,7) moved south to (2,6).
+   A at (2,1) attacked W1 to its north.
+   W2 at (2,6) moved south to (2,5).
+   A at (2,1) moved north to (2,2).
+   W2 at (2,5) moved south to (2,4).
+   A at (2,2) moved south to (2,1).
+   W2 at (2,4) moved south to (2,3).
+   A at (2,1) moved south to (2,0).
+   W2 at (2,3) moved south to (2,2).
    A at (2,0) did nothing.
-   W2 at (2,2) moved South to (2,1).
+   W2 at (2,2) moved south to (2,1).
    A at (2,0) did nothing.
-   W2 at (2,1) attacked A to its South.
+   W2 at (2,1) attacked A to its south.
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Actions of an agent with the personality $\personality{S}{W}{S}{W}{F}$ in Scenario 6., label=lst:evalWorld62, float=t]
-   A at (2,0) moved North to (2,1).
-   W1 at (2,3) moved South to (2,2).
-   W2 at (2,7) moved South to (2,6).
-   A at (2,1) attacked W2 to its North.
-   W2 at (2,6) moved South to (2,5).
-   A at (2,1) moved North to (2,2).
-   W2 at (2,5) moved South to (2,4).
+   A at (2,0) moved north to (2,1).
+   W1 at (2,3) moved south to (2,2).
+   W2 at (2,7) moved south to (2,6).
+   A at (2,1) attacked W2 to its north.
+   W2 at (2,6) moved south to (2,5).
+   A at (2,1) moved north to (2,2).
+   W2 at (2,5) moved south to (2,4).
    A at (2,2) picked up meat.
-   W2 at (2,4) moved South to (2,3).
-   A at (2,2) attacked W2 to its North.
+   W2 at (2,4) moved south to (2,3).
+   A at (2,2) attacked W2 to its north.
 \end{lstlisting}
 
 \paragraph{Scenario 7: Searching for food.} We placed an agent with 0.5 health into a world with one pile of fruit outside of its sight cone. This scenario was interesting because, while the goal was clear, there was no obvious series of actions which the agent was supposed to take, nor was a goal immediately obvious. We expected it to search its surroundings in search of a source of food. The world is shown in Figure~\ref{fig:evalWorld7} and the results in Listing~\ref{lst:evalWorld7}. It should be noted that the agent's actions are largely random, as agents may randomly select a possible action if several equally beneficial are possible. As we can see, the results were somewhat unsatisfying. While the agent did eventually find the food, it spent many round aimlessly wandering and turning around. Due to the lack of any dedicated algorithm responsible for exploration and the lack of stimuli to guide it, the agent essentially moved around randomly until it eventually stumbled upon the cell with meat on it.
@@ -170,26 +170,26 @@ A at (2,2) did nothing.
 \end{figure}
 
 \begin{lstlisting}[caption=Actions in Scenario 7., label=lst:evalWorld7, float=t]
-A at (3,0) moved North to (3,1).
-A at (3,1) turned West.
-A at (3,1) moved West to (2,1).
-A at (2,1) moved West to (1,1).
-A at (1,1) moved West to (0,1).
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) turned South.
-A at (0,1) turned North.
-A at (0,1) moved East to (1,1).
-A at (1,1) moved East to (2,1).
-A at (2,1) moved North to (2,2).
-A at (2,2) moved North to (2,3).
-A at (2,3) moved North to (2,4).
-A at (2,4) moved North to (2,5).
-A at (2,5) moved East to (3,5).
-A at (3,5) moved North to (3,6).
-A at (3,6) moved North to (3,7).
+A at (3,0) moved north to (3,1).
+A at (3,1) turned west.
+A at (3,1) moved west to (2,1).
+A at (2,1) moved west to (1,1).
+A at (1,1) moved west to (0,1).
+A at (0,1) turned south.
+A at (0,1) turned north.
+A at (0,1) turned south.
+A at (0,1) turned north.
+A at (0,1) turned south.
+A at (0,1) turned north.
+A at (0,1) moved east to (1,1).
+A at (1,1) moved east to (2,1).
+A at (2,1) moved north to (2,2).
+A at (2,2) moved north to (2,3).
+A at (2,3) moved north to (2,4).
+A at (2,4) moved north to (2,5).
+A at (2,5) moved east to (3,5).
+A at (3,5) moved north to (3,6).
+A at (3,6) moved north to (3,7).
 A at (3,7) picked up meat.
 A at (3,7) ate meat.
 A at (3,7) did nothing.
@@ -206,28 +206,28 @@ A at (3,7) did nothing.
 
 \begin{lstlisting}[caption=Actions in Scenario 8 when both agents had the personality $\personality{W}{W}{W}{W}{F}$., label=lst:evalWorld81, float=t]
 A at (2,0) ate fruit.
-B at (2,4) moved South to (2,3).
+B at (2,4) moved south to (2,3).
 A at (2,0) did nothing.
-B at (2,3) moved South to (2,2).
+B at (2,3) moved south to (2,2).
 A at (2,0) did nothing.
-B at (2,2) moved South to (2,1).
+B at (2,2) moved south to (2,1).
 A at (2,0) did nothing.
-B at (2,1) gestured 'love' to A to its South.
+B at (2,1) gestured 'love' to A to its south.
 A at (2,0) did nothing.
-B at (2,1) gestured 'love' to A to its South.
+B at (2,1) gestured 'love' to A to its south.
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Actions in Scenario 8 when both agents had the personality $\personality{W}{W}{S}{W}{F}$., label=lst:evalWorld82, float=t]
-A at (2,0) moved North to (2,1).
-B at (2,4) moved South to (2,3).
-A at (2,1) moved North to (2,2).
-B at (2,3) gestured 'love' to 1 to its South.
-A at (2,2) gave meat to 2 to its North.
-B at (2,3) gestured 'love' to 1 to its South.
-A at (2,2) gestured 'love' to 2 to its North.
-B at (2,3) gave meat to 1 to its South.
-A at (2,2) gestured 'love' to 2 to its North.
-B at (2,3) gestured 'love' to 1 to its South.
+A at (2,0) moved north to (2,1).
+B at (2,4) moved south to (2,3).
+A at (2,1) moved north to (2,2).
+B at (2,3) gestured 'love' to 1 to its south.
+A at (2,2) gave meat to 2 to its north.
+B at (2,3) gestured 'love' to 1 to its south.
+A at (2,2) gestured 'love' to 2 to its north.
+B at (2,3) gave meat to 1 to its south.
+A at (2,2) gestured 'love' to 2 to its north.
+B at (2,3) gestured 'love' to 1 to its south.
 \end{lstlisting}
 
 \subsubsection{Results}
@@ -674,38 +674,6 @@ In addition to recording the raw numbers, we also calculated their averages by p
 		}}
 \end{table}
 
-\begin{table}
-	\centering
-	\begin{tabular}{ l | c | c }
-		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
-		\hline
-			Anger & 254.5 & 234.375\\
-			Fear & 244.688 & 244.188\\
-			Enthusiasm & 84.75 & 404.125\\
-			Contentment & 255.375 & 233.5\\
-			Hostility & 251.375 & 237.5\\
-		\hline
-	\end{tabular}
-	\caption{Average number of gestures sent, by personality fragment.}
-	\label{tab:numGesturesAvg}
-\end{table}
-
-\begin{table}
-	\centering
-	\begin{tabular}{ l | c | c }
-		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
-		\hline
-			Anger & 15.625 & 14.563\\
-			Fear & 14.5 & 15.688\\
-			Enthusiasm & 13.813 & 16.38\\
-			Contentment & 17.375 & 12.813\\
-			Hostility & 14.688 & 15.5\\
-		\hline
-	\end{tabular}
-	\caption{Average number items eaten, by personality fragment.}
-	\label{tab:numMealsAvg}
-\end{table}
-
 \paragraph{Surviving Wumpuses.} We see the absolute number of surviving Wumpuses and the averages in Tables~\ref{tab:numWumpuses}~and~\ref{tab:numWumpusesAvg}. Similarly to the number of meat gifts given, we see that strong anger, weak fear and low contentment all led to more Wumpuses being killed. Enthusiasm and hostility somewhat increased the Wumpuses' chances of survival --- here we might hypothesise that agents with strong enthusiasm spent more time gathering fruit and engaging in interactions with other agents, and that hostile agents spent more time attacking each other than they spent attacking Wumpuses.
 
 \paragraph{Surviving agents.} The absolute and average number of surviving agents are listed in Tables~\ref{tab:numAgents}~and~\ref{tab:numAgentsAvg}. While all other metrics were important as well, in the end, survival by whatever means is the measure of success in our evaluation. While all personality types managed to survive reasonable well, we can see significant differences between them. In Table~\ref{tab:numAgentsAvg}, we can see that agents with weak anger survived better than those with strong anger, as did agents with strong fear. This does make sense, as fighting was a dangerous tactic, despite the meat with which it provided the victor. High enthusiasm had a moderately beneficial effect on survival, which again makes sense, as it is associated with low-cost, high-reward behaviour like the gathering of food and items and the sending of friendly gestures that might lead to gifts in the future. Contentment had relatively little effect and hostility actually increased survival. The case of hostility is somewhat odd, as we would have expected friendliness to have the same beneficial effect that enthusiasm in general had, but it seems that not being too friendly by perhaps giving away all of one's inventory to others might also be advantageous.
@@ -820,6 +788,7 @@ In addition to recording the raw numbers, we also calculated their averages by p
 	\centering
 	\begin{tabular}{ l | c | c }
 		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+			\hline
 			Anger & 6.688 & 5.75\\
 			Fear & 5.875 & 6.5625\\
 			Enthusiasm & 5.9375 & 6.5\\
@@ -829,4 +798,36 @@ In addition to recording the raw numbers, we also calculated their averages by p
 	\end{tabular}
 	\caption{Average number surviving Wumpuses, by personality fragment.}
 	\label{tab:numWumpusesAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+		\hline
+		Anger & 254.5 & 234.375\\
+		Fear & 244.688 & 244.188\\
+		Enthusiasm & 84.75 & 404.125\\
+		Contentment & 255.375 & 233.5\\
+		Hostility & 251.375 & 237.5\\
+		\hline
+	\end{tabular}
+	\caption{Average number of gestures sent, by personality fragment.}
+	\label{tab:numGesturesAvg}
+\end{table}
+
+\begin{table}
+	\centering
+	\begin{tabular}{ l | c | c }
+		\emph{Personality fragment} & \emph{weak/hostile} & \emph{friendly/strong} \\
+		\hline
+		Anger & 15.625 & 14.563\\
+		Fear & 14.5 & 15.688\\
+		Enthusiasm & 13.813 & 16.38\\
+		Contentment & 17.375 & 12.813\\
+		Hostility & 14.688 & 15.5\\
+		\hline
+	\end{tabular}
+	\caption{Average number items eaten, by personality fragment.}
+	\label{tab:numMealsAvg}
 \end{table}

@@ -1,0 +1,129 @@
+\documentclass[handout]{beamer}
+
+% for themes, etc.
+\mode<presentation>
+{ \usetheme{boxes} }
+
+\usepackage{times}  % fonts are up to you
+\usepackage{graphicx}
+
+% these will be used later in the title page
+\title{Design and Implementation of an Agent Architecture combining Emotions and Reasoning}
+\author{Janos Tapolczai \\
+   Matrikelnummer 0825077 \\
+}
+\date{Wien, 09.05.2016}
+
+% note: do NOT include a \maketitle line; also note that this title
+% material goes BEFORE the \begin{document}
+
+% have this if you'd like a recurring outline
+\AtBeginSection[]  % "Beamer, do the following at the start of every section"
+{
+   \begin{frame}<beamer> 
+      \frametitle{Content} % make a frame titled "Outline"
+      \tableofcontents[currentsection]  % show TOC and highlight current section
+   \end{frame}
+}
+
+\begin{document}
+   
+   % this prints title, author etc. info from above
+   \begin{frame}
+      \titlepage
+   \end{frame}
+   
+   \section{Our Goal}
+   
+   \begin{frame}
+	   	\frametitle{Our Goal}
+	   	
+	   	\begin{itemize}
+	   		\item What is AI supposed to be able to do?
+	   		\pause
+	   		\item Many approaches based on search/logic exist:
+		   		\begin{itemize}
+		   			\item A* search,
+		   			\item Iterated deepening DFS,
+		   			\item Answer-set programming, etc.
+		   		\end{itemize}
+		   	\pause
+		   	\item These do well, but world-ontology has to be encoded in explicit rules!
+	   	\end{itemize}
+   \end{frame}
+   
+   \begin{frame}
+   	\frametitle{Our Goal}
+   	
+   	\begin{itemize}
+   		\item Neural networks are another approach:
+   		\begin{itemize}
+   			\item supervised learning,
+   			\item unsupervised learning,
+   			\item hierarchical learning, etc.
+   		\end{itemize}
+   		\pause
+   		\item The network must approximate some function with the help of training data.
+   		\pause
+   		\item We must have labelled examples/cost functions available.
+   		\pause
+   		\item It's not obvious what a neural network ``understands''.
+   	\end{itemize}
+   \end{frame}
+   
+   \begin{frame}
+      \frametitle{Our Goal}
+      
+   	\begin{itemize}
+   		\item Neural networks are another approach:
+   		\begin{itemize}
+   			\item supervised learning,
+   			\item unsupervised learning,
+   			\item hierarchical learning, etc.
+   		\end{itemize}
+   		\pause
+   		\item The network must approximate some function with the help of training data.
+   		\pause
+   		\item We must have labelled examples/cost functions available.
+   		\pause
+   		\item It's not obvious what a good neural network ``understands''.
+   	\end{itemize}
+   \end{frame}
+   
+   \section{Biological Considerations}
+   \section{Architecture}
+   \section{Results}
+   \section{Conclusion}
+   
+%   \begin{frame}
+%      \frametitle{A Geometry Proof}
+%      
+%      (Illustrating {\sc beamer}'s $\backslash$uncover command.)
+%      \vskip 0.5in
+%      
+%      \begin{theorem}
+%         The angles in a triangle sum to $180^{\circ}$.
+%      \end{theorem}
+%      
+%      \pause
+%      
+%      Plan:  Extend AC past C to D.  Draw CE parallel to AB.
+%      
+%   \end{frame}
+   
+%   \begin{frame}
+%      \begin{proof}
+%         \begin{tabular}{ll}
+%            % uncover makes advanced overlay
+%            \uncover<1->{1. u = y} & \uncover<2->{Alternate angles of a
+%               transveral.} \\ 
+%            \uncover<3->{2. v = x} & \uncover<4->{Consecutive interior angles of a
+%               transveral} \\ 
+%            \uncover<5->{3. z+u+v = $180^{\circ}$} & \uncover<6->{ACD is a straight
+%               line.} \\ 
+%            \uncover<7->{4. z+y+x = $180^{\circ}$} & \uncover<8->{Substitution
+%               from Steps 1 and 2.} \\
+%         \end{tabular}
+%      \end{proof}
+%   \end{frame}
+\end{document}

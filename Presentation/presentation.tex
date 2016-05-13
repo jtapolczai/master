@@ -239,10 +239,10 @@
    
    \begin{frame}{Architecture --- World Simulator}
       \begin{itemize}
-         \item Worlds are 2D grids with possible inaccessible cells.
+         \item Worlds are 2D grids with some inaccessible cells.
          \item \emph{Entities} are agents or Wumpuses.
          \item \emph{Wumpuses} roam the world in search for agents.
-       \item \emph{Meat}, \emph{fruits}, and \emph{gold} lies around.
+       \item \emph{Meat}, \emph{fruits}, and \emph{gold} lie around.
          \item \emph{Plants} can be harvested for fruit.
          \item Killed entitites leave behind meat.
          
@@ -337,7 +337,7 @@
                \item The more nodes are activated, the stronger the emotion.
                \pause
                \vspace{3mm}
-               \item ``Pre-Social'' $\Rightarrow$ anger, fear, etc. are evolutionarily older than social emotions like trust.
+               \item ``Pre-Social'' $\Rightarrow$ anger, fear, etc. are evolutionarily older than social emotions like trust or contempt.
             \end{itemize}
       \end{itemize}
       
@@ -363,7 +363,7 @@
                      \item respect.
                   \end{itemize}
                \pause
-               \item Just enttity has its own emotional levels.
+               \item Every stranger has its own emotional levels.
                \item Agents can become friends (through positive interactions) or enemies.
             \end{itemize}
       \end{itemize}
@@ -433,7 +433,7 @@
          \begin{itemize}
             \item If the DM chose a \emph{hypothetical} action, we simulate its consequences.
             \item We use the actual world simulator, but we construct the world from memory.
-            \item The agent is then given \emph{imaginary perceptions}.
+            \item The agent is then given \emph{imagined perceptions}.
          \end{itemize}
       \end{itemize}
       

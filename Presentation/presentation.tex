@@ -75,46 +75,45 @@
    
    \section{Our Goal}
    
-   \begin{frame}{Our Goal}
-         \begin{itemize}
-            \item What is AI supposed to be able to do?
-            \pause
-            \item Many approaches based on search/logic exist:
-               \begin{itemize}
-                  \item A* search,
-                  \item Iterated deepening DFS,
-                  \item Answer-set programming, etc.
-               \end{itemize}
-            \pause
-            \item These do well, but world-ontology has to be encoded in explicit rules!
-         \end{itemize}
-   \end{frame}
+%   \begin{frame}{Our Goal}
+%         \begin{itemize}
+%            \item What is AI supposed to be able to do?
+%            \pause
+%            \item Many approaches based on search/logic exist:
+%               \begin{itemize}
+%                  \item A* search,
+%                  \item Iterated deepening DFS,
+%                  \item Answer-set programming, etc.
+%               \end{itemize}
+%            \pause
+%            \item These do well, but world-ontology has to be encoded in explicit rules!
+%         \end{itemize}
+%   \end{frame}
 
-   \begin{frame}{Our Goal}
-      \begin{itemize}
-         \item Neural networks are another approach:
-         \begin{itemize}
-            \item supervised learning,
-            \item unsupervised learning,
-            \item hierarchical learning, etc.
-         \end{itemize}
-         \pause
-         \item The network must approximate some function with the help of training data.
-         \pause
-         \item We must have labelled examples/cost functions available.
-         \pause
-         \item It's not obvious what a neural network ``understands''.
-      \end{itemize}
-   \end{frame}
+%   \begin{frame}{Our Goal}
+%      \begin{itemize}
+%         \item Neural networks are another approach:
+%         \begin{itemize}
+%            \item supervised learning,
+%            \item unsupervised learning,
+%            \item hierarchical learning, etc.
+%         \end{itemize}
+%         \pause
+%         \item The network must approximate some function with the help of training data.
+%         \pause
+%         \item We must have labelled examples/cost functions available.
+%         \pause
+%         \item It's not obvious what a neural network ``understands''.
+%      \end{itemize}
+%   \end{frame}
    
    \begin{frame}{Our Goal}
-      
       \begin{itemize}
-         \item We want to closely imitate the biological brain.
+         \item We wanted to emulate simple, animal behaviours.
          
          \pause
          
-         \item We are interested in
+         \item We were interested in
          \begin{itemize}
             \item \emph{realistic behaviour}
             \item and \emph{realistic cognition}.
@@ -132,57 +131,68 @@
    
    \begin{frame}{Our Goal --- Nouvelle AI}
       
-         \pause
-      
          \begin{quote}\emph{
             One aim of nouvelle AI is the relatively modest one of producing systems that display the same level of intelligence as insects.
          }\end{quote}
          
-         \pause
-            
         \begin{quote}\emph{
-           A central idea of nouvelle AI is that the basic building blocks of intelligence are very simple behaviours {\upshape[$\dots$]} More complex behaviours ``emerge'' from the interaction of these simple behaviours.
+           A central idea of nouvelle AI is that the basic building blocks of intelligence are \textbf{very simple behaviours} {\upshape[$\dots$]} More \textbf{complex behaviours} ``emerge'' from the interaction of these simple behaviours.
          }\end{quote}
-         
-         \pause
-         
+
          Jack Copeland. What is Artificial Intelligence?\\
          {\footnotesize\url{http://www.alanturing.net/turing_archive/pages/Reference\%20Articles/what\_is\_AI/What\%20is\%20AI11.html}}
    \end{frame}
    
-   \begin{frame}{Our Goal --- Evolutionary Neurobiology}
-      
-      \begin{itemize}
-         \item In what order did the components of the brain evolve?
-         \item What is their relation to each other?
-         \item How well is the brain ``designed''?
-      \end{itemize}
-      
-      \pause
-      
-      \begin{quote}\emph{
-            It is not worth asking how to define consciousness, how to explain it, how it
-            evolved, what its function is, etc., because there’s no one thing for which all
-            the answers would be the same. Instead, we have many sub-capabilities, for
-            which the answers are different: e.g., different kinds of perception, learning,
-            knowledge, attention control, self-monitoring, self-control, etc.
-         }\end{quote}
+%   \begin{frame}{Our Goal --- Evolutionary Neurobiology}
+%      
+%      \begin{itemize}
+%         \item In what order did the components of the brain evolve?
+%         \item What is their relation to each other?
+%         \item How well is the brain ``designed''?
+%      \end{itemize}
+%      
+%      \pause
+%      
+%      \begin{quote}\emph{
+%            It is not worth asking how to define consciousness, how to explain it, how it
+%            evolved, what its function is, etc., because there’s no one thing for which all
+%            the answers would be the same. Instead, we have many sub-capabilities, for
+%            which the answers are different: e.g., different kinds of perception, learning,
+%            knowledge, attention control, self-monitoring, self-control, etc.
+%         }\end{quote}
+%
+%         Aaron Sloman, quoted in \emph{The Emotion Machine}, p. 97.
+%         \end{frame}
 
-         Aaron Sloman, quoted in \emph{The Emotion Machine}, p. 97.
-         \end{frame}
+   \section{Methodology}
    
-   \section{Biological Considerations}
-   
-   \begin{frame}{Biological Considerations}
+   \begin{frame}{Methodology}
       \begin{itemize}
-            \item Nervous systems long predate brains.
-            \item Brains themselves evolved over hundreds of millions of years.
+         \item We implemented a \emph{toy AI} in a 2D world.
+         \item Agents reasoned about the world, but also had emotional reactions.
+         \item Each agent was given a certain \emph{personality}.
+         \item Agents were tasked with survival.
+         
+         \vspace{1cm}
+         \pause
+         
+         \item We tested general fitness,
+         \item and we compared different personalities.
       \end{itemize}
    \end{frame}
    
-   \begin{frame}{Biological Considerations}
-      \includegraphics[width=\textwidth]{../Thesis/Figs/chordata.jpg}
-   \end{frame}
+   \section{Design Philosophy}
+   
+%   \begin{frame}{Biological Considerations}
+%      \begin{itemize}
+%            \item Nervous systems long predate brains.
+%            \item Brains themselves evolved over hundreds of millions of years.
+%      \end{itemize}
+%   \end{frame}
+   
+%   \begin{frame}{Biological Considerations}
+%      \includegraphics[width=\textwidth]{../Thesis/Figs/chordata.jpg}
+%   \end{frame}
 
    \begin{frame}{Biological Considerations}
       \begin{itemize}
@@ -202,7 +212,7 @@
       \begin{itemize}
          \item Traditional programming languages work via \emph{black boxes}:\\
               \vspace{2mm}
-               A functions are called, but their internals are unobservable.
+               Functions are called, but their internals are unobservable.
                \vspace{2mm}
          \item We assume that components in the brain are \emph{white boxes}:\\
               \vspace{2mm}
@@ -238,20 +248,27 @@
    \end{frame}
    
    \begin{frame}{Architecture --- World Simulator}
+      \begin{center}
+         \only<1>{\includegraphics[width=0.65\textwidth]{map.png}}%
+         \only<2>{\includegraphics[width=0.65\textwidth]{map_agent.png}}%
+         \only<3>{\includegraphics[width=0.65\textwidth]{map_wumpus.png}}%
+         \only<4>{\includegraphics[width=0.65\textwidth]{map_plant.png}}%
+         \only<5>{\includegraphics[width=0.65\textwidth]{map_fruit.png}}%
+         \only<6>{\includegraphics[width=0.65\textwidth]{map_meat.png}}%
+         \only<7>{\includegraphics[width=0.65\textwidth]{map_gold.png}}%
+         \only<8>{\includegraphics[width=0.65\textwidth]{map_pit.png}}%
+      \end{center}
+%
       \begin{itemize}
-         \item Worlds are 2D grids with some inaccessible cells.
-         \item \emph{Entities} are agents or Wumpuses.
-         \item \emph{Wumpuses} roam the world in search for agents.
-       \item \emph{Meat}, \emph{fruits}, and \emph{gold} lie around.
-         \item \emph{Plants} can be harvested for fruit.
-         \item Killed entitites leave behind meat.
-         
-         \vspace{2mm}
-         \item Pits kill whatever falls into them.
-         \vspace{2mm}
-         \item Entities can fight, but this costs health.
-         \item Meat and fruit can be \emph{eaten} to restore health.
-         \item Agents can give each other gifts and communicate via gestures.
+         \setlength\itemsep{-1.25em}
+         \item<1>Worlds are 2D grids.%
+         \item<2>Agents see part of the world.%
+         \item<3>Wumpuses seek and attack agents.%
+         \item<4>Plants can be harvested.%
+         \item<5>Fruit can be eaten.%
+         \item<6>Meat can be eaten as well.%
+         \item<7>Gold is just for ``trade''.%
+         \item<8> Pits kill whatever falls into them.%
       \end{itemize}
    \end{frame}
    
@@ -294,26 +311,26 @@
       };
    \end{frame}
    
-   \begin{frame}{Architecture --- Agents}
-      \begin{itemize}
-         \item Perception
-            \begin{itemize}
-               \item Complex messages from the world simulator are chopped up into atomic pieces.
-               \item The other components only have to deal with simple facts, e.g.
-                  \begin{itemize}
-                     \item ``My Health is 0.7'',
-                     \item ``Cell (x,y) has an entity'', or
-                     \item ``There is a plant on cell (x,y)''.
-                  \end{itemize}
-            \end{itemize}
-      \end{itemize}
+%   \begin{frame}{Architecture --- Agents}
+%      \begin{itemize}
+%         \item Perception
+%            \begin{itemize}
+%               \item Complex messages from the world simulator are chopped up into atomic pieces.
+%               \item The other components only have to deal with simple facts, e.g.
+%                  \begin{itemize}
+%                     \item ``My Health is 0.7'',
+%                     \item ``Cell (x,y) has an entity'', or
+%                     \item ``There is a plant on cell (x,y)''.
+%                  \end{itemize}
+%            \end{itemize}
+%      \end{itemize}
       
 %      \tikzoverlay[text width=1.8cm] at (9.7cm,3.9cm) {
 %         \tikz node (label) at (0,0)[]{
 %            \includegraphics[width=1.8cm]{agent_components_perception.png}
 %         };
 %      };
-   \end{frame}
+%   \end{frame}
    
    \begin{frame}{Architecture --- Agents}
       \begin{itemize}   
@@ -327,29 +344,27 @@
                      \item enthusiasm, and
                      \item contentment.   
                   \end{itemize}
-               \pause
-               \item Each emotion has an associated graph.
-               \pause
-               \item Each node responds to a specific message (e.g. low health).
-               \pause
-               \item Nodes may activate neighboring nodes.
-               \pause
-               \item The more nodes are activated, the stronger the emotion.
-               \pause
-               \vspace{3mm}
-               \item ``Pre-Social'' $\Rightarrow$ anger, fear, etc. are evolutionarily older than social emotions like trust or contempt.
+%               \pause
+%               \item Each emotion has an associated graph.
+%               \pause
+%               \item Each node responds to a specific message (e.g. low health).
+%               \pause
+%               \item Nodes may activate neighboring nodes.
+%               \pause
+%               \item The more nodes are activated, the stronger the emotion.
+%               \pause
+%               \vspace{3mm}
+%               \item ``Pre-Social'' $\Rightarrow$ anger, fear, etc. are evolutionarily older than social emotions like trust or contempt.
             \end{itemize}
       \end{itemize}
-      
-%      \tikzoverlay[text width=1.8cm] at (9.7cm,3.9cm) {
-%         \tikz node (label) at (0,0)[]{
-%            \includegraphics[width=1.8cm]{agent_components_psbc.png}
-%         };
-%      };
    \end{frame}
-   
+      
    \begin{frame}{Architecture --- Agents}
       \includegraphics[width=\textwidth]{../Thesis/Figs/PSBC.png}
+   \end{frame}
+      
+   \begin{frame}{Architecture --- Agents}
+         \includegraphics[width=0.8\textwidth]{anger_filter.png}
    \end{frame}
    
    \begin{frame}{Architecture --- Agents}
@@ -535,9 +550,9 @@
       \end{itemize}
    \end{frame}
    
-   \section{Results}
+   \section{Evaluation}
    
-   \begin{frame}{Results}
+   \begin{frame}{Evaluation}
       \begin{itemize}
          \item We created 32 populations with different personalities
          \item and simulated 50 rounds with each population.
@@ -559,33 +574,33 @@
          \begin{tabular}{ l | c | c }
             \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
             \hline
-            Anger & 24.25 & 22.313\\
-            Fear & 22.438 & 24.125\\
-            Enthusiasm & 22.75 & 23.8125\\
-            Contentment & 23.063 & 23.5\\
-            Hostility & 23.625 & 22.938\\
+            Anger & 24.25 & 22.31\\
+            Fear & 22.44 & 24.13\\
+            Enthusiasm & 22.75 & 23.81\\
+            Contentment & 23.06 & 23.50\\
+            Hostility & 23.63 & 22.94\\
             \hline
          \end{tabular}}
          \only<2>{%
             \begin{tabular}{ l | c | c }
                \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
                \hline
-               \rowcolor{LightGreen} Anger & \cellcolor{IntenseGreen} 24.25 & 22.313\\
-               Fear & 22.438 & 24.125\\
-               Enthusiasm & 22.75 & 23.8125\\
-               Contentment & 23.063 & 23.5\\
-               Hostility & 23.625 & 22.938\\
+               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}24.25&22.31\\
+               Fear & 22.44 & 24.13\\
+               Enthusiasm & 22.75 & 23.81\\
+               Contentment & 23.06 & 23.50\\
+               Hostility & 23.63 & 22.94\\
                \hline
             \end{tabular}}
          \only<3>{%
             \begin{tabular}{ l | c | c }
                \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
                \hline
-               \rowcolor{LightGreen} Anger & \cellcolor{IntenseGreen} 24.25 & 22.313\\
-               \rowcolor{LightYellow} Fear & 22.438 & \cellcolor{IntenseYellow} 24.125\\
-               Enthusiasm & 22.75 & 23.8125\\
-               Contentment & 23.063 & 23.5\\
-               Hostility & 23.625 & 22.938\\
+               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}24.25&22.31\\
+               \rowcolor{LightYellow}Fear&22.44 &\cellcolor{IntenseYellow}24.13\\
+               Enthusiasm & 22.75 & 23.81\\
+               Contentment & 23.06 & 23.50\\
+               Hostility & 23.63 & 22.94\\
                \hline
             \end{tabular}}
          \caption{Average number of surviving agents, by personality fragment.}

@@ -73,75 +73,68 @@
       \titlepage
    \end{frame}
    
-   \section{Our Goal}
-   
-%   \begin{frame}{Our Goal}
-%         \begin{itemize}
-%            \item What is AI supposed to be able to do?
-%            \pause
-%            \item Many approaches based on search/logic exist:
-%               \begin{itemize}
-%                  \item A* search,
-%                  \item Iterated deepening DFS,
-%                  \item Answer-set programming, etc.
-%               \end{itemize}
-%            \pause
-%            \item These do well, but world-ontology has to be encoded in explicit rules!
-%         \end{itemize}
-%   \end{frame}
-
-%   \begin{frame}{Our Goal}
-%      \begin{itemize}
-%         \item Neural networks are another approach:
-%         \begin{itemize}
-%            \item supervised learning,
-%            \item unsupervised learning,
-%            \item hierarchical learning, etc.
-%         \end{itemize}
-%         \pause
-%         \item The network must approximate some function with the help of training data.
-%         \pause
-%         \item We must have labelled examples/cost functions available.
-%         \pause
-%         \item It's not obvious what a neural network ``understands''.
-%      \end{itemize}
-%   \end{frame}
-   
-   \begin{frame}{Our Goal}
+   \begin{frame}{Content}
       \begin{itemize}
-         \item We wanted to emulate simple, animal behaviours.
-         
-         \pause
-         
-         \item We were interested in
-         \begin{itemize}
-            \item \emph{realistic behaviour}
-            \item and \emph{realistic cognition}.
-         \end{itemize}
-         
-         \pause
-         
-         \item Our inspirations:
-         \begin{itemize}
-            \item \emph{evolutionary neurobiology} and
-            \item nouvelle AI.
-         \end{itemize}
+         \item Our Goal
+         \item Methodology
+         \item Design Philosophy
+         \item Architecture
+         \item Evaluation
+         \item Conclusion
       \end{itemize}
    \end{frame}
    
-   \begin{frame}{Our Goal --- Nouvelle AI}
-      
-         \begin{quote}\emph{
-            One aim of nouvelle AI is the relatively modest one of producing systems that display the same level of intelligence as insects.
-         }\end{quote}
-         
-        \begin{quote}\emph{
-           A central idea of nouvelle AI is that the basic building blocks of intelligence are \textbf{very simple behaviours} {\upshape[$\dots$]} More \textbf{complex behaviours} ``emerge'' from the interaction of these simple behaviours.
-         }\end{quote}
+   \section{Our Goal}
 
-         Jack Copeland. What is Artificial Intelligence?\\
-         {\footnotesize\url{http://www.alanturing.net/turing_archive/pages/Reference\%20Articles/what\_is\_AI/What\%20is\%20AI11.html}}
+   \begin{frame}{Our Goal}
+      \begin{itemize}
+         \item We wanted to design an AI that combined emotions and reasoning.
+         \item Emotions should guide the planning and serve as \emph{cognitive shortcuts}.
+         
+         \item In the design, we took cues from evolutionary neurobiology, as well as from Marvin Minsky and Aaron Sloman.
+         
+         \item We had three core questions:
+         
+         \begin{quotation}
+            How could brains have evolved?
+         \end{quotation}
+         
+         \begin{quotation}
+            Could we approximate their functioning?
+         \end{quotation}
+         
+         \begin{quotation}
+            Would the end result be useful?
+         \end{quotation}
+      \end{itemize}
    \end{frame}
+   
+   \begin{frame}{Our Goal}
+      \begin{itemize}
+         \item We were not interested in logic as such; fidelity to biological systems was more important.
+         
+         \begin{quotation}
+            It is not worth asking how to define consciousness, how to explain it, how it
+            evolved, what its function is, etc. [...]\\
+            Instead, we have many sub-capabilities, for which the answers are different: e.g., different kinds of perception, learning, knowledge, attention control, self-monitoring, self-control, etc.
+         \end{quotation}
+         
+         Aaron Sloman, \texttt{comp.ai.philosophy} newsgroup
+      \end{itemize}
+   \end{frame}
+   
+%   \begin{frame}{Our Goal --- Nouvelle AI}
+%         \begin{quote}\emph{
+%            One aim of nouvelle AI is the relatively modest one of producing systems that display the same level of intelligence as insects.
+%         }\end{quote}
+%         
+%        \begin{quote}\emph{
+%           A central idea of nouvelle AI is that the basic building blocks of intelligence are \textbf{very simple behaviours} {\upshape[$\dots$]} More \textbf{complex behaviours} ``emerge'' from the interaction of these simple behaviours.
+%         }\end{quote}
+%
+%         Jack Copeland. What is Artificial Intelligence?\\
+%         {\footnotesize\url{http://www.alanturing.net/turing_archive/pages/Reference\%20Articles/what\_is\_AI/What\%20is\%20AI11.html}}
+%   \end{frame}
    
 %   \begin{frame}{Our Goal --- Evolutionary Neurobiology}
 %      
@@ -168,15 +161,13 @@
    
    \begin{frame}{Methodology}
       \begin{itemize}
-         \item We implemented a \emph{toy AI} in a 2D world.
-         \item Agents reasoned about the world, but also had emotional reactions.
+         \item We implemented a \emph{toy AI} and a 2D world.
          \item Each agent was given a certain \emph{personality}.
-         \item Agents were tasked with survival.
+         \item The only goal was survival.
          
          \vspace{1cm}
-         \pause
          
-         \item We tested general fitness,
+         \item We tested AI's general fitness,
          \item and we compared different personalities.
       \end{itemize}
    \end{frame}
@@ -196,13 +187,18 @@
 
    \begin{frame}{Biological Considerations}
       \begin{itemize}
-         \item Neurons function as a signalling mechanism in an organism.
-         \pause
-         \item They receive signals from body parts, but also other neurons.\\
-            $\Rightarrow$ Neurons \emph{listen in} on other neurons.
-         \pause
-         \item Functionality was added gradually, with no long-term design.\\
-            $\Rightarrow$ Components have no well-defined interfaces.
+         \item Neurons evolved as a means of sending signals in an organism.
+         \item Over time, neurons began to modulate the signals of other neurons.
+         \item This was computation of a sort, but it was not \emph{well-designed}.
+         \item Moreover, there was no long-term planning.
+         \item Functionality evolved on an ad-hoc basis.\\
+         
+         \vspace{2mm}
+         
+            $\Rightarrow$ there are no well-defined components, interfaces.\\
+            $\Rightarrow$ there is no calling model.\\
+            $\Rightarrow$ neurons just \emph{listen in} on the activity of others.
+            
          \pause
          \item Thus our working hypothesis: a \emph{White-box model of cognition}.
        \end{itemize}
@@ -272,24 +268,24 @@
       \end{itemize}
    \end{frame}
    
-   \begin{frame}{Architecture --- World Simulator}
-      \begin{itemize}
-         \item Time moves in rounds.
-         \item In each round, every entity takes one action.
-            \begin{itemize}
-               \item The entity gets a slice of the world as \emph{perception} and
-               \item it has to return its desired action.
-            \end{itemize}
-         \item Actions are
-            \begin{itemize}
-               \item \emph{move},
-               \item \emph{rotate},
-               \item \emph{attack},
-               \item \emph{gather},
-               \item \emph{eat}, etc.
-            \end{itemize}
-      \end{itemize}
-   \end{frame}
+%   \begin{frame}{Architecture --- World Simulator}
+%      \begin{itemize}
+%         \item Time moves in rounds.
+%         \item In each round, every entity takes one action.
+%            \begin{itemize}
+%               \item The entity gets a slice of the world as \emph{perception} and
+%               \item it has to return its desired action.
+%            \end{itemize}
+%         \item Actions are
+%            \begin{itemize}
+%               \item \emph{move},
+%               \item \emph{rotate},
+%               \item \emph{attack},
+%               \item \emph{gather},
+%               \item \emph{eat}, etc.
+%            \end{itemize}
+%      \end{itemize}
+%   \end{frame}
    
    \begin{frame}{Architecture --- Agents}
       \begin{itemize}

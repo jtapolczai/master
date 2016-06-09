@@ -45,13 +45,13 @@
 % material goes BEFORE the \begin{document}
 
 % have this if you'd like a recurring outline
-\AtBeginSection[]  % "Beamer, do the following at the start of every section"
-{
-   \begin{frame}<beamer> 
-      \frametitle{Content} % make a frame titled "Outline"
-      \tableofcontents[currentsection]  % show TOC and highlight current section
-   \end{frame}
-}
+%\AtBeginSection[]  % "Beamer, do the following at the start of every section"
+%{
+%   \begin{frame}<beamer> 
+%      \frametitle{Content} % make a frame titled "Outline"
+%      \tableofcontents[currentsection]  % show TOC and highlight current section
+%   \end{frame}
+%}
 
 \tikzset{
    every overlay node/.style={
@@ -81,24 +81,25 @@
 
    \begin{frame}{Our Goal}
       \begin{itemize}
-         \item We wanted to design an AI that combined emotions and reasoning.
+         \item We wanted to design an AI that combines emotions and reasoning.
+         
+         \medskip
+         
          \item Emotions should guide the planning and serve as \emph{cognitive shortcuts}.
          
-         \item In the design, we took cues from evolutionary neurobiology, as well as from Marvin Minsky and Aaron Sloman.
+         \medskip
          
-         \item We had three core questions:
+         \item In the design, we took cues from evolutionary neurobiology, as well as from works by Marvin Minsky and Aaron Sloman.
          
-         \begin{quotation}
-            How could brains have evolved?
-         \end{quotation}
+         \medskip
          
-         \begin{quotation}
-            Could we approximate their functioning?
-         \end{quotation}
+         \item In particular, the following questions motivated our approach:
          
-         \begin{quotation}
-            Would the end result be useful?
-         \end{quotation}
+         \begin{itemize}
+            \item How could brains have evolved?
+            \item Could we approximate their functioning?
+            \item Would the end result be useful?
+         \end{itemize}
       \end{itemize}
    \end{frame}
    
@@ -106,13 +107,16 @@
       \begin{itemize}
          \item We were not interested in logic as such; fidelity to biological systems was more important.
          
-         \begin{quotation}
+         \medskip
+         
+         \item Aaron Sloman (quoted from the \texttt{comp.ai.philosophy} newsgroup):
+         
+         \begin{quote}
             It is not worth asking how to define consciousness, how to explain it, how it
             evolved, what its function is, etc. [...]\\
             Instead, we have many sub-capabilities, for which the answers are different: e.g., different kinds of perception, learning, knowledge, attention control, self-monitoring, self-control, etc.
-         \end{quotation}
+         \end{quote}
          
-         Aaron Sloman, \texttt{comp.ai.philosophy} newsgroup
       \end{itemize}
    \end{frame}
    
@@ -178,12 +182,16 @@
 %      \includegraphics[width=\textwidth]{../Thesis/Figs/chordata.jpg}
 %   \end{frame}
 
-   \begin{frame}{Biological Considerations}
+   \begin{frame}{Design Philosophy --- Biological Considerations}
       \begin{itemize}
          \item Neurons evolved as a means of sending signals in an organism.
+         \medskip
          \item Over time, neurons began to modulate the signals of other neurons.
-         \item This was computation of a sort, but it was not \emph{well-designed}.
+         \medskip
+         \item This was computation of a sort, but it was not \emph{well-designed} from an engineering standpoint.
+         \medskip
          \item Moreover, there was no long-term planning.
+         \medskip
          \item Functionality evolved on an ad-hoc basis.\\
          
          \vspace{2mm}
@@ -193,31 +201,34 @@
             $\Rightarrow$ neurons just \emph{listen in} on the activity of others.
             
          \pause
+         \medskip
          \item Thus our working hypothesis: a \emph{White-box model of cognition}.
        \end{itemize}
    \end{frame}
    
-   \begin{frame}{Biological Considerations - White-box model}
+   \begin{frame}{Design Philosophy --- White-box model}
       \begin{itemize}
          \item Traditional programming languages work via \emph{black boxes}:\\
               \vspace{2mm}
                Functions are called, but their internals are unobservable.
-               \vspace{2mm}
+               \vspace{4mm}
          \item We assume that components in the brain are \emph{white boxes}:\\
               \vspace{2mm}
                Any component can observe the activity of others.
       \end{itemize}
    \end{frame}
    
-   \begin{frame}{Biological Considerations - White-box model}
+   \begin{frame}{Design Philosophy --- White-box model}
       \begin{itemize}
          \item Of course, practical considerations apply.
-         \vspace{2mm}
+         \medskip
          \item We still use regular functions within components,
          \item but components can publish \emph{messages}.
+         \medskip
          \item These are stored in a central \emph{message space}.
+         \medskip
          \item Any component can read from and write into the message space.
-         \vspace{2mm}
+         \vspace{8mm}
          \item Components are \emph{loosely coupled}:\\
             $\Rightarrow$ components don't know who reads their messages;\\
             $\Rightarrow$ components don't know who wrote the messages.
@@ -233,6 +244,9 @@
                 \item \emph{world simulator} and an
                 \item \emph{agent architecture}.
              \end{itemize}
+             
+          \medskip
+          \item Our world is a generalisation of the \emph{Wumpus World} of Russel and Norvig (from Artificial Intelligence: A Moden Approach, p. 236).
        \end{itemize}
    \end{frame}
    
@@ -419,8 +433,6 @@
                \pause
                \item If our emotion is strong enough, we take a \emph{real} action,
                \item otherwise, we take a \emph{hypothetical} one.
-               \vspace{2mm}
-               \item The DM can also abort plans if, e.g., fear begins to override anger.
             \end{itemize}
       \end{itemize}
       
@@ -539,13 +551,38 @@
       \end{itemize}
    \end{frame}
    
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item An example plan.
+         \item Our agent is hungry, but has no food.
+         \item There is a plant some distance away.
+      \end{itemize}
+      
+      \medskip
+      
+      \begin{tabular}{c c}
+         \hspace{1cm}\parbox{0.4\textwidth}{\vspace{-3cm}
+                                 Plan:\\
+                                 Move North.\\
+                                 Move North.\\
+                                 Harvest plant.\\
+                                 Eat fruit.\\}
+
+           & \includegraphics[width=0.3\textwidth]{hungry_agent.png}
+      \end{tabular}
+   \end{frame}
+   
    \section{Evaluation}
    
    \begin{frame}{Evaluation}
       \begin{itemize}
          \item We created 32 populations with different personalities
          \item and simulated 50 rounds with each population.
-         \item We combined weak/strong anger, fear, enthusiasm, contentment, as well as friendly/hostile demeanor.
+         \item We combined weak/strong anger, fear, enthusiasm, contentment, as well as hostility.
+            \begin{itemize}
+               \item Example personality: $\personality{S}{W}{S}{W}{S}$\\
+               meaning ``strong anger, weak fear, strong enthusiasm, weak contentment, strong hostility''.
+            \end{itemize}
          \item Throughout the simulation, we collected data: the number of
          \begin{itemize}
             \item gifts given,
@@ -557,39 +594,44 @@
    \end{frame}
    
    \begin{frame}{Results}
+      \begin{itemize}
+         \item Initially, there were 30 agents.
+         \item We averaged survival over all personalities with weak anger, strong anger, etc.
+      \end{itemize}
+      
       \begin{table}
          \centering
          \only<1>{%
-         \begin{tabular}{ l | c | c }
-            \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+         \begin{tabular}{ l | c | c | c}
+            \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$ \\
             \hline
-            Anger & 24.25 & 22.31\\
-            Fear & 22.44 & 24.13\\
-            Enthusiasm & 22.75 & 23.81\\
-            Contentment & 23.06 & 23.50\\
-            Hostility & 23.63 & 22.94\\
+            Anger & 80.8\% & 74.4\% & -6.4\\
+            Fear & 74.8\% & 80.4\% & 5.6\\
+            Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+            Contentment & 76.9\% & 78.3\% & 1.4\\
+            Hostility & 76.4\% & 78.8\% & 2.4\\
             \hline
          \end{tabular}}
          \only<2>{%
-            \begin{tabular}{ l | c | c }
-               \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+            \begin{tabular}{ l | c | c | c}
+               \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$ \\
                \hline
-               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}24.25&22.31\\
-               Fear & 22.44 & 24.13\\
-               Enthusiasm & 22.75 & 23.81\\
-               Contentment & 23.06 & 23.50\\
-               Hostility & 23.63 & 22.94\\
+               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}80.8\%&74.4\% & -6.4\\
+               Fear & 74.8\% & 80.4\% & 5.6\\
+               Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+               Contentment & 76.9\% & 78.3\% & 1.4\\
+               Hostility & 76.4\% & 78.8\% & 2.4\\
                \hline
             \end{tabular}}
          \only<3>{%
-            \begin{tabular}{ l | c | c }
-               \emph{Personality fragment} & \emph{weak/hostile} & \emph{ strong/friendly} \\
+            \begin{tabular}{ l | c | c | c}
+               \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$  \\
                \hline
-               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}24.25&22.31\\
-               \rowcolor{LightYellow}Fear&22.44 &\cellcolor{IntenseYellow}24.13\\
-               Enthusiasm & 22.75 & 23.81\\
-               Contentment & 23.06 & 23.50\\
-               Hostility & 23.63 & 22.94\\
+               \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}80.8\%&74.4\% & -6.4\\
+               \rowcolor{LightYellow}Fear&74.8\%&\cellcolor{IntenseYellow}80.4\% & 5.6\\
+               Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+               Contentment & 76.9\% & 78.3\% & 1.4\\
+               Hostility & 76.4\% & 78.8\% & 2.4\\
                \hline
             \end{tabular}}
          \caption{Average number of surviving agents, by personality fragment.}
@@ -603,31 +645,29 @@
    
    \begin{frame}{Results}
       \begin{itemize}
-         \item Other surprising results:
+         \item There were some surprising results.
+         \item Agents were able to give gifts (meat, fruit, gold) to others.
       \end{itemize}
       
       \begin{table}
          \centering
             \begin{tabular}{ l | c }
-               \emph{Personality} & \emph{Wumpuses} \\
+               \emph{Personality} & \emph{Meat gifts} \\
                \hline
 
-					$\personality{S}{W}{W}{W}{H}$ & 0\\
+					$\personality{S}{W}{W}{W}{S}$ & 0\\
+               $\personality{W}{W}{W}{W}{S}$ & 0\\
+               $\personality{S}{W}{W}{S}{W}$ & 1\\
                \multicolumn{2}{c}{$\dots$}\\
-               $\personality{W}{W}{W}{W}{H}$ & 0\\
-               $\personality{S}{W}{W}{S}{F}$ & 1\\
-               $\personality{S}{W}{W}{W}{F}$ & 2\\
-               \multicolumn{2}{c}{$\dots$}\\
-               $\personality{S}{W}{S}{W}{F}$ & 19\\
-               $\personality{S}{W}{S}{W}{H}$ & 19\\
+               $\personality{S}{W}{S}{W}{W}$ & 19\\
+               $\personality{S}{W}{S}{W}{S}$ & 19\\
                \hline
             \end{tabular}
             \caption{Number of meat items given as gifts after 50 rounds.}
             \label{tab:numWumpuses}
       \end{table}
-      
       \begin{itemize}
-         \item $\personality{S}{W}{S}{W}{H}$ means ``strong anger, weak fear, strong enthusiasm, weak contentment, hostile demeanor''.
+         \item $\personality{S}{W}{S}{W}{S}$ means ``strong anger, weak fear, strong enthusiasm, weak contentment, strong hostility''.
          \item Agents with strong anger and weak fear killed everything and shared the meat among themselves.
       \end{itemize}
    \end{frame}

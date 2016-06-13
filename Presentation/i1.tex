@@ -1,0 +1,530 @@
+% !TEX root = aslides.tex
+   
+   % this prints title, author etc. info from above
+   \begin{frame}{Content}
+      \tableofcontents
+   \end{frame}
+   
+   \section{Our Goal}
+   
+   \begin{frame}{Our Goal}
+      \begin{itemize}
+         \item We wanted to design an AI that combines emotions and reasoning.
+         
+         \medskip
+         
+         \item Emotions should guide the planning and serve as \cemph{cognitive shortcuts}.
+         
+         \medskip
+         
+         \item In the design, we took cues from evolutionary neurobiology, as well as from works by Marvin Minsky and Aaron Sloman.
+         
+         \medskip
+         
+         \item In particular, the following questions motivated our approach:
+         
+         \begin{itemize}
+            \item How could brains have evolved?
+            \item Could we approximate their functioning?
+            \item Would the end result be useful?
+         \end{itemize}
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Our Goal}
+      \begin{itemize}
+         \item We were not interested in logic as such; fidelity to biological systems was more important.
+         
+         \medskip
+         
+         \item Aaron Sloman (quoted from the \texttt{comp.ai.philosophy} newsgroup):
+         
+         \begin{quote}
+            It is not worth asking how to define consciousness, how to explain it, how it
+            evolved, what its function is, etc. [...]\\
+            Instead, we have many sub-capabilities, for which the answers are different: e.g., different kinds of perception, learning, knowledge, attention control, self-monitoring, self-control, etc.
+         \end{quote}
+         
+      \end{itemize}
+   \end{frame}
+   
+   \section{Methodology}
+   
+   \begin{frame}{Methodology}
+      \begin{itemize}
+         \item We implemented a \cemph{toy AI} and a 2D world.
+         \item Each agent was given a certain \cemph{personality}.
+         \item The only goal was survival.
+         
+         \vspace{1cm}
+         
+         \item We tested the AI's general fitness,
+         \item and we compared different personalities.
+      \end{itemize}
+   \end{frame}
+   
+   \section{Design Philosophy}
+   
+   \begin{frame}{Design Philosophy --- Biological Considerations}
+      \begin{itemize}
+         \item Neurons evolved as a means of sending signals in an organism.
+         \medskip
+         \item Over time, neurons began to modulate the signals of other neurons.
+         \medskip
+         \item This was computation of a sort, but it was not \cemph{well-designed} from an engineering standpoint.
+         \medskip
+         \item Moreover, there was no long-term planning.
+         \medskip
+         \item Functionality evolved on an \emph{ad hoc} basis.\\
+         
+         \vspace{2mm}
+         
+         $\Rightarrow$ There are no well-defined components or interfaces.\\
+         $\Rightarrow$ There is no calling model.\\
+         $\Rightarrow$ Neurons just \cemph{listen in} on the activity of others.
+         
+         \pause
+         \medskip
+         \item Thus our working hypothesis: a \cemph{White-box model of cognition}.
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Design Philosophy --- White-box model}
+      \begin{itemize}
+         \item Traditional programming languages work via \cemph{black boxes}:\\
+         \vspace{2mm}
+         Functions are called, but their internals are unobservable.
+         \vspace{4mm}
+         \item We assume that components in the brain are \cemph{white boxes}:\\
+         \vspace{2mm}
+         Any component can observe the activity of others.
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Design Philosophy --- White-box model}
+      \begin{itemize}
+         \item Of course, practical considerations apply.
+         \medskip
+         \item We still use regular functions within components,
+         \item but components can publish \cemph{messages}.
+         \medskip
+         \item These are stored in a central \cemph{message space}.
+         \medskip
+         \item Any component can read from and write into the message space.
+         \vspace{8mm}
+         \item Components are \cemph{loosely coupled}:\\
+         $\Rightarrow$ components don't know who reads their messages;\\
+         $\Rightarrow$ components don't know who wrote the messages.
+      \end{itemize}
+   \end{frame}
+   
+   \section{Architecture}
+   
+   \begin{frame}{Architecture}
+      \begin{itemize}
+         \item The implementation consists of a
+         \begin{itemize}
+            \item \cemph{world simulator} and an
+            \item \cemph{agent architecture}.
+         \end{itemize}
+         
+         \medskip
+         \item Our world is a generalisation of the \cemph{Wumpus World} of Russel and Norvig (from Artificial Intelligence: A Moden Approach, p. 236).
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- World Simulator}
+      \begin{center}
+         \only<1>{\includegraphics[width=0.65\textwidth]{map.png}}%
+         \only<2>{\includegraphics[width=0.65\textwidth]{map_agent.png}}%
+         \only<3>{\includegraphics[width=0.65\textwidth]{map_wumpus.png}}%
+         \only<4>{\includegraphics[width=0.65\textwidth]{map_plant.png}}%
+         \only<5>{\includegraphics[width=0.65\textwidth]{map_fruit.png}}%
+         \only<6>{\includegraphics[width=0.65\textwidth]{map_meat.png}}%
+         \only<7>{\includegraphics[width=0.65\textwidth]{map_gold.png}}%
+         \only<8>{\includegraphics[width=0.65\textwidth]{map_pit.png}}%
+      \end{center}
+      %
+      \begin{itemize}
+         \setlength\itemsep{-1.25em}
+         \item<1>Worlds are 2D grids.%
+         \item<2>Agents see part of the world.%
+         \item<3>Wumpuses seek and attack agents.%
+         \item<4>Plants can be harvested.%
+         \item<5>Fruit can be eaten.%
+         \item<6>Meat can be eaten as well.%
+         \item<7>Gold is just for ``trade''.%
+         \item<8> Pits kill whatever falls into them.%
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item Based on evolutionary considerations, we designed 7 components.
+         \vspace{2mm}
+         \item Perception,
+         \item Pre-social Behaviour Control (PSBC),
+         \item Social Judgment System (SJS),
+         \item Memory,
+         \item Attention Control (AC),
+         \item Decision Maker (DM), and
+         \item Belief Generator (BG).
+      \end{itemize}
+      
+      \tikzoverlay at (7.8cm,0.3cm) {
+         \tikz node (label) at (0,0)[]{
+            \includegraphics[width=3cm]{agent_components_intense.png}
+         };
+      };
+   \end{frame}
+   
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}   
+         \item Pre-Social Behaviour Control
+         \pause
+         \begin{itemize}
+            \item The agent has four emotions:
+            \begin{itemize}
+               \item anger,
+               \item fear,
+               \item enthusiasm, and
+               \item contentment.   
+            \end{itemize}
+         \end{itemize}
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{../Thesis/Figs/PSBC.png}
+      \end{center}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \includegraphics[width=0.8\textwidth]{anger_filter.png}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {Social Judgment System}
+         \begin{itemize}
+            \item Other agents evoke
+            \begin{itemize}
+               \item sympathy,
+               \item trust,
+               \item respect.
+            \end{itemize}
+            \pause
+            \item Every stranger has its own emotional levels.
+            \item Agents can become friends (through positive interactions) or enemies.
+         \end{itemize}
+      \end{itemize}
+      
+      %      \tikzoverlay[text width=1.8cm] at (9.7cm,3.9cm) {
+      %         \tikz node (label) at (0,0)[]{
+      %            \includegraphics[width=1.8cm]{agent_components_sjs.png}
+      %         };
+      %      };
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item Memory
+         \begin{itemize}
+            \item We store our perceptions for later recall.
+            \item Memory can also store \cemph{imagined} worlds in a \cemph{tree structure}.
+         \end{itemize}
+         \pause
+         \item Attention Control
+         \begin{itemize}
+            \item We assist the Decision Maker by selecting important targets.
+            \item ``Important'' means ''evokes the strongest emotions''.
+         \end{itemize}
+      \end{itemize}
+      
+      %      \tikzoverlay[text width=2cm] at (9.5cm,3.3cm) {
+      %         \tikz node (label) at (0,0)[]{
+      %            \includegraphics[width=2cm]{agent_components_memory_ac.png}
+      %         };
+      %      };
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item Decision Maker
+         \begin{itemize}
+            \item Each emotion has some actions associated with it, e.g.,
+            \begin{itemize}
+               \item attacking is associated with anger,
+               \item eating is associated with enthusiasm.
+            \end{itemize}
+            \pause
+            \item The PSBC and the AC guide the planning:
+            \begin{itemize}
+               \item We select an action associated with our strongest emotion,
+               \item and the cell(s) which have the most attention.
+            \end{itemize}
+            \pause
+            \item If our emotion is strong enough, we take a \cemph{real} action,
+            \item otherwise, we take a \cemph{hypothetical} one.
+         \end{itemize}
+      \end{itemize}
+      
+      %      \tikzoverlay[text width=1.8cm] at (9.7cm,3.9cm) {
+      %         \tikz node (label) at (0,0)[]{
+      %            \includegraphics[width=1.8cm]{agent_components_dm.png}
+      %         };
+      %      };
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item Belief Generator
+         \begin{itemize}
+            \item If the DM chose a \cemph{hypothetical} action, we simulate its consequences.
+            \item We use the actual world simulator, but we construct the world from memory.
+            \item The agent is then given \cemph{imagined perceptions}.
+         \end{itemize}
+      \end{itemize}
+      
+      %      \tikzoverlay[text width=1.8cm] at (9.7cm,3.9cm) {
+      %         \tikz node (label) at (0,0)[]{
+      %            \includegraphics[width=1.8cm]{agent_components_bg.png}
+      %         };
+      %      };
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_0.png}
+      \end{center}
+      
+      ~
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_1.png}
+      \end{center}
+      
+      \cemph{Perception} distributes its messages.
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_2.png}
+      \end{center}
+      
+      The \cemph{Decision Maker} is informed about the affective reactions.
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_3.png}
+      \end{center}
+      
+      Option 1: The \cemph{Belief Generator} simulates the consequences.
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_4.png}
+      \end{center}
+      
+      The loop begins anew, but with \cemph{imagined} perceptions.
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item {How does this all fit together?}
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.8\textwidth]{plan_5.png}
+      \end{center}
+      
+      Option 2: The \cemph{Decision Maker} chooses a real action.
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item To simplify it: DM and BG are in a loop.
+      \end{itemize}
+      
+      \begin{center}
+         \includegraphics[width=0.3\textwidth]{bg_dm_loop.png}
+      \end{center}
+      
+      \begin{enumerate}
+         \item We choose a \cemph{hypothetical} action,
+         \item Then we simulate its consequences.
+      \end{enumerate}
+      
+      \begin{itemize}
+         \item We repeat this until the DM deems the outcome satisfactory and chooses a \cemph{real} action.
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Architecture --- Agents}
+      \begin{itemize}
+         \item An example plan.
+         \item Our agent is hungry, but has no food.
+         \item There is a plant some distance away.
+      \end{itemize}
+      
+      \medskip
+      
+      \begin{tabular}{c c}
+         \hspace{1cm}\parbox{0.4\textwidth}{\vspace{-3cm}
+            Plan:\\
+            Move North.\\
+            Move North.\\
+            Harvest plant.\\
+            Eat fruit.\\}
+         
+         & \includegraphics[width=0.3\textwidth]{hungry_agent.png}
+      \end{tabular}
+   \end{frame}
+   
+   \section{Evaluation}
+   
+   \begin{frame}{Evaluation}
+      \begin{itemize}
+         \item We created 32 populations with different personalities
+         \item and simulated 50 rounds with each population.
+         \item We combined weak/strong anger, fear, enthusiasm, contentment, as well as hostility.
+         \begin{itemize}
+            \item Example personality: $\personality{S}{W}{S}{W}{S}$\\
+            meaning ``strong anger, weak fear, strong enthusiasm, weak contentment, strong hostility''.
+         \end{itemize}
+         \item Throughout the simulation, we collected data: the number of
+         \begin{itemize}
+            \item gifts given,
+            \item surviving Wumpuses,
+            \item surviving agents,
+            \item plants harvested, etc.
+         \end{itemize}
+      \end{itemize}
+   \end{frame}
+   
+   \begin{frame}{Results}
+      \begin{itemize}
+         \item Initially, there were 30 agents.
+         \item We averaged survival over all personalities with weak anger, strong anger, weak enthusiasm, etc.
+      \end{itemize}
+      
+      \begin{table}
+         \centering
+         \only<1>{%
+            \begin{tabular}{ l | c | c | c}
+               \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$ \\
+               \hline
+               Anger & 80.8\% & 74.4\% & -6.4\\
+               Fear & 74.8\% & 80.4\% & 5.6\\
+               Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+               Contentment & 76.9\% & 78.3\% & 1.4\\
+               Hostility & 76.4\% & 78.8\% & 2.4\\
+               \hline
+            \end{tabular}}
+            \only<2>{%
+               \begin{tabular}{ l | c | c | c}
+                  \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$ \\
+                  \hline
+                  \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}80.8\%&74.4\% & -6.4\\
+                  Fear & 74.8\% & 80.4\% & 5.6\\
+                  Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+                  Contentment & 76.9\% & 78.3\% & 1.4\\
+                  Hostility & 76.4\% & 78.8\% & 2.4\\
+                  \hline
+               \end{tabular}}
+               \only<3>{%
+                  \begin{tabular}{ l | c | c | c}
+                     \emph{Personality fragment} & \emph{weak} & \emph{ strong} & $\Delta$  \\
+                     \hline
+                     \rowcolor{LightGreen}Anger&\cellcolor{IntenseGreen}80.8\%&74.4\% & -6.4\\
+                     \rowcolor{LightYellow}Fear&74.8\%&\cellcolor{IntenseYellow}80.4\% & 5.6\\
+                     Enthusiasm & 75.8\% & 79.4\% & 3.6\\
+                     Contentment & 76.9\% & 78.3\% & 1.4\\
+                     Hostility & 76.4\% & 78.8\% & 2.4\\
+                     \hline
+                  \end{tabular}}
+                  \caption{Average number of surviving agents, by personality fragment.}
+                  \label{tab:numAgentsAvg}
+               \end{table}
+               
+               \begin{itemize}
+                  \item<3-> Weak anger and strong fear are useful!
+               \end{itemize}
+            \end{frame}
+            
+            \begin{frame}{Results}
+               \begin{itemize}
+                  \item There were some surprising results.
+                  \item Agents were able to give gifts (meat, fruit, gold) to others.
+               \end{itemize}
+               
+               \begin{table}
+                  \centering
+                  \begin{tabular}{ l | c }
+                     \emph{Personality} & \emph{Meat gifts} \\
+                     \hline
+                     
+                     $\personality{S}{W}{W}{W}{S}$ & 0\\
+                     $\personality{W}{W}{W}{W}{S}$ & 0\\
+                     $\personality{S}{W}{W}{S}{W}$ & 1\\
+                     \multicolumn{2}{c}{$\dots$}\\
+                     $\personality{S}{W}{S}{W}{W}$ & 19\\
+                     $\personality{S}{W}{S}{W}{S}$ & 19\\
+                     \hline
+                  \end{tabular}
+                  \caption{Number of meat items given as gifts after 50 rounds.}
+                  \label{tab:numWumpuses}
+               \end{table}
+               \begin{itemize}
+                  \item $\personality{S}{W}{S}{W}{S}$ means ``strong anger, weak fear, strong enthusiasm, weak contentment, strong hostility''.
+                  \item Agents with strong anger and weak fear killed everything and shared the meat among themselves.
+               \end{itemize}
+            \end{frame}
+            
+            \section{Conclusion}
+            
+            \begin{frame}{Conclusion}
+               \begin{itemize}
+                  \item We designed an agent architecture based on evolutionary considerations.
+                  \pause
+                  \item Our aim was to approximate real organisms.
+                  \pause
+                  \item Agents were put into a moderately complex game world
+                  \pause
+                  \item and performed reasonably well.
+                  \pause
+                  \item Personalities differentiated themselves in interesting ways.
+               \end{itemize}
+            \end{frame}
+            
+            \begin{frame}[plain, c]
+               \begin{center}
+                  \huge Thank you for your attention!
+               \end{center}
+            \end{frame}
